@@ -1,0 +1,59 @@
+{
+  "name": "t:sections.slideshow.name",
+  "tag": "section",
+  "class": "section section--slideshow",
+  "max_blocks": 6,
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "header", "content": "t:labels.layout" },
+    { "type": "select", "id": "container", "label": "t:labels.width", "default": "full",
+      "options": [
+        { "value": "full", "label": "t:labels.width_full" },
+        { "value": "fixed", "label": "t:labels.width_fixed" }
+      ] },
+    { "type": "select", "id": "slide_height", "label": "t:labels.slide_height", "default": "medium",
+      "options": [
+        { "value": "adapt", "label": "t:labels.ratio_adapt" },
+        { "value": "small", "label": "t:labels.size_small" },
+        { "value": "medium", "label": "t:labels.size_medium" },
+        { "value": "large", "label": "t:labels.size_large" }
+      ] },
+    { "type": "header", "content": "t:labels.behavior" },
+    { "type": "checkbox", "id": "autoplay", "label": "t:labels.autoplay", "default": false },
+    { "type": "range", "id": "autoplay_delay", "min": 3, "max": 9, "step": 1, "unit": "s", "default": 5, "label": "t:labels.autoplay_delay" },
+    { "type": "checkbox", "id": "show_controls", "label": "t:labels.show_controls", "default": true },
+    { "type": "select", "id": "text_alignment_mobile", "label": "t:labels.alignment_mobile", "default": "center",
+      "options": [
+        { "value": "left", "label": "t:labels.align_left" },
+        { "value": "center", "label": "t:labels.align_center" }
+      ] },
+    { "type": "text", "id": "accessibility_info", "label": "t:labels.accessibility_info", "default": "Slideshow" }
+  ],
+  "blocks": [
+    { "type": "slide", "name": "t:blocks.slide", "limit": 6,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "t:labels.image" },
+        { "type": "image_picker", "id": "image_mobile", "label": "t:labels.image_mobile" },
+        { "type": "range", "id": "image_overlay_opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 0, "label": "t:labels.image_overlay_opacity" },
+        { "type": "color_scheme", "id": "color_scheme", "label": "t:labels.color_scheme", "default": "scheme-1" },
+        { "type": "select", "id": "content_position", "label": "t:labels.content_position", "default": "middle-center",
+          "options": [
+            { "value": "top-left", "label": "t:labels.pos_top_left" },
+            { "value": "middle-center", "label": "t:labels.pos_middle_center" },
+            { "value": "bottom-left", "label": "t:labels.pos_bottom_left" }
+          ] },
+        { "type": "inline_richtext", "id": "subheading", "label": "t:labels.subheading" },
+        { "type": "inline_richtext", "id": "heading", "label": "t:labels.heading", "default": "Slide heading" },
+        { "type": "select", "id": "heading_size", "label": "t:labels.heading_size", "default": "h1",
+          "options": [ { "value": "h1", "label": "t:labels.size_large" }, { "value": "h2", "label": "t:labels.size_medium" } ] },
+        { "type": "richtext", "id": "description", "label": "t:labels.description" },
+        { "type": "text", "id": "button_label", "label": "t:labels.button_label" },
+        { "type": "url", "id": "button_link", "label": "t:labels.button_link" },
+        { "type": "select", "id": "button_style", "label": "t:labels.button_style", "default": "primary",
+          "options": [ { "value": "primary", "label": "t:labels.style_primary" }, { "value": "secondary", "label": "t:labels.style_secondary" } ] }
+      ] }
+  ],
+  "presets": [
+    { "name": "t:sections.slideshow.name", "blocks": [ { "type": "slide" }, { "type": "slide" } ] }
+  ]
+}

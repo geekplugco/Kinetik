@@ -1,17 +1,13 @@
 {
   "sections": {
-    "hero": {
-      "type": "hero",
-      "settings": {
-        "image": "/uploads/hero-editorial.png",
-        "subheading": "FW26 — just dropped",
-        "heading": "Move different.",
-        "button_label": "Shop the drop",
-        "button_link": "/collections/new-arrivals",
-        "content_alignment": "left",
-        "overlay_opacity": 40,
-        "color_scheme": "scheme-1"
-      }
+    "slideshow": {
+      "type": "slideshow",
+      "settings": { "slide_height": "large", "autoplay": true, "autoplay_delay": 6, "show_controls": true },
+      "blocks": {
+        "s1": { "type": "slide", "settings": { "image": "/uploads/hero-editorial.png", "subheading": "FW26 — just dropped", "heading": "Move different.", "button_label": "Shop the drop", "button_link": "/collections/new-arrivals", "content_position": "bottom-left", "image_overlay_opacity": 40 } },
+        "s2": { "type": "slide", "settings": { "image": "/uploads/banner-dark-flatlay.png", "subheading": "The system", "heading": "Field-tested kit.", "button_label": "Explore", "button_link": "/collections/apparel", "content_position": "middle-center", "image_overlay_opacity": 45 } }
+      },
+      "block_order": ["s1", "s2"]
     },
     "marquee": {
       "type": "marquee",
@@ -62,5 +58,5 @@
       }
     }
   },
-  "order": ["hero", "marquee", "arrivals", "editorial", "trust", "categories", "newsletter"]
+  "order": ["slideshow", "marquee", "arrivals", "editorial", "trust", "categories", "newsletter"]
 }
