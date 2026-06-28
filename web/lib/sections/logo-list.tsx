@@ -5,7 +5,7 @@ import { sectionStyle } from "../section-style";
 export function LogoList({ section }: SectionProps) {
   const logos = section.blocks.filter((b) => b.type === "logo");
   return (
-    <section data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"} style={sectionStyle({ padding_top: 48, padding_bottom: 48, ...section.settings })} className="border-y border-border-hairline bg-surface-page pt-[var(--pt,48px)] pb-[var(--pb,48px)]">
+    <section data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"} style={sectionStyle(section.settings)} className="border-y border-border-hairline bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]">
       <div className="mx-auto max-w-[var(--page-width)] px-6">
         {typeof section.settings.heading === "string" && section.settings.heading && (
           <p className="mb-8 text-center font-mono text-xs uppercase tracking-label text-text-muted">{section.settings.heading}</p>

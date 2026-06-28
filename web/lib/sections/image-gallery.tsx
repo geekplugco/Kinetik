@@ -5,7 +5,7 @@ import { sectionStyle } from "../section-style";
 export function ImageGallery({ section }: SectionProps) {
   const images = section.blocks.filter((b) => b.type === "image");
   return (
-    <section data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"} style={sectionStyle({ padding_top: 56, padding_bottom: 56, ...section.settings })} className="bg-surface-page pt-[var(--pt,56px)] pb-[var(--pb,56px)]">
+    <section data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"} style={sectionStyle(section.settings)} className="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]">
       <div className="mx-auto max-w-[var(--page-width)] px-6">
         {typeof section.settings.heading === "string" && section.settings.heading && (
           <h2 className="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{section.settings.heading}</h2>

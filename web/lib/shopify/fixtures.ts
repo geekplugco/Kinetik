@@ -79,9 +79,9 @@ export const collection = makeCollection("c-arrivals", "New Arrivals", "new-arri
 const apparel = makeCollection("c-apparel", "Apparel", "apparel", "Technical apparel, field-tested.", products.filter((p) => apparelTypes.includes(p.type)));
 const tech = makeCollection("c-tech", "Tech", "tech", "Audio and wearables.", products.filter((p) => !apparelTypes.includes(p.type)));
 
-collection.featured_image = { id: "ci-arrivals", src: "/uploads/hero-editorial.png", alt: "New arrivals", width: 1200, height: 1600 };
-apparel.featured_image = { id: "ci-apparel", src: "/uploads/banner-dark-flatlay.png", alt: "Apparel", width: 1200, height: 1600 };
-tech.featured_image = { id: "ci-tech", src: "/uploads/banner-dark-flatlay.png", alt: "Tech", width: 1200, height: 1600 };
+collection.featured_image = { id: "ci-arrivals", src: "/uploads/onmodel/02-fulllook-cropped.png", alt: "New arrivals", width: 1024, height: 1280 };
+apparel.featured_image = { id: "ci-apparel", src: "/uploads/onmodel/03-vest-torso.png", alt: "Apparel", width: 1024, height: 1280 };
+tech.featured_image = { id: "ci-tech", src: "/uploads/onmodel/06-headphones-back.png", alt: "Tech", width: 1024, height: 1280 };
 
 export const collectionsByHandle: Record<string, Collection> = {
   "new-arrivals": collection,
@@ -143,9 +143,9 @@ export const mainMenu: Menu = {
 };
 
 export const articles: Article[] = [
-  { id: "a1", title: "Field notes: building the FW26 shell", handle: "fw26-shell", excerpt: "How the season's flagship jacket came together.", content: "<p>The shell started as a question: how light can technical protection get?</p><p>Eighteen prototypes later, we had our answer.</p>", author: "Studio", published_at: "2026-05-12", image: "/uploads/banner-dark-flatlay.png", url: "/blog/fw26-shell" },
-  { id: "a2", title: "On utility and restraint", handle: "utility-restraint", excerpt: "Why we cut three pockets from the cargo pant.", content: "<p>Good design is as much about subtraction as addition.</p>", author: "Studio", published_at: "2026-04-28", image: "/uploads/hero-editorial.png", url: "/blog/utility-restraint" },
-  { id: "a3", title: "The sound of the city", handle: "sound-of-the-city", excerpt: "Tuning the Studio Headphones for the street.", content: "<p>We tuned for movement, not the lab.</p>", author: "Studio", published_at: "2026-04-10", image: "/uploads/card-07-headphones.png", url: "/blog/sound-of-the-city" },
+  { id: "a1", title: "Field notes: building the FW26 shell", handle: "fw26-shell", excerpt: "How the season's flagship jacket came together.", content: "<p>The shell started as a question: how light can technical protection get?</p><p>Eighteen prototypes later, we had our answer.</p>", author: "Studio", published_at: "2026-05-12", image: "/uploads/onmodel/01-jacket-hood-back.png", url: "/blog/fw26-shell" },
+  { id: "a2", title: "On utility and restraint", handle: "utility-restraint", excerpt: "Why we cut three pockets from the cargo pant.", content: "<p>Good design is as much about subtraction as addition.</p>", author: "Studio", published_at: "2026-04-28", image: "/uploads/onmodel/04-lowerbody-cargo.png", url: "/blog/utility-restraint" },
+  { id: "a3", title: "The sound of the city", handle: "sound-of-the-city", excerpt: "Tuning the Studio Headphones for the street.", content: "<p>We tuned for movement, not the lab.</p>", author: "Studio", published_at: "2026-04-10", image: "/uploads/onmodel/06-headphones-back.png", url: "/blog/sound-of-the-city" },
 ];
 
 export const pagesByHandle: Record<string, Page> = {

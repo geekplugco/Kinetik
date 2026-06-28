@@ -20,7 +20,7 @@ export function Video({ section }: SectionProps) {
   const embed = typeof s.video_url === "string" ? embedUrl(s.video_url) : null;
   const cover = (s.cover_image as string) ?? "/uploads/banner-dark-flatlay.png";
   return (
-    <section data-color-scheme={(s.color_scheme as string) ?? "scheme-1"} style={sectionStyle({ padding_top: 56, padding_bottom: 56, ...s })} className="bg-surface-page pt-[var(--pt,56px)] pb-[var(--pb,56px)]">
+    <section data-color-scheme={(s.color_scheme as string) ?? "scheme-1"} style={sectionStyle(s)} className="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]">
       <div className="mx-auto max-w-[1100px] px-6">
         {typeof s.heading === "string" && s.heading && (
           <h2 className="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{s.heading}</h2>

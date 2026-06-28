@@ -10,7 +10,7 @@ export function ImageWithText({ section }: SectionProps) {
   return (
     <section
       data-color-scheme={(s.color_scheme as string) ?? "scheme-1"}
-      style={sectionStyle({ padding_top: 0, padding_bottom: 0, ...s })}
+      style={sectionStyle(s)}
       className="bg-surface-page"
     >
       <div className={`mx-auto grid max-w-[var(--page-width)] items-stretch md:grid-cols-2 ${reverse ? "md:[direction:rtl]" : ""}`}>

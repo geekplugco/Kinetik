@@ -13,8 +13,8 @@ export function CollectionList({ section }: SectionProps) {
   return (
     <section
       data-color-scheme={(s.color_scheme as string) ?? "scheme-1"}
-      style={sectionStyle({ padding_top: 64, padding_bottom: 64, ...s })}
-      className="bg-surface-page pt-[var(--pt,64px)] pb-[var(--pb,64px)]"
+      style={sectionStyle(s)}
+      className="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
     >
       <div className="mx-auto max-w-[var(--page-width)] px-6">
         <div className="mb-10 flex flex-col gap-2">
@@ -32,10 +32,10 @@ export function CollectionList({ section }: SectionProps) {
                   alt={c.title}
                   fill
                   sizes="(min-width:768px) 33vw, 100vw"
-                  className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/25 to-transparent" aria-hidden />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/5 to-transparent" aria-hidden />
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-6">
                 <div className="flex flex-col gap-1.5">
                   <span className="font-mono text-[11px] uppercase tracking-label text-paper/70">{c.products_count} pieces</span>

@@ -16,8 +16,8 @@ export function FeaturedCollection({ section }: SectionProps) {
   return (
     <section
       data-color-scheme={(s.color_scheme as string) ?? "scheme-1"}
-      style={sectionStyle({ padding_top: 64, padding_bottom: 64, ...s })}
-      className="bg-surface-page pt-[var(--pt,64px)] pb-[var(--pb,64px)]"
+      style={sectionStyle(s)}
+      className="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
     >
       <div className="mx-auto max-w-[var(--page-width)] px-6">
         <div className="mb-10 flex items-end justify-between gap-4">

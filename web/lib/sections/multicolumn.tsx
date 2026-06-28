@@ -8,8 +8,8 @@ export function Multicolumn({ section }: SectionProps) {
   return (
     <section
       data-color-scheme={(s.color_scheme as string) ?? "scheme-1"}
-      style={sectionStyle({ padding_top: 56, padding_bottom: 56, ...s })}
-      className="border-y border-border-hairline bg-surface-page pt-[var(--pt,56px)] pb-[var(--pb,56px)]"
+      style={sectionStyle(s)}
+      className="border-y border-border-hairline bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
     >
       <div className="mx-auto max-w-[var(--page-width)] px-6">
         {typeof s.heading === "string" && s.heading && (
@@ -20,8 +20,8 @@ export function Multicolumn({ section }: SectionProps) {
             <div key={b.id} className="flex flex-col gap-3">
               <Icon name={((b.settings.icon as IconName) ?? "star")} size={28} className="text-accent-press" />
               <h3 className="font-sans text-h4 text-text-strong">{(b.settings.title as string) ?? ""}</h3>
-              {typeof b.settings.text === "string" && (
-                <p className="text-sm text-text-muted">{b.settings.text}</p>
+              {typeof b.settings.text === "string" && b.settings.text && (
+                <div className="text-sm text-text-muted [&_p]:m-0" dangerouslySetInnerHTML={{ __html: b.settings.text }} />
               )}
             </div>
           ))}

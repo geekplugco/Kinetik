@@ -12,7 +12,7 @@ export function BlogPosts({ section }: SectionProps) {
   const limit = typeof s.posts_to_show === "number" ? s.posts_to_show : 3;
   const posts = articles.slice(0, limit);
   return (
-    <section data-color-scheme={(s.color_scheme as string) ?? "scheme-1"} style={sectionStyle({ padding_top: 64, padding_bottom: 64, ...s })} className="bg-surface-page pt-[var(--pt,64px)] pb-[var(--pb,64px)]">
+    <section data-color-scheme={(s.color_scheme as string) ?? "scheme-1"} style={sectionStyle(s)} className="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]">
       <div className="mx-auto max-w-[var(--page-width)] px-6">
         <div className="mb-8 flex items-end justify-between gap-4">
           <h2 className="font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{(s.heading as string) ?? "Journal"}</h2>

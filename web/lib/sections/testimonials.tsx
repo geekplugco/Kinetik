@@ -5,7 +5,7 @@ import { Icon } from "@/components/Icon";
 export function Testimonials({ section }: SectionProps) {
   const items = section.blocks.filter((b) => b.type === "testimonial");
   return (
-    <section data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"} style={sectionStyle({ padding_top: 64, padding_bottom: 64, ...section.settings })} className="bg-surface-sunken pt-[var(--pt,64px)] pb-[var(--pb,64px)]">
+    <section data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"} style={sectionStyle(section.settings)} className="bg-surface-sunken pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]">
       <div className="mx-auto max-w-[var(--page-width)] px-6">
         {typeof section.settings.heading === "string" && section.settings.heading && (
           <h2 className="mb-10 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{section.settings.heading}</h2>
@@ -18,7 +18,7 @@ export function Testimonials({ section }: SectionProps) {
                   <Icon key={i} name="star" size={16} />
                 ))}
               </div>
-              <blockquote className="text-body-lg text-text-body">{(b.settings.quote as string) ?? ""}</blockquote>
+              <blockquote className="text-body-lg text-text-body [&_p]:m-0" dangerouslySetInnerHTML={{ __html: (b.settings.quote as string) ?? "" }} />
               <figcaption className="mt-auto font-mono text-xs uppercase tracking-label text-text-muted">{(b.settings.author as string) ?? ""}</figcaption>
             </figure>
           ))}

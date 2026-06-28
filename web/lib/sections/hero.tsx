@@ -15,9 +15,10 @@ export function Hero({ section }: SectionProps) {
             {(s.heading as string) ?? "Move faster."}
           </h1>
           <div className="flex flex-col gap-7">
-            <p className="max-w-sm text-body-lg leading-snug text-ink-300">
-              {(s.text as string) ?? "High-resolution techwear that loads in a blink. Engineered for the city, the trail, and everything in transit."}
-            </p>
+            <div
+              className="max-w-sm text-body-lg leading-snug text-ink-300 [&_p]:m-0"
+              dangerouslySetInnerHTML={{ __html: (s.text as string) ?? "<p>High-resolution techwear that loads in a blink. Engineered for the city, the trail, and everything in transit.</p>" }}
+            />
             <div className="flex flex-wrap gap-3">
               <Button href={(s.button_link as string) ?? "/collections/new-arrivals"} variant="primary" size="md" className="gap-3 px-8 py-4 text-sm">
                 {(s.button_label as string) ?? "Shop the drop"} <Icon name="arrow" size={18} />

@@ -8,7 +8,7 @@ export function RichText({ section }: SectionProps) {
     <section
       data-color-scheme={(s.color_scheme as string) ?? "scheme-1"}
       style={sectionStyle(s)}
-      className="bg-surface-page pt-[var(--pt,48px)] pb-[var(--pb,48px)]"
+      className="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
     >
       <div className={`mx-auto flex max-w-[var(--page-width)] flex-col gap-4 px-6 ${align}`}>
         {typeof s.subheading === "string" && s.subheading && (
