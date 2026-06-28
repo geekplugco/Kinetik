@@ -1,0 +1,11 @@
+{
+  "name": "Header",
+  "tag": "header",
+  "class": "section section--header",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "sticky_header", "label": "Sticky header", "default": true }
+  ],
+  "presets": [{ "name": "Header" }]
+}
