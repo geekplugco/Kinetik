@@ -1,0 +1,47 @@
+/* ============================================================
+   KINETIK — Effects: radii, borders, shadows, motion, z-index
+   Crisp & near-square. Elevation comes from hairlines first,
+   shadow only for things that truly float (drawer, dialog, pop).
+   ============================================================ */
+
+:root {
+  /* ---- Corner radii (intentionally tight) ---- */
+  --radius-0:    0px;       /* default — square, brutalist */
+  --radius-sm:   2px;
+  --radius-md:   4px;       /* controls, cards */
+  --radius-lg:   8px;       /* media tiles */
+  --radius-pill: 999px;     /* tags, avatars */
+
+  /* ---- Borders ---- */
+  --border-width:   1px;
+  --border-width-2: 2px;    /* emphatic / focus block */
+  --border:         var(--border-width) solid var(--border-hairline);
+  --border-ink:     var(--border-width) solid var(--border-strong);
+
+  /* ---- Shadows (sparse, neutral, no color tint) ---- */
+  --shadow-none: none;
+  --shadow-pop:    0 4px 16px rgba(10, 10, 10, 0.08);
+  --shadow-drawer: -16px 0 48px rgba(10, 10, 10, 0.16);
+  --shadow-dialog: 0 24px 64px rgba(10, 10, 10, 0.24);
+  --shadow-focus:  0 0 0 2px var(--surface-page), 0 0 0 4px var(--focus-ring);
+
+  /* ---- Motion — snappy, app-like 60fps ---- */
+  --dur-instant: 80ms;  /* @kind other */
+  --dur-fast:    140ms; /* @kind other */
+  --dur-base:    220ms; /* @kind other */
+  --dur-slow:    340ms; /* @kind other */
+
+  /* expo-out — the signature easing */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);  /* @kind other */
+  --ease-in:       cubic-bezier(0.4, 0, 1, 1);    /* @kind other */
+
+  /* ---- Z-index scale ---- */
+  --z-base:    0;    /* @kind other */
+  --z-sticky:  100;  /* @kind other */
+  --z-header:  200;  /* @kind other */
+  --z-overlay: 900;  /* @kind other */
+  --z-drawer:  1000; /* @kind other */
+  --z-dialog:  1100; /* @kind other */
+  --z-toast:   1200; /* @kind other */
+}
