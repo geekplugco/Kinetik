@@ -58,6 +58,10 @@ export const collection = makeCollection("c-arrivals", "New Arrivals", "new-arri
 const apparel = makeCollection("c-apparel", "Apparel", "apparel", "Technical apparel, field-tested.", products.filter((p) => apparelTypes.includes(p.type)));
 const tech = makeCollection("c-tech", "Tech", "tech", "Audio and wearables.", products.filter((p) => !apparelTypes.includes(p.type)));
 
+collection.featured_image = { id: "ci-arrivals", src: "/uploads/hero-editorial.png", alt: "New arrivals", width: 1200, height: 800 };
+apparel.featured_image = { id: "ci-apparel", src: "/uploads/card-03-utility-vest.png", alt: "Apparel", width: 1200, height: 1500 };
+tech.featured_image = { id: "ci-tech", src: "/uploads/card-07-headphones.png", alt: "Tech", width: 1200, height: 1500 };
+
 export const collectionsByHandle: Record<string, Collection> = {
   "new-arrivals": collection,
   apparel,

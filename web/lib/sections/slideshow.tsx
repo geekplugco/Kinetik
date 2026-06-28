@@ -48,12 +48,14 @@ export function Slideshow({ section }: SectionProps) {
               {typeof s.image === "string" && s.image && (
                 <Image src={s.image as string} alt="" fill priority={i === 0} sizes="100vw" className="object-cover" />
               )}
-              <div className="absolute inset-0 bg-ink-950" style={{ opacity: overlay }} aria-hidden />
-              <div className={`relative mx-auto flex h-full max-w-[var(--page-width)] flex-col gap-5 px-6 py-16 ${align}`}>
-                {typeof s.subheading === "string" && s.subheading && <span className="font-mono text-xs uppercase tracking-label text-paper/80">{s.subheading}</span>}
-                <h2 className="max-w-2xl font-display text-fluid-hero leading-[0.95] tracking-hero text-paper">{(s.heading as string) ?? ""}</h2>
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/35 to-ink-950/10" aria-hidden />
+              {overlay > 0.5 && <div className="absolute inset-0 bg-ink-950" style={{ opacity: overlay - 0.5 }} aria-hidden />}
+              <div className={`relative mx-auto flex h-full max-w-[var(--page-width)] flex-col gap-6 px-6 pb-20 pt-16 ${align}`}>
+                <span className="h-1 w-12 bg-accent" aria-hidden />
+                {typeof s.subheading === "string" && s.subheading && <span className="font-mono text-xs uppercase tracking-label text-paper/90">{s.subheading}</span>}
+                <h2 className="max-w-3xl font-display text-fluid-hero font-bold leading-[0.92] tracking-hero text-paper">{(s.heading as string) ?? ""}</h2>
                 {typeof s.button_label === "string" && s.button_label && (
-                  <Button href={(s.button_link as string) ?? "#"} variant="primary">{s.button_label}</Button>
+                  <Button href={(s.button_link as string) ?? "#"} variant="primary" size="md" className="mt-2 px-8 py-4 text-sm">{s.button_label}</Button>
                 )}
               </div>
             </div>

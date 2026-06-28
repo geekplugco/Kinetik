@@ -10,12 +10,24 @@ export function NewsletterPopup() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (ui.popupOpen === false && typeof window !== "undefined" && window.sessionStorage.getItem("kinetik-popup")) return;
-    const timer = window.setTimeout(() => {
-      if (!window.sessionStorage.getItem("kinetik-popup")) setOpen(true);
-    }, 4000);
-    return () => window.clearTimeout(timer);
-  }, [ui.popupOpen]);
+    if (typeof window === "undefined") return;
+    if (window.sessionStorage.getItem("kinetik-popup")) return;
+    let done = false;
+    const fire = () => {
+      if (done || window.sessionStorage.getItem("kinetik-popup")) return;
+      done = true;
+      setOpen(true);
+    };
+    const onScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.75) fire();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const timer = window.setTimeout(fire, 12000);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(timer);
+    };
+  }, []);
 
   const dismiss = () => {
     setOpen(false);

@@ -2,16 +2,48 @@
   "sections": {
     "slideshow": {
       "type": "slideshow",
-      "settings": { "slide_height": "large", "autoplay": true, "autoplay_delay": 6, "show_controls": true },
-      "blocks": {
-        "s1": { "type": "slide", "settings": { "image": "/uploads/hero-editorial.png", "subheading": "FW26 — just dropped", "heading": "Move different.", "button_label": "Shop the drop", "button_link": "/collections/new-arrivals", "content_position": "bottom-left", "image_overlay_opacity": 40 } },
-        "s2": { "type": "slide", "settings": { "image": "/uploads/banner-dark-flatlay.png", "subheading": "The system", "heading": "Field-tested kit.", "button_label": "Explore", "button_link": "/collections/apparel", "content_position": "middle-center", "image_overlay_opacity": 45 } }
+      "settings": {
+        "slide_height": "large",
+        "autoplay": true,
+        "autoplay_delay": 6,
+        "show_controls": true
       },
-      "block_order": ["s1", "s2"]
+      "blocks": {
+        "s1": {
+          "type": "slide",
+          "settings": {
+            "image": "/uploads/hero-editorial.png",
+            "subheading": "FW26 \u2014 just dropped",
+            "heading": "Move different.",
+            "button_label": "Shop the drop",
+            "button_link": "/collections/new-arrivals",
+            "content_position": "bottom-left",
+            "image_overlay_opacity": 40
+          }
+        },
+        "s2": {
+          "type": "slide",
+          "settings": {
+            "image": "/uploads/banner-dark-flatlay.png",
+            "subheading": "The system",
+            "heading": "Field-tested kit.",
+            "button_label": "Explore",
+            "button_link": "/collections/apparel",
+            "content_position": "middle-center",
+            "image_overlay_opacity": 45
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2"
+      ]
     },
     "marquee": {
       "type": "marquee",
-      "settings": { "text": "KINETIK — FIELD-TESTED —" }
+      "settings": {
+        "text": "KINETIK \u2014 FIELD-TESTED \u2014"
+      }
     },
     "arrivals": {
       "type": "featured-collection",
@@ -37,81 +69,155 @@
     },
     "trust": {
       "type": "multicolumn",
-      "settings": { "heading": "Why Kinetik" },
-      "blocks": {
-        "c1": { "type": "column", "settings": { "icon": "star", "title": "Field-tested", "text": "<p>Every piece earns its place.</p>" } },
-        "c2": { "type": "column", "settings": { "icon": "cart", "title": "Free shipping", "text": "<p>On orders over $150.</p>" } },
-        "c3": { "type": "column", "settings": { "icon": "user", "title": "Lifetime support", "text": "<p>We stand behind the build.</p>" } }
+      "settings": {
+        "heading": "Why Kinetik"
       },
-      "block_order": ["c1", "c2", "c3"]
+      "blocks": {
+        "c1": {
+          "type": "column",
+          "settings": {
+            "icon": "star",
+            "title": "Field-tested",
+            "text": "<p>Every piece earns its place.</p>"
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "icon": "cart",
+            "title": "Free shipping",
+            "text": "<p>On orders over $150.</p>"
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "icon": "user",
+            "title": "Lifetime support",
+            "text": "<p>We stand behind the build.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ]
     },
     "categories": {
       "type": "collection-list",
-      "settings": { "heading": "Shop by category" }
+      "settings": {
+        "heading": "Shop by category"
+      }
     },
     "featured": {
       "type": "featured-product",
-      "settings": { "heading": "Drop of the week", "product": "shell-jacket" }
-    },
-    "video": {
-      "type": "video",
-      "settings": { "heading": "The making of FW26", "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "cover_image": "/uploads/banner-dark-flatlay.png" }
+      "settings": {
+        "heading": "Drop of the week",
+        "product": "shell-jacket"
+      }
     },
     "gallery": {
       "type": "image-gallery",
-      "settings": { "heading": "In the field" },
-      "blocks": {
-        "g1": { "type": "image", "settings": { "image": "/uploads/hero-editorial.png", "size": "wide" } },
-        "g2": { "type": "image", "settings": { "image": "/uploads/card-03-utility-vest.png" } },
-        "g3": { "type": "image", "settings": { "image": "/uploads/card-07-headphones.png" } },
-        "g4": { "type": "image", "settings": { "image": "/uploads/card-05-sneakers.png" } },
-        "g5": { "type": "image", "settings": { "image": "/uploads/card-09-smartwatch.png" } }
+      "settings": {
+        "heading": "In the field"
       },
-      "block_order": ["g1", "g2", "g3", "g4", "g5"]
-    },
-    "logos": {
-      "type": "logo-list",
-      "settings": { "heading": "As seen in" },
       "blocks": {
-        "l1": { "type": "logo", "settings": { "alt": "Highsnobiety" } },
-        "l2": { "type": "logo", "settings": { "alt": "Hypebeast" } },
-        "l3": { "type": "logo", "settings": { "alt": "GQ" } },
-        "l4": { "type": "logo", "settings": { "alt": "Monocle" } }
+        "g1": {
+          "type": "image",
+          "settings": {
+            "image": "/uploads/hero-editorial.png",
+            "size": "wide"
+          }
+        },
+        "g2": {
+          "type": "image",
+          "settings": {
+            "image": "/uploads/card-03-utility-vest.png"
+          }
+        },
+        "g3": {
+          "type": "image",
+          "settings": {
+            "image": "/uploads/card-07-headphones.png"
+          }
+        },
+        "g4": {
+          "type": "image",
+          "settings": {
+            "image": "/uploads/card-05-sneakers.png"
+          }
+        },
+        "g5": {
+          "type": "image",
+          "settings": {
+            "image": "/uploads/card-09-smartwatch.png"
+          }
+        }
       },
-      "block_order": ["l1", "l2", "l3", "l4"]
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "g4",
+        "g5"
+      ]
     },
     "testimonials": {
       "type": "testimonials",
-      "settings": { "heading": "What people say" },
-      "blocks": {
-        "t1": { "type": "testimonial", "settings": { "quote": "<p>The shell is the best technical jacket I've owned.</p>", "author": "A. Mercer", "rating": 5 } },
-        "t2": { "type": "testimonial", "settings": { "quote": "<p>Considered, quiet, built to last.</p>", "author": "J. Okafor", "rating": 5 } },
-        "t3": { "type": "testimonial", "settings": { "quote": "<p>Audio that actually holds up on the move.</p>", "author": "R. Vale", "rating": 4 } }
+      "settings": {
+        "heading": "What people say"
       },
-      "block_order": ["t1", "t2", "t3"]
-    },
-    "faq": {
-      "type": "collapsible-content",
-      "settings": { "heading": "Questions" },
       "blocks": {
-        "f1": { "type": "item", "settings": { "heading": "What's your return window?", "content": "<p>30 days, unworn, with tags.</p>" } },
-        "f2": { "type": "item", "settings": { "heading": "Do you ship internationally?", "content": "<p>Yes — to 40+ countries.</p>" } },
-        "f3": { "type": "item", "settings": { "heading": "How do I size up?", "content": "<p>See the size guide on each product.</p>" } }
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>The shell is the best technical jacket I've owned.</p>",
+            "author": "A. Mercer",
+            "rating": 5
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Considered, quiet, built to last.</p>",
+            "author": "J. Okafor",
+            "rating": 5
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Audio that actually holds up on the move.</p>",
+            "author": "R. Vale",
+            "rating": 4
+          }
+        }
       },
-      "block_order": ["f1", "f2", "f3"]
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ]
     },
     "blogposts": {
       "type": "blog-posts",
-      "settings": { "heading": "From the journal", "posts_to_show": 3 }
-    },
-    "newsletter": {
-      "type": "newsletter",
       "settings": {
-        "heading": "Join the movement",
-        "text": "Early access to drops, plus 10% off your first order.",
-        "button_label": "Subscribe"
+        "heading": "From the journal",
+        "posts_to_show": 3
       }
     }
   },
-  "order": ["slideshow", "marquee", "arrivals", "editorial", "featured", "video", "trust", "gallery", "logos", "testimonials", "faq", "categories", "blogposts", "newsletter"]
+  "order": [
+    "slideshow",
+    "marquee",
+    "arrivals",
+    "categories",
+    "editorial",
+    "featured",
+    "gallery",
+    "trust",
+    "testimonials",
+    "blogposts"
+  ]
 }
