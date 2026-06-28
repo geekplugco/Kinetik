@@ -1,0 +1,7 @@
+{ "name": "Collection", "tag": "section", "class": "section section--main-collection",
+  "settings": [
+    { "type": "checkbox", "id": "enable_filtering", "label": "Enable filtering", "default": true },
+    { "type": "checkbox", "id": "enable_sorting", "label": "Enable sorting", "default": true },
+    { "type": "range", "id": "columns_desktop", "min": 2, "max": 5, "step": 1, "default": 4, "label": "Columns on desktop" }
+  ],
+  "presets": [{ "name": "Collection" }] }

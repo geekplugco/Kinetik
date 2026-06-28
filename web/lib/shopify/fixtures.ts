@@ -40,15 +40,28 @@ export const productsByHandle: Record<string, Product> = Object.fromEntries(
   products.map((p) => [p.handle, p]),
 );
 
-export const collection: Collection = {
-  id: "c-arrivals",
-  title: "New Arrivals",
-  handle: "new-arrivals",
-  description: "The latest Kinetik drop.",
-  products,
-  products_count: products.length,
-  featured_image: products[0].featured_image,
-  url: "/collections/new-arrivals",
+function makeCollection(id: string, title: string, handle: string, description: string, items: Product[]): Collection {
+  return {
+    id,
+    title,
+    handle,
+    description,
+    products: items,
+    products_count: items.length,
+    featured_image: items[0]?.featured_image,
+    url: `/collections/${handle}`,
+  };
+}
+
+const apparelTypes = ["Outerwear", "Bottoms", "Bags", "Footwear", "Accessories"];
+export const collection = makeCollection("c-arrivals", "New Arrivals", "new-arrivals", "The latest Kinetik drop.", products);
+const apparel = makeCollection("c-apparel", "Apparel", "apparel", "Technical apparel, field-tested.", products.filter((p) => apparelTypes.includes(p.type)));
+const tech = makeCollection("c-tech", "Tech", "tech", "Audio and wearables.", products.filter((p) => !apparelTypes.includes(p.type)));
+
+export const collectionsByHandle: Record<string, Collection> = {
+  "new-arrivals": collection,
+  apparel,
+  tech,
 };
 
 export const cart: Cart = {
@@ -82,7 +95,7 @@ export const mainMenu: Menu = {
 export const shopifyFixture: ShopifyContextValue = {
   shop,
   cart,
-  collections: { "new-arrivals": collection },
+  collections: collectionsByHandle,
   products: productsByHandle,
   menus: { "main-menu": mainMenu },
   locale: "en-US",

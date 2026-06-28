@@ -1,0 +1,5 @@
+{ "name": "Search", "tag": "section", "class": "section section--main-search",
+  "settings": [
+    { "type": "checkbox", "id": "enable_filtering", "label": "Enable filtering", "default": true }
+  ],
+  "presets": [{ "name": "Search" }] }
