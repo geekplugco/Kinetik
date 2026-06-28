@@ -69,6 +69,7 @@ export function CartDrawer() {
                 <span className="font-mono text-h4 text-text-strong">{money(ui.cartTotal)}</span>
               </div>
               <Button className="w-full">Checkout</Button>
+              <a href="#" className="mt-2 flex w-full items-center justify-center bg-[#5a31f4] px-6 py-3 font-mono text-sm uppercase tracking-wide text-white transition-opacity hover:opacity-90">Buy with Shop Pay</a>
               <a href="/cart" onClick={ui.closeCart} className="mt-3 block text-center font-mono text-xs uppercase tracking-label text-text-muted hover:text-text-strong">View cart</a>
             </footer>
           </>

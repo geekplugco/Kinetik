@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import type { SectionProps } from "../registry";
 import { useMoney } from "../shopify-context";
@@ -10,6 +11,9 @@ export function MainCart({ section }: SectionProps) {
   const money = useMoney();
   const ui = useUI();
   const lines = ui.lines;
+  const [note, setNote] = useState("");
+  const [code, setCode] = useState("");
+  const [applied, setApplied] = useState<{ code: string; amount: number } | null>(null);
   const threshold = typeof section.settings.free_shipping_threshold === "number" ? section.settings.free_shipping_threshold : 15000;
 
   const setQty = ui.updateQty;
@@ -63,12 +67,40 @@ export function MainCart({ section }: SectionProps) {
         ))}
       </ul>
 
-      <div className="mt-6 flex flex-col items-end gap-4 border-t border-border-strong pt-6">
-        <div className="flex w-full max-w-xs items-center justify-between">
-          <span className="font-mono text-sm uppercase tracking-label text-text-muted">Subtotal</span>
-          <span className="font-mono text-h4 text-text-strong">{money(subtotal)}</span>
+      <div className="mt-8 grid gap-8 border-t border-border-strong pt-8 md:grid-cols-2">
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="cart-note" className="font-mono text-xs uppercase tracking-label text-text-muted">Order note</label>
+            <textarea id="cart-note" rows={3} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Add a note to your order" className="border border-border-strong bg-surface-page px-4 py-3 font-sans text-sm text-text-strong placeholder:text-text-faint" />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="cart-code" className="font-mono text-xs uppercase tracking-label text-text-muted">Discount code</label>
+            <div className="flex gap-2">
+              <input id="cart-code" value={code} onChange={(e) => setCode(e.target.value)} placeholder="Code" className="min-w-0 flex-1 border border-border-strong bg-surface-page px-4 py-2 font-mono text-sm uppercase text-text-strong placeholder:text-text-faint" />
+              <Button variant="secondary" size="sm" onClick={() => code && setApplied({ code: code.toUpperCase(), amount: Math.round(subtotal * 0.1) })}>Apply</Button>
+            </div>
+          </div>
         </div>
-        <Button size="md" className="w-full max-w-xs">Checkout</Button>
+
+        <div className="flex flex-col gap-3 md:items-end">
+          <div className="flex w-full max-w-xs items-center justify-between font-mono text-sm">
+            <span className="uppercase tracking-label text-text-muted">Subtotal</span>
+            <span className="text-text-strong">{money(subtotal)}</span>
+          </div>
+          {applied && (
+            <div className="flex w-full max-w-xs items-center justify-between font-mono text-sm text-accent-press">
+              <span className="uppercase tracking-label">Discount · {applied.code}</span>
+              <span>−{money(applied.amount)}</span>
+            </div>
+          )}
+          <div className="flex w-full max-w-xs items-center justify-between border-t border-border-hairline pt-3 font-mono">
+            <span className="text-sm uppercase tracking-label text-text-muted">Total</span>
+            <span className="text-h4 text-text-strong">{money(Math.max(0, subtotal - (applied?.amount ?? 0)))}</span>
+          </div>
+          <p className="w-full max-w-xs text-right font-mono text-[10px] text-text-faint">Taxes and shipping calculated at checkout</p>
+          <Button size="md" className="w-full max-w-xs">Checkout</Button>
+          <a href="#" className="flex w-full max-w-xs items-center justify-center bg-[#5a31f4] px-6 py-3 font-mono text-sm uppercase tracking-wide text-white transition-opacity hover:opacity-90">Buy with Shop Pay</a>
+        </div>
       </div>
     </section>
   );
