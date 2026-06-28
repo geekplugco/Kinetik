@@ -23,6 +23,15 @@ import { ContactForm } from "./contact-form";
 import { MainAccount } from "./main-account";
 import { MainPassword } from "./main-password";
 import { MainGiftCard } from "./main-gift-card";
+import { FeaturedProduct } from "./featured-product";
+import { CollapsibleContent } from "./collapsible-content";
+import { LogoList } from "./logo-list";
+import { Testimonials } from "./testimonials";
+import { ImageGallery } from "./image-gallery";
+import { Video } from "./video";
+import { BlogPosts } from "./blog-posts";
+import { CustomLiquid } from "./custom-liquid";
+import { MapSection } from "./map";
 
 export function registerSections(): void {
   registerSection("rich-text", RichText);
@@ -49,6 +58,15 @@ export function registerSections(): void {
   registerSection("main-account", MainAccount);
   registerSection("main-password", MainPassword);
   registerSection("main-gift-card", MainGiftCard);
+  registerSection("featured-product", FeaturedProduct);
+  registerSection("collapsible-content", CollapsibleContent);
+  registerSection("logo-list", LogoList);
+  registerSection("testimonials", Testimonials);
+  registerSection("image-gallery", ImageGallery);
+  registerSection("video", Video);
+  registerSection("blog-posts", BlogPosts);
+  registerSection("custom-liquid", CustomLiquid);
+  registerSection("map", MapSection);
 }
 
 registerSections();

@@ -1,0 +1,5 @@
+{ "name": "Blog posts", "tag": "section", "class": "section section--blog-posts",
+  "settings": [ { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Journal" },
+    { "type": "range", "id": "posts_to_show", "min": 2, "max": 6, "step": 1, "default": 3, "label": "Posts to show" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
+  "presets": [{ "name": "Blog posts" }] }

@@ -1,0 +1,4 @@
+{ "name": "Custom Liquid", "tag": "section", "class": "section section--custom-liquid",
+  "settings": [ { "type": "liquid", "id": "custom_html", "label": "Custom Liquid" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
+  "presets": [{ "name": "Custom Liquid" }] }

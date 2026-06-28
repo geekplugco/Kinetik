@@ -1,0 +1,8 @@
+{ "name": "Image gallery", "tag": "section", "class": "section section--image-gallery", "max_blocks": 12,
+  "settings": [ { "type": "inline_richtext", "id": "heading", "label": "Heading" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
+  "blocks": [ { "type": "image", "name": "Image", "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "select", "id": "size", "label": "Size", "default": "regular", "options": [ { "value": "regular", "label": "Regular" }, { "value": "wide", "label": "Wide" } ] } ] } ],
+  "presets": [{ "name": "Image gallery", "blocks": [{ "type": "image" }, { "type": "image" }, { "type": "image" }] }] }

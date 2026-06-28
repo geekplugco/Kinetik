@@ -1,0 +1,7 @@
+{ "name": "Collapsible content", "tag": "section", "class": "section section--collapsible", "max_blocks": 12,
+  "settings": [ { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "FAQ" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
+  "blocks": [ { "type": "item", "name": "Item", "settings": [
+    { "type": "text", "id": "heading", "label": "Question", "default": "Question" },
+    { "type": "richtext", "id": "content", "label": "Answer" } ] } ],
+  "presets": [{ "name": "Collapsible content", "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }] }] }

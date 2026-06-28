@@ -1,0 +1,6 @@
+{ "name": "Map", "tag": "section", "class": "section section--map",
+  "settings": [ { "type": "inline_richtext", "id": "subheading", "label": "Subheading", "default": "Visit us" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "The studio" },
+    { "type": "text", "id": "address", "label": "Address", "default": "382 NE 191st St, Miami, FL" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
+  "presets": [{ "name": "Map" }] }

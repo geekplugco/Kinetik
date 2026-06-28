@@ -1,0 +1,6 @@
+{ "name": "Video", "tag": "section", "class": "section section--video",
+  "settings": [ { "type": "inline_richtext", "id": "heading", "label": "Heading" },
+    { "type": "video_url", "id": "video_url", "label": "Video URL", "accept": ["youtube", "vimeo"] },
+    { "type": "image_picker", "id": "cover_image", "label": "Cover image" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
+  "presets": [{ "name": "Video" }] }

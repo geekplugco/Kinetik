@@ -1,0 +1,8 @@
+{ "name": "Featured product", "tag": "section", "class": "section section--featured-product",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "heading", "label": "Eyebrow heading" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px", "label": "Top padding" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px", "label": "Bottom padding" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
+  "presets": [{ "name": "Featured product" }] }

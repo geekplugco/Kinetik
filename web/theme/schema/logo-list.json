@@ -1,0 +1,7 @@
+{ "name": "Logo list", "tag": "section", "class": "section section--logo-list", "max_blocks": 12,
+  "settings": [ { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "As seen in" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
+  "blocks": [ { "type": "logo", "name": "Logo", "settings": [
+    { "type": "image_picker", "id": "image", "label": "Logo" },
+    { "type": "text", "id": "alt", "label": "Name" } ] } ],
+  "presets": [{ "name": "Logo list", "blocks": [{ "type": "logo" }, { "type": "logo" }, { "type": "logo" }, { "type": "logo" }] }] }

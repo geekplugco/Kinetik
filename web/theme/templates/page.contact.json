@@ -1,1 +1,24 @@
-{ "sections": { "main": { "type": "main-page", "settings": {} }, "form": { "type": "contact-form", "settings": {} } }, "order": ["main", "form"] }
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {}
+    },
+    "map": {
+      "type": "map",
+      "settings": {
+        "heading": "The studio",
+        "address": "382 NE 191st St, Miami, FL"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "form",
+    "map"
+  ]
+}

@@ -49,6 +49,61 @@
       "type": "collection-list",
       "settings": { "heading": "Shop by category" }
     },
+    "featured": {
+      "type": "featured-product",
+      "settings": { "heading": "Drop of the week", "product": "shell-jacket" }
+    },
+    "video": {
+      "type": "video",
+      "settings": { "heading": "The making of FW26", "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "cover_image": "/uploads/banner-dark-flatlay.png" }
+    },
+    "gallery": {
+      "type": "image-gallery",
+      "settings": { "heading": "In the field" },
+      "blocks": {
+        "g1": { "type": "image", "settings": { "image": "/uploads/hero-editorial.png", "size": "wide" } },
+        "g2": { "type": "image", "settings": { "image": "/uploads/card-03-utility-vest.png" } },
+        "g3": { "type": "image", "settings": { "image": "/uploads/card-07-headphones.png" } },
+        "g4": { "type": "image", "settings": { "image": "/uploads/card-05-sneakers.png" } },
+        "g5": { "type": "image", "settings": { "image": "/uploads/card-09-smartwatch.png" } }
+      },
+      "block_order": ["g1", "g2", "g3", "g4", "g5"]
+    },
+    "logos": {
+      "type": "logo-list",
+      "settings": { "heading": "As seen in" },
+      "blocks": {
+        "l1": { "type": "logo", "settings": { "alt": "Highsnobiety" } },
+        "l2": { "type": "logo", "settings": { "alt": "Hypebeast" } },
+        "l3": { "type": "logo", "settings": { "alt": "GQ" } },
+        "l4": { "type": "logo", "settings": { "alt": "Monocle" } }
+      },
+      "block_order": ["l1", "l2", "l3", "l4"]
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": { "heading": "What people say" },
+      "blocks": {
+        "t1": { "type": "testimonial", "settings": { "quote": "<p>The shell is the best technical jacket I've owned.</p>", "author": "A. Mercer", "rating": 5 } },
+        "t2": { "type": "testimonial", "settings": { "quote": "<p>Considered, quiet, built to last.</p>", "author": "J. Okafor", "rating": 5 } },
+        "t3": { "type": "testimonial", "settings": { "quote": "<p>Audio that actually holds up on the move.</p>", "author": "R. Vale", "rating": 4 } }
+      },
+      "block_order": ["t1", "t2", "t3"]
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "settings": { "heading": "Questions" },
+      "blocks": {
+        "f1": { "type": "item", "settings": { "heading": "What's your return window?", "content": "<p>30 days, unworn, with tags.</p>" } },
+        "f2": { "type": "item", "settings": { "heading": "Do you ship internationally?", "content": "<p>Yes — to 40+ countries.</p>" } },
+        "f3": { "type": "item", "settings": { "heading": "How do I size up?", "content": "<p>See the size guide on each product.</p>" } }
+      },
+      "block_order": ["f1", "f2", "f3"]
+    },
+    "blogposts": {
+      "type": "blog-posts",
+      "settings": { "heading": "From the journal", "posts_to_show": 3 }
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
@@ -58,5 +113,5 @@
       }
     }
   },
-  "order": ["slideshow", "marquee", "arrivals", "editorial", "trust", "categories", "newsletter"]
+  "order": ["slideshow", "marquee", "arrivals", "editorial", "featured", "video", "trust", "gallery", "logos", "testimonials", "faq", "categories", "blogposts", "newsletter"]
 }
