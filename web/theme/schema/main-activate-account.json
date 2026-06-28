@@ -1,0 +1,1 @@
+{ "name": "activate account", "tag": "section", "class": "section section--main-activate-account", "settings": [ { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ], "presets": [{ "name": "activate account" }] }

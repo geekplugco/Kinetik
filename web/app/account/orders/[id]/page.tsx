@@ -1,12 +1,12 @@
 import { ThemeShell } from "@/lib/theme-layout";
 import { SectionRenderer } from "@/lib/section-renderer";
 import type { Template } from "@/lib/types";
-import tmpl from "@/theme/templates/customers/account.json";
+import orderTemplate from "@/theme/templates/customers/order.json";
 
-export default function Page() {
+export default function OrderPage() {
   return (
     <ThemeShell>
-      <SectionRenderer template={tmpl as Template} />
+      <SectionRenderer template={orderTemplate as Template} />
     </ThemeShell>
   );
 }

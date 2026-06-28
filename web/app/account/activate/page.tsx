@@ -1,7 +1,7 @@
 import { ThemeShell } from "@/lib/theme-layout";
 import { SectionRenderer } from "@/lib/section-renderer";
 import type { Template } from "@/lib/types";
-import tmpl from "@/theme/templates/customers/account.json";
+import tmpl from "@/theme/templates/customers/activate_account.json";
 
 export default function Page() {
   return (

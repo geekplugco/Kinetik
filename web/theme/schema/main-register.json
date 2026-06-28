@@ -1,0 +1,1 @@
+{ "name": "register", "tag": "section", "class": "section section--main-register", "settings": [ { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ], "presets": [{ "name": "register" }] }
