@@ -10,6 +10,8 @@ export function AnnouncementBar({ section }: SectionProps) {
   const showLoc = section.settings.show_localization === true;
   return (
     <div
+      role="region"
+      aria-label="Announcement"
       data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-2"}
       style={sectionStyle(section.settings)}
       className="bg-ink-950 text-paper"

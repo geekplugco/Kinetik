@@ -19,15 +19,16 @@ export function CartDrawer() {
         className={`fixed inset-0 z-50 bg-ink-950/50 transition-opacity ${ui.cartOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
         aria-hidden
       />
-      <aside
+      <div
         role="dialog"
+        aria-modal="true"
         aria-label="Cart"
         className={`fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col bg-surface-page shadow-xl transition-transform duration-300 ${ui.cartOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        <header className="flex items-center justify-between border-b border-border-hairline px-6 py-4">
+        <div className="flex items-center justify-between border-b border-border-hairline px-6 py-4">
           <span className="font-mono text-xs uppercase tracking-label text-text-strong">Cart · {ui.cartCount}</span>
           <button type="button" aria-label="Close" onClick={ui.closeCart} className="text-text-strong hover:text-accent-press"><Icon name="close" /></button>
-        </header>
+        </div>
 
         {ui.lines.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
@@ -63,7 +64,7 @@ export function CartDrawer() {
                 </li>
               ))}
             </ul>
-            <footer className="border-t border-border-strong px-6 py-5">
+            <div className="border-t border-border-strong px-6 py-5">
               <div className="mb-4 flex items-center justify-between">
                 <span className="font-mono text-xs uppercase tracking-label text-text-muted">Subtotal</span>
                 <span className="font-mono text-h4 text-text-strong">{money(ui.cartTotal)}</span>
@@ -71,10 +72,10 @@ export function CartDrawer() {
               <Button className="w-full">Checkout</Button>
               <a href="#" className="mt-2 flex w-full items-center justify-center bg-[#5a31f4] px-6 py-3 font-mono text-sm uppercase tracking-wide text-white transition-opacity hover:opacity-90">Buy with Shop Pay</a>
               <a href="/cart" onClick={ui.closeCart} className="mt-3 block text-center font-mono text-xs uppercase tracking-label text-text-muted hover:text-text-strong">View cart</a>
-            </footer>
+            </div>
           </>
         )}
-      </aside>
+      </div>
     </>
   );
 }

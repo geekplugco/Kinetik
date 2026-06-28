@@ -14,7 +14,7 @@ export function ImageGallery({ section }: SectionProps) {
           {images.map((b, i) => {
             const wide = b.settings.size === "wide" || i === 0;
             return (
-              <a key={b.id} href={(b.settings.link as string) ?? "#"} className={`group relative overflow-hidden bg-surface-sunken ${wide ? "col-span-2 row-span-2" : ""}`}>
+              <a key={b.id} href={(b.settings.link as string) ?? "#"} aria-label={(b.settings.alt as string) || `Gallery image ${i + 1}`} className={`group relative overflow-hidden bg-surface-sunken ${wide ? "col-span-2 row-span-2" : ""}`}>
                 {typeof b.settings.image === "string" && b.settings.image && (
                   <Image src={b.settings.image as string} alt={(b.settings.alt as string) ?? ""} fill sizes="50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
                 )}

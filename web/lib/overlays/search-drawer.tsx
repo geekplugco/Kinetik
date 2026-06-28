@@ -22,7 +22,7 @@ export function SearchDrawer() {
   return (
     <>
       <div onClick={ui.closeSearch} className={`fixed inset-0 z-50 bg-ink-950/50 transition-opacity ${ui.searchOpen ? "opacity-100" : "pointer-events-none opacity-0"}`} aria-hidden />
-      <aside role="dialog" aria-label="Search" className={`fixed inset-x-0 top-0 z-50 bg-surface-page shadow-xl transition-transform duration-300 ${ui.searchOpen ? "translate-y-0" : "-translate-y-full"}`}>
+      <div role="dialog" aria-modal="true" aria-label="Search" className={`fixed inset-x-0 top-0 z-50 bg-surface-page shadow-xl transition-transform duration-300 ${ui.searchOpen ? "translate-y-0" : "-translate-y-full"}`}>
         <div className="mx-auto max-w-[900px] px-6 py-6">
           <div className="flex items-center gap-3 border-b border-border-strong pb-3">
             <Icon name="search" className="text-text-muted" />
@@ -44,7 +44,7 @@ export function SearchDrawer() {
           )}
           {query.trim() && results.length === 0 && <p className="mt-4 font-mono text-xs text-text-muted">No results for “{query}”.</p>}
         </div>
-      </aside>
+      </div>
     </>
   );
 }

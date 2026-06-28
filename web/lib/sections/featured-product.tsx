@@ -21,7 +21,7 @@ export function FeaturedProduct({ section }: SectionProps) {
         </div>
         <div className="flex flex-col justify-center gap-5 px-6 py-16 md:px-16">
           {typeof section.settings.heading === "string" && section.settings.heading && (
-            <span className="font-mono text-xs uppercase tracking-label text-accent-press">{section.settings.heading}</span>
+            <span className="font-mono text-xs uppercase tracking-label text-text-muted">{section.settings.heading}</span>
           )}
           <h2 className="font-display text-display-2 leading-[0.95] tracking-tight text-text-strong">{product.title}</h2>
           <Price price={product.price} compareAt={product.compare_at_price} className="text-body-lg" />

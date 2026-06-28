@@ -21,7 +21,7 @@ export function Footer({ section }: SectionProps) {
           <Logo />
           <p className="max-w-xs text-sm text-text-muted">{(s.tagline as string) ?? "Engineered for movement."}</p>
         </div>
-        <nav className="flex flex-col gap-3">
+        <nav aria-label="Footer" className="flex flex-col gap-3">
           <span className="font-mono text-xs uppercase tracking-label text-text-muted">{(s.menu_heading as string) ?? "Shop"}</span>
           {menu?.links.map((link) => (
             <a key={link.title} href={link.url} className="text-sm text-text-body hover:text-text-strong">

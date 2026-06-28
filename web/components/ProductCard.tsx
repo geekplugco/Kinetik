@@ -39,12 +39,12 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <span className="font-mono text-[10px] uppercase tracking-label text-text-faint">{product.code}</span>
+        <span className="font-mono text-[10px] uppercase tracking-label text-text-muted">{product.code}</span>
         <a href={product.url} className="font-sans text-body leading-tight text-text-strong hover:text-accent-press">{product.title}</a>
         <span className="font-mono text-[11px] text-text-muted">{product.spec}</span>
         <div className="flex items-baseline gap-2 pt-0.5 font-mono text-sm">
-          <span className={onSale ? "text-accent-press" : "text-text-strong"}>{money(product.price)}</span>
-          {onSale && <s className="text-xs text-text-faint">{money(product.compare_at_price!)}</s>}
+          <span className="text-text-strong">{money(product.price)}</span>
+          {onSale && <s className="text-xs text-text-muted">{money(product.compare_at_price!)}</s>}
         </div>
         {product.colors.length > 1 && (
           <div className="flex gap-1.5 pt-1">

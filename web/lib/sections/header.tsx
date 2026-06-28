@@ -19,7 +19,7 @@ export function Header({ section }: SectionProps) {
     >
       <div className="mx-auto flex max-w-[var(--page-width)] items-center justify-between gap-6 px-6 py-4">
         <Logo />
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
           {menu?.links.map((link) => (
             <div key={link.title} className="group relative">
               <a href={link.url} className="flex items-center gap-1 py-2 font-mono text-xs uppercase tracking-label text-text-body hover:text-text-strong">

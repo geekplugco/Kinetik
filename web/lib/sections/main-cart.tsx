@@ -88,7 +88,7 @@ export function MainCart({ section }: SectionProps) {
             <span className="text-text-strong">{money(subtotal)}</span>
           </div>
           {applied && (
-            <div className="flex w-full max-w-xs items-center justify-between font-mono text-sm text-accent-press">
+            <div className="flex w-full max-w-xs items-center justify-between font-mono text-sm text-text-strong">
               <span className="uppercase tracking-label">Discount · {applied.code}</span>
               <span>−{money(applied.amount)}</span>
             </div>
