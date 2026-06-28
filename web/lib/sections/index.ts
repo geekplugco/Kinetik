@@ -10,6 +10,8 @@ import { ImageWithText } from "./image-with-text";
 import { Multicolumn } from "./multicolumn";
 import { Newsletter } from "./newsletter";
 import { CollectionList } from "./collection-list";
+import { MainProduct } from "./main-product";
+import { RelatedProducts } from "./related-products";
 
 export function registerSections(): void {
   registerSection("rich-text", RichText);
@@ -23,6 +25,8 @@ export function registerSections(): void {
   registerSection("multicolumn", Multicolumn);
   registerSection("newsletter", Newsletter);
   registerSection("collection-list", CollectionList);
+  registerSection("main-product", MainProduct);
+  registerSection("related-products", RelatedProducts);
 }
 
 registerSections();

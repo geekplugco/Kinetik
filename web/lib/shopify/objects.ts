@@ -91,4 +91,6 @@ export interface ShopifyContextValue {
   menus: Record<string, Menu>;
   locale: string;
   translations: Record<string, string>;
+  product?: Product;
+  collection?: Collection;
 }
