@@ -1,0 +1,8 @@
+{ "name": "Newsletter", "tag": "section", "class": "section section--newsletter",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Join the movement" },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-2" }
+  ],
+  "presets": [{ "name": "Newsletter" }] }

@@ -1,0 +1,6 @@
+{ "name": "Collection list", "tag": "section", "class": "section section--collection-list",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Shop by category" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "presets": [{ "name": "Collection list" }] }

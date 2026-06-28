@@ -26,7 +26,41 @@
         "columns_desktop": 4,
         "columns_mobile": "2"
       }
+    },
+    "editorial": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "/uploads/banner-dark-flatlay.png",
+        "layout": "image_first",
+        "subheading": "The system",
+        "heading": "Engineered for movement",
+        "text": "<p>Technical materials, considered construction, zero noise. Built to be worn, not displayed.</p>",
+        "button_label": "Our story",
+        "button_link": "/pages/about"
+      }
+    },
+    "trust": {
+      "type": "multicolumn",
+      "settings": { "heading": "Why Kinetik" },
+      "blocks": {
+        "c1": { "type": "column", "settings": { "icon": "star", "title": "Field-tested", "text": "<p>Every piece earns its place.</p>" } },
+        "c2": { "type": "column", "settings": { "icon": "cart", "title": "Free shipping", "text": "<p>On orders over $150.</p>" } },
+        "c3": { "type": "column", "settings": { "icon": "user", "title": "Lifetime support", "text": "<p>We stand behind the build.</p>" } }
+      },
+      "block_order": ["c1", "c2", "c3"]
+    },
+    "categories": {
+      "type": "collection-list",
+      "settings": { "heading": "Shop by category" }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Join the movement",
+        "text": "Early access to drops, plus 10% off your first order.",
+        "button_label": "Subscribe"
+      }
     }
   },
-  "order": ["hero", "marquee", "arrivals"]
+  "order": ["hero", "marquee", "arrivals", "editorial", "trust", "categories", "newsletter"]
 }

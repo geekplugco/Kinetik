@@ -1,0 +1,13 @@
+{ "name": "Multicolumn", "tag": "section", "class": "section section--multicolumn", "max_blocks": 8,
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "blocks": [
+    { "type": "column", "name": "Column", "settings": [
+      { "type": "select", "id": "icon", "label": "Icon", "default": "star",
+        "options": [{ "value": "star", "label": "Star" }, { "value": "cart", "label": "Cart" }, { "value": "search", "label": "Search" }, { "value": "user", "label": "User" }] },
+      { "type": "text", "id": "title", "label": "Title", "default": "Feature" },
+      { "type": "richtext", "id": "text", "label": "Text" } ] }
+  ],
+  "presets": [{ "name": "Multicolumn", "blocks": [{ "type": "column" }, { "type": "column" }, { "type": "column" }] }] }
