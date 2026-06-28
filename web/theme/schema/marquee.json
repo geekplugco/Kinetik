@@ -1,0 +1,10 @@
+{
+  "name": "Marquee",
+  "tag": "div",
+  "class": "section section--marquee",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Text", "default": "KINETIK" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "presets": [{ "name": "Marquee" }]
+}

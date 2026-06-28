@@ -1,0 +1,18 @@
+{
+  "name": "Hero",
+  "tag": "section",
+  "class": "section section--hero",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "inline_richtext", "id": "subheading", "label": "Subheading" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Move different." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the drop" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "select", "id": "content_alignment", "label": "Alignment", "default": "left",
+      "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }] },
+    { "type": "range", "id": "overlay_opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 35, "label": "Image overlay" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
