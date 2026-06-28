@@ -2,12 +2,28 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": { "enable_sticky_info": true }
+      "settings": {
+        "enable_sticky_info": true
+      }
     },
     "related": {
       "type": "related-products",
-      "settings": { "heading": "You might also like", "products_to_show": 4 }
+      "settings": {
+        "heading": "You might also like",
+        "products_to_show": 4
+      }
+    },
+    "complementary": {
+      "type": "complementary-products",
+      "settings": {
+        "heading": "Pairs well with",
+        "products_to_show": 3
+      }
     }
   },
-  "order": ["main", "related"]
+  "order": [
+    "main",
+    "complementary",
+    "related"
+  ]
 }

@@ -3,15 +3,17 @@
 import { useState } from "react";
 import Image from "next/image";
 import type { SectionProps } from "../registry";
-import { useShopify } from "../shopify-context";
+import { useShopify, useMoney } from "../shopify-context";
 import { useUI } from "../ui-context";
 import { Price } from "@/components/Price";
 import { Button } from "@/components/Button";
 import { Tag } from "@/components/Tag";
+import { Icon } from "@/components/Icon";
 
 export function MainProduct({ section }: SectionProps) {
   const { product } = useShopify();
   const ui = useUI();
+  const money = useMoney();
   const [variantIndex, setVariantIndex] = useState(0);
   const [qty, setQty] = useState(1);
   const sticky = section.settings.enable_sticky_info !== false;
@@ -62,6 +64,26 @@ export function MainProduct({ section }: SectionProps) {
           <Button size="md" disabled={!variant.available} className="w-full" onClick={() => ui.addToCart(product, variant, qty)}>
             {variant.available ? "Add to cart" : "Sold out"}
           </Button>
+          <a href="#" className="flex w-full items-center justify-center gap-2 bg-[#5a31f4] px-6 py-3 font-mono text-sm uppercase tracking-wide text-white transition-opacity hover:opacity-90">
+            Buy with Shop Pay
+          </a>
+          <p className="text-center font-mono text-xs text-text-muted">
+            Pay in 4 interest-free payments of {money(Math.round(variant.price / 4))} with Shop Pay.{" "}
+            <a href="#" className="underline underline-offset-2 hover:text-text-strong">Learn more</a>
+          </p>
+
+          <div className="flex items-start gap-2 border border-border-hairline p-4 text-sm text-text-body">
+            <Icon name="user" size={18} className="mt-0.5 text-positive" />
+            <span><strong className="text-text-strong">Pickup available</strong> at Kinetik Studio · Usually ready in 24 hours</span>
+          </div>
+
+          <div className="flex items-center gap-4 border-t border-border-hairline pt-4 font-mono text-xs uppercase tracking-label text-text-muted">
+            <span>Share</span>
+            {["Copy link", "Facebook", "Pinterest", "X"].map((p) => (
+              <button key={p} type="button" className="hover:text-text-strong">{p}</button>
+            ))}
+          </div>
+
           <div className="border-t border-border-hairline pt-5 text-body text-text-body" dangerouslySetInnerHTML={{ __html: product.description }} />
         </div>
       </div>

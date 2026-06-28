@@ -20,6 +20,7 @@ import { MainBlog } from "./main-blog";
 import { MainArticle } from "./main-article";
 import { MainPage } from "./main-page";
 import { ContactForm } from "./contact-form";
+import { ComplementaryProducts } from "./complementary-products";
 import { CustomerLogin, CustomerRegister, CustomerReset, CustomerActivate, CustomerAccount, CustomerOrder, CustomerAddresses } from "./customer";
 import { MainPassword } from "./main-password";
 import { MainGiftCard } from "./main-gift-card";
@@ -48,6 +49,7 @@ export function registerSections(): void {
   registerSection("collection-list", CollectionList);
   registerSection("main-product", MainProduct);
   registerSection("related-products", RelatedProducts);
+  registerSection("complementary-products", ComplementaryProducts);
   registerSection("main-collection", MainCollection);
   registerSection("main-search", MainSearch);
   registerSection("main-cart", MainCart);
