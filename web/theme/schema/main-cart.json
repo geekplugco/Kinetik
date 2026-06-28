@@ -1,0 +1,6 @@
+{ "name": "Cart", "tag": "section", "class": "section section--main-cart",
+  "settings": [
+    { "type": "checkbox", "id": "show_free_shipping_goal", "label": "Free shipping bar", "default": true },
+    { "type": "range", "id": "free_shipping_threshold", "min": 0, "max": 50000, "step": 1000, "default": 15000, "label": "Free shipping threshold (cents)" }
+  ],
+  "presets": [{ "name": "Cart" }] }

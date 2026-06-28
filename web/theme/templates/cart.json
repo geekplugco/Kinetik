@@ -1,0 +1,1 @@
+{ "sections": { "main": { "type": "main-cart", "settings": { "free_shipping_threshold": 15000 } } }, "order": ["main"] }

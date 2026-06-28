@@ -14,6 +14,7 @@ import { MainProduct } from "./main-product";
 import { RelatedProducts } from "./related-products";
 import { MainCollection } from "./main-collection";
 import { MainSearch } from "./main-search";
+import { MainCart } from "./main-cart";
 
 export function registerSections(): void {
   registerSection("rich-text", RichText);
@@ -31,6 +32,7 @@ export function registerSections(): void {
   registerSection("related-products", RelatedProducts);
   registerSection("main-collection", MainCollection);
   registerSection("main-search", MainSearch);
+  registerSection("main-cart", MainCart);
 }
 
 registerSections();
