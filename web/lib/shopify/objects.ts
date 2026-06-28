@@ -17,12 +17,20 @@ export interface Variant {
   featured_image?: ShopifyImage;
 }
 
+export interface SwatchColor {
+  name: string;
+  swatch: string;
+}
+
 export interface Product {
   id: string;
   title: string;
   handle: string;
   vendor: string;
   type: string;
+  code: string;
+  spec: string;
+  badge?: string;
   description: string;
   price: number;
   price_min: number;
@@ -33,6 +41,7 @@ export interface Product {
   images: ShopifyImage[];
   variants: Variant[];
   options: string[];
+  colors: SwatchColor[];
   tags: string[];
   url: string;
 }
