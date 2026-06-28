@@ -8,7 +8,7 @@ export function Testimonials({ section }: SectionProps) {
     <section data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"} style={sectionStyle({ padding_top: 64, padding_bottom: 64, ...section.settings })} className="bg-surface-sunken pt-[var(--pt,64px)] pb-[var(--pb,64px)]">
       <div className="mx-auto max-w-[var(--page-width)] px-6">
         {typeof section.settings.heading === "string" && section.settings.heading && (
-          <h2 className="mb-10 font-display text-h2 tracking-tight text-text-strong">{section.settings.heading}</h2>
+          <h2 className="mb-10 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{section.settings.heading}</h2>
         )}
         <div className="grid gap-6 md:grid-cols-3">
           {items.map((b) => (

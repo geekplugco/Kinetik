@@ -1,33 +1,44 @@
 import Image from "next/image";
 import type { SectionProps } from "../registry";
-import { sectionStyle } from "../section-style";
 import { Button } from "@/components/Button";
+import { Icon } from "@/components/Icon";
 
 export function Hero({ section }: SectionProps) {
   const s = section.settings;
   const image = (s.image as string) ?? "/uploads/hero-editorial.png";
-  const align = s.content_alignment === "center" ? "items-center text-center" : "items-start text-left";
-  const overlay = typeof s.overlay_opacity === "number" ? s.overlay_opacity / 100 : 0.35;
   return (
-    <section
-      data-color-scheme={(s.color_scheme as string) ?? "scheme-dark"}
-      style={sectionStyle(s)}
-      className="relative isolate flex min-h-[70vh] items-end overflow-hidden bg-ink-950"
-    >
-      <Image src={image} alt={(s.image_alt as string) ?? ""} fill priority sizes="100vw" className="object-cover" />
-      <div className="absolute inset-0 bg-ink-950" style={{ opacity: overlay }} aria-hidden />
-      <div className={`relative mx-auto flex w-full max-w-[var(--page-width)] flex-col gap-6 px-6 py-16 ${align}`}>
-        {typeof s.subheading === "string" && s.subheading && (
-          <span className="font-mono text-xs uppercase tracking-label text-paper/80">{s.subheading}</span>
-        )}
-        <h1 className="max-w-3xl font-display text-fluid-hero leading-[0.95] tracking-hero text-paper">
-          {(s.heading as string) ?? "Move different."}
-        </h1>
-        {typeof s.button_label === "string" && s.button_label && (
-          <Button href={(s.button_link as string) ?? "#"} variant="primary" size="md">
-            {s.button_label}
-          </Button>
-        )}
+    <section className="border-b border-border-strong">
+      <div className="mx-auto grid max-w-[var(--page-width)] md:grid-cols-[1.05fr_1.25fr]">
+        <div className="order-2 flex flex-col justify-between gap-8 bg-ink-950 px-7 py-12 text-paper md:order-1 md:min-h-[640px] md:px-14 md:py-14">
+          <span className="font-mono text-xs uppercase tracking-label text-accent">{(s.subheading as string) ?? "SS26 / Field System"}</span>
+          <h1 className="font-display text-[clamp(3rem,8.5vw,6rem)] font-bold uppercase leading-[0.88] tracking-hero">
+            {(s.heading as string) ?? "Move faster."}
+          </h1>
+          <div className="flex flex-col gap-7">
+            <p className="max-w-sm text-body-lg leading-snug text-ink-300">
+              {(s.text as string) ?? "High-resolution techwear that loads in a blink. Engineered for the city, the trail, and everything in transit."}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Button href={(s.button_link as string) ?? "/collections/new-arrivals"} variant="primary" size="md" className="gap-3 px-8 py-4 text-sm">
+                {(s.button_label as string) ?? "Shop the drop"} <Icon name="arrow" size={18} />
+              </Button>
+              {typeof s.button_label_2 === "string" && s.button_label_2 && (
+                <a href={(s.button_link_2 as string) ?? "#"} className="inline-flex items-center justify-center border border-ink-600 px-8 py-4 font-mono text-sm uppercase tracking-wide text-paper transition-colors hover:bg-ink-900">
+                  {s.button_label_2}
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="relative order-1 min-h-[440px] bg-ink-900 md:order-2 md:min-h-[640px]">
+          <Image src={image} alt={(s.image_alt as string) ?? ""} fill priority sizes="(min-width:768px) 56vw, 100vw" className="object-cover" />
+          <span className="absolute bottom-5 left-5 font-mono text-[11px] uppercase tracking-label text-paper/85">
+            {(s.image_caption as string) ?? "SS26 · Lookbook 01"}
+          </span>
+          {typeof s.tag === "string" && s.tag && (
+            <span className="absolute right-5 top-5 bg-accent px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-accent-ink">{s.tag}</span>
+          )}
+        </div>
       </div>
     </section>
   );

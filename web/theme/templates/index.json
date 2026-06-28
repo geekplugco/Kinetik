@@ -1,48 +1,9 @@
 {
   "sections": {
-    "slideshow": {
-      "type": "slideshow",
-      "settings": {
-        "slide_height": "large",
-        "autoplay": true,
-        "autoplay_delay": 6,
-        "show_controls": true
-      },
-      "blocks": {
-        "s1": {
-          "type": "slide",
-          "settings": {
-            "image": "/uploads/hero-editorial.png",
-            "subheading": "FW26 \u2014 just dropped",
-            "heading": "Move different.",
-            "button_label": "Shop the drop",
-            "button_link": "/collections/new-arrivals",
-            "content_position": "bottom-left",
-            "image_overlay_opacity": 40
-          }
-        },
-        "s2": {
-          "type": "slide",
-          "settings": {
-            "image": "/uploads/banner-dark-flatlay.png",
-            "subheading": "The system",
-            "heading": "Field-tested kit.",
-            "button_label": "Explore",
-            "button_link": "/collections/apparel",
-            "content_position": "middle-center",
-            "image_overlay_opacity": 45
-          }
-        }
-      },
-      "block_order": [
-        "s1",
-        "s2"
-      ]
-    },
     "marquee": {
       "type": "marquee",
       "settings": {
-        "text": "KINETIK \u2014 FIELD-TESTED \u2014"
+        "text": "Ships in 24h \u00b7 Gore-Tex 3L \u00b7 Free returns 60d \u00b7 Engineered for movement \u00b7 Carbon-neutral \u00b7 Field-tested"
       }
     },
     "arrivals": {
@@ -206,10 +167,25 @@
         "heading": "From the journal",
         "posts_to_show": 3
       }
+    },
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "subheading": "SS26 / Field System",
+        "heading": "Move faster.",
+        "text": "<p>High-resolution techwear that loads in a blink. Engineered for the city, the trail, and everything in transit.</p>",
+        "button_label": "Shop the drop",
+        "button_link": "/collections/new-arrivals",
+        "button_label_2": "Lookbook",
+        "button_link_2": "/blog",
+        "image": "/uploads/hero-editorial.png",
+        "image_caption": "SS26 \u00b7 Lookbook 01",
+        "tag": "Drop 04 Live"
+      }
     }
   },
   "order": [
-    "slideshow",
+    "hero",
     "marquee",
     "arrivals",
     "categories",

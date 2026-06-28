@@ -11,7 +11,7 @@ export function MapSection({ section }: SectionProps) {
       <div className="mx-auto grid max-w-[var(--page-width)] md:grid-cols-2">
         <div className="flex flex-col justify-center gap-4 px-6 py-16 md:px-16">
           <span className="font-mono text-xs uppercase tracking-label text-text-muted">{(s.subheading as string) ?? "Visit us"}</span>
-          <h2 className="font-display text-h2 tracking-tight text-text-strong">{(s.heading as string) ?? "The studio"}</h2>
+          <h2 className="font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{(s.heading as string) ?? "The studio"}</h2>
           <p className="flex items-start gap-2 text-body text-text-body"><Icon name="user" size={18} className="mt-1 text-accent-press" />{address}</p>
           <a href={`https://maps.google.com/?q=${query}`} target="_blank" rel="noopener noreferrer" className="font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 hover:text-accent-press">Get directions</a>
         </div>

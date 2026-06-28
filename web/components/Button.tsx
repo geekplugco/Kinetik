@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 type Variant = "primary" | "secondary" | "link";
-type Size = "sm" | "md";
+type Size = "sm" | "md" | "lg";
 
 const base = "inline-flex items-center justify-center gap-2 font-mono uppercase tracking-wide transition-colors disabled:opacity-40 disabled:pointer-events-none";
 
@@ -14,6 +14,7 @@ const variants: Record<Variant, string> = {
 const sizes: Record<Size, string> = {
   sm: "px-4 py-2 text-xs",
   md: "px-6 py-3 text-sm",
+  lg: "px-8 py-4 text-sm",
 };
 
 interface ButtonProps {

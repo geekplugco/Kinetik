@@ -8,7 +8,7 @@ export function ImageGallery({ section }: SectionProps) {
     <section data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"} style={sectionStyle({ padding_top: 56, padding_bottom: 56, ...section.settings })} className="bg-surface-page pt-[var(--pt,56px)] pb-[var(--pb,56px)]">
       <div className="mx-auto max-w-[var(--page-width)] px-6">
         {typeof section.settings.heading === "string" && section.settings.heading && (
-          <h2 className="mb-8 font-display text-h2 tracking-tight text-text-strong">{section.settings.heading}</h2>
+          <h2 className="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{section.settings.heading}</h2>
         )}
         <div className="grid auto-rows-[200px] grid-cols-2 gap-3 md:grid-cols-4">
           {images.map((b, i) => {

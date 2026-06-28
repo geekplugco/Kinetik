@@ -14,7 +14,7 @@ export function RelatedProducts({ section }: SectionProps) {
   return (
     <section className="border-t border-border-hairline bg-surface-page py-16">
       <div className="mx-auto max-w-[var(--page-width)] px-6">
-        <h2 className="mb-8 font-display text-h2 tracking-tight text-text-strong">
+        <h2 className="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">
           {(section.settings.heading as string) ?? "You might also like"}
         </h2>
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">

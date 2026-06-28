@@ -17,7 +17,7 @@ export function CollectionList({ section }: SectionProps) {
     >
       <div className="mx-auto max-w-[var(--page-width)] px-6">
         {typeof s.heading === "string" && s.heading && (
-          <h2 className="mb-8 font-display text-h2 tracking-tight text-text-strong">{s.heading}</h2>
+          <h2 className="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{s.heading}</h2>
         )}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c) => (
