@@ -1,0 +1,46 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Kinetik",
+    "theme_version": "0.1.0",
+    "theme_author": "Kinetik",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color_scheme_group",
+        "id": "color_schemes",
+        "definition": [
+          { "type": "header", "content": "Colors" },
+          { "type": "color", "id": "background", "label": "Background", "default": "#FFFFFF" },
+          { "type": "color", "id": "text", "label": "Text", "default": "#0A0A0A" },
+          { "type": "color", "id": "accent", "label": "Accent", "default": "#CCFF00" },
+          { "type": "color", "id": "on_accent", "label": "On accent", "default": "#0A0A0A" }
+        ],
+        "role": {
+          "background": "background",
+          "text": "text",
+          "primary_button": "accent",
+          "on_primary_button": "on_accent"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      { "type": "font_picker", "id": "font_body", "label": "Body font", "default": "assistant_n4" },
+      { "type": "font_picker", "id": "font_heading", "label": "Heading font", "default": "assistant_n7" },
+      { "type": "range", "id": "font_body_scale", "min": 90, "max": 130, "step": 5, "unit": "%", "default": 100, "label": "Body scale" }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      { "type": "range", "id": "page_width", "min": 1000, "max": 1600, "step": 20, "unit": "px", "default": 1440, "label": "Page width" }
+    ]
+  }
+]
