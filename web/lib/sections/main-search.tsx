@@ -17,7 +17,7 @@ export function MainSearch(_props: SectionProps) {
   }, [all, query]);
 
   return (
-    <section className="mx-auto max-w-[1200px] px-6 py-12">
+    <section className="mx-auto max-w-[var(--page-width)] px-6 py-12">
       <h1 className="font-display text-h1 tracking-tight text-text-strong">Search</h1>
       <div className="mt-6 flex items-center gap-3 border-b border-border-strong pb-3">
         <Icon name="search" className="text-text-muted" />

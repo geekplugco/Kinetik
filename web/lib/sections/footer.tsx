@@ -16,7 +16,7 @@ export function Footer({ section }: SectionProps) {
       data-color-scheme={(s.color_scheme as string) ?? "scheme-2"}
       className="border-t border-border-hairline bg-surface-sunken"
     >
-      <div className="mx-auto grid max-w-[1200px] gap-10 px-6 py-16 md:grid-cols-[1.5fr_1fr_1.5fr]">
+      <div className="mx-auto grid max-w-[var(--page-width)] gap-10 px-6 py-16 md:grid-cols-[1.5fr_1fr_1.5fr]">
         <div className="flex flex-col gap-4">
           <Logo />
           <p className="max-w-xs text-sm text-text-muted">{(s.tagline as string) ?? "Engineered for movement."}</p>
@@ -46,7 +46,7 @@ export function Footer({ section }: SectionProps) {
         </div>
       </div>
       <div className="border-t border-border-hairline">
-        <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-5 px-6 py-6 md:flex-row">
+        <div className="mx-auto flex max-w-[var(--page-width)] flex-col items-center justify-between gap-5 px-6 py-6 md:flex-row">
           <div className="flex items-center gap-4">
             {s.show_social !== false && <SocialIcons />}
             {s.enable_follow_on_shop !== false && <FollowOnShop />}
@@ -57,7 +57,7 @@ export function Footer({ section }: SectionProps) {
         </div>
       </div>
       <div className="border-t border-border-hairline">
-        <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-3 px-6 py-4 font-mono text-xs text-text-muted md:flex-row">
+        <div className="mx-auto flex max-w-[var(--page-width)] flex-col items-center justify-between gap-3 px-6 py-4 font-mono text-xs text-text-muted md:flex-row">
           <span>© {shop.name}. All rights reserved.</span>
           {s.show_payment_icons !== false && <PaymentIcons />}
         </div>

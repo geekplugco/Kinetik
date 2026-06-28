@@ -49,7 +49,7 @@ export function Slideshow({ section }: SectionProps) {
                 <Image src={s.image as string} alt="" fill priority={i === 0} sizes="100vw" className="object-cover" />
               )}
               <div className="absolute inset-0 bg-ink-950" style={{ opacity: overlay }} aria-hidden />
-              <div className={`relative mx-auto flex h-full max-w-[1200px] flex-col gap-5 px-6 py-16 ${align}`}>
+              <div className={`relative mx-auto flex h-full max-w-[var(--page-width)] flex-col gap-5 px-6 py-16 ${align}`}>
                 {typeof s.subheading === "string" && s.subheading && <span className="font-mono text-xs uppercase tracking-label text-paper/80">{s.subheading}</span>}
                 <h2 className="max-w-2xl font-display text-fluid-hero leading-[0.95] tracking-hero text-paper">{(s.heading as string) ?? ""}</h2>
                 {typeof s.button_label === "string" && s.button_label && (

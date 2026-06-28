@@ -7,7 +7,7 @@ import { useShopify } from "../shopify-context";
 export function MainBlog(_props: SectionProps) {
   const { articles } = useShopify();
   return (
-    <section className="mx-auto max-w-[1200px] px-6 py-12">
+    <section className="mx-auto max-w-[var(--page-width)] px-6 py-12">
       <h1 className="font-display text-h1 tracking-tight text-text-strong">Journal</h1>
       <div className="mt-10 grid gap-10 md:grid-cols-3">
         {articles.map((a) => (

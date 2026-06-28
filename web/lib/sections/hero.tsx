@@ -16,7 +16,7 @@ export function Hero({ section }: SectionProps) {
     >
       <Image src={image} alt={(s.image_alt as string) ?? ""} fill priority sizes="100vw" className="object-cover" />
       <div className="absolute inset-0 bg-ink-950" style={{ opacity: overlay }} aria-hidden />
-      <div className={`relative mx-auto flex w-full max-w-[1200px] flex-col gap-6 px-6 py-16 ${align}`}>
+      <div className={`relative mx-auto flex w-full max-w-[var(--page-width)] flex-col gap-6 px-6 py-16 ${align}`}>
         {typeof s.subheading === "string" && s.subheading && (
           <span className="font-mono text-xs uppercase tracking-label text-paper/80">{s.subheading}</span>
         )}

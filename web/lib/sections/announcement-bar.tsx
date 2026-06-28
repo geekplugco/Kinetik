@@ -14,7 +14,7 @@ export function AnnouncementBar({ section }: SectionProps) {
       style={sectionStyle(section.settings)}
       className="bg-ink-950 text-paper"
     >
-      <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-6 px-6 py-2">
+      <div className="mx-auto flex max-w-[var(--page-width)] items-center justify-between gap-6 px-6 py-2">
         {showLoc ? <span className="hidden w-32 md:block" /> : null}
         <div className="flex flex-1 items-center justify-center gap-6">
           {items.map((b) => (

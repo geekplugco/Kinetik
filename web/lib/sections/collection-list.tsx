@@ -15,7 +15,7 @@ export function CollectionList({ section }: SectionProps) {
       style={sectionStyle({ padding_top: 64, padding_bottom: 64, ...s })}
       className="bg-surface-page pt-[var(--pt,64px)] pb-[var(--pb,64px)]"
     >
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-[var(--page-width)] px-6">
         {typeof s.heading === "string" && s.heading && (
           <h2 className="mb-8 font-display text-h2 tracking-tight text-text-strong">{s.heading}</h2>
         )}

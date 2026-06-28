@@ -13,7 +13,7 @@ export function BlogPosts({ section }: SectionProps) {
   const posts = articles.slice(0, limit);
   return (
     <section data-color-scheme={(s.color_scheme as string) ?? "scheme-1"} style={sectionStyle({ padding_top: 64, padding_bottom: 64, ...s })} className="bg-surface-page pt-[var(--pt,64px)] pb-[var(--pb,64px)]">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-[var(--page-width)] px-6">
         <div className="mb-8 flex items-end justify-between gap-4">
           <h2 className="font-display text-h2 tracking-tight text-text-strong">{(s.heading as string) ?? "Journal"}</h2>
           <Button href="/blog" variant="link" size="sm">All posts</Button>

@@ -81,6 +81,20 @@
 }
 
 @layer base {
+  :root {
+    --page-width: var(--container-max, 90rem);
+    --gutter: var(--container-pad, 1.5rem);
+  }
+
+  .x-container {
+    width: 100%;
+    max-width: var(--page-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .x-container--narrow { max-width: 48rem; }
+  .x-container--full { max-width: 100%; }
+
   html {
     color-scheme: light;
   }

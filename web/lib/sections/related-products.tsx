@@ -13,7 +13,7 @@ export function RelatedProducts({ section }: SectionProps) {
   if (!related.length) return null;
   return (
     <section className="border-t border-border-hairline bg-surface-page py-16">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-[var(--page-width)] px-6">
         <h2 className="mb-8 font-display text-h2 tracking-tight text-text-strong">
           {(section.settings.heading as string) ?? "You might also like"}
         </h2>

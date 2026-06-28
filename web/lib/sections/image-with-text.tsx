@@ -13,7 +13,7 @@ export function ImageWithText({ section }: SectionProps) {
       style={sectionStyle({ padding_top: 0, padding_bottom: 0, ...s })}
       className="bg-surface-page"
     >
-      <div className={`mx-auto grid max-w-[1440px] items-stretch md:grid-cols-2 ${reverse ? "md:[direction:rtl]" : ""}`}>
+      <div className={`mx-auto grid max-w-[var(--page-width)] items-stretch md:grid-cols-2 ${reverse ? "md:[direction:rtl]" : ""}`}>
         <div className="relative aspect-[4/3] md:aspect-auto md:min-h-[60vh] [direction:ltr]">
           <Image src={image} alt={(s.image_alt as string) ?? ""} fill sizes="50vw" className="object-cover" />
         </div>

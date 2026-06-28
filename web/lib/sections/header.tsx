@@ -17,7 +17,7 @@ export function Header({ section }: SectionProps) {
       data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"}
       className={`${sticky ? "sticky top-0 z-40" : ""} border-b border-border-hairline bg-surface-page/90 backdrop-blur`}
     >
-      <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-6 px-6 py-4">
+      <div className="mx-auto flex max-w-[var(--page-width)] items-center justify-between gap-6 px-6 py-4">
         <Logo />
         <nav className="hidden items-center gap-8 md:flex">
           {menu?.links.map((link) => (

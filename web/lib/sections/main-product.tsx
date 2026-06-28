@@ -21,7 +21,7 @@ export function MainProduct({ section }: SectionProps) {
   const variant = product.variants[variantIndex] ?? product.variants[0];
   const gallery = product.images.length ? product.images : [product.featured_image];
   return (
-    <section className="mx-auto grid max-w-[1200px] gap-10 px-6 py-12 md:grid-cols-2">
+    <section className="mx-auto grid max-w-[var(--page-width)] gap-10 px-6 py-12 md:grid-cols-2">
       <div className="flex flex-col gap-3">
         {gallery.map((img, i) => (
           <div key={img.id ?? i} className="relative aspect-[4/5] overflow-hidden bg-surface-sunken">

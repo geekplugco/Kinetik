@@ -10,7 +10,7 @@ export function RichText({ section }: SectionProps) {
       style={sectionStyle(s)}
       className="bg-surface-page pt-[var(--pt,48px)] pb-[var(--pb,48px)]"
     >
-      <div className={`mx-auto flex max-w-[1200px] flex-col gap-4 px-6 ${align}`}>
+      <div className={`mx-auto flex max-w-[var(--page-width)] flex-col gap-4 px-6 ${align}`}>
         {typeof s.subheading === "string" && s.subheading && (
           <span className="font-mono text-xs uppercase tracking-label text-text-muted">{s.subheading}</span>
         )}

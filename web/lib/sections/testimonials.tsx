@@ -6,7 +6,7 @@ export function Testimonials({ section }: SectionProps) {
   const items = section.blocks.filter((b) => b.type === "testimonial");
   return (
     <section data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"} style={sectionStyle({ padding_top: 64, padding_bottom: 64, ...section.settings })} className="bg-surface-sunken pt-[var(--pt,64px)] pb-[var(--pb,64px)]">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-[var(--page-width)] px-6">
         {typeof section.settings.heading === "string" && section.settings.heading && (
           <h2 className="mb-10 font-display text-h2 tracking-tight text-text-strong">{section.settings.heading}</h2>
         )}

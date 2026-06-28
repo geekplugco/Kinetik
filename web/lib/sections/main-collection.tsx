@@ -24,7 +24,7 @@ export function MainCollection({ section }: SectionProps) {
   }, [active, type, sort]);
 
   return (
-    <section className="mx-auto max-w-[1200px] px-6 py-12">
+    <section className="mx-auto max-w-[var(--page-width)] px-6 py-12">
       <header className="flex flex-col gap-2 border-b border-border-hairline pb-8">
         <span className="font-mono text-xs uppercase tracking-label text-text-muted">Collection</span>
         <h1 className="font-display text-h1 tracking-tight text-text-strong">{active.title}</h1>

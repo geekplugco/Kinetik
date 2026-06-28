@@ -16,7 +16,7 @@ export function FeaturedProduct({ section }: SectionProps) {
   if (!product) return null;
   return (
     <section data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"} style={sectionStyle({ padding_top: 64, padding_bottom: 64, ...section.settings })} className="bg-surface-page pt-[var(--pt,64px)] pb-[var(--pb,64px)]">
-      <div className="mx-auto grid max-w-[1200px] items-center gap-10 px-6 md:grid-cols-2">
+      <div className="mx-auto grid max-w-[var(--page-width)] items-center gap-10 px-6 md:grid-cols-2">
         <div className="relative aspect-square overflow-hidden bg-surface-sunken">
           <Image src={product.featured_image.src} alt={product.featured_image.alt} fill sizes="50vw" className="object-cover" />
         </div>

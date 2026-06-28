@@ -14,7 +14,7 @@ export function ComplementaryProducts({ section }: SectionProps) {
   const items = Object.values(products).filter((p) => p.handle !== product?.handle).slice(0, limit);
   if (!items.length) return null;
   return (
-    <section className="mx-auto max-w-[1200px] px-6 py-10">
+    <section className="mx-auto max-w-[var(--page-width)] px-6 py-10">
       <h2 className="mb-6 font-mono text-xs uppercase tracking-label text-text-muted">{(section.settings.heading as string) ?? "Pairs well with"}</h2>
       <div className="flex flex-col divide-y divide-border-hairline border-y border-border-hairline">
         {items.map((p) => (

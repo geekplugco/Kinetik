@@ -11,7 +11,7 @@ export function Multicolumn({ section }: SectionProps) {
       style={sectionStyle({ padding_top: 56, padding_bottom: 56, ...s })}
       className="border-y border-border-hairline bg-surface-page pt-[var(--pt,56px)] pb-[var(--pb,56px)]"
     >
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-[var(--page-width)] px-6">
         {typeof s.heading === "string" && s.heading && (
           <h2 className="mb-8 font-display text-h2 tracking-tight text-text-strong">{s.heading}</h2>
         )}

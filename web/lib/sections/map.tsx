@@ -8,7 +8,7 @@ export function MapSection({ section }: SectionProps) {
   const query = encodeURIComponent(address);
   return (
     <section data-color-scheme={(s.color_scheme as string) ?? "scheme-1"} style={sectionStyle(s)} className="bg-surface-page">
-      <div className="mx-auto grid max-w-[1440px] md:grid-cols-2">
+      <div className="mx-auto grid max-w-[var(--page-width)] md:grid-cols-2">
         <div className="flex flex-col justify-center gap-4 px-6 py-16 md:px-16">
           <span className="font-mono text-xs uppercase tracking-label text-text-muted">{(s.subheading as string) ?? "Visit us"}</span>
           <h2 className="font-display text-h2 tracking-tight text-text-strong">{(s.heading as string) ?? "The studio"}</h2>
