@@ -1,0 +1,13 @@
+{
+  "name": "Footer",
+  "tag": "footer",
+  "class": "section section--footer",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Engineered for movement." },
+    { "type": "text", "id": "menu_heading", "label": "Menu heading", "default": "Shop" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Get the drop" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-2" }
+  ],
+  "presets": [{ "name": "Footer" }]
+}
