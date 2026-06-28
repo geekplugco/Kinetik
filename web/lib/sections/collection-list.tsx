@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { SectionProps } from "../registry";
 import { useShopify } from "../shopify-context";
 import { sectionStyle } from "../section-style";
+import { Icon } from "@/components/Icon";
 
 export function CollectionList({ section }: SectionProps) {
   const { collections } = useShopify();
@@ -16,17 +17,34 @@ export function CollectionList({ section }: SectionProps) {
       className="bg-surface-page pt-[var(--pt,64px)] pb-[var(--pb,64px)]"
     >
       <div className="mx-auto max-w-[var(--page-width)] px-6">
-        {typeof s.heading === "string" && s.heading && (
-          <h2 className="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{s.heading}</h2>
-        )}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mb-10 flex flex-col gap-2">
+          <span className="font-mono text-xs uppercase tracking-label text-text-muted">Browse the system</span>
+          <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-bold uppercase leading-[0.9] tracking-tight text-text-strong">
+            {(s.heading as string) ?? "Collections"}
+          </h2>
+        </div>
+        <div className="grid gap-3 grid-cols-[repeat(auto-fit,minmax(260px,1fr))]">
           {list.map((c) => (
-            <a key={c.id} href={c.url} className="group relative block aspect-[3/2] overflow-hidden bg-surface-sunken">
+            <a key={c.id} href={c.url} className="group relative block aspect-[3/4] overflow-hidden bg-ink-950">
               {c.featured_image && (
-                <Image src={c.featured_image.src} alt={c.title} fill sizes="(min-width:990px) 33vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                <Image
+                  src={c.featured_image.src}
+                  alt={c.title}
+                  fill
+                  sizes="(min-width:768px) 33vw, 100vw"
+                  className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
+                />
               )}
-              <span className="absolute inset-0 bg-ink-950/30" aria-hidden />
-              <span className="absolute bottom-4 left-4 font-display text-h3 uppercase tracking-tight text-paper">{c.title}</span>
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/25 to-transparent" aria-hidden />
+              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-6">
+                <div className="flex flex-col gap-1.5">
+                  <span className="font-mono text-[11px] uppercase tracking-label text-paper/70">{c.products_count} pieces</span>
+                  <span className="font-display text-[clamp(1.75rem,3vw,2.5rem)] font-bold uppercase leading-[0.95] tracking-tight text-paper">{c.title}</span>
+                </div>
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-paper/40 text-paper transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-accent-ink">
+                  <Icon name="arrow" size={18} />
+                </span>
+              </div>
             </a>
           ))}
         </div>

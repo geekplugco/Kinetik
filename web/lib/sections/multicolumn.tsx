@@ -15,7 +15,7 @@ export function Multicolumn({ section }: SectionProps) {
         {typeof s.heading === "string" && s.heading && (
           <h2 className="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{s.heading}</h2>
         )}
-        <div className={`grid gap-8 sm:grid-cols-2 ${columns.length >= 4 ? "lg:grid-cols-4" : columns.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"}`}>
+        <div className="grid gap-8 grid-cols-[repeat(auto-fit,minmax(220px,1fr))]">
           {columns.map((b) => (
             <div key={b.id} className="flex flex-col gap-3">
               <Icon name={((b.settings.icon as IconName) ?? "star")} size={28} className="text-accent-press" />
