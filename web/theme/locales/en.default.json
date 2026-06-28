@@ -1,0 +1,16 @@
+{
+  "general": {
+    "search": { "title": "Search", "placeholder": "Search products" },
+    "404": { "title": "Page not found", "back": "Back home" }
+  },
+  "products": {
+    "product": { "add_to_cart": "Add to cart", "sold_out": "Sold out", "in_stock": "In stock" }
+  },
+  "cart": {
+    "general": { "title": "Cart", "subtotal": "Subtotal", "checkout": "Checkout", "empty": "Your cart is empty", "remove": "Remove" }
+  },
+  "sections": {
+    "newsletter": { "button": "Subscribe", "placeholder": "Email address" },
+    "featured_collection": { "view_all": "View all" }
+  }
+}
