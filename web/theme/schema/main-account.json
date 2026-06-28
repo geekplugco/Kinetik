@@ -1,0 +1,1 @@
+{ "name": "account", "tag": "section", "class": "section section--main-account", "settings": [ { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ], "presets": [{ "name": "account" }] }

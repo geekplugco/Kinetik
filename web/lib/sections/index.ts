@@ -15,6 +15,13 @@ import { RelatedProducts } from "./related-products";
 import { MainCollection } from "./main-collection";
 import { MainSearch } from "./main-search";
 import { MainCart } from "./main-cart";
+import { MainBlog } from "./main-blog";
+import { MainArticle } from "./main-article";
+import { MainPage } from "./main-page";
+import { ContactForm } from "./contact-form";
+import { MainAccount } from "./main-account";
+import { MainPassword } from "./main-password";
+import { MainGiftCard } from "./main-gift-card";
 
 export function registerSections(): void {
   registerSection("rich-text", RichText);
@@ -33,6 +40,13 @@ export function registerSections(): void {
   registerSection("main-collection", MainCollection);
   registerSection("main-search", MainSearch);
   registerSection("main-cart", MainCart);
+  registerSection("main-blog", MainBlog);
+  registerSection("main-article", MainArticle);
+  registerSection("main-page", MainPage);
+  registerSection("contact-form", ContactForm);
+  registerSection("main-account", MainAccount);
+  registerSection("main-password", MainPassword);
+  registerSection("main-gift-card", MainGiftCard);
 }
 
 registerSections();

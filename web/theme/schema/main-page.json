@@ -1,0 +1,1 @@
+{ "name": "page", "tag": "section", "class": "section section--main-page", "settings": [ { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ], "presets": [{ "name": "page" }] }

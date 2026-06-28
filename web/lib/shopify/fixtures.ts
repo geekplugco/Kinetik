@@ -1,4 +1,4 @@
-import type { Product, Collection, Cart, Shop, Menu, ShopifyContextValue } from "./objects";
+import type { Product, Collection, Cart, Shop, Menu, ShopifyContextValue, Article, Page } from "./objects";
 
 const catalog: { handle: string; title: string; vendor: string; type: string; price: number; img: string }[] = [
   { handle: "shell-jacket", title: "Shell Jacket", vendor: "Kinetik", type: "Outerwear", price: 24800, img: "card-01-shell-jacket.png" },
@@ -92,12 +92,24 @@ export const mainMenu: Menu = {
   ],
 };
 
+export const articles: Article[] = [
+  { id: "a1", title: "Field notes: building the FW26 shell", handle: "fw26-shell", excerpt: "How the season's flagship jacket came together.", content: "<p>The shell started as a question: how light can technical protection get?</p><p>Eighteen prototypes later, we had our answer.</p>", author: "Studio", published_at: "2026-05-12", image: "/uploads/banner-dark-flatlay.png", url: "/blog/fw26-shell" },
+  { id: "a2", title: "On utility and restraint", handle: "utility-restraint", excerpt: "Why we cut three pockets from the cargo pant.", content: "<p>Good design is as much about subtraction as addition.</p>", author: "Studio", published_at: "2026-04-28", image: "/uploads/hero-editorial.png", url: "/blog/utility-restraint" },
+  { id: "a3", title: "The sound of the city", handle: "sound-of-the-city", excerpt: "Tuning the Studio Headphones for the street.", content: "<p>We tuned for movement, not the lab.</p>", author: "Studio", published_at: "2026-04-10", image: "/uploads/card-07-headphones.png", url: "/blog/sound-of-the-city" },
+];
+
+export const pagesByHandle: Record<string, Page> = {
+  about: { title: "About Kinetik", handle: "about", content: "<p>Kinetik builds field-tested apparel and audio for people who move. Technical materials, considered construction, zero noise.</p><p>Designed in studio, tested in the world.</p>" },
+  contact: { title: "Contact", handle: "contact", content: "<p>Questions, press, or wholesale — send a note and the studio will reply within two business days.</p>" },
+};
+
 export const shopifyFixture: ShopifyContextValue = {
   shop,
   cart,
   collections: collectionsByHandle,
   products: productsByHandle,
   menus: { "main-menu": mainMenu },
+  articles,
   locale: "en-US",
   translations: {},
 };

@@ -83,6 +83,24 @@ export interface Shop {
   domain: string;
 }
 
+export interface Article {
+  id: string;
+  title: string;
+  handle: string;
+  excerpt: string;
+  content: string;
+  author: string;
+  published_at: string;
+  image: string;
+  url: string;
+}
+
+export interface Page {
+  title: string;
+  handle: string;
+  content: string;
+}
+
 export interface ShopifyContextValue {
   shop: Shop;
   cart: Cart;
@@ -93,4 +111,7 @@ export interface ShopifyContextValue {
   translations: Record<string, string>;
   product?: Product;
   collection?: Collection;
+  article?: Article;
+  page?: Page;
+  articles: Article[];
 }
