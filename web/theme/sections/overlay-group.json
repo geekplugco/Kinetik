@@ -1,0 +1,11 @@
+{
+  "type": "custom.overlay",
+  "name": "Overlay group",
+  "sections": {
+    "cart-drawer": { "type": "cart-drawer", "settings": { "show_free_shipping_goal": true } },
+    "search-drawer": { "type": "search-drawer", "settings": {} },
+    "quick-view": { "type": "quick-view", "settings": {} },
+    "popup": { "type": "popup", "settings": { "enable": true, "trigger_open": "delay" } }
+  },
+  "order": ["cart-drawer", "search-drawer", "quick-view", "popup"]
+}

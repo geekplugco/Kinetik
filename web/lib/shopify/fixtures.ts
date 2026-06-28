@@ -85,9 +85,35 @@ export const mainMenu: Menu = {
   handle: "main-menu",
   title: "Main menu",
   links: [
-    { title: "Shop", url: "/collections/new-arrivals" },
-    { title: "Apparel", url: "/collections/apparel" },
-    { title: "Tech", url: "/collections/tech" },
+    {
+      title: "Shop",
+      url: "/collections/new-arrivals",
+      links: [
+        { title: "New arrivals", url: "/collections/new-arrivals" },
+        { title: "Apparel", url: "/collections/apparel" },
+        { title: "Tech", url: "/collections/tech" },
+        { title: "All collections", url: "/collections" },
+      ],
+    },
+    {
+      title: "Apparel",
+      url: "/collections/apparel",
+      links: [
+        { title: "Outerwear", url: "/collections/apparel" },
+        { title: "Bottoms", url: "/collections/apparel" },
+        { title: "Bags", url: "/collections/apparel" },
+        { title: "Footwear", url: "/collections/apparel" },
+      ],
+    },
+    {
+      title: "Tech",
+      url: "/collections/tech",
+      links: [
+        { title: "Audio", url: "/collections/tech" },
+        { title: "Wearables", url: "/collections/tech" },
+      ],
+    },
+    { title: "Journal", url: "/blog" },
     { title: "About", url: "/pages/about" },
   ],
 };

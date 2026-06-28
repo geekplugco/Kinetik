@@ -1,23 +1,21 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import type { SectionProps } from "../registry";
-import { useShopify } from "../shopify-context";
 import { useMoney } from "../shopify-context";
+import { useUI } from "../ui-context";
 import { Button } from "@/components/Button";
 
 export function MainCart({ section }: SectionProps) {
-  const { cart } = useShopify();
   const money = useMoney();
-  const [lines, setLines] = useState(cart.items.map((i) => ({ ...i })));
+  const ui = useUI();
+  const lines = ui.lines;
   const threshold = typeof section.settings.free_shipping_threshold === "number" ? section.settings.free_shipping_threshold : 15000;
 
-  const setQty = (id: string, qty: number) =>
-    setLines((prev) => prev.map((l) => (l.id === id ? { ...l, quantity: Math.max(1, qty), line_price: l.variant.price * Math.max(1, qty) } : l)));
-  const remove = (id: string) => setLines((prev) => prev.filter((l) => l.id !== id));
+  const setQty = ui.updateQty;
+  const remove = ui.removeLine;
 
-  const subtotal = lines.reduce((sum, l) => sum + l.line_price, 0);
+  const subtotal = ui.cartTotal;
   const remaining = Math.max(0, threshold - subtotal);
   const progress = Math.min(100, (subtotal / threshold) * 100);
 

@@ -4,12 +4,14 @@ import { useState } from "react";
 import Image from "next/image";
 import type { SectionProps } from "../registry";
 import { useShopify } from "../shopify-context";
+import { useUI } from "../ui-context";
 import { Price } from "@/components/Price";
 import { Button } from "@/components/Button";
 import { Tag } from "@/components/Tag";
 
 export function MainProduct({ section }: SectionProps) {
   const { product } = useShopify();
+  const ui = useUI();
   const [variantIndex, setVariantIndex] = useState(0);
   const [qty, setQty] = useState(1);
   const sticky = section.settings.enable_sticky_info !== false;
@@ -57,7 +59,7 @@ export function MainProduct({ section }: SectionProps) {
             </div>
             {variant.available ? <Tag tone="accent">In stock</Tag> : <Tag>Sold out</Tag>}
           </div>
-          <Button size="md" disabled={!variant.available} className="w-full">
+          <Button size="md" disabled={!variant.available} className="w-full" onClick={() => ui.addToCart(product, variant, qty)}>
             {variant.available ? "Add to cart" : "Sold out"}
           </Button>
           <div className="border-t border-border-hairline pt-5 text-body text-text-body" dangerouslySetInnerHTML={{ __html: product.description }} />
