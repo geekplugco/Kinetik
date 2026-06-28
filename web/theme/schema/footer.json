@@ -1,13 +1,15 @@
-{
-  "name": "Footer",
-  "tag": "footer",
-  "class": "section section--footer",
+{ "name": "Footer", "tag": "footer", "class": "section section--footer",
   "settings": [
     { "type": "text", "id": "tagline", "label": "Tagline", "default": "Engineered for movement." },
     { "type": "text", "id": "menu_heading", "label": "Menu heading", "default": "Shop" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
     { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Get the drop" },
+    { "type": "header", "content": "Footer meta" },
+    { "type": "checkbox", "id": "show_social", "label": "Show social icons", "default": true },
+    { "type": "checkbox", "id": "enable_follow_on_shop", "label": "Follow on Shop button", "default": true },
+    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment icons", "default": true },
+    { "type": "checkbox", "id": "enable_country_selector", "label": "Country/region selector", "default": true },
+    { "type": "checkbox", "id": "enable_language_selector", "label": "Language selector", "default": true },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-2" }
   ],
-  "presets": [{ "name": "Footer" }]
-}
+  "presets": [{ "name": "Footer" }] }

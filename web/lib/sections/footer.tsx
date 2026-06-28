@@ -4,6 +4,8 @@ import type { SectionProps } from "../registry";
 import { useShopify } from "../shopify-context";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/Button";
+import { Localization } from "@/components/Localization";
+import { SocialIcons, PaymentIcons, FollowOnShop } from "@/components/StoreFooterMeta";
 
 export function Footer({ section }: SectionProps) {
   const { shop, menus } = useShopify();
@@ -44,9 +46,20 @@ export function Footer({ section }: SectionProps) {
         </div>
       </div>
       <div className="border-t border-border-hairline">
-        <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-2 px-6 py-4 font-mono text-xs text-text-muted md:flex-row">
+        <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-5 px-6 py-6 md:flex-row">
+          <div className="flex items-center gap-4">
+            {s.show_social !== false && <SocialIcons />}
+            {s.enable_follow_on_shop !== false && <FollowOnShop />}
+          </div>
+          {(s.enable_country_selector !== false || s.enable_language_selector !== false) && (
+            <Localization showCountry={s.enable_country_selector !== false} showLanguage={s.enable_language_selector !== false} />
+          )}
+        </div>
+      </div>
+      <div className="border-t border-border-hairline">
+        <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-3 px-6 py-4 font-mono text-xs text-text-muted md:flex-row">
           <span>© {shop.name}. All rights reserved.</span>
-          <span className="uppercase tracking-label">{shop.currency}</span>
+          {s.show_payment_icons !== false && <PaymentIcons />}
         </div>
       </div>
     </footer>
