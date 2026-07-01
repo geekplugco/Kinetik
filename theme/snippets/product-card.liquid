@@ -61,8 +61,10 @@
         {{ 'product-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
       {%- endif -%}
     </a>
+    {%- assign show_quick_add = false -%}
+    {%- if quick_add and product.available and card_mode != 'editorial' -%}{%- assign show_quick_add = true -%}{%- endif -%}
     {%- if card_mode != 'editorial' -%}
-      <div class="kx-card-spec font-mono text-[10px] uppercase tracking-label text-paper mix-blend-difference" aria-hidden="true">
+      <div class="kx-card-spec font-mono text-[10px] uppercase tracking-label text-paper mix-blend-difference"{% if show_quick_add %} style="bottom:3.25rem"{% endif %} aria-hidden="true">
         <span>{{ code | default: product.vendor | default: 'Kinetik' }}</span>
         <span>{{ spec | default: 'System' }}</span>
       </div>
@@ -80,7 +82,7 @@
     {%- elsif badge != blank -%}
       <span class="absolute {{ badge_pos }} top-3 bg-ink-950 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-paper" style="border-radius:var(--badge-radius)">{{ badge }}</span>
     {%- endif -%}
-    {%- if quick_add and product.available and card_mode != 'editorial' -%}
+    {%- if show_quick_add -%}
       {%- render 'quick-add', product: product -%}
     {%- endif -%}
   </div>
