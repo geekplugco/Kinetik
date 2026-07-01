@@ -17,12 +17,14 @@
           this.grid = this.querySelector('[data-rv-grid]');
           this.limit = parseInt(this.dataset.limit || '4', 10);
           this.current = this.dataset.current || '';
+          this.hidden = true;
+          this.style.display = 'none';
           this.render();
         }
         async render() {
           if (!this.grid) return;
           var handles = read().filter((x) => x && x !== this.current).slice(0, this.limit);
-          if (!handles.length) { this.hidden = true; return; }
+          if (!handles.length) { this.hidden = true; this.style.display = 'none'; return; }
           var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
           var cards = await Promise.all(
             handles.map(async (handle) => {
@@ -37,7 +39,9 @@
             .filter((c) => c && c.indexOf('<a') !== -1)
             .join('');
           this.grid.innerHTML = html;
-          this.hidden = this.grid.children.length === 0;
+          var hasItems = this.grid.children.length > 0;
+          this.hidden = !hasItems;
+          this.style.display = hasItems ? '' : 'none';
         }
       }
     );
