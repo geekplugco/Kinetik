@@ -2137,6 +2137,45 @@
         "name": "Related products"
       }
     },
+    "promo-grid": {
+      "name": "Promo grid",
+      "settings": {
+        "subheading": { "label": "Subheading" },
+        "heading": { "label": "Heading" },
+        "columns_desktop": { "label": "Columns on desktop" },
+        "columns_mobile": {
+          "label": "Columns on mobile",
+          "options__1": { "label": "1 column" },
+          "options__2": { "label": "2 columns" }
+        },
+        "image_ratio": {
+          "label": "Image ratio",
+          "options__1": { "label": "Portrait" },
+          "options__2": { "label": "Square" },
+          "options__3": { "label": "Wide" }
+        },
+        "color_scheme": { "label": "Color scheme" },
+        "header__1": { "content": "Section padding" },
+        "padding_top": { "label": "Top padding" },
+        "padding_bottom": { "label": "Bottom padding" }
+      },
+      "blocks": {
+        "promo": {
+          "name": "Promo card",
+          "settings": {
+            "image": { "label": "Image" },
+            "eyebrow": { "label": "Eyebrow" },
+            "heading": { "label": "Heading" },
+            "text": { "label": "Text" },
+            "button_label": { "label": "Button label" },
+            "link": { "label": "Link" }
+          }
+        }
+      },
+      "presets": {
+        "name": "Promo grid"
+      }
+    },
     "rich-text": {
       "name": "Rich text",
       "settings": {

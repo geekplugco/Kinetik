@@ -158,6 +158,55 @@
         "color_scheme": "scheme-3"
       }
     },
+    "promo_grid": {
+      "type": "promo-grid",
+      "settings": {
+        "subheading": "Shop by system",
+        "heading": "Build your loadout",
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "image_ratio": "portrait",
+        "color_scheme": "scheme-1",
+        "padding_top": 56,
+        "padding_bottom": 56
+      },
+      "blocks": {
+        "p1": {
+          "type": "promo",
+          "settings": {
+            "image": "shopify://shop_images/02-fulllook-cropped.png",
+            "eyebrow": "Outerwear",
+            "heading": "Shells & layers",
+            "text": "<p>Waterproof-breathable, seam-taped.</p>",
+            "button_label": "Shop outerwear",
+            "link": "shopify://collections/frontpage"
+          }
+        },
+        "p2": {
+          "type": "promo",
+          "settings": {
+            "image": "shopify://shop_images/05-sling-worn.png",
+            "eyebrow": "Carry",
+            "heading": "Packs & slings",
+            "text": "<p>Modular carry for the commute.</p>",
+            "button_label": "Shop carry",
+            "link": "shopify://collections/frontpage"
+          }
+        },
+        "p3": {
+          "type": "promo",
+          "settings": {
+            "image": "shopify://shop_images/07-cap-shadow.png",
+            "eyebrow": "Accessories",
+            "heading": "Caps & extras",
+            "text": "<p>Finish the system.</p>",
+            "button_label": "Shop accessories",
+            "link": "shopify://collections/frontpage"
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3"]
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
@@ -230,6 +279,7 @@
     "collection_story",
     "marquee",
     "statement",
+    "promo_grid",
     "newsletter",
     "route_map"
   ]
