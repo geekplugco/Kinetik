@@ -1,14 +1,18 @@
 {%- liquid
   assign s = section.settings
   assign kicker = s.subheading | default: 'The system'
+  assign list_cols_cls = 'md:grid-cols-2'
+  if s.list_columns == '1'
+    assign list_cols_cls = ''
+  endif
 -%}
 <section
   data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
   style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
   class="border-y border-border-hairline bg-surface-page"
 >
-  <div class="mx-auto grid max-w-[var(--page-width)] gap-px bg-border-hairline px-6 md:grid-cols-[0.85fr_1.15fr]">
-    <div class="bg-surface-page p-6 md:sticky md:top-24 md:self-start md:p-8">
+  <div class="mx-auto grid max-w-[var(--page-width)] px-6 md:grid-cols-[0.85fr_1.15fr]">
+    <div class="border-b border-border-hairline bg-surface-page p-6 md:sticky md:top-24 md:self-start md:border-b-0 md:border-r md:p-8">
       <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ kicker }}</span>
       {%- if s.heading != blank -%}
         <h2 class="hp-reveal hp-reveal--fade mt-3 font-display text-h3 tracking-tight text-text-strong">{{ s.heading }}</h2>
@@ -16,13 +20,15 @@
       {%- if s.text != blank -%}
         <div class="mt-4 max-w-sm text-body leading-relaxed text-text-muted [&_p]:m-0">{{ s.text }}</div>
       {%- endif -%}
-      <div class="mt-8 grid grid-cols-2 border border-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted">
-        <span class="border-r border-border-hairline p-3">Framework</span>
-        <span class="p-3 text-right text-text-strong">{{ section.blocks.size }} modules</span>
-      </div>
+      {%- if s.show_module_count -%}
+        <div class="mt-8 grid grid-cols-2 border border-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted">
+          <span class="border-r border-border-hairline p-3">Framework</span>
+          <span class="p-3 text-right text-text-strong">{{ section.blocks.size }} modules</span>
+        </div>
+      {%- endif -%}
     </div>
 
-    <ol class="grid bg-surface-page md:grid-cols-2">
+    <ol class="grid bg-surface-page {{ list_cols_cls }}">
       {%- for block in section.blocks -%}
         {%- if block.type == 'column' -%}
           {%- assign num = forloop.index -%}
@@ -70,6 +76,22 @@
       "id": "color_scheme",
       "label": "t:sections.multicolumn.settings.color_scheme.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_module_count",
+      "label": "Show framework module count",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "list_columns",
+      "label": "Columns (desktop)",
+      "default": "2",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ]
     },
     {
       "type": "header",
