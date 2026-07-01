@@ -1,0 +1,10 @@
+<svg width="144" height="144" viewBox="0 0 144 144" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kinetik mark">
+  <title>Kinetik mark</title>
+  <rect width="144" height="144" fill="transparent"/>
+  <g fill="#0A0A0A">
+    <rect x="28" y="30" width="12" height="84"/>
+    <polygon points="46,72 84,30 102,30 64,72 104,114 86,114"/>
+    <rect x="110" y="102" width="10" height="12"/>
+  </g>
+  <rect x="110" y="30" width="10" height="12" fill="#CCFF00"/>
+</svg>
