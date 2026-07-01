@@ -46,6 +46,8 @@ if (!customElements.get('material-scan')) {
 
       scan() {
         if (!this.line || !this.line.animate) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var base = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--transition-base')) || 300;
         this.line.animate(
           [
             { transform: 'translateY(0)', opacity: 0 },
@@ -53,7 +55,7 @@ if (!customElements.get('material-scan')) {
             { opacity: 1, offset: 0.88 },
             { transform: 'translateY(' + this.stage.offsetHeight + 'px)', opacity: 0 },
           ],
-          { duration: 900, easing: 'cubic-bezier(.16,1,.3,1)' }
+          { duration: base * 3, easing: 'cubic-bezier(.16,1,.3,1)' }
         );
       }
     }

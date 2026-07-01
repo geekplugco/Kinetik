@@ -153,6 +153,13 @@
         --font-display: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
         --font-sans: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
         --font-mono: {{ settings.font_accent.family }}, {{ settings.font_accent.fallback_families }};
+        --dur-fast: calc(var(--transition-base) * 0.73);
+        --dur-base: calc(var(--transition-base) * 1.27);
+        --dur-slow: calc(var(--transition-base) * 2.13);
+        --dur-slower: calc(var(--transition-base) * 3);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        :root { --dur-fast: 0.01ms; --dur-base: 0.01ms; --dur-slow: 0.01ms; --dur-slower: 0.01ms; }
       }
     </style>
 
