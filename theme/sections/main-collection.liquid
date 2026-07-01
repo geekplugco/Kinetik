@@ -3,6 +3,8 @@
   assign show_sort = section.settings.enable_sorting
   assign cols = section.settings.columns_desktop | default: 4
   assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign promo_enable = section.settings.promo_enable
+  assign promo_position = section.settings.promo_position | default: 3
   assign active_filter_count = 0
   for filter in collection.filters
     assign active_filter_count = active_filter_count | plus: filter.active_values.size
@@ -99,6 +101,23 @@
 
       <div data-grid class="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-[repeat(var(--cols-desktop,4),minmax(0,1fr))]">
         {%- for product in collection.products -%}
+          {%- if promo_enable and section.settings.promo_link != blank and paginate.current_page == 1 and forloop.index == promo_position -%}
+            {%- assign pm = section.settings -%}
+            <a href="{{ pm.promo_link }}" class="group relative flex aspect-[4/5] flex-col justify-end overflow-hidden border border-border-strong bg-ink-950 p-5 text-paper">
+              {%- if pm.promo_image != blank -%}
+                <div class="kx-media-effect absolute inset-0">
+                  {%- assign pm_alt = pm.promo_image.alt | default: pm.promo_heading | default: 'Featured' -%}
+                  {{ pm.promo_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(min-width:990px) 25vw, 50vw', alt: pm_alt, class: 'h-full w-full object-cover' }}
+                </div>
+                <div class="absolute inset-0 z-[2] bg-gradient-to-t from-ink-950/90 via-ink-950/20 to-transparent" aria-hidden="true"></div>
+              {%- endif -%}
+              <div class="relative z-[3] flex flex-col gap-1.5">
+                {%- if pm.promo_eyebrow != blank -%}<span class="font-mono text-[10px] uppercase tracking-label text-accent">{{ pm.promo_eyebrow }}</span>{%- endif -%}
+                {%- if pm.promo_heading != blank -%}<span class="font-display text-h4 uppercase leading-[0.95]">{{ pm.promo_heading }}</span>{%- endif -%}
+                {%- if pm.promo_button_label != blank -%}<span class="mt-1 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-label group-hover:text-accent">{{ pm.promo_button_label }}<span class="transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none">{%- render 'icon', name: 'arrow', size: 12 -%}</span></span>{%- endif -%}
+              </div>
+            </a>
+          {%- endif -%}
           <div>
             {%- render 'product-card', product: product -%}
           </div>
@@ -110,6 +129,9 @@
           </div>
         {%- endfor -%}
       </div>
+      {%- if show_filter -%}
+        <button type="button" data-facet-open aria-label="Open filters and sort" class="fixed bottom-5 left-1/2 z-40 flex min-h-[44px] -translate-x-1/2 items-center gap-2 border border-border-strong bg-surface-page px-5 py-2.5 font-mono text-xs uppercase tracking-label text-text-strong shadow-[var(--shadow-pop)] md:hidden">Filter &amp; sort{%- if active_filter_count > 0 -%}<span class="bg-accent px-1.5 py-0.5 text-accent-ink">{{ active_filter_count }}</span>{%- endif -%}</button>
+      {%- endif -%}
     </collection-facets>
 
     {%- if paginate.pages > 1 -%}
@@ -155,6 +177,53 @@
       "id": "color_scheme",
       "label": "t:sections.main-collection.settings.color_scheme.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Promo tile"
+    },
+    {
+      "type": "checkbox",
+      "id": "promo_enable",
+      "label": "Show a promo tile in the grid",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "promo_position",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 3,
+      "label": "Grid position",
+      "info": "Inserts the tile before this product (page 1 only)."
+    },
+    {
+      "type": "image_picker",
+      "id": "promo_image",
+      "label": "Promo image"
+    },
+    {
+      "type": "text",
+      "id": "promo_eyebrow",
+      "label": "Promo eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "promo_heading",
+      "label": "Promo heading",
+      "default": "New drop"
+    },
+    {
+      "type": "text",
+      "id": "promo_button_label",
+      "label": "Promo button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "promo_link",
+      "label": "Promo link"
     },
     {
       "type": "header",

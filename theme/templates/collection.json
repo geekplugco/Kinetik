@@ -1,1 +1,17 @@
-{ "sections": { "main": { "type": "main-collection" } }, "order": ["main"] }
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "promo_enable": true,
+        "promo_position": 3,
+        "promo_image": "shopify://shop_images/07-cap-shadow.png",
+        "promo_eyebrow": "SS26",
+        "promo_heading": "Field system drop",
+        "promo_button_label": "Shop the drop",
+        "promo_link": "shopify://collections/frontpage"
+      }
+    }
+  },
+  "order": ["main"]
+}
