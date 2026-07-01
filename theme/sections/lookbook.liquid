@@ -60,11 +60,24 @@
       {%- for block in section.blocks -%}
         {%- if block.type == 'note' -%}
           {%- assign n = block.settings -%}
-          {%- case n.width -%}
-            {%- when 'wide' -%}{%- assign note_cls = 'col-span-12' -%}
-            {%- when 'narrow' -%}{%- assign note_cls = 'col-span-12 md:col-span-4' -%}
-            {%- else -%}{%- assign note_cls = 'col-span-12 md:col-span-6' -%}
-          {%- endcase -%}
+          {%- if is_editorial -%}
+            {%- case n.width -%}
+              {%- when 'wide' -%}{%- assign note_cls = 'col-span-12' -%}
+              {%- when 'narrow' -%}{%- assign note_cls = 'col-span-12 md:col-span-4' -%}
+              {%- else -%}{%- assign note_cls = 'col-span-12 md:col-span-6' -%}
+            {%- endcase -%}
+          {%- elsif is_grid -%}
+            {%- case n.width -%}
+              {%- when 'narrow' -%}{%- assign note_cls = 'col-span-2 md:col-span-1' -%}
+              {%- else -%}{%- assign note_cls = 'col-span-2' -%}
+            {%- endcase -%}
+          {%- else -%}
+            {%- case n.width -%}
+              {%- when 'wide' -%}{%- assign note_cls = 'w-full' -%}
+              {%- when 'narrow' -%}{%- assign note_cls = 'w-full max-w-md' -%}
+              {%- else -%}{%- assign note_cls = 'w-full max-w-2xl' -%}
+            {%- endcase -%}
+          {%- endif -%}
           <article class="flex min-h-56 flex-col justify-between border border-border-hairline bg-surface-page p-5 md:p-6 {{ note_cls }}" {{ block.shopify_attributes }}>
             <div>
               {%- if n.kicker != blank -%}<span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ n.kicker }}</span>{%- endif -%}
@@ -96,17 +109,25 @@
         {%- endif -%}
         {%- case b.frame_size -%}
           {%- when 'feature' -%}
-            {%- assign cell_cls = 'col-span-12 md:col-span-8' -%}
             {%- assign cell_ratio = 'aspect-[4/5] md:aspect-[3/2]' -%}
+            {%- if is_editorial -%}{%- assign cell_cls = 'col-span-12 md:col-span-8' -%}
+            {%- elsif is_grid -%}{%- assign cell_cls = 'col-span-2' -%}
+            {%- endif -%}
           {%- when 'tall' -%}
-            {%- assign cell_cls = 'col-span-12 md:col-span-4' -%}
             {%- assign cell_ratio = 'aspect-[3/4]' -%}
+            {%- if is_editorial -%}{%- assign cell_cls = 'col-span-12 md:col-span-4' -%}
+            {%- elsif is_grid -%}{%- assign cell_cls = 'col-span-2 md:col-span-1' -%}
+            {%- endif -%}
           {%- when 'wide' -%}
-            {%- assign cell_cls = 'col-span-12' -%}
             {%- assign cell_ratio = 'aspect-[16/9]' -%}
+            {%- if is_editorial -%}{%- assign cell_cls = 'col-span-12' -%}
+            {%- elsif is_grid -%}{%- assign cell_cls = 'col-span-2' -%}
+            {%- endif -%}
           {%- when 'square' -%}
-            {%- assign cell_cls = 'col-span-12 md:col-span-4' -%}
             {%- assign cell_ratio = 'aspect-square' -%}
+            {%- if is_editorial -%}{%- assign cell_cls = 'col-span-12 md:col-span-4' -%}
+            {%- elsif is_grid -%}{%- assign cell_cls = 'col-span-2 md:col-span-1' -%}
+            {%- endif -%}
         {%- endcase -%}
         {%- case b.focal_point -%}
           {%- when 'top' -%}{%- assign focal_cls = 'object-top' -%}
