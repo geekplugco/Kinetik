@@ -8,7 +8,7 @@
         "attribution": "Night movement system",
         "alignment": "left",
         "height": "compact",
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-5",
         "button_label": "Shop the system",
         "button_link": "shopify://collections/all",
         "button_style": "secondary"
@@ -18,7 +18,7 @@
       "type": "main-collection",
       "settings": {
         "columns_desktop": 4,
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-5",
         "promo_enable": true,
         "promo_position": 5,
         "promo_image": "shopify://shop_images/08-dark-set-banner.png",
@@ -35,7 +35,7 @@
       "settings": {
         "subheading": "Use route",
         "heading": "Built for after-dark movement",
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-5",
         "padding_top": 72,
         "padding_bottom": 72
       },

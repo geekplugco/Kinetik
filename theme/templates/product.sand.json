@@ -8,7 +8,7 @@
         "enable_sticky_info": true,
         "enable_sticky_atc": true,
         "enable_image_zoom": true,
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-4",
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -16,7 +16,7 @@
     "field_spec": {
       "type": "field-spec",
       "settings": {
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-4",
         "padding_top": 56,
         "padding_bottom": 56
       }
@@ -25,7 +25,7 @@
       "type": "product-use-modes",
       "settings": {
         "heading": "Where it works",
-        "color_scheme": "scheme-2"
+        "color_scheme": "scheme-4"
       },
       "blocks": {
         "m1": { "type": "mode", "settings": { "label": "Travel", "heading": "Pack light", "text": "<p>Dry-touch fabric and simple carry paths for long travel days.</p>" } },
@@ -45,7 +45,7 @@
         "text": "<p>A warmer product page for outdoor, travel, ceramics, wellness, and lifestyle brands that still want Kinetik precision.</p>",
         "button_label": "View the route",
         "button_link": "shopify://pages/lookbook",
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-4",
         "padding_top": 72,
         "padding_bottom": 72
       }
@@ -54,7 +54,7 @@
       "type": "product-faq",
       "settings": {
         "heading": "Care and fit",
-        "color_scheme": "scheme-2"
+        "color_scheme": "scheme-4"
       }
     },
     "related": {
@@ -62,7 +62,7 @@
       "settings": {
         "heading": "More warm-weather kit",
         "products_to_show": 4,
-        "color_scheme": "scheme-2"
+        "color_scheme": "scheme-4"
       }
     },
     "recently_viewed": {
@@ -70,7 +70,7 @@
       "settings": {
         "heading": "Recently viewed",
         "products_to_show": 4,
-        "color_scheme": "scheme-2"
+        "color_scheme": "scheme-4"
       }
     }
   },
