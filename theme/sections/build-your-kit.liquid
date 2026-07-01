@@ -30,15 +30,25 @@
           {%- assign slot_id = block.id -%}
           {%- assign slot_label = block.settings.label | default: 'Slot' -%}
           {%- assign types = block.settings.types | split: ',' -%}
+          {%- if block.settings.products.size > 0 -%}
+            {%- assign slot_products = block.settings.products -%}
+          {%- elsif block.settings.collection != blank -%}
+            {%- assign slot_products = block.settings.collection.products -%}
+          {%- else -%}
+            {%- assign slot_products = all_products -%}
+          {%- endif -%}
           {%- assign opt_count = 0 -%}
           {%- capture options_html -%}
-            {%- for product in all_products -%}
+            {%- for product in slot_products -%}
               {%- assign ptype = product.type | strip -%}
-              {%- assign is_match = false -%}
-              {%- for t in types -%}
-                {%- assign tt = t | strip -%}
-                {%- if tt == ptype -%}{%- assign is_match = true -%}{%- break -%}{%- endif -%}
-              {%- endfor -%}
+              {%- assign is_match = true -%}
+              {%- if block.settings.products.size == 0 and block.settings.collection == blank and types.size > 0 -%}
+                {%- assign is_match = false -%}
+                {%- for t in types -%}
+                  {%- assign tt = t | strip -%}
+                  {%- if tt == ptype -%}{%- assign is_match = true -%}{%- break -%}{%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
               {%- unless is_match -%}{%- continue -%}{%- endunless -%}
               {%- assign opt_count = opt_count | plus: 1 -%}
               {%- assign opt_variant = product.selected_or_first_available_variant -%}
@@ -198,6 +208,19 @@
           "id": "label",
           "label": "t:sections.build-your-kit.blocks.slot.settings.label.label",
           "default": "Shell"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Pull this slot's options from a collection. Takes priority over product types below."
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Specific products",
+          "info": "Hand-pick exact products for this slot. Takes priority over collection and product types.",
+          "limit": 12
         },
         {
           "type": "text",
