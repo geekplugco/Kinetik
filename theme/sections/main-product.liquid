@@ -9,8 +9,6 @@
   assign load_label = 'Adding…'
   assign picker_type = section.settings.picker_type | default: 'button'
   assign inv_threshold = section.settings.inventory_threshold | default: 0
-  assign material = product.metafields.custom.material.value
-  assign fit_notes = product.metafields.custom.fit_notes.value
   assign weight = product.metafields.custom.weight.value
 
   assign color_name = ''
@@ -111,18 +109,10 @@
         <div data-price data-price-class="text-body-lg">{%- render 'price', variant: current_variant, class: 'text-body-lg' -%}</div>
       </div>
 
-      <div class="grid grid-cols-2 border border-border-hairline font-mono text-[11px] uppercase tracking-label sm:grid-cols-4">
-        <div class="border-b border-r border-border-hairline p-3 sm:border-b-0">
+      <div class="grid grid-cols-2 border border-border-hairline font-mono text-[11px] uppercase tracking-label">
+        <div class="border-r border-border-hairline p-3">
           <span class="block text-text-muted">Code</span>
           <span class="mt-1 block truncate text-text-strong">{{ code | default: current_variant.sku | default: 'Ready' }}</span>
-        </div>
-        <div class="border-b border-border-hairline p-3 sm:border-b-0 sm:border-r">
-          <span class="block text-text-muted">Material</span>
-          <span class="mt-1 block truncate text-text-strong">{{ material | default: spec | default: product.type | default: 'Field grade' }}</span>
-        </div>
-        <div class="border-r border-border-hairline p-3">
-          <span class="block text-text-muted">Fit</span>
-          <span class="mt-1 block truncate text-text-strong">{{ fit_notes | default: 'True to size' }}</span>
         </div>
         <div class="p-3">
           <span class="block text-text-muted">Status</span>
@@ -133,11 +123,11 @@
       <div class="grid gap-2 text-sm text-text-body sm:grid-cols-3">
         <div class="border border-border-hairline p-3">
           <span class="block font-mono text-[10px] uppercase tracking-label text-text-muted">Dispatch</span>
-          <span class="mt-1 block text-text-strong">Ships from active stock</span>
+          <span class="mt-1 block text-text-strong">{{ section.settings.dispatch_text | default: 'Ships from active stock' }}</span>
         </div>
         <div class="border border-border-hairline p-3">
           <span class="block font-mono text-[10px] uppercase tracking-label text-text-muted">Returns</span>
-          <span class="mt-1 block text-text-strong">Fit-safe return window</span>
+          <span class="mt-1 block text-text-strong">{{ section.settings.returns_text | default: 'Fit-safe return window' }}</span>
         </div>
         <div class="border border-border-hairline p-3">
           <span class="block font-mono text-[10px] uppercase tracking-label text-text-muted">Build</span>
@@ -184,37 +174,9 @@
                           {% if option.selected_value == value %}checked{% endif %}
                         >
                         {%- if is_color -%}
-                          {%- liquid
-                            assign sw_bg = ''
-                            assign sw_img = ''
-                            if value.swatch.color
-                              assign sw_bg = value.swatch.color
-                            elsif value.swatch.image
-                              assign sw_img = value.swatch.image | image_url: width: 40
-                            else
-                              assign val_dc = value | downcase | strip
-                              assign rows = settings.swatch_list | newline_to_br | split: '<br />'
-                              for row in rows
-                                assign parts = row | strip | split: ':'
-                                assign sw_name = parts.first | downcase | strip
-                                if sw_name == val_dc
-                                  assign sw_val = parts.last | strip
-                                  if sw_val contains '.'
-                                    assign sw_img = sw_val
-                                  else
-                                    assign sw_bg = sw_val
-                                  endif
-                                  break
-                                endif
-                              endfor
-                              if sw_bg == blank and sw_img == blank
-                                assign sw_bg = value | split: ' ' | last | handle
-                              endif
-                            endif
-                          -%}
-                          <span title="{{ value | escape }}" class="block h-9 w-9 rounded-full border border-border-hairline bg-cover bg-center transition-transform hover:scale-110 peer-checked:ring-2 peer-checked:ring-text-strong peer-checked:ring-offset-2 peer-checked:ring-offset-surface-page peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-surface-page" style="background-color: {{ sw_bg }};{% if sw_img != blank %} background-image: url({{ sw_img }});{% endif %}"></span>
+                          {%- render 'swatch', value: value, title: value, size_class: 'h-9 w-9' -%}
                         {%- else -%}
-                          <span class="block border border-border-hairline px-4 py-2 font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">{{ value }}</span>
+                          <span class="block min-h-[44px] border border-border-hairline px-4 py-3 font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">{{ value }}</span>
                         {%- endif -%}
                       </label>
                     {%- endfor -%}
@@ -472,6 +434,18 @@
       "default": 10,
       "label": "t:sections.main-product.settings.inventory_threshold.label",
       "info": "t:sections.main-product.settings.inventory_threshold.info"
+    },
+    {
+      "type": "text",
+      "id": "dispatch_text",
+      "label": "Dispatch note",
+      "default": "Ships from active stock"
+    },
+    {
+      "type": "text",
+      "id": "returns_text",
+      "label": "Returns note",
+      "default": "Fit-safe return window"
     },
     {
       "type": "header",

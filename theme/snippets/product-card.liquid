@@ -94,7 +94,7 @@
     {%- if spec != blank and card_mode != 'commerce' -%}<span class="font-mono text-[11px] text-text-muted">{{ spec }}</span>{%- endif -%}
     <div class="pt-0.5">{%- render 'price', product: product -%}</div>
     {%- if color_option and color_option.values.size > 1 and settings.card_show_swatches -%}
-      <div class="flex gap-1.5 pt-1">
+      <div class="flex flex-wrap items-center gap-1.5 pt-1.5" aria-label="{{ color_option.name | escape }}">
         {%- for value in color_option.values limit: settings.card_max_swatches -%}
           {%- assign v_img = '' -%}
           {%- for variant in product.variants -%}
@@ -103,10 +103,10 @@
               {%- break -%}
             {%- endif -%}
           {%- endfor -%}
-          <button type="button" data-card-swatch{% if v_img != blank %} data-img="{{ v_img }}"{% endif %} aria-label="{{ value | escape }}" class="-my-1.5 grid h-6 w-6 place-items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'swatch', value: value, title: value, size_class: 'h-3.5 w-3.5' -%}</button>
+          <button type="button" data-card-swatch{% if v_img != blank %} data-img="{{ v_img }}"{% endif %} aria-label="{{ color_option.name | escape }}: {{ value | escape }}" class="grid h-8 w-8 place-items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'swatch', value: value, title: value, size_class: 'h-5 w-5' -%}</button>
         {%- endfor -%}
         {%- if color_option.values.size > settings.card_max_swatches -%}
-          <span class="font-mono text-[10px] text-text-muted">+{{ color_option.values.size | minus: settings.card_max_swatches }}</span>
+          <span class="font-mono text-[10px] text-text-muted">+{{ color_option.values.size | minus: settings.card_max_swatches }} colors</span>
         {%- endif -%}
       </div>
     {%- endif -%}

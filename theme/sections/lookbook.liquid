@@ -32,13 +32,13 @@
   endif
   case s.editorial_density
     when 'spacious'
-      assign editorial_grid_cls = 'grid grid-cols-1 gap-10 md:grid-cols-12 md:items-start md:gap-x-6 md:gap-y-16'
-      assign editorial_side_offset = 'md:mt-20'
+      assign editorial_gap = 40
+      assign editorial_side_offset = 'md:mt-28'
     when 'balanced'
-      assign editorial_grid_cls = 'grid grid-cols-1 gap-6 md:grid-cols-12 md:items-start md:gap-x-6 md:gap-y-8'
+      assign editorial_gap = 24
       assign editorial_side_offset = ''
     else
-      assign editorial_grid_cls = 'grid grid-cols-1 gap-4 md:grid-cols-12 md:items-stretch md:gap-5 lg:gap-6'
+      assign editorial_gap = 16
       assign editorial_side_offset = ''
   endcase
   if is_grid or is_editorial
@@ -68,10 +68,10 @@
         </div>
       </div>
     {%- else -%}
-      <div class="mb-5 grid gap-4 border-y border-border-hairline py-5 md:mb-6 md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.48fr)] md:items-end md:py-6">
+      <div class="mb-5 grid gap-4 border-y border-border-hairline py-5 md:mb-6 md:grid-cols-2 md:items-end md:py-6">
         <div>
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.kicker | default: 'Lookbook' }}</span>
-          {%- if s.heading != blank -%}<h2 class="mt-2 max-w-3xl font-display text-h2 tracking-tight text-text-strong md:text-h1">{{ s.heading }}</h2>{%- endif -%}
+          {%- if s.heading != blank -%}<h2 class="mt-2 max-w-3xl font-display text-h2 tracking-tight text-text-strong">{{ s.heading }}</h2>{%- endif -%}
         </div>
         <div class="md:justify-self-end">
           {%- if s.text != blank -%}<div class="max-w-sm text-body text-text-muted [&_p]:m-0">{{ s.text }}</div>{%- endif -%}
@@ -83,7 +83,7 @@
       </div>
     {%- endif -%}
 
-    <div class="{% if is_editorial %}{{ editorial_grid_cls }}{% elsif is_grid %}grid gap-4 md:grid-cols-2 md:gap-6{% else %}flex flex-col gap-8 md:gap-12{% endif %}">
+    <div class="{% if is_editorial %}grid grid-cols-12 items-start{% elsif is_grid %}grid gap-4 md:grid-cols-2 md:gap-6{% else %}flex flex-col gap-8 md:gap-12{% endif %}"{% if is_editorial %} style="gap: {{ editorial_gap }}px;"{% endif %}>
       {%- for block in section.blocks -%}
         {%- if block.type == 'note' -%}
           {%- assign n = block.settings -%}

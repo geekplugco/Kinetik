@@ -22,7 +22,7 @@
         {%- if s.heading != blank -%}<h2 class="font-display text-[clamp(2rem,4vw,3.25rem)] font-bold uppercase leading-[0.95] tracking-tight text-text-strong">{{ s.heading }}</h2>{%- endif -%}
       </div>
     {%- endif -%}
-    <ol class="flex flex-col">
+    <ol class="flex max-w-2xl flex-col">
       {%- for block in chapters -%}
         {%- assign b = block.settings -%}
         <li class="hp-reveal hp-reveal--fade grid grid-cols-[2rem_1fr] gap-x-4 md:grid-cols-[3.5rem_1fr] md:gap-x-8" {{ block.shopify_attributes }}>

@@ -81,8 +81,8 @@
         "s6": {
           "type": "shot",
           "settings": {
-            "image": "shopify://shop_images/09-paired-hero.png",
-            "image_alt": "Paired layers, hero",
+            "image": "shopify://shop_images/lookbook-frame6-hoodie-shoes.png",
+            "image_alt": "Black hoodie and trail running sneakers arranged as a flat lay",
             "caption": "06 — Storm Hoodie + Trail Runner",
             "product_1": "tech-hoodie",
             "x_1": 38,
@@ -145,7 +145,11 @@
           }
         }
       },
-      "block_order": ["c1", "c2", "c3"]
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ]
     },
     "marquee": {
       "type": "marquee",
@@ -205,7 +209,11 @@
           }
         }
       },
-      "block_order": ["p1", "p2", "p3"]
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ]
     },
     "compare_slider": {
       "type": "compare-slider",
@@ -226,12 +234,17 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {
+        "subheading": "Field signal",
         "heading": "Join the system",
         "text": "<p>Drop alerts, restocks, and field notes.</p>",
+        "input_placeholder": "Email address",
         "button_label": "Subscribe",
-        "layout": "centered",
+        "layout": "split",
         "width": "page",
-        "color_scheme": "scheme-1"
+        "background_style": "dark",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     },
     "route_map": {

@@ -70,9 +70,10 @@
           required
           aria-label="Email address"
           placeholder="{{ s.input_placeholder | default: 'Email address' }}"
+          style="flex: 1 1 18rem;"
           class="min-h-[44px] min-w-0 flex-1 border bg-transparent px-4 py-3 font-mono text-sm {{ input_color }}"
         >
-        {%- render 'button', label: s.button_label, type: 'submit' -%}
+        {%- render 'button', label: s.button_label, type: 'submit', class: 'shrink-0' -%}
       {%- endif -%}
     {%- endform -%}
     </div>

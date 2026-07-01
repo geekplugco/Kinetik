@@ -61,9 +61,9 @@
 
         {%- if show_filter -%}
           <div data-facet-overlay class="pointer-events-none fixed inset-0 kx-z-overlay bg-ink-950/70 opacity-0 transition-opacity motion-reduce:transition-none" aria-hidden="true"></div>
-          <aside data-facet-panel role="dialog" aria-modal="true" aria-label="Collection filters" class="fixed inset-y-0 right-0 kx-z-drawer flex w-[94vw] translate-x-full flex-col border-l border-border-hairline bg-surface-page transition-transform duration-300 motion-reduce:transition-none {% if filter_style == 'rail' %}max-w-[min(760px,94vw)] shadow-[-40px_0_90px_-48px_rgba(10,10,10,0.85)] md:grid md:grid-cols-[180px_1fr]{% else %}max-w-[460px] shadow-[-24px_0_60px_-36px_rgba(10,10,10,0.65)]{% endif %}">
+          <aside data-facet-panel role="dialog" aria-modal="true" aria-label="Collection filters" style="max-width:{% if filter_style == 'rail' %}min(760px,94vw){% else %}460px{% endif %};" class="fixed inset-y-0 right-0 kx-z-drawer flex w-[94vw] translate-x-full flex-col border-l border-border-hairline bg-surface-page transition-transform duration-300 motion-reduce:transition-none {% if filter_style == 'rail' %}shadow-[-40px_0_90px_-48px_rgba(10,10,10,0.85)] md:flex-row{% else %}shadow-[-24px_0_60px_-36px_rgba(10,10,10,0.65)]{% endif %}">
             {%- if filter_style == 'rail' -%}
-              <div class="hidden border-r border-border-hairline bg-ink-950 p-5 text-paper md:flex md:flex-col md:justify-between">
+              <div style="width:180px;" class="hidden shrink-0 border-r border-border-hairline bg-ink-950 p-5 text-paper md:flex md:flex-col md:justify-between">
                 <div>
                   <span class="font-mono text-[10px] uppercase tracking-label text-paper/55">Filter command</span>
                   <p class="mt-4 font-display text-h3 uppercase leading-none tracking-tight">{{ collection.title }}</p>
@@ -73,7 +73,7 @@
                   <p class="mt-2 text-accent">{{ active_filter_count }} active</p>
                 </div>
               </div>
-              <div class="flex min-h-0 flex-col">
+              <div class="flex min-h-0 flex-1 flex-col">
             {%- endif -%}
             <div class="border-b border-border-hairline px-5 py-4{% if filter_style == 'rail' %} bg-surface-raised/70 md:px-6{% endif %}">
               <div class="flex items-center justify-between gap-4">

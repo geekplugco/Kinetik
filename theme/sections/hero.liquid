@@ -30,6 +30,7 @@
   assign alt = s.image_alt | default: '' | escape
   assign caption = s.image_caption
   assign tag = s.tag
+  assign visual_effect = s.visual_effect | default: 'technical_scan'
   assign btn_link = s.button_link | default: routes.all_products_collection_url
   assign btn_label = s.button_label | default: 'Shop the drop'
 -%}
@@ -59,15 +60,92 @@
 {%- capture image_bits -%}
   {%- if caption != blank -%}<span class="absolute bottom-5 left-5 z-10 font-mono text-[11px] uppercase tracking-label text-paper/85">{{ caption }}</span>{%- endif -%}
   {%- if tag != blank -%}<span class="absolute right-5 top-5 z-10 bg-accent px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-accent-ink">{{ tag }}</span>{%- endif -%}
+  {%- unless visual_effect == 'none' -%}
+    <span class="kx-hero-effect kx-hero-effect--{{ visual_effect }}" aria-hidden="true"></span>
+    <span class="kx-hero-frame" aria-hidden="true"></span>
+  {%- endunless -%}
 {%- endcapture -%}
 
 {%- capture hero_image -%}
   {%- if s.image != blank -%}
-    {{ s.image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1600,2000', sizes: '100vw', alt: alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+    {{ s.image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1600,2000', sizes: '100vw', alt: alt, class: 'absolute inset-0 h-full w-full object-cover kx-hero-media' }}
   {%- else -%}
     {{ 'lifestyle-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
   {%- endif -%}
 {%- endcapture -%}
+
+<style>
+  #shopify-section-{{ section.id }} .kx-hero-media {
+    transform: scale(1.012);
+    animation: kxHeroDrift-{{ section.id }} 12s var(--ease-enter, ease) infinite alternate;
+  }
+
+  #shopify-section-{{ section.id }} .kx-hero-effect {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
+  #shopify-section-{{ section.id }} .kx-hero-effect--technical_scan {
+    background:
+      linear-gradient(90deg, transparent 0 43%, color-mix(in srgb, var(--accent) 24%, transparent) 50%, transparent 57%),
+      repeating-linear-gradient(180deg, transparent 0 18px, color-mix(in srgb, var(--paper) 10%, transparent) 18px 19px);
+    opacity: 0.34;
+    background-size: 190% 100%, 100% 100%;
+    animation: kxHeroScan-{{ section.id }} 5.8s linear infinite;
+  }
+
+  #shopify-section-{{ section.id }} .kx-hero-effect--signal_frame {
+    background:
+      radial-gradient(circle at 78% 18%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 22%),
+      linear-gradient(90deg, color-mix(in srgb, var(--accent) 34%, transparent) 0 1px, transparent 1px 100%),
+      linear-gradient(180deg, color-mix(in srgb, var(--paper) 12%, transparent) 0 1px, transparent 1px 100%);
+    background-size: 100% 100%, 32px 100%, 100% 32px;
+    opacity: 0.42;
+    animation: kxHeroSignal-{{ section.id }} 8s steps(4, end) infinite;
+  }
+
+  #shopify-section-{{ section.id }} .kx-hero-frame {
+    position: absolute;
+    inset: 1rem;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.72;
+    background:
+      linear-gradient(var(--accent), var(--accent)) left top / 52px 1px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) left top / 1px 52px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) right top / 52px 1px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) right top / 1px 52px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) left bottom / 52px 1px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) left bottom / 1px 52px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) right bottom / 52px 1px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) right bottom / 1px 52px no-repeat;
+  }
+
+  @keyframes kxHeroDrift-{{ section.id }} {
+    from { transform: scale(1.012) translate3d(-0.4%, 0, 0); }
+    to { transform: scale(1.045) translate3d(0.8%, -0.6%, 0); }
+  }
+
+  @keyframes kxHeroScan-{{ section.id }} {
+    from { background-position: 130% 0, 0 0; }
+    to { background-position: -80% 0, 0 19px; }
+  }
+
+  @keyframes kxHeroSignal-{{ section.id }} {
+    0%, 100% { opacity: 0.28; filter: contrast(1); }
+    50% { opacity: 0.5; filter: contrast(1.25); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .kx-hero-media,
+    #shopify-section-{{ section.id }} .kx-hero-effect {
+      animation: none;
+    }
+  }
+</style>
 
 {%- if layout == 'overlay' -%}
   {%- if s.text_alignment == 'center' -%}
@@ -200,6 +278,26 @@
         {
           "value": "3/4",
           "label": "t:sections.hero.settings.image_ratio.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "visual_effect",
+      "label": "Hero visual effect",
+      "default": "technical_scan",
+      "options": [
+        {
+          "value": "technical_scan",
+          "label": "Technical scan"
+        },
+        {
+          "value": "signal_frame",
+          "label": "Signal frame"
+        },
+        {
+          "value": "none",
+          "label": "None"
         }
       ]
     },

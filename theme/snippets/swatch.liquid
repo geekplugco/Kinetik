@@ -4,6 +4,7 @@
   @param {object} value - an option value from product.options_with_values[].values[]
   @param {string} [title] - accessible label
   @param {string} [size_class] - sizing utility classes for the swatch element
+  @param {string} [class] - extra classes
 {% enddoc %}
 {%- liquid
   assign sw_bg = ''
@@ -37,5 +38,6 @@
     assign shape_cls = 'rounded-none'
   endif
   assign sizing = size_class | default: 'h-4 w-4'
+  assign extra = class | default: ''
 -%}
-<span class="block {{ sizing }} {{ shape_cls }} border border-border-hairline bg-cover bg-center" title="{{ title | default: value | escape }}" style="background-color: {{ sw_bg }};{% if sw_img != blank %} background-image: url({{ sw_img }});{% endif %}"></span>
+<span class="block {{ sizing }} {{ shape_cls }} border border-border-strong bg-cover bg-center transition-transform hover:scale-110 peer-checked:ring-2 peer-checked:ring-text-strong peer-checked:ring-offset-2 peer-checked:ring-offset-surface-page peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-surface-page motion-reduce:transform-none {{ extra }}" title="{{ title | default: value | escape }}" style="background-color: {{ sw_bg }};{% if sw_img != blank %} background-image: url({{ sw_img }});{% endif %} box-shadow: inset 0 0 0 1px rgba(255,255,255,0.34);"></span>

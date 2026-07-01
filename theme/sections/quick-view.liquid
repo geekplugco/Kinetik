@@ -53,7 +53,7 @@
                     {%- if is_color -%}
                       {%- render 'swatch', value: value, title: value, size_class: 'h-8 w-8' -%}
                     {%- else -%}
-                      <span class="block border border-border-hairline px-3 py-1.5 font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong">{{ value }}</span>
+                      <span class="block min-h-[40px] border border-border-hairline px-3 py-2 font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">{{ value }}</span>
                     {%- endif -%}
                   </label>
                 {%- endfor -%}

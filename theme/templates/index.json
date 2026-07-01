@@ -12,7 +12,8 @@
         "button_label_2": "Lookbook",
         "button_link_2": "shopify://pages/lookbook",
         "image": "shopify://shop_images/08-hero-back-wide.png",
-        "image_caption": "SS26 · Lookbook 01"
+        "image_caption": "SS26 · Lookbook 01",
+        "visual_effect": "signal_frame"
       }
     },
     "marquee": {
