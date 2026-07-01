@@ -16,16 +16,22 @@
     class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)] text-text-strong"
   >
     <div class="mx-auto max-w-[var(--page-width)] px-6">
-      <div class="mb-8 flex max-w-2xl flex-col gap-3">
-        {%- if section.settings.subheading != blank -%}
-          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
-        {%- endif -%}
-        {%- if section.settings.heading != blank -%}
-          <h2 class="font-display text-h1 tracking-tight">{{ section.settings.heading }}</h2>
-        {%- endif -%}
+      <div class="mb-8 grid border border-border-strong md:grid-cols-[1fr_auto]">
+        <div class="p-4 md:p-5">
+          {%- if section.settings.subheading != blank -%}
+            <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="mt-2 font-display text-h3 tracking-tight">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+        </div>
+        <div class="grid grid-cols-2 border-t border-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted md:w-56 md:border-l md:border-t-0">
+          <span class="border-r border-border-hairline p-3">{{ points.size }} points</span>
+          <span class="p-3">scan</span>
+        </div>
       </div>
-      <material-scan class="grid gap-8 md:grid-cols-2 md:items-start">
-        <div data-scan-stage class="relative overflow-hidden border border-border-hairline bg-surface-sunken">
+      <material-scan class="grid border border-border-hairline md:grid-cols-[1.25fr_0.75fr] md:items-stretch">
+        <div data-scan-stage class="relative overflow-hidden bg-surface-sunken">
           <div class="relative aspect-[4/3]">
             {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700,1050,1400', sizes: '(min-width:990px) 45vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading, class: 'h-full w-full object-cover' }}
             <span data-scan-line aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent opacity-0"></span>
@@ -34,7 +40,7 @@
             {%- endfor -%}
           </div>
         </div>
-        <ul class="flex flex-col">
+        <ul class="flex flex-col border-t border-border-hairline md:border-l md:border-t-0">
           {%- for point in points -%}
             <li>
               <button type="button" data-scan-detail data-index="{{ forloop.index }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" class="flex w-full items-start gap-4 border-b border-border-hairline py-4 text-left">

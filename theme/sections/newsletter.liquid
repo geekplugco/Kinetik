@@ -42,14 +42,15 @@
   style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px"
   class="pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))] {{ bg }}"
 >
-  <div class="mx-auto {{ width }} px-6 {{ outer }}">
+  <div class="mx-auto {{ width }} px-6">
+    <div class="border {% if dark %}border-paper/20{% else %}border-border-strong{% endif %} p-5 md:p-6 {{ outer }}">
     <div class="flex flex-col gap-3 {{ textwrap }}">
       {%- if s.subheading != blank -%}
-        <span class="font-mono text-xs uppercase tracking-label {{ sub_color }}">{{ s.subheading }}</span>
+        <span class="font-mono text-[10px] uppercase tracking-label {{ sub_color }}">{{ s.subheading }}</span>
       {%- endif -%}
-      <h2 class="font-display text-h1 tracking-tight">{{ s.heading | default: 'Join the movement' }}</h2>
+      <h2 class="font-display text-h3 tracking-tight">{{ s.heading | default: 'Join the movement' }}</h2>
       {%- if s.text != blank -%}
-        <div class="text-body-lg [&_p]:m-0 {{ text_color }}">{{ s.text }}</div>
+        <div class="text-body [&_p]:m-0 {{ text_color }}">{{ s.text }}</div>
       {%- endif -%}
     </div>
     {%- assign form_class = 'mt-2 flex w-full max-w-md flex-wrap gap-2 ' | append: formextra -%}
@@ -74,6 +75,7 @@
         {%- render 'button', label: s.button_label, type: 'submit' -%}
       {%- endif -%}
     {%- endform -%}
+    </div>
   </div>
 </section>
 {% schema %}

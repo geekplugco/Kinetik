@@ -35,6 +35,14 @@
       assign rows = 'auto-rows-[200px]'
       assign masonry = true
   endcase
+  case s.spacing
+    when 'none'
+      assign gap_cls = 'gap-0'
+    when 'wide'
+      assign gap_cls = 'gap-4'
+    else
+      assign gap_cls = 'gap-px bg-paper/20 p-px'
+  endcase
   assign rounded = ''
   if s.image_style == 'rounded'
     assign rounded = 'rounded-sm'
@@ -62,7 +70,7 @@
         </div>
       </div>
 
-      <div class="grid {{ mobile }} {{ desktop }} {{ rows }} gap-px bg-paper/20 p-px">
+      <div class="grid {{ mobile }} {{ desktop }} {{ rows }} {{ gap_cls }}">
         {%- for block in section.blocks -%}
           {%- if block.type == 'image' -%}
             {%- assign wide = '' -%}

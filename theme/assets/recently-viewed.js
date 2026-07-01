@@ -32,10 +32,12 @@
               } catch (e) { return ''; }
             })
           );
-          var html = cards.filter(Boolean).join('');
-          if (!html) { this.hidden = true; return; }
+          var html = cards
+            .map((c) => (c || '').trim())
+            .filter((c) => c && c.indexOf('<a') !== -1)
+            .join('');
           this.grid.innerHTML = html;
-          this.hidden = false;
+          this.hidden = this.grid.children.length === 0;
         }
       }
     );

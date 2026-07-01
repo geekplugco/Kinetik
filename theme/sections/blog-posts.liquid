@@ -20,12 +20,8 @@
       assign ratio = 'aspect-[3/2]'
   endcase
   assign overlay = false
-  assign bordered = false
   if s.card_style == 'overlay'
     assign overlay = true
-  endif
-  if s.card_style == 'bordered'
-    assign bordered = true
   endif
 
   assign blog_handle = s.blog
@@ -47,16 +43,23 @@
   class="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
 >
   <div class="mx-auto {{ width }} px-6">
-    <div class="mb-8 flex items-end justify-between gap-4">
-      <h2 class="font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{{ s.heading | default: 'Journal' }}</h2>
-      {%- if s.show_view_all -%}
-        {%- render 'button', label: 'All posts', href: routes.all_blogs_url, variant: 'link', size: 'sm' -%}
-      {%- endif -%}
-    </div>
-    <div class="grid grid-cols-[repeat(var(--cols-mobile,1),minmax(0,1fr))] gap-8 lg:grid-cols-[repeat(var(--cols-desktop,3),minmax(0,1fr))]">
+    <div class="border border-border-strong">
+      <div class="grid border-b border-border-hairline bg-surface-page md:grid-cols-[1fr_auto]">
+        <div class="p-4 md:p-5">
+          <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">Journal log · field notes</span>
+          <h2 class="mt-2 font-display text-h3 tracking-tight text-text-strong">{{ s.heading | default: 'Journal' }}</h2>
+        </div>
+        <div class="flex items-stretch border-t border-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted md:border-l md:border-t-0">
+          <span class="flex items-center border-r border-border-hairline px-4">{{ limit }} entries</span>
+          {%- if s.show_view_all -%}
+            <a href="{{ routes.all_blogs_url }}" class="flex min-h-[44px] items-center px-4 text-text-strong underline-offset-4 hover:underline">All posts</a>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="grid grid-cols-[repeat(var(--cols-mobile,1),minmax(0,1fr))] gap-px bg-border-hairline lg:grid-cols-[repeat(var(--cols-desktop,3),minmax(0,1fr))]">
       {%- for article in source.articles limit: limit -%}
         {%- if overlay -%}
-          <a href="{{ article.url }}" class="group relative flex flex-col justify-end overflow-hidden {{ ratio }} bg-surface-sunken">
+          <a href="{{ article.url }}" class="group relative flex flex-col justify-end overflow-hidden {{ ratio }} bg-ink-950">
             {%- if article.image -%}
               {{ article.image | image_url: width: 1000 | image_tag: loading: 'lazy', sizes: '(min-width:990px) 33vw, 100vw', widths: '300,500,700,1000', alt: article.title, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105' }}
             {%- endif -%}
@@ -67,20 +70,31 @@
             </div>
           </a>
         {%- else -%}
-          <article class="group flex flex-col gap-3{% if bordered %} border border-border-hairline p-4{% endif %}">
-            <a href="{{ article.url }}" class="relative block {{ ratio }} overflow-hidden bg-surface-sunken">
+          <article class="group flex min-w-0 flex-col bg-surface-page">
+            <a href="{{ article.url }}" class="kx-media-effect relative block {{ ratio }} overflow-hidden bg-surface-sunken">
               {%- if article.image -%}
-                {{ article.image | image_url: width: 1000 | image_tag: loading: 'lazy', sizes: '(min-width:990px) 33vw, 100vw', widths: '300,500,700,1000', alt: article.title, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105' }}
+                {{ article.image | image_url: width: 1000 | image_tag: loading: 'lazy', sizes: '(min-width:990px) 33vw, 100vw', widths: '300,500,700,1000', alt: article.title, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
               {%- endif -%}
+              <span class="absolute left-3 top-3 bg-ink-950/60 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper backdrop-blur-sm">Log {{ forloop.index }}</span>
             </a>
-            <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ article.published_at | date: '%b %d, %Y' }}</span>
-            <a href="{{ article.url }}" class="font-display text-h4 tracking-tight text-text-strong hover:text-accent-press">{{ article.title }}</a>
-            {%- if s.show_excerpt -%}
-              <p class="text-sm text-text-muted">{% if article.excerpt != blank %}{{ article.excerpt | strip_html }}{% else %}{{ article.content | strip_html | truncatewords: 24 }}{% endif %}</p>
-            {%- endif -%}
+            <div class="flex flex-1 flex-col gap-3 border-t border-border-hairline p-4">
+              <div class="flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-label text-text-muted">
+                <span>{{ article.published_at | date: '%b %d, %Y' }}</span>
+                <span>{{ article.content | strip_html | split: ' ' | size | divided_by: 180 | at_least: 1 }} min read</span>
+              </div>
+              <a href="{{ article.url }}" class="font-display text-h4 tracking-tight text-text-strong hover:text-accent-press">{{ article.title }}</a>
+              {%- if s.show_excerpt -%}
+                <p class="text-sm text-text-muted">{% if article.excerpt != blank %}{{ article.excerpt | strip_html }}{% else %}{{ article.content | strip_html | truncatewords: 24 }}{% endif %}</p>
+              {%- endif -%}
+              <a href="{{ article.url }}" class="mt-auto inline-flex min-h-[44px] items-center justify-between border-t border-border-hairline pt-3 font-mono text-[10px] uppercase tracking-label text-text-strong">
+                Read field note
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </article>
         {%- endif -%}
       {%- endfor -%}
+      </div>
     </div>
   </div>
 </section>

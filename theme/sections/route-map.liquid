@@ -8,30 +8,37 @@
     class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)]"
   >
     <div class="mx-auto max-w-[var(--page-width)] px-6">
-      <div class="mb-10 flex max-w-2xl flex-col gap-3">
-        {%- if section.settings.subheading != blank -%}
-          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
-        {%- endif -%}
-        {%- if section.settings.heading != blank -%}
-          <h2 class="font-display text-h1 tracking-tight text-text-strong">{{ section.settings.heading }}</h2>
-        {%- endif -%}
+      <div class="mb-8 grid border border-border-strong md:grid-cols-[1fr_auto]">
+        <div class="p-4 md:p-5">
+          {%- if section.settings.subheading != blank -%}
+            <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="mt-2 font-display text-h3 tracking-tight text-text-strong">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+        </div>
+        <div class="grid grid-cols-2 border-t border-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted md:w-56 md:border-l md:border-t-0">
+          <span class="border-r border-border-hairline p-3">{{ stops.size }} stops</span>
+          <span class="p-3">route</span>
+        </div>
       </div>
-      <ol class="relative ml-3 border-l border-border-strong md:ml-4">
+      <ol class="relative border border-border-hairline bg-surface-page">
         {%- for block in stops -%}
           {%- assign p = block.settings.product -%}
-          <li class="relative pb-12 pl-8 last:pb-0 md:pl-12" {{ block.shopify_attributes }}>
-            <span aria-hidden="true" class="absolute left-0 top-1 flex h-6 w-6 -translate-x-1/2 items-center justify-center border border-border-strong bg-surface-page font-mono text-[11px] text-text-strong">{{ forloop.index }}</span>
-            <div class="grid gap-6 md:grid-cols-2 md:items-start">
-              <div class="relative aspect-[4/3] overflow-hidden border border-border-hairline bg-surface-sunken">
+          <li class="grid border-b border-border-hairline last:border-b-0 md:grid-cols-[3rem_1.1fr_1fr]" {{ block.shopify_attributes }}>
+            <span aria-hidden="true" class="flex min-h-[3rem] items-center justify-center border-b border-border-hairline font-mono text-[11px] text-text-muted md:border-b-0 md:border-r">{{ forloop.index }}</span>
+            <div class="relative aspect-[4/3] overflow-hidden bg-surface-sunken md:aspect-auto">
+              <div class="absolute inset-0">
                 {%- if block.settings.image != blank -%}
                   {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: block.settings.image.alt | default: block.settings.place, class: 'h-full w-full object-cover' }}
                 {%- else -%}
                   {{ 'lifestyle-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
                 {%- endif -%}
               </div>
-              <div class="flex flex-col gap-3">
+            </div>
+            <div class="flex flex-col justify-center gap-3 border-t border-border-hairline p-5 md:border-l md:border-t-0">
                 {%- if block.settings.place != blank -%}
-                  <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ block.settings.place }}</span>
+                  <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ block.settings.place }}</span>
                 {%- endif -%}
                 {%- if block.settings.heading != blank -%}
                   <h3 class="font-display text-h3 tracking-tight text-text-strong">{{ block.settings.heading }}</h3>
@@ -56,7 +63,6 @@
                     <span aria-hidden="true" class="font-mono text-text-muted">&#8599;</span>
                   </a>
                 {%- endif -%}
-              </div>
             </div>
           </li>
         {%- endfor -%}

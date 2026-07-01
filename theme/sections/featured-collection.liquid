@@ -21,11 +21,11 @@
 
   case layout
     when 'stacked'
-      assign header_cls = 'mb-10 flex flex-col items-center gap-3 text-center'
+      assign header_cls = 'mb-8 grid border border-border-strong md:grid-cols-[1fr_auto]'
     when 'editorial'
-      assign header_cls = 'mb-12 flex flex-col gap-3 border-b border-border-hairline pb-8'
+      assign header_cls = 'mb-8 grid border border-border-strong md:grid-cols-[1fr_auto]'
     else
-      assign header_cls = 'mb-10 flex items-end justify-between gap-4'
+      assign header_cls = 'mb-8 grid border border-border-strong md:grid-cols-[1fr_auto]'
   endcase
 
   case density
@@ -49,16 +49,16 @@
 >
   <div class="mx-auto {{ container_w }} px-6">
     <div class="{{ header_cls }}">
-      <div class="flex flex-col gap-2 {{ inner_items }}">
+      <div class="flex flex-col gap-2 p-4 md:p-5 {{ inner_items }}">
         {%- if coll -%}
-          <span class="font-mono text-xs uppercase tracking-label text-text-muted">SS26 &mdash; {{ coll.products_count }} styles</span>
+          <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">SS26 &mdash; {{ coll.products_count }} styles</span>
         {%- endif -%}
-        <h2 class="hp-reveal hp-reveal--fade font-display text-[clamp(2.5rem,5vw,4.5rem)] font-bold uppercase leading-[0.9] tracking-tight text-text-strong">
+        <h2 class="hp-reveal hp-reveal--fade font-display text-h3 tracking-tight text-text-strong">
           {{ section.settings.heading | default: coll.title | default: 'Featured' }}
         </h2>
       </div>
       {%- if coll -%}
-        <a href="{{ coll.url }}" class="flex min-h-[44px] shrink-0 items-center gap-2 pb-2 font-mono text-xs uppercase tracking-label text-text-strong hover:text-accent-press">
+        <a href="{{ coll.url }}" class="flex min-h-[44px] shrink-0 items-center justify-between gap-2 border-t border-border-hairline px-4 font-mono text-[10px] uppercase tracking-label text-text-strong hover:text-accent-press md:border-l md:border-t-0">
           {{ 'sections.featured_collection.view_all' | t | default: 'View all' }} {%- render 'icon', name: 'arrow', size: 16 -%}
         </a>
       {%- endif -%}
