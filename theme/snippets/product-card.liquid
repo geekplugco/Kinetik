@@ -101,7 +101,7 @@
               {%- break -%}
             {%- endif -%}
           {%- endfor -%}
-          <button type="button" data-card-swatch{% if v_img != blank %} data-img="{{ v_img }}"{% endif %} aria-label="{{ value | escape }}" class="block h-3.5 w-3.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'swatch', value: value, title: value, size_class: 'h-3.5 w-3.5' -%}</button>
+          <button type="button" data-card-swatch{% if v_img != blank %} data-img="{{ v_img }}"{% endif %} aria-label="{{ value | escape }}" class="-my-1.5 grid h-6 w-6 place-items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'swatch', value: value, title: value, size_class: 'h-3.5 w-3.5' -%}</button>
         {%- endfor -%}
         {%- if color_option.values.size > settings.card_max_swatches -%}
           <span class="font-mono text-[10px] text-text-muted">+{{ color_option.values.size | minus: settings.card_max_swatches }}</span>

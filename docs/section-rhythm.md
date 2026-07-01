@@ -29,3 +29,17 @@ Sections alternate `color_scheme` (scheme-1 light / scheme-2 tint / scheme-3 dar
 - Card density is one shared `product-card` snippet + `card_image_ratio` / `card_show_second_image` settings — never per-section card styling.
 
 **Result:** homepage, collection, PDP, and content templates share one spacing scale, one heading pattern, one gutter, one card, and a deliberate scheme sequence — a cohesive rhythm, not fragments.
+
+## 6. Flagship homepage sequence
+
+The canonical demo homepage now follows this rhythm:
+
+1. **Hero**: first viewport brand/product signal and primary shop action.
+2. **Marquee + drop telemetry**: compact operational proof before the product grid.
+3. **New arrivals + categories**: direct shopping and discovery.
+4. **Hero product + build-your-kit**: conversion and AOV.
+5. **Material proof + route map + lookbook**: technical storytelling with shoppable context.
+6. **Gallery + trust + testimonials**: social and product proof.
+7. **Journal + newsletter**: retention and drop access.
+
+This order alternates dense commerce modules with proof-led editorial modules so the page does not feel like a random section stack.

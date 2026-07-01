@@ -5,8 +5,8 @@
       "settings": {
         "tag": "Drop 04 Live",
         "subheading": "SS26 / Field System",
-        "heading": "Move faster.",
-        "text": "<p>High-resolution techwear that loads in a blink. Engineered for the city, the trail, and everything in transit.</p>",
+        "heading": "Field kit for motion.",
+        "text": "<p>A modular technical wardrobe for commute, weather, field work, and after-dark movement. Start with the drop, then build the full system.</p>",
         "button_label": "Shop the drop",
         "button_link": "shopify://collections/new-arrivals",
         "button_label_2": "Lookbook",
@@ -24,9 +24,9 @@
     "drop": {
       "type": "drop-system",
       "settings": {
-        "kicker": "Next drop",
-        "heading": "Drop 05 · Field System",
-        "text": "<p>The SS26 field kit lands in full. Lock your access — limited first run.</p>",
+        "kicker": "Launch telemetry",
+        "heading": "Drop 05 · Storm commute",
+        "text": "<p>Shells, carry, base layers, and weather-ready audio. The next capsule opens with a controlled first run.</p>",
         "target_date": "2026-07-15T10:00:00"
       }
     },
@@ -51,22 +51,10 @@
         ]
       }
     },
-    "editorial": {
-      "type": "image-with-text",
-      "settings": {
-        "image": "shopify://shop_images/08-dark-set-banner.png",
-        "layout": "image_first",
-        "subheading": "The system",
-        "heading": "Engineered for movement",
-        "text": "<p>Technical materials, considered construction, zero noise. Built to be worn, not displayed.</p>",
-        "button_label": "Our story",
-        "button_link": "shopify://pages/about"
-      }
-    },
     "featured": {
       "type": "featured-product",
       "settings": {
-        "heading": "Drop of the week",
+        "heading": "Hero piece",
         "product": "shell-jacket"
       }
     },
@@ -130,6 +118,114 @@
         "s4",
         "s5",
         "s6"
+      ]
+    },
+    "editorial": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "shopify://shop_images/08-dark-set-banner.png",
+        "layout": "image_first",
+        "subheading": "Material proof",
+        "heading": "No feature without a field reason",
+        "text": "<p>Every pocket, membrane, strap, and seam has to earn its position. The product page reads like a spec sheet because the product is built like one.</p>",
+        "button_label": "Our story",
+        "button_link": "shopify://pages/about"
+      }
+    },
+    "route": {
+      "type": "route-map",
+      "settings": {
+        "subheading": "Field route",
+        "heading": "One kit, three conditions",
+        "color_scheme": "scheme-2"
+      },
+      "blocks": {
+        "r1": {
+          "type": "stop",
+          "settings": {
+            "place": "06:40 · Transit",
+            "heading": "Rain at platform level",
+            "caption": "<p>Shell up, pack sealed, audio tucked under the hood. The first mile stays dry.</p>",
+            "product": "shell-jacket"
+          }
+        },
+        "r2": {
+          "type": "stop",
+          "settings": {
+            "place": "13:20 · Field",
+            "heading": "Layer down, tools out",
+            "caption": "<p>Base layer breathes under load while the carry system keeps weight close.</p>",
+            "product": "merino-base-ls"
+          }
+        },
+        "r3": {
+          "type": "stop",
+          "settings": {
+            "place": "21:10 · Return",
+            "heading": "Reflective readout",
+            "caption": "<p>Low-light details and quick-access pockets keep the last leg clean.</p>",
+            "product": "field-sling"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ]
+    },
+    "lookbook": {
+      "type": "lookbook",
+      "settings": {
+        "kicker": "Shoppable route",
+        "heading": "Worn as a system",
+        "text": "<p>Tap the field notes inside each frame. Products stay attached to real use, not isolated catalog shots.</p>",
+        "layout": "editorial",
+        "image_ratio": "portrait",
+        "color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "l1": {
+          "type": "shot",
+          "settings": {
+            "image": "shopify://shop_images/09-paired-hero.png",
+            "image_alt": "Two Kinetik looks standing in a field route",
+            "caption": "Shell, base, carry · city-to-field",
+            "product_1": "shell-jacket",
+            "x_1": 34,
+            "y_1": 42,
+            "product_2": "field-sling",
+            "x_2": 62,
+            "y_2": 56
+          }
+        },
+        "l2": {
+          "type": "shot",
+          "settings": {
+            "image": "shopify://shop_images/05-sling-worn.png",
+            "image_alt": "Kinetik sling worn across technical outerwear",
+            "caption": "Carry system · hands free",
+            "product_1": "field-sling",
+            "x_1": 52,
+            "y_1": 48
+          }
+        },
+        "l3": {
+          "type": "shot",
+          "settings": {
+            "image": "shopify://shop_images/06-detail-trio.png",
+            "image_alt": "Close details of Kinetik technical materials",
+            "caption": "Material readout · hardware, fabric, closure",
+            "product_1": "merino-base-ls",
+            "x_1": 45,
+            "y_1": 54
+          }
+        }
+      },
+      "block_order": [
+        "l1",
+        "l2",
+        "l3"
       ]
     },
     "gallery": {
@@ -275,20 +371,35 @@
         "heading": "From the journal",
         "posts_to_show": 3
       }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "subheading": "Drop access",
+        "heading": "Get the next field signal",
+        "text": "<p>Release notes, material changes, and restock alerts. No fake urgency, no noise.</p>",
+        "layout": "split",
+        "width": "page",
+        "background_style": "dark",
+        "color_scheme": "scheme-3"
+      }
     }
   },
   "order": [
     "hero",
     "marquee",
+    "drop",
     "arrivals",
     "categories",
-    "drop",
     "featured",
     "kit",
     "editorial",
+    "route",
+    "lookbook",
     "gallery",
     "trust",
     "testimonials",
-    "blogposts"
+    "blogposts",
+    "newsletter"
   ]
 }

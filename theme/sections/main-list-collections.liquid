@@ -7,9 +7,18 @@
   <ul class="mt-8 grid grid-cols-1 gap-px bg-border-hairline md:grid-cols-3">
     {%- for collection in collections -%}
       <li class="bg-surface-page"><a href="{{ collection.url }}" class="group relative block aspect-[4/3] overflow-hidden">
-        {{ collection.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'h-full w-full object-cover' }}
+        {%- if collection.featured_image != blank -%}
+          {{ collection.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', sizes: '(min-width:750px) 33vw, 100vw', alt: collection.title, class: 'h-full w-full object-cover' }}
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
+        {%- endif -%}
         <span class="absolute bottom-4 left-4 font-display text-h3 uppercase text-paper mix-blend-difference">{{ collection.title }}</span>
       </a></li>
+    {%- else -%}
+      <li class="col-span-full bg-surface-page py-16 text-center">
+        <p class="font-display text-h3 text-text-strong">No collections yet.</p>
+        <p class="mt-2 text-body text-text-muted">Collections you publish will appear here.</p>
+      </li>
     {%- endfor -%}
   </ul>
 </section>

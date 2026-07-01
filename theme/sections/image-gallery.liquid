@@ -35,18 +35,11 @@
       assign rows = 'auto-rows-[200px]'
       assign masonry = true
   endcase
-  case s.spacing
-    when 'none'
-      assign gap = 'gap-0'
-    when 'wide'
-      assign gap = 'gap-6'
-    else
-      assign gap = 'gap-3'
-  endcase
   assign rounded = ''
   if s.image_style == 'rounded'
     assign rounded = 'rounded-sm'
   endif
+  assign label = s.heading | default: 'Field gallery'
 -%}
 <section
   data-color-scheme="{{ s.color_scheme }}"
@@ -54,26 +47,44 @@
   class="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
 >
   <div class="mx-auto px-6 {{ width }}">
-    {%- if s.heading != blank -%}
-      <h2 class="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{{ s.heading }}</h2>
-    {%- endif -%}
-    <div class="grid {{ mobile }} {{ desktop }} {{ rows }} {{ gap }}">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'image' -%}
-          {%- assign wide = '' -%}
-          {%- if masonry -%}
-            {%- if block.settings.size == 'wide' or forloop.first -%}
-              {%- assign wide = 'col-span-2 row-span-2' -%}
-            {%- endif -%}
+    <div class="border border-border-strong bg-ink-950 text-paper">
+      <div class="grid border-b border-paper/20 md:grid-cols-[1fr_auto]">
+        <div class="p-4 md:p-5">
+          <span class="font-mono text-[10px] uppercase tracking-label text-paper/55">Contact sheet · field archive</span>
+          {%- if s.heading != blank -%}
+            <h2 class="mt-2 font-display text-h3 tracking-tight text-paper">{{ s.heading }}</h2>
           {%- endif -%}
-          {%- capture aria -%}{% if block.settings.alt != blank %}{{ block.settings.alt }}{% else %}Gallery image {{ forloop.index }}{% endif %}{%- endcapture -%}
-          <a {{ block.shopify_attributes }} href="{{ block.settings.link | default: '#' }}" aria-label="{{ aria }}" class="group relative overflow-hidden bg-surface-sunken {{ rounded }} {{ wide }}">
-            {%- if block.settings.image != blank -%}
-              {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '50vw', widths: '300,500,700,900,1200', alt: block.settings.alt, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105' }}
+        </div>
+        <div class="grid grid-cols-3 border-t border-paper/20 font-mono text-[10px] uppercase tracking-label text-paper/60 md:w-72 md:border-l md:border-t-0">
+          <span class="border-r border-paper/20 p-3">{{ section.blocks.size }} frames</span>
+          <span class="border-r border-paper/20 p-3">{{ s.layout }}</span>
+          <span class="p-3">scan</span>
+        </div>
+      </div>
+
+      <div class="grid {{ mobile }} {{ desktop }} {{ rows }} gap-px bg-paper/20 p-px">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'image' -%}
+            {%- assign wide = '' -%}
+            {%- if masonry -%}
+              {%- if block.settings.size == 'wide' or forloop.first -%}
+                {%- assign wide = 'col-span-2 row-span-2' -%}
+              {%- endif -%}
             {%- endif -%}
-          </a>
-        {%- endif -%}
-      {%- endfor -%}
+            {%- capture aria -%}{% if block.settings.alt != blank %}{{ block.settings.alt }}{% else %}Gallery image {{ forloop.index }}{% endif %}{%- endcapture -%}
+            <a {{ block.shopify_attributes }} href="{{ block.settings.link | default: '#' }}" aria-label="{{ aria }}" class="group kx-media-effect relative overflow-hidden bg-ink-900 {{ rounded }} {{ wide }}">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '50vw', widths: '300,500,700,900,1200', alt: block.settings.alt, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
+              {%- endif -%}
+              <span class="absolute left-3 top-3 bg-ink-950/60 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper backdrop-blur-sm">F{{ forloop.index }}</span>
+              <span class="absolute bottom-0 left-0 right-0 flex items-center justify-between bg-ink-950/80 px-3 py-2 font-mono text-[10px] uppercase tracking-label text-paper backdrop-blur-sm">
+                <span>{{ label }}</span>
+                <span>{{ block.settings.size | default: 'regular' }}</span>
+              </span>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
     </div>
   </div>
 </section>
@@ -268,57 +279,6 @@
     {
       "name": "t:sections.image-gallery.presets.name__1",
       "blocks": [
-        {
-          "type": "image"
-        },
-        {
-          "type": "image"
-        },
-        {
-          "type": "image"
-        }
-      ]
-    },
-    {
-      "name": "t:sections.image-gallery.presets.name__2",
-      "settings": {
-        "layout": "square",
-        "columns_desktop": 3,
-        "spacing": "wide"
-      },
-      "blocks": [
-        {
-          "type": "image"
-        },
-        {
-          "type": "image"
-        },
-        {
-          "type": "image"
-        },
-        {
-          "type": "image"
-        },
-        {
-          "type": "image"
-        },
-        {
-          "type": "image"
-        }
-      ]
-    },
-    {
-      "name": "t:sections.image-gallery.presets.name__3",
-      "settings": {
-        "layout": "landscape",
-        "width": "full",
-        "spacing": "none",
-        "columns_desktop": 4
-      },
-      "blocks": [
-        {
-          "type": "image"
-        },
         {
           "type": "image"
         },
