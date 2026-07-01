@@ -265,7 +265,9 @@
         "kicker": "Shoppable route",
         "heading": "Worn as a system",
         "text": "<p>Tap the field notes inside each frame. Products stay attached to real use, not isolated catalog shots.</p>",
+        "heading_layout": "bar",
         "layout": "editorial",
+        "editorial_density": "compact",
         "image_ratio": "portrait",
         "color_scheme": "scheme-1"
       },

@@ -1,0 +1,53 @@
+<style>
+  :root {
+    --kx-z-base: 0;
+    --kx-z-raised: 10;
+    --kx-z-control: 20;
+    --kx-z-sticky: 40;
+    --kx-z-header: 100;
+    --kx-z-overlay: 900;
+    --kx-z-drawer: 920;
+    --kx-z-modal: 1000;
+    --kx-z-popover: 1100;
+    --kx-z-toast: 1200;
+    --z-base: var(--kx-z-base);
+    --z-sticky: var(--kx-z-sticky);
+    --z-header: var(--kx-z-header);
+    --z-overlay: var(--kx-z-overlay);
+    --z-drawer: var(--kx-z-drawer);
+    --z-dialog: var(--kx-z-modal);
+    --z-toast: var(--kx-z-toast);
+  }
+
+  .kx-layer-root {
+    isolation: isolate;
+  }
+
+  .kx-z-sticky {
+    z-index: var(--kx-z-sticky);
+  }
+
+  .kx-z-header {
+    z-index: var(--kx-z-header);
+  }
+
+  .kx-z-overlay {
+    z-index: var(--kx-z-overlay);
+  }
+
+  .kx-z-drawer {
+    z-index: var(--kx-z-drawer);
+  }
+
+  .kx-z-modal {
+    z-index: var(--kx-z-modal);
+  }
+
+  .kx-z-popover {
+    z-index: var(--kx-z-popover);
+  }
+
+  .kx-z-toast {
+    z-index: var(--kx-z-toast);
+  }
+</style>

@@ -1,0 +1,78 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "gallery_layout": "thumbnail_slider",
+        "media_size": "medium",
+        "enable_sticky_info": true,
+        "enable_sticky_atc": true,
+        "enable_image_zoom": true,
+        "color_scheme": "scheme-2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "field_spec": {
+      "type": "field-spec",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "use_modes": {
+      "type": "product-use-modes",
+      "settings": {
+        "heading": "Where it works",
+        "color_scheme": "scheme-2"
+      },
+      "blocks": {
+        "m1": { "type": "mode", "settings": { "label": "Travel", "heading": "Pack light", "text": "<p>Dry-touch fabric and simple carry paths for long travel days.</p>" } },
+        "m2": { "type": "mode", "settings": { "label": "Field", "heading": "Hold shape outside", "text": "<p>Warm-tone utility for trail edges, markets, and exposed transit.</p>" } },
+        "m3": { "type": "mode", "settings": { "label": "Daily", "heading": "Repeat without noise", "text": "<p>The same grid discipline, softened through palette and texture.</p>" } }
+      },
+      "block_order": ["m1", "m2", "m3"]
+    },
+    "story": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "shopify://shop_images/09-paired-hero.png",
+        "layout": "image_first",
+        "image_ratio": "landscape",
+        "subheading": "Sand system",
+        "heading": "Utility without coldness",
+        "text": "<p>A warmer product page for outdoor, travel, ceramics, wellness, and lifestyle brands that still want Kinetik precision.</p>",
+        "button_label": "View the route",
+        "button_link": "shopify://pages/lookbook",
+        "color_scheme": "scheme-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "settings": {
+        "heading": "Care and fit",
+        "color_scheme": "scheme-2"
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "heading": "More warm-weather kit",
+        "products_to_show": 4,
+        "color_scheme": "scheme-2"
+      }
+    },
+    "recently_viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "heading": "Recently viewed",
+        "products_to_show": 4,
+        "color_scheme": "scheme-2"
+      }
+    }
+  },
+  "order": ["main", "field_spec", "use_modes", "story", "faq", "related", "recently_viewed"]
+}

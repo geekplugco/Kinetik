@@ -22,7 +22,8 @@ if (!customElements.get('collection-facets')) {
 
         this.querySelectorAll('input[type="checkbox"]:not([data-client-filter])').forEach((input) => {
           input.addEventListener('change', () => {
-            if (window.matchMedia('(min-width: 750px)').matches && this.form) this.form.submit();
+            var group = input.closest('details');
+            if (group) group.open = true;
           });
         });
 
@@ -65,7 +66,7 @@ if (!customElements.get('collection-facets')) {
       open(event) {
         if (!this.panel) return;
         this.opener = event.currentTarget;
-        this.panel.classList.remove('-translate-x-full');
+        this.panel.classList.remove('translate-x-full');
         this.panel.classList.add('translate-x-0');
         if (this.overlay) {
           this.overlay.classList.remove('pointer-events-none', 'opacity-0');
@@ -79,7 +80,7 @@ if (!customElements.get('collection-facets')) {
 
       close() {
         if (!this.panel) return;
-        this.panel.classList.add('-translate-x-full');
+        this.panel.classList.add('translate-x-full');
         this.panel.classList.remove('translate-x-0');
         if (this.overlay) {
           this.overlay.classList.add('pointer-events-none', 'opacity-0');
@@ -94,7 +95,7 @@ if (!customElements.get('collection-facets')) {
       }
 
       isOpen() {
-        return this.panel && !this.panel.classList.contains('-translate-x-full');
+        return this.panel && !this.panel.classList.contains('translate-x-full');
       }
 
       onKey(event) {

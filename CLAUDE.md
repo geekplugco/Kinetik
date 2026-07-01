@@ -139,6 +139,14 @@ See `@.claude/rules/skill-routing.md` for the full decision guide:
 3. **Task tracking** — Every work session must have an active beads task.
 4. **No prose comments in code** — explanatory comments drift from the code when requirements change, then mislead; make names carry the meaning instead. Guard: `node web/scripts/guard-comments.mjs theme` must PASS. Banned: `//`, `/* */`, `<!-- -->`, `{% comment %}`. Allowed because the toolchain validates them against the code (can't silently drift): Liquid `{% doc %}` snippet contracts (theme-check `ValidDoc`) and `{%- # theme-check-disable/enable -%}` directives.
 
+## Theme Z-Index Rule
+
+Global stacking must go through `theme/snippets/z-layers.liquid`.
+Use semantic classes for site-level layers:
+`kx-z-header`, `kx-z-sticky`, `kx-z-overlay`, `kx-z-drawer`, `kx-z-modal`, `kx-z-popover`, `kx-z-toast`.
+
+Do not add new hardcoded global Tailwind z-index classes such as `z-40`, `z-50`, `z-[70]`, or `z-[81]` for header, drawer, modal, overlay, sticky bars, cart, search, quickview, filters, or size guide. Local stacking inside a component can still use small relative values like `z-10` or `z-20` when it does not compete with another site-level overlay.
+
 
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:6cd5cc61 -->
 ## Beads Issue Tracker

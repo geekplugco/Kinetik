@@ -5,6 +5,7 @@
   assign sort_by = collection.sort_by | default: collection.default_sort_by
   assign promo_enable = section.settings.promo_enable
   assign promo_position = section.settings.promo_position | default: 3
+  assign filter_style = section.settings.filter_style | default: 'command'
   assign active_filter_count = 0
   for filter in collection.filters
     assign active_filter_count = active_filter_count | plus: filter.active_values.size
@@ -59,23 +60,47 @@
         </div>
 
         {%- if show_filter -%}
-          <div data-facet-overlay class="pointer-events-none fixed inset-0 z-50 bg-ink-950/50 opacity-0 transition-opacity motion-reduce:transition-none" aria-hidden="true"></div>
-          <aside data-facet-panel role="dialog" aria-modal="true" aria-label="Collection filters" class="fixed inset-y-0 left-0 z-50 flex w-[92vw] max-w-sm -translate-x-full flex-col bg-surface-page transition-transform duration-300 motion-reduce:transition-none md:sticky md:top-24 md:z-auto md:hidden">
-            <div class="flex items-center justify-between border-b border-border-hairline px-5 py-4">
-              <span class="font-mono text-xs uppercase tracking-label text-text-strong">Filters</span>
-              <button type="button" data-facet-close aria-label="Close filters" class="flex h-11 w-11 items-center justify-center text-text-strong">×</button>
+          <div data-facet-overlay class="pointer-events-none fixed inset-0 kx-z-overlay bg-ink-950/70 opacity-0 transition-opacity motion-reduce:transition-none" aria-hidden="true"></div>
+          <aside data-facet-panel role="dialog" aria-modal="true" aria-label="Collection filters" class="fixed inset-y-0 right-0 kx-z-drawer flex w-[94vw] translate-x-full flex-col border-l border-border-hairline bg-surface-page transition-transform duration-300 motion-reduce:transition-none {% if filter_style == 'rail' %}max-w-[min(760px,94vw)] shadow-[-40px_0_90px_-48px_rgba(10,10,10,0.85)] md:grid md:grid-cols-[180px_1fr]{% else %}max-w-[460px] shadow-[-24px_0_60px_-36px_rgba(10,10,10,0.65)]{% endif %}">
+            {%- if filter_style == 'rail' -%}
+              <div class="hidden border-r border-border-hairline bg-ink-950 p-5 text-paper md:flex md:flex-col md:justify-between">
+                <div>
+                  <span class="font-mono text-[10px] uppercase tracking-label text-paper/55">Filter command</span>
+                  <p class="mt-4 font-display text-h3 uppercase leading-none tracking-tight">{{ collection.title }}</p>
+                </div>
+                <div class="font-mono text-[10px] uppercase tracking-label text-paper/55">
+                  <p>{{ collection.products_count }} products</p>
+                  <p class="mt-2 text-accent">{{ active_filter_count }} active</p>
+                </div>
+              </div>
+              <div class="flex min-h-0 flex-col">
+            {%- endif -%}
+            <div class="border-b border-border-hairline px-5 py-4{% if filter_style == 'rail' %} bg-surface-raised/70 md:px-6{% endif %}">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <span class="font-mono text-xs uppercase tracking-label text-text-muted">Collection filters</span>
+                  <p class="mt-1 font-display text-h4 tracking-tight text-text-strong">{{ collection.title }}</p>
+                </div>
+                <button type="button" data-facet-close aria-label="Close filters" class="flex h-11 w-11 shrink-0 items-center justify-center border border-border-hairline text-text-strong transition-colors hover:border-border-strong">×</button>
+              </div>
+              <div class="mt-4 flex items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-label text-text-muted">
+                <span>{{ collection.products_count }} products</span>
+                {%- if active_filter_count > 0 -%}
+                  <a href="{{ collection.url }}{% if sort_by != blank %}?sort_by={{ sort_by | url_encode }}{% endif %}" class="text-text-strong underline underline-offset-4 hover:text-accent-press">Clear all</a>
+                {%- endif -%}
+              </div>
             </div>
-            <div class="flex-1 overflow-y-auto px-5 py-4">
+            <div class="flex-1 overflow-y-auto px-5{% if filter_style == 'rail' %} md:px-6{% endif %}">
               {%- render 'facets-panel', collection: collection -%}
             </div>
-            <div class="border-t border-border-hairline p-5">
-              <button type="submit" class="inline-flex min-h-[44px] w-full items-center justify-center bg-accent px-5 py-3 font-mono text-xs uppercase tracking-label text-accent-ink">Apply filters</button>
+            <div class="grid grid-cols-2 gap-2 border-t border-border-hairline p-5{% if filter_style == 'rail' %} md:p-6{% endif %}">
+              <button type="button" data-facet-close class="inline-flex min-h-[44px] items-center justify-center border border-border-strong px-5 py-3 font-mono text-xs uppercase tracking-label text-text-strong transition-colors hover:bg-surface-sunken">Close</button>
+              <button type="submit" class="inline-flex min-h-[44px] items-center justify-center bg-accent px-5 py-3 font-mono text-xs uppercase tracking-label text-accent-ink transition-colors hover:bg-accent-hover">Apply</button>
             </div>
+            {%- if filter_style == 'rail' -%}
+              </div>
+            {%- endif -%}
           </aside>
-
-          <div class="hidden border-y border-border-hairline py-5 md:block">
-            {%- render 'facets-panel', collection: collection -%}
-          </div>
 
           {%- if active_filter_count > 0 -%}
             <div class="flex flex-wrap gap-2 pb-6">
@@ -142,7 +167,7 @@
         {%- endfor -%}
       </div>
       {%- if show_filter -%}
-        <button type="button" data-facet-open aria-label="Open filters and sort" class="fixed bottom-5 left-1/2 z-40 flex min-h-[44px] -translate-x-1/2 items-center gap-2 border border-border-strong bg-surface-page px-5 py-2.5 font-mono text-xs uppercase tracking-label text-text-strong shadow-[var(--shadow-pop)] md:hidden">Filter &amp; sort{%- if active_filter_count > 0 -%}<span class="bg-accent px-1.5 py-0.5 text-accent-ink">{{ active_filter_count }}</span>{%- endif -%}</button>
+        <button type="button" data-facet-open aria-label="Open filters and sort" class="fixed bottom-5 left-1/2 kx-z-sticky flex min-h-[44px] -translate-x-1/2 items-center gap-2 border border-border-strong bg-surface-page px-5 py-2.5 font-mono text-xs uppercase tracking-label text-text-strong shadow-[var(--shadow-pop)] md:hidden">Filter &amp; sort{%- if active_filter_count > 0 -%}<span class="bg-accent px-1.5 py-0.5 text-accent-ink">{{ active_filter_count }}</span>{%- endif -%}</button>
       {%- endif -%}
     </collection-facets>
 
@@ -174,6 +199,22 @@
       "id": "enable_sorting",
       "label": "t:sections.main-collection.settings.enable_sorting.label",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "filter_style",
+      "label": "Filter drawer style",
+      "default": "command",
+      "options": [
+        {
+          "value": "command",
+          "label": "Command drawer"
+        },
+        {
+          "value": "rail",
+          "label": "Technical rail"
+        }
+      ]
     },
     {
       "type": "range",

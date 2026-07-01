@@ -173,6 +173,7 @@
       body[data-section-divider="hairline"] #MainContent > .shopify-section + .shopify-section { border-top: 1px solid var(--border-hairline); }
     </style>
 
+    {%- render 'z-layers' -%}
     <link rel="stylesheet" href="{{ 'tailwind.min.css' | asset_url }}" media="all">
     {%- render 'color-schemes' -%}
 
@@ -200,7 +201,7 @@
     {{ content_for_header }}
   </head>
 
-  <body data-color-scheme="scheme-1" data-animate-reveal="{{ settings.animate_reveal }}" data-animate-hover="{{ settings.animate_hover }}" data-section-divider="{{ settings.section_divider }}" class="template-{{ request.page_type | handleize }}{% if settings.heading_uppercase %} theme-heading-uppercase{% endif %}">
+  <body data-color-scheme="scheme-1" data-animate-reveal="{{ settings.animate_reveal }}" data-animate-hover="{{ settings.animate_hover }}" data-section-divider="{{ settings.section_divider }}" class="kx-layer-root template-{{ request.page_type | handleize }}{% if settings.heading_uppercase %} theme-heading-uppercase{% endif %}">
     <a class="sr-only focus:not-sr-only" href="#MainContent">{{ 'accessibility.skip_to_text' | t | default: 'Skip to content' }}</a>
 
     {% sections 'header-group' %}
@@ -215,7 +216,7 @@
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t | default: 'Choosing a selection results in a full page refresh.' }}</li>
     </ul>
 
-    <quick-view-modal hidden class="fixed inset-0 z-[60] flex items-center justify-center p-4 opacity-0 transition-opacity duration-200 [&.is-open]:opacity-100">
+    <quick-view-modal hidden class="fixed inset-0 kx-z-modal flex items-center justify-center p-4 opacity-0 transition-opacity duration-200 [&.is-open]:opacity-100">
       <div data-qv-close class="absolute inset-0 bg-ink-950/60"></div>
       <div role="dialog" aria-modal="true" aria-label="Quick view" class="relative z-10 max-h-[90vh] w-[min(920px,94vw)] overflow-auto border border-border-strong bg-surface-page p-5 shadow-[0_24px_60px_-24px_rgba(10,10,10,0.5)] md:p-8">
         <button type="button" data-qv-close aria-label="Close quick view" class="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center text-text-muted transition-colors hover:text-text-strong">{%- render 'icon', name: 'close', size: 18 -%}</button>

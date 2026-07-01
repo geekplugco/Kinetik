@@ -1,0 +1,72 @@
+{
+  "sections": {
+    "statement": {
+      "type": "statement",
+      "settings": {
+        "eyebrow": "Carbon preset",
+        "quote": "<p>Low light gear. High signal utility.</p>",
+        "attribution": "Night movement system",
+        "alignment": "left",
+        "height": "compact",
+        "color_scheme": "scheme-3",
+        "button_label": "Shop the system",
+        "button_link": "shopify://collections/all",
+        "button_style": "secondary"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "columns_desktop": 4,
+        "color_scheme": "scheme-3",
+        "promo_enable": true,
+        "promo_position": 5,
+        "promo_image": "shopify://shop_images/08-dark-set-banner.png",
+        "promo_eyebrow": "Carbon",
+        "promo_heading": "Blackout field kit",
+        "promo_button_label": "Open drop",
+        "promo_link": "shopify://collections/all",
+        "padding_top": 36,
+        "padding_bottom": 72
+      }
+    },
+    "route": {
+      "type": "route-map",
+      "settings": {
+        "subheading": "Use route",
+        "heading": "Built for after-dark movement",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "r1": {
+          "type": "stop",
+          "settings": {
+            "place": "19:40 · Transit",
+            "heading": "Commute without reflection noise",
+            "caption": "<p>Matte shell, sealed carry, low-profile pockets.</p>"
+          }
+        },
+        "r2": {
+          "type": "stop",
+          "settings": {
+            "place": "22:10 · Weather",
+            "heading": "Waterproof when the street turns",
+            "caption": "<p>Technical layers hold shape without reading as outdoor costume.</p>"
+          }
+        },
+        "r3": {
+          "type": "stop",
+          "settings": {
+            "place": "00:30 · Reset",
+            "heading": "Pack down clean",
+            "caption": "<p>Everything returns to the kit without loose straps or bulk.</p>"
+          }
+        }
+      },
+      "block_order": ["r1", "r2", "r3"]
+    }
+  },
+  "order": ["statement", "main", "route"]
+}

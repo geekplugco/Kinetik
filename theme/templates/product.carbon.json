@@ -1,0 +1,72 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "gallery_layout": "stacked",
+        "media_size": "large",
+        "enable_sticky_info": true,
+        "enable_sticky_atc": true,
+        "enable_image_zoom": true,
+        "color_scheme": "scheme-3",
+        "padding_top": 24,
+        "padding_bottom": 48
+      }
+    },
+    "motion_spec": {
+      "type": "product-motion-spec",
+      "settings": {
+        "subheading": "Carbon spec",
+        "heading": "Blackout utility, measured",
+        "text": "<p>Use this PDP for technical apparel, gear, electronics, and darker premium stores that need proof-forward conversion.</p>",
+        "image": "shopify://shop_images/material-macro.png",
+        "proof_caption": "Field standard · low-light kit",
+        "media_position": "right",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "20K", "label": "Weather" } },
+        "s2": { "type": "stat", "settings": { "value": "3L", "label": "Shell" } },
+        "s3": { "type": "stat", "settings": { "value": "0", "label": "Noise", "note": "visual" } },
+        "s4": { "type": "stat", "settings": { "value": "24H", "label": "Transit" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"]
+    },
+    "material_scan": {
+      "type": "material-scan",
+      "settings": {
+        "subheading": "Material scan",
+        "heading": "Surface, seam, hardware",
+        "image": "shopify://shop_images/06-detail-trio.png",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "p1": { "type": "point", "settings": { "x": 30, "y": 40, "label": "Matte face", "detail": "<p>Low shine fabric keeps the silhouette quiet.</p>" } },
+        "p2": { "type": "point", "settings": { "x": 58, "y": 58, "label": "Sealed detail", "detail": "<p>Construction points are visible only where they explain performance.</p>" } },
+        "p3": { "type": "point", "settings": { "x": 78, "y": 72, "label": "Hardware", "detail": "<p>Dark hardware supports the system without adding decoration.</p>" } }
+      },
+      "block_order": ["p1", "p2", "p3"]
+    },
+    "faq": {
+      "type": "product-faq",
+      "settings": {
+        "heading": "Technical questions",
+        "color_scheme": "scheme-3"
+      }
+    },
+    "loadout": { "type": "product-loadout" },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Complete the carbon kit",
+        "products_to_show": 4,
+        "color_scheme": "scheme-3"
+      }
+    }
+  },
+  "order": ["main", "motion_spec", "material_scan", "faq", "loadout", "related"]
+}

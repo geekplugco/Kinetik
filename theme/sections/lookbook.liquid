@@ -30,6 +30,17 @@
   if s.layout == 'editorial'
     assign is_editorial = true
   endif
+  case s.editorial_density
+    when 'spacious'
+      assign editorial_grid_cls = 'grid grid-cols-1 gap-10 md:grid-cols-12 md:items-start md:gap-x-6 md:gap-y-16'
+      assign editorial_side_offset = 'md:mt-20'
+    when 'balanced'
+      assign editorial_grid_cls = 'grid grid-cols-1 gap-6 md:grid-cols-12 md:items-start md:gap-x-6 md:gap-y-8'
+      assign editorial_side_offset = ''
+    else
+      assign editorial_grid_cls = 'grid grid-cols-1 gap-4 md:grid-cols-12 md:items-stretch md:gap-5 lg:gap-6'
+      assign editorial_side_offset = ''
+  endcase
   if is_grid or is_editorial
     assign shot_sizes = '(min-width:750px) 50vw, 100vw'
   else
@@ -42,29 +53,45 @@
   class="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
 >
   <look-book class="mx-auto block {{ width_cls }} px-6">
-    <div class="mb-8 grid border border-border-hairline md:grid-cols-[1fr_auto]">
-      <div class="p-5 md:p-6">
-        <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.kicker | default: 'Lookbook' }}</span>
-        {%- if s.heading != blank -%}<h2 class="mt-2 font-display text-h3 tracking-tight text-text-strong">{{ s.heading }}</h2>{%- endif -%}
-      </div>
-      <div class="border-t border-border-hairline p-5 md:border-l md:border-t-0 md:p-6">
-        {%- if s.text != blank -%}<div class="max-w-sm text-body text-text-muted [&_p]:m-0">{{ s.text }}</div>{%- endif -%}
-        <div class="mt-4 flex gap-2 font-mono text-[10px] uppercase tracking-label text-text-muted">
-          <span class="border border-border-hairline px-2 py-1">Hotspots</span>
-          <span class="border border-border-hairline px-2 py-1">{{ shots.size }} frames</span>
+    {%- if s.heading_layout == 'framed' -%}
+      <div class="mb-8 grid border border-border-hairline md:grid-cols-[1fr_auto]">
+        <div class="p-5 md:p-6">
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.kicker | default: 'Lookbook' }}</span>
+          {%- if s.heading != blank -%}<h2 class="mt-2 font-display text-h3 tracking-tight text-text-strong">{{ s.heading }}</h2>{%- endif -%}
+        </div>
+        <div class="border-t border-border-hairline p-5 md:border-l md:border-t-0 md:p-6">
+          {%- if s.text != blank -%}<div class="max-w-sm text-body text-text-muted [&_p]:m-0">{{ s.text }}</div>{%- endif -%}
+          <div class="mt-4 flex gap-2 font-mono text-[10px] uppercase tracking-label text-text-muted">
+            <span class="border border-border-hairline px-2 py-1">Hotspots</span>
+            <span class="border border-border-hairline px-2 py-1">{{ shots.size }} frames</span>
+          </div>
         </div>
       </div>
-    </div>
+    {%- else -%}
+      <div class="mb-5 grid gap-4 border-y border-border-hairline py-5 md:mb-6 md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.48fr)] md:items-end md:py-6">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.kicker | default: 'Lookbook' }}</span>
+          {%- if s.heading != blank -%}<h2 class="mt-2 max-w-3xl font-display text-h2 tracking-tight text-text-strong md:text-h1">{{ s.heading }}</h2>{%- endif -%}
+        </div>
+        <div class="md:justify-self-end">
+          {%- if s.text != blank -%}<div class="max-w-sm text-body text-text-muted [&_p]:m-0">{{ s.text }}</div>{%- endif -%}
+          <div class="mt-4 flex flex-wrap gap-2 font-mono text-[10px] uppercase tracking-label text-text-muted">
+            <span class="border border-border-hairline px-2 py-1">Hotspots</span>
+            <span class="border border-border-hairline px-2 py-1">{{ shots.size }} frames</span>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
 
-    <div class="{% if is_editorial %}grid grid-cols-12 items-start gap-x-6 gap-y-10 md:gap-y-16{% elsif is_grid %}grid gap-6 md:grid-cols-2{% else %}flex flex-col gap-16 md:gap-24{% endif %}">
+    <div class="{% if is_editorial %}{{ editorial_grid_cls }}{% elsif is_grid %}grid gap-4 md:grid-cols-2 md:gap-6{% else %}flex flex-col gap-8 md:gap-12{% endif %}">
       {%- for block in section.blocks -%}
         {%- if block.type == 'note' -%}
           {%- assign n = block.settings -%}
           {%- if is_editorial -%}
             {%- case n.width -%}
-              {%- when 'wide' -%}{%- assign note_cls = 'col-span-12' -%}
-              {%- when 'narrow' -%}{%- assign note_cls = 'col-span-12 md:col-span-4' -%}
-              {%- else -%}{%- assign note_cls = 'col-span-12 md:col-span-6' -%}
+              {%- when 'wide' -%}{%- assign note_cls = 'col-span-12 md:col-span-8' -%}
+              {%- when 'narrow' -%}{%- assign note_cls = 'col-span-12 md:col-span-3' -%}
+              {%- else -%}{%- assign note_cls = 'col-span-12 md:col-span-4' -%}
             {%- endcase -%}
           {%- elsif is_grid -%}
             {%- case n.width -%}
@@ -78,14 +105,14 @@
               {%- else -%}{%- assign note_cls = 'w-full max-w-2xl' -%}
             {%- endcase -%}
           {%- endif -%}
-          <article class="flex min-h-56 flex-col justify-between border border-border-hairline bg-surface-page p-5 md:p-6 {{ note_cls }}" {{ block.shopify_attributes }}>
+          <article class="flex min-h-44 flex-col justify-between border border-border-hairline bg-surface-page p-5 md:h-full md:p-6 {{ note_cls }}" {{ block.shopify_attributes }}>
             <div>
               {%- if n.kicker != blank -%}<span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ n.kicker }}</span>{%- endif -%}
               {%- if n.heading != blank -%}<h3 class="mt-3 font-display text-h3 tracking-tight text-text-strong">{{ n.heading }}</h3>{%- endif -%}
               {%- if n.text != blank -%}<div class="mt-4 max-w-md text-body text-text-body [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ n.text }}</div>{%- endif -%}
             </div>
             {%- if n.link_label != blank and n.link_url != blank -%}
-              <a href="{{ n.link_url }}" class="mt-8 inline-flex min-h-[44px] items-center gap-2 self-start font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 hover:text-accent-press">{{ n.link_label }} <span aria-hidden="true">&#8599;</span></a>
+              <a href="{{ n.link_url }}" class="mt-6 inline-flex min-h-[44px] items-center gap-2 self-start font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 hover:text-accent-press">{{ n.link_label }} <span aria-hidden="true">&#8599;</span></a>
             {%- endif -%}
           </article>
           {%- continue -%}
@@ -100,7 +127,7 @@
             {%- assign cell_cls = 'col-span-12 md:col-span-8' -%}
             {%- assign cell_ratio = 'aspect-[4/5] md:aspect-[3/2]' -%}
           {%- elsif pat == 1 -%}
-            {%- assign cell_cls = 'col-span-12 md:col-span-4 md:mt-28' -%}
+            {%- assign cell_cls = 'col-span-12 md:col-span-4 ' | append: editorial_side_offset -%}
             {%- assign cell_ratio = 'aspect-[3/4]' -%}
           {%- else -%}
             {%- assign cell_cls = 'col-span-12' -%}
@@ -120,7 +147,7 @@
             {%- endif -%}
           {%- when 'wide' -%}
             {%- assign cell_ratio = 'aspect-[16/9]' -%}
-            {%- if is_editorial -%}{%- assign cell_cls = 'col-span-12' -%}
+            {%- if is_editorial -%}{%- assign cell_cls = 'col-span-12 md:col-span-8' -%}
             {%- elsif is_grid -%}{%- assign cell_cls = 'col-span-2' -%}
             {%- endif -%}
           {%- when 'square' -%}
@@ -259,6 +286,22 @@
     },
     {
       "type": "select",
+      "id": "heading_layout",
+      "label": "Heading layout",
+      "default": "bar",
+      "options": [
+        {
+          "value": "bar",
+          "label": "Editorial bar"
+        },
+        {
+          "value": "framed",
+          "label": "Framed panel"
+        }
+      ]
+    },
+    {
+      "type": "select",
       "id": "layout",
       "label": "t:sections.lookbook.settings.layout.label",
       "default": "single",
@@ -274,6 +317,26 @@
         {
           "value": "editorial",
           "label": "t:sections.lookbook.settings.layout.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "editorial_density",
+      "label": "Editorial spacing",
+      "default": "compact",
+      "options": [
+        {
+          "value": "compact",
+          "label": "Compact"
+        },
+        {
+          "value": "balanced",
+          "label": "Balanced"
+        },
+        {
+          "value": "spacious",
+          "label": "Spacious"
         }
       ]
     },
