@@ -59,7 +59,12 @@
           "shadow": "#000000"
         }
       }
-    }
+    },
+    "social_instagram": "https://instagram.com/kinetik",
+    "social_tiktok": "https://tiktok.com/@kinetik",
+    "social_youtube": "https://youtube.com/@kinetik",
+    "social_facebook": "https://facebook.com/kinetik",
+    "social_x": "https://x.com/kinetik"
   },
   "presets": {
     "Field System": {
@@ -122,7 +127,12 @@
             "shadow": "#000000"
           }
         }
-      }
+      },
+      "social_instagram": "https://instagram.com/kinetik",
+      "social_tiktok": "https://tiktok.com/@kinetik",
+      "social_youtube": "https://youtube.com/@kinetik",
+      "social_facebook": "https://facebook.com/kinetik",
+      "social_x": "https://x.com/kinetik"
     },
     "Carbon": {
       "mode": "production-css-inline",
@@ -184,7 +194,12 @@
             "shadow": "#000000"
           }
         }
-      }
+      },
+      "social_instagram": "https://instagram.com/kinetik",
+      "social_tiktok": "https://tiktok.com/@kinetik",
+      "social_youtube": "https://youtube.com/@kinetik",
+      "social_facebook": "https://facebook.com/kinetik",
+      "social_x": "https://x.com/kinetik"
     },
     "Sand": {
       "mode": "production-css-inline",
@@ -246,7 +261,12 @@
             "shadow": "#000000"
           }
         }
-      }
+      },
+      "social_instagram": "https://instagram.com/kinetik",
+      "social_tiktok": "https://tiktok.com/@kinetik",
+      "social_youtube": "https://youtube.com/@kinetik",
+      "social_facebook": "https://facebook.com/kinetik",
+      "social_x": "https://x.com/kinetik"
     }
   }
 }
