@@ -146,6 +146,12 @@ if (!customElements.get('variant-picker')) {
           this.atc.setAttribute('disabled', '');
           this.atc.textContent = this.atc.dataset.labelSoldout || 'Sold out';
         }
+        const bis = this.querySelector('[data-back-in-stock]');
+        if (bis) {
+          bis.classList.toggle('hidden', !!(v && v.available));
+          const vf = bis.querySelector('[data-bis-variant]');
+          if (vf && v && v.options) vf.value = v.options.join(' / ');
+        }
       }
 
       renderInventory(v) {

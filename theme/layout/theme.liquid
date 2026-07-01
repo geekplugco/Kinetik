@@ -58,18 +58,21 @@
       }
       input, select, textarea { border-radius: var(--input-radius, 0); }
       .theme-heading-uppercase h1, .theme-heading-uppercase h2, .theme-heading-uppercase h3 { text-transform: uppercase; }
-      .kx-media-effect { position: relative; isolation: isolate; }
+      .kx-media-effect { position: relative; isolation: isolate; background: var(--ink-950); }
       .kx-media-effect > img,
-      .kx-media-effect > svg { transition: transform var(--dur-slow, 640ms) var(--ease-enter), filter var(--dur-base, 380ms) var(--ease-enter); }
+      .kx-media-effect > svg { transition: transform var(--dur-slow, 640ms) var(--ease-enter), filter var(--dur-base, 380ms) var(--ease-enter), opacity var(--dur-base, 380ms) var(--ease-enter); }
       .kx-media-effect::before {
         content: "";
         position: absolute;
         inset: 0;
         z-index: 2;
         pointer-events: none;
-        background: linear-gradient(110deg, transparent 0 38%, color-mix(in srgb, var(--accent) 38%, transparent) 48%, transparent 60%);
+        background:
+          linear-gradient(90deg, color-mix(in srgb, var(--accent) 52%, transparent) 0 1px, transparent 1px 100%),
+          linear-gradient(180deg, transparent 0 48%, color-mix(in srgb, var(--accent) 38%, transparent) 50%, transparent 52%);
+        background-size: 26px 100%, 100% 7px;
         opacity: 0;
-        transform: translateX(-130%);
+        transform: translateY(-8%);
         transition: transform var(--dur-slow, 640ms) var(--ease-enter), opacity var(--dur-fast, 220ms) var(--ease-enter);
       }
       .kx-media-effect::after {
@@ -78,17 +81,25 @@
         inset: 0;
         z-index: 2;
         pointer-events: none;
-        border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+        background:
+          linear-gradient(var(--accent), var(--accent)) left top / 34px 1px no-repeat,
+          linear-gradient(var(--accent), var(--accent)) left top / 1px 34px no-repeat,
+          linear-gradient(var(--accent), var(--accent)) right top / 34px 1px no-repeat,
+          linear-gradient(var(--accent), var(--accent)) right top / 1px 34px no-repeat,
+          linear-gradient(var(--accent), var(--accent)) left bottom / 34px 1px no-repeat,
+          linear-gradient(var(--accent), var(--accent)) left bottom / 1px 34px no-repeat,
+          linear-gradient(var(--accent), var(--accent)) right bottom / 34px 1px no-repeat,
+          linear-gradient(var(--accent), var(--accent)) right bottom / 1px 34px no-repeat;
         opacity: 0;
-        transform: scale(0.985);
+        transform: scale(0.975);
         transition: transform var(--dur-base, 380ms) var(--ease-enter), opacity var(--dur-base, 380ms) var(--ease-enter);
       }
       .group:hover .kx-media-effect > img,
       .group:focus-within .kx-media-effect > img,
       .group:hover .kx-media-effect > svg,
-      .group:focus-within .kx-media-effect > svg { transform: scale(1.035); filter: contrast(1.04) saturate(1.04); }
+      .group:focus-within .kx-media-effect > svg { transform: scale(1.045) translateY(-0.6%); filter: contrast(1.08) saturate(1.02); }
       .group:hover .kx-media-effect::before,
-      .group:focus-within .kx-media-effect::before { opacity: 1; transform: translateX(130%); }
+      .group:focus-within .kx-media-effect::before { opacity: 0.46; transform: translateY(8%); }
       .group:hover .kx-media-effect::after,
       .group:focus-within .kx-media-effect::after { opacity: 1; transform: scale(1); }
       .kx-card-spec {

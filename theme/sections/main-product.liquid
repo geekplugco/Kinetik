@@ -253,6 +253,20 @@
         </div>
       {%- endform -%}
 
+      <div data-back-in-stock class="{% if current_variant.available %}hidden {% endif %}border border-border-hairline p-4">
+        <p class="font-mono text-xs uppercase tracking-label text-text-strong">Back in stock alert</p>
+        <p class="mt-1 text-sm text-text-muted">Sold out — leave your email and we&rsquo;ll notify you the moment it returns.</p>
+        {%- form 'contact', class: 'mt-3 flex flex-col gap-2 sm:flex-row' -%}
+          <input type="hidden" name="contact[body]" value="Back-in-stock request">
+          <input type="hidden" name="contact[Product]" value="{{ product.title | escape }}">
+          <input type="hidden" data-bis-variant name="contact[Variant]" value="{{ current_variant.title | escape }}">
+          <label class="sr-only" for="bis-email-{{ section.id }}">Email address</label>
+          <input type="email" id="bis-email-{{ section.id }}" name="contact[email]" required autocomplete="email" placeholder="you@email.com" class="min-h-[44px] min-w-0 flex-1 border border-border-strong bg-surface-page px-3 font-sans text-sm text-text-strong placeholder:text-text-faint focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
+          <button type="submit" class="min-h-[44px] bg-text-strong px-5 font-mono text-xs uppercase tracking-label text-surface-page transition-colors hover:bg-accent hover:text-accent-ink">Notify me</button>
+        {%- endform -%}
+        <p class="mt-2 font-mono text-[10px] uppercase tracking-label text-text-faint">Powered by your store&rsquo;s contact inbox — connect a back-in-stock app to automate.</p>
+      </div>
+
       {%- if section.blocks.size > 0 -%}
         <div class="flex flex-col gap-4 border-t border-border-hairline pt-5">
           {%- for block in section.blocks -%}

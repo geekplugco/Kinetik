@@ -39,7 +39,7 @@
         <p class="mb-3 font-mono text-xs uppercase tracking-label text-text-muted">{{ s.subheading }}</p>
       {%- endif -%}
       {%- if s.heading != blank -%}
-        <h2 class="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{{ s.heading }}</h2>
+        <h2 class="mb-8 font-display text-h3 tracking-tight text-text-strong">{{ s.heading }}</h2>
       {%- endif -%}
     </div>
     <collapsible-content data-open-first="{% if s.open_first %}true{% else %}false{% endif %}" class="block {{ list_class }}">
@@ -47,9 +47,9 @@
         {%- if block.type == 'item' -%}
           {%- assign panel_id = 'Collapsible-' | append: section.id | append: '-' | append: forloop.index -%}
           <div data-acc-item{% if item_pad != blank %} class="{{ item_pad }}"{% endif %}>
-            <button type="button" data-acc-trigger aria-expanded="false" aria-controls="{{ panel_id }}" class="flex min-h-[44px] w-full items-center justify-between gap-4 py-5 text-left">
+            <button type="button" data-acc-trigger aria-expanded="false" aria-controls="{{ panel_id }}" class="group flex min-h-[44px] w-full items-center justify-between gap-4 py-5 text-left">
               <span class="font-sans text-h4 text-text-strong">{{ block.settings.heading | default: 'Question' }}</span>
-              <span data-acc-icon-closed>{% render 'icon', name: 'arrow', class: 'rotate-90' %}</span>
+              <span data-acc-icon-closed class="transition-transform group-hover:translate-x-1">{% render 'icon', name: 'arrow', class: 'rotate-90' %}</span>
               <span data-acc-icon-open class="hidden">{% render 'icon', name: 'close' %}</span>
             </button>
             <div id="{{ panel_id }}" data-acc-panel hidden class="pb-5 text-body text-text-body">{{ block.settings.content }}</div>

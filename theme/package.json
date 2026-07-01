@@ -4,9 +4,6 @@
   "description": "Kinetik Shopify theme — no-build (Tailwind v4 browser CDN in dev, committed minified CSS in prod)",
   "scripts": {
     "smoke": "node scripts/smoke-theme.mjs",
-    "css:gen": "node ../scripts/build-theme-css.mjs",
-    "css:build": "npx @tailwindcss/cli@4 -i ./assets/tailwind.css -o ./assets/tailwind.min.css --minify",
-    "build": "npm run css:gen && npm run css:build",
     "dev": "shopify theme dev",
     "push": "shopify theme push"
   }

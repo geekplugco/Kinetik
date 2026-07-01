@@ -53,17 +53,20 @@
   class="{{ dark }}bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
 >
   <div class="mx-auto {{ width }} px-6">
-    {%- if s.heading != blank -%}
-      <h2 class="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong {{ heading_align }}">{{ s.heading }}</h2>
-    {%- endif -%}
-    <video-embed data-embed="{{ embed }}" data-title="{{ s.heading | escape }}" class="relative {{ ratio }} block overflow-hidden bg-ink-950">
+    <div class="mb-6 border border-border-hairline p-5">
+      {%- if s.heading != blank -%}
+        <p class="font-mono text-xs uppercase tracking-label text-text-muted">Motion file</p>
+        <h2 class="mt-2 font-display text-h3 tracking-tight text-text-strong {{ heading_align }}">{{ s.heading }}</h2>
+      {%- endif -%}
+    </div>
+    <video-embed data-embed="{{ embed }}" data-title="{{ s.heading | escape }}" class="kx-media-effect relative {{ ratio }} block overflow-hidden border border-border-hairline bg-ink-950">
       <button type="button" data-play class="group absolute inset-0" aria-label="Play video">
         {%- if s.cover_image != blank -%}
           {%- assign cover_alt = s.cover_image.alt | default: s.heading | default: 'Video cover' | escape -%}
           {{ s.cover_image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '100vw', widths: '600,900,1200,1600', alt: cover_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
         {%- endif -%}
-        <span class="absolute inset-0 flex items-center justify-center {{ overlay_class }}">
-          <span class="flex h-[max(44px,4rem)] w-[max(44px,4rem)] items-center justify-center rounded-full bg-accent text-accent-ink transition-transform group-hover:scale-110">{% render 'icon', name: 'arrow', size: 28 %}</span>
+        <span class="absolute inset-0 z-10 flex items-center justify-center {{ overlay_class }}">
+          <span class="flex h-[max(44px,4rem)] w-[max(44px,4rem)] items-center justify-center border border-accent bg-accent text-accent-ink transition-transform group-hover:scale-105">{% render 'icon', name: 'arrow', size: 28 %}</span>
         </span>
       </button>
     </video-embed>

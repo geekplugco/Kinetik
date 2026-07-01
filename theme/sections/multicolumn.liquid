@@ -7,27 +7,31 @@
   style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
   class="border-y border-border-hairline bg-surface-page"
 >
-  <div class="mx-auto grid max-w-[var(--page-width)] gap-x-12 gap-y-10 px-6 md:grid-cols-[0.85fr_1.15fr]">
-    <div class="md:sticky md:top-24 md:self-start">
+  <div class="mx-auto grid max-w-[var(--page-width)] gap-px bg-border-hairline px-6 md:grid-cols-[0.8fr_1.2fr]">
+    <div class="bg-surface-page p-6 md:sticky md:top-24 md:self-start md:p-8">
       <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ kicker }}</span>
       {%- if s.heading != blank -%}
-        <h2 class="hp-reveal hp-reveal--fade mt-4 font-display text-display-2 uppercase text-text-strong">{{ s.heading }}</h2>
+        <h2 class="hp-reveal hp-reveal--fade mt-3 font-display text-h3 tracking-tight text-text-strong">{{ s.heading }}</h2>
       {%- endif -%}
       {%- if s.text != blank -%}
-        <div class="mt-5 max-w-sm text-body-lg leading-snug text-text-muted [&_p]:m-0">{{ s.text }}</div>
+        <div class="mt-4 max-w-sm text-body leading-relaxed text-text-muted [&_p]:m-0">{{ s.text }}</div>
       {%- endif -%}
+      <div class="mt-8 grid grid-cols-2 border border-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted">
+        <span class="border-r border-border-hairline p-3">Framework</span>
+        <span class="p-3 text-right text-text-strong">{{ section.blocks.size }} modules</span>
+      </div>
     </div>
 
-    <ol class="flex flex-col">
+    <ol class="grid bg-surface-page md:grid-cols-2">
       {%- for block in section.blocks -%}
         {%- if block.type == 'column' -%}
           {%- assign num = forloop.index -%}
           <li
             {{ block.shopify_attributes }}
-            class="grid grid-cols-[2.5rem_1fr] gap-x-5 gap-y-2 border-t border-border-hairline py-6 first:border-t-0 first:pt-0 md:grid-cols-[3rem_1fr] md:py-7"
+            class="group grid grid-cols-[2.5rem_1fr] gap-x-5 gap-y-3 border-b border-border-hairline p-5 transition-colors hover:bg-surface-sunken md:grid-cols-[3rem_1fr] md:border-l md:p-7"
           >
             <span class="font-mono text-sm tabular-nums text-text-muted md:text-base">{% if num < 10 %}0{% endif %}{{ num }}</span>
-            <h3 class="font-display text-h3 text-text-strong">{{ block.settings.title }}</h3>
+            <h3 class="font-display text-h4 text-text-strong">{{ block.settings.title }}</h3>
             {%- if block.settings.text != blank -%}
               <div class="col-start-2 max-w-md text-body leading-relaxed text-text-muted [&_p]:m-0">{{ block.settings.text }}</div>
             {%- endif -%}
