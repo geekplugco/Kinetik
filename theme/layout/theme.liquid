@@ -94,12 +94,39 @@
         transform: scale(0.975);
         transition: transform var(--dur-base, 380ms) var(--ease-enter), opacity var(--dur-base, 380ms) var(--ease-enter);
       }
+      .kx-media-effect[data-kx-effect="hero"]::before {
+        background:
+          linear-gradient(90deg, transparent 0 46%, color-mix(in srgb, var(--paper) 36%, transparent) 50%, transparent 54%),
+          linear-gradient(180deg, transparent 0 0, color-mix(in srgb, var(--paper) 12%, transparent) 0 1px, transparent 1px 100%);
+        background-size: 100% 100%, 100% 18px;
+        transform: translateX(-8%);
+      }
+      .kx-media-effect[data-kx-effect="proof"]::before {
+        background:
+          linear-gradient(90deg, color-mix(in srgb, var(--accent) 45%, transparent) 0 1px, transparent 1px 100%),
+          linear-gradient(180deg, color-mix(in srgb, var(--text-strong) 18%, transparent) 0 1px, transparent 1px 100%);
+        background-size: 22px 100%, 100% 22px;
+      }
+      .kx-media-effect[data-kx-effect="hotspot"]::before {
+        background:
+          radial-gradient(circle at 50% 50%, transparent 0 42%, color-mix(in srgb, var(--accent) 30%, transparent) 43% 44%, transparent 45%),
+          linear-gradient(90deg, color-mix(in srgb, var(--accent) 36%, transparent) 0 1px, transparent 1px 100%);
+        background-size: 180px 180px, 28px 100%;
+      }
       .group:hover .kx-media-effect > img,
       .group:focus-within .kx-media-effect > img,
       .group:hover .kx-media-effect > svg,
       .group:focus-within .kx-media-effect > svg { transform: scale(1.045) translateY(-0.6%); filter: contrast(1.08) saturate(1.02); }
+      .group:hover .kx-media-effect[data-kx-effect="hero"] > img,
+      .group:focus-within .kx-media-effect[data-kx-effect="hero"] > img,
+      .group:hover .kx-media-effect[data-kx-effect="hero"] > svg,
+      .group:focus-within .kx-media-effect[data-kx-effect="hero"] > svg { transform: scale(1.025); filter: contrast(1.1) saturate(0.98); }
       .group:hover .kx-media-effect::before,
       .group:focus-within .kx-media-effect::before { opacity: 0.46; transform: translateY(8%); }
+      .group:hover .kx-media-effect[data-kx-effect="hero"]::before,
+      .group:focus-within .kx-media-effect[data-kx-effect="hero"]::before { opacity: 0.32; transform: translateX(4%); }
+      .group:hover .kx-media-effect[data-kx-effect="hotspot"]::before,
+      .group:focus-within .kx-media-effect[data-kx-effect="hotspot"]::before { opacity: 0.38; transform: translateY(4%); }
       .group:hover .kx-media-effect::after,
       .group:focus-within .kx-media-effect::after { opacity: 1; transform: scale(1); }
       .kx-card-spec {
@@ -141,7 +168,8 @@
       body[data-animate-hover="none"] .kx-media-effect > svg,
       body[data-animate-hover="none"] .hp-hover-lift:hover { transform: none !important; filter: none !important; }
       body[data-animate-hover="none"] .kx-media-effect::before,
-      body[data-animate-hover="none"] .kx-media-effect::after { display: none !important; }
+      body[data-animate-hover="none"] .kx-media-effect::after,
+      body[data-animate-hover="none"] .kx-card-spec { display: none !important; }
       body[data-section-divider="hairline"] #MainContent > .shopify-section + .shopify-section { border-top: 1px solid var(--border-hairline); }
     </style>
 

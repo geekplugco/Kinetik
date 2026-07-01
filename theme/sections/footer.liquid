@@ -7,11 +7,11 @@
   {%- if footer_style == 'compact' -%}
     <div class="mx-auto flex max-w-[var(--page-width)] flex-col gap-8 px-6 py-8 md:flex-row md:items-center md:justify-between">
       <div class="max-w-md">
-        <a href="{{ routes.root_url }}" class="block text-text-strong" aria-label="Kinetik">
+        <a href="{{ routes.root_url }}" class="block text-text-strong" aria-label="{{ shop.name | escape }}">
           {%- if settings.logo != blank -%}
-            {{ settings.logo | image_url: width: 420 | image_tag: alt: 'Kinetik', widths: '180,300,420', loading: 'lazy', style: 'max-width:180px', class: 'h-auto w-auto' }}
+            {{ settings.logo | image_url: width: 420 | image_tag: alt: shop.name, widths: '180,300,420', loading: 'lazy', style: 'max-width:180px', class: 'h-auto w-auto' }}
           {%- else -%}
-            {%- render 'brand-logo', class: 'h-7 w-auto text-current' -%}
+            <span class="font-display text-2xl font-bold uppercase leading-none tracking-tight">{{ shop.name }}</span>
           {%- endif -%}
         </a>
         <p class="mt-3 font-mono text-xs uppercase tracking-label text-text-muted">{{ s.tagline | default: 'No noise. Drops, restocks, field notes.' }}</p>
@@ -29,7 +29,7 @@
       {%- endform -%}
     </div>
     <div class="mx-auto flex max-w-[var(--page-width)] flex-col items-center justify-between gap-3 border-t border-border-hairline px-6 py-5 font-mono text-xs text-text-muted md:flex-row">
-      <span>&copy; {{ 'now' | date: '%Y' }} Kinetik. Engineered for movement.</span>
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Engineered for movement.</span>
       {%- if s.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
         <div class="flex flex-wrap items-center gap-2">
           {%- for type in shop.enabled_payment_types -%}
@@ -79,9 +79,9 @@
       <div class="mx-auto max-w-[var(--page-width)]">
         <div class="py-6 text-text-strong">
           {%- if settings.logo != blank -%}
-            {{ settings.logo | image_url: width: 1600 | image_tag: alt: 'Kinetik', widths: '600,1000,1600', loading: 'lazy', class: 'h-auto w-full max-w-none' }}
+            {{ settings.logo | image_url: width: 1600 | image_tag: alt: shop.name, widths: '600,1000,1600', loading: 'lazy', class: 'h-auto w-full max-w-none' }}
           {%- else -%}
-            {%- render 'brand-logo', class: 'h-auto w-full text-current' -%}
+            <span class="block font-display text-[18vw] font-bold uppercase leading-none tracking-tight">{{ shop.name }}</span>
           {%- endif -%}
         </div>
       </div>
@@ -123,27 +123,28 @@
     </div>
   {%- else -%}
   <div class="border-y border-border-hairline">
-    <div class="mx-auto grid max-w-[var(--page-width)] gap-px bg-border-hairline px-6">
-      <div class="grid gap-px bg-border-hairline md:grid-cols-[1.1fr_0.9fr]">
-        <div class="bg-surface-page p-6 md:p-8">
-          <a href="{{ routes.root_url }}" class="block text-text-strong" aria-label="Kinetik">
+    <div class="mx-auto max-w-[var(--page-width)] px-6">
+      <div class="grid border-x border-border-hairline md:grid-cols-[0.85fr_1.15fr]">
+        <div class="border-b border-border-hairline p-5 md:border-b-0 md:border-r md:p-6">
+          <a href="{{ routes.root_url }}" class="block w-fit text-text-strong" aria-label="{{ shop.name | escape }}">
             {%- if settings.logo != blank -%}
-              {{ settings.logo | image_url: width: 1600 | image_tag: alt: 'Kinetik', widths: '600,1000,1600', loading: 'lazy', class: 'h-auto w-full max-w-[760px]' }}
+              {{ settings.logo | image_url: width: 520 | image_tag: alt: shop.name, widths: '180,320,520', loading: 'lazy', style: 'max-width:220px', class: 'h-auto w-auto' }}
             {%- else -%}
-              {%- render 'brand-logo', class: 'h-auto w-full max-w-[760px] text-current' -%}
+              <span class="font-display text-2xl font-bold uppercase leading-none tracking-tight">{{ shop.name }}</span>
             {%- endif -%}
           </a>
-          <div class="mt-6 grid gap-px bg-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted md:grid-cols-3">
-            <span class="bg-surface-page p-3">System footer</span>
-            <span class="bg-surface-page p-3">SS26 field kit</span>
-            <span class="bg-surface-page p-3 text-text-strong">{{ localization.country.currency.iso_code | default: 'USD' }}</span>
+          <p class="mt-4 max-w-sm font-mono text-xs uppercase tracking-label text-text-muted">{{ s.tagline | default: 'No noise. Drops, restocks, field notes.' }}</p>
+          <div class="mt-5 grid max-w-md grid-cols-3 border border-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted">
+            <span class="border-r border-border-hairline p-2">SS26</span>
+            <span class="border-r border-border-hairline p-2">System</span>
+            <span class="p-2 text-text-strong">{{ localization.country.currency.iso_code | default: 'USD' }}</span>
           </div>
         </div>
 
-        <div class="bg-surface-page p-6 md:p-8">
+        <div class="p-5 md:p-6">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.newsletter_heading | default: 'The drop list' }}</span>
-          <h2 class="mt-3 font-display text-h3 tracking-tight text-text-strong">{{ s.cta_heading | default: 'Stay in the system' }}</h2>
-          {%- form 'customer', class: 'mt-7 flex flex-col gap-3' -%}
+          <h2 class="mt-2 font-display text-h3 tracking-tight text-text-strong">{{ s.cta_heading | default: 'Stay in the system' }}</h2>
+          {%- form 'customer', class: 'mt-5 flex flex-col gap-3' -%}
             <input type="hidden" name="contact[tags]" value="newsletter">
             <label for="Footer-email-{{ section.id }}" class="sr-only">{{ 'newsletter.label' | t | default: 'Email' }}</label>
             {%- if form.posted_successfully? -%}
@@ -154,20 +155,20 @@
                 {%- render 'button', label: 'Join', type: 'submit', size: 'md' -%}
               </div>
             {%- endif -%}
-            <p class="font-mono text-xs text-text-muted">{{ s.tagline | default: 'No noise. Drops, restocks, field notes.' }}</p>
+            <p class="font-mono text-xs text-text-muted">Release notes, restocks, and material changes only.</p>
           {%- endform -%}
         </div>
       </div>
 
-      <div class="grid gap-px bg-border-hairline md:grid-cols-4">
-        <nav aria-label="Footer" class="flex flex-col gap-3 bg-surface-page p-6">
+      <div class="grid border-x border-t border-border-hairline md:grid-cols-4">
+        <nav aria-label="Footer" class="flex flex-col gap-3 border-b border-border-hairline p-5 md:border-b-0 md:border-r">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.menu_heading | default: 'Shop' }}</span>
           {%- for link in menu.links -%}
             <a href="{{ link.url }}" class="text-sm text-text-body transition-colors hover:text-text-strong">{{ link.title }}</a>
           {%- endfor -%}
         </nav>
 
-        <div class="flex flex-col gap-3 bg-surface-page p-6">
+        <div class="flex flex-col gap-3 border-b border-border-hairline p-5 md:border-b-0 md:border-r">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">Support</span>
           <a href="/pages/contact" class="text-sm text-text-body transition-colors hover:text-text-strong">Contact</a>
           <a href="/pages/shipping" class="text-sm text-text-body transition-colors hover:text-text-strong">Shipping &amp; returns</a>
@@ -175,7 +176,7 @@
           <a href="/pages/warranty" class="text-sm text-text-body transition-colors hover:text-text-strong">Warranty</a>
         </div>
 
-        <div class="flex flex-col gap-3 bg-surface-page p-6">
+        <div class="flex flex-col gap-3 border-b border-border-hairline p-5 md:border-b-0 md:border-r">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">Social</span>
           {%- if s.show_social -%}
             {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" class="text-sm text-text-body transition-colors hover:text-text-strong" rel="noopener" target="_blank">Instagram</a>{%- endif -%}
@@ -189,7 +190,7 @@
           {%- endif -%}
         </div>
 
-        <div class="flex flex-col gap-3 bg-surface-page p-6">
+        <div class="flex flex-col gap-3 p-5">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">Region</span>
           {%- if s.enable_country_selector or s.enable_language_selector -%}
             {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
@@ -222,8 +223,8 @@
     </div>
   </div>
 
-  <div class="mx-auto flex max-w-[var(--page-width)] flex-col items-center justify-between gap-3 px-6 py-5 font-mono text-xs text-text-muted md:flex-row">
-    <span>&copy; {{ 'now' | date: '%Y' }} Kinetik. Engineered for movement.</span>
+  <div class="mx-auto flex max-w-[var(--page-width)] flex-col items-center justify-between gap-3 px-6 py-4 font-mono text-xs text-text-muted md:flex-row">
+    <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Engineered for movement.</span>
     {%- if s.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
       <div class="flex flex-wrap items-center gap-2">
         {%- for type in shop.enabled_payment_types -%}

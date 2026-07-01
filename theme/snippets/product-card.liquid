@@ -48,7 +48,7 @@
   endfor
 -%}
 <article class="group hp-reveal hp-reveal--fade hp-hover-lift flex flex-col {% if card_mode == 'commerce' %}gap-2{% elsif card_mode == 'editorial' %}gap-4{% else %}gap-3{% endif %}" data-card-mode="{{ card_mode }}">
-  <div data-card-media class="kx-media-effect relative {{ ratio_cls }} overflow-hidden border border-border-hairline bg-surface-sunken">
+  <div data-card-media data-kx-effect="scan" class="kx-media-effect relative {{ ratio_cls }} overflow-hidden border border-border-hairline bg-surface-sunken">
     <a href="{{ product.url }}" aria-label="{{ product.title | escape }}">
       {%- if product.featured_media -%}
         {%- assign show_second = false -%}
@@ -65,7 +65,7 @@
     {%- if quick_add and product.available and card_mode != 'editorial' -%}{%- assign show_quick_add = true -%}{%- endif -%}
     {%- if card_mode != 'editorial' -%}
       <div class="kx-card-spec font-mono text-[10px] uppercase tracking-label text-paper mix-blend-difference"{% if show_quick_add %} style="bottom:3.25rem"{% endif %} aria-hidden="true">
-        <span>{{ code | default: product.vendor | default: 'Kinetik' }}</span>
+        <span>{{ code | default: product.vendor | default: shop.name }}</span>
         <span>{{ spec | default: 'System' }}</span>
       </div>
     {%- endif -%}

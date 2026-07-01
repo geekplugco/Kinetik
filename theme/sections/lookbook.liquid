@@ -57,7 +57,27 @@
     </div>
 
     <div class="{% if is_editorial %}grid grid-cols-12 items-start gap-x-6 gap-y-10 md:gap-y-16{% elsif is_grid %}grid gap-6 md:grid-cols-2{% else %}flex flex-col gap-16 md:gap-24{% endif %}">
-      {%- for block in shots -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'note' -%}
+          {%- assign n = block.settings -%}
+          {%- case n.width -%}
+            {%- when 'wide' -%}{%- assign note_cls = 'col-span-12' -%}
+            {%- when 'narrow' -%}{%- assign note_cls = 'col-span-12 md:col-span-4' -%}
+            {%- else -%}{%- assign note_cls = 'col-span-12 md:col-span-6' -%}
+          {%- endcase -%}
+          <article class="flex min-h-56 flex-col justify-between border border-border-hairline bg-surface-page p-5 md:p-6 {{ note_cls }}" {{ block.shopify_attributes }}>
+            <div>
+              {%- if n.kicker != blank -%}<span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ n.kicker }}</span>{%- endif -%}
+              {%- if n.heading != blank -%}<h3 class="mt-3 font-display text-h3 tracking-tight text-text-strong">{{ n.heading }}</h3>{%- endif -%}
+              {%- if n.text != blank -%}<div class="mt-4 max-w-md text-body text-text-body [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ n.text }}</div>{%- endif -%}
+            </div>
+            {%- if n.link_label != blank and n.link_url != blank -%}
+              <a href="{{ n.link_url }}" class="mt-8 inline-flex min-h-[44px] items-center gap-2 self-start font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 hover:text-accent-press">{{ n.link_label }} <span aria-hidden="true">&#8599;</span></a>
+            {%- endif -%}
+          </article>
+          {%- continue -%}
+        {%- endif -%}
+        {%- if block.type != 'shot' -%}{%- continue -%}{%- endif -%}
         {%- assign b = block.settings -%}
         {%- assign cell_cls = '' -%}
         {%- assign cell_ratio = ratio_cls -%}
@@ -65,7 +85,7 @@
           {%- assign pat = forloop.index0 | modulo: 3 -%}
           {%- if pat == 0 -%}
             {%- assign cell_cls = 'col-span-12 md:col-span-8' -%}
-            {%- assign cell_ratio = 'aspect-[4/5]' -%}
+            {%- assign cell_ratio = 'aspect-[4/5] md:aspect-[3/2]' -%}
           {%- elsif pat == 1 -%}
             {%- assign cell_cls = 'col-span-12 md:col-span-4 md:mt-28' -%}
             {%- assign cell_ratio = 'aspect-[3/4]' -%}
@@ -74,15 +94,40 @@
             {%- assign cell_ratio = 'aspect-[16/9]' -%}
           {%- endif -%}
         {%- endif -%}
+        {%- case b.frame_size -%}
+          {%- when 'feature' -%}
+            {%- assign cell_cls = 'col-span-12 md:col-span-8' -%}
+            {%- assign cell_ratio = 'aspect-[4/5] md:aspect-[3/2]' -%}
+          {%- when 'tall' -%}
+            {%- assign cell_cls = 'col-span-12 md:col-span-4' -%}
+            {%- assign cell_ratio = 'aspect-[3/4]' -%}
+          {%- when 'wide' -%}
+            {%- assign cell_cls = 'col-span-12' -%}
+            {%- assign cell_ratio = 'aspect-[16/9]' -%}
+          {%- when 'square' -%}
+            {%- assign cell_cls = 'col-span-12 md:col-span-4' -%}
+            {%- assign cell_ratio = 'aspect-square' -%}
+        {%- endcase -%}
+        {%- case b.focal_point -%}
+          {%- when 'top' -%}{%- assign focal_cls = 'object-top' -%}
+          {%- when 'bottom' -%}{%- assign focal_cls = 'object-bottom' -%}
+          {%- when 'left' -%}{%- assign focal_cls = 'object-left' -%}
+          {%- when 'right' -%}{%- assign focal_cls = 'object-right' -%}
+          {%- when 'left-top' -%}{%- assign focal_cls = 'object-left-top' -%}
+          {%- when 'right-top' -%}{%- assign focal_cls = 'object-right-top' -%}
+          {%- when 'left-bottom' -%}{%- assign focal_cls = 'object-left-bottom' -%}
+          {%- when 'right-bottom' -%}{%- assign focal_cls = 'object-right-bottom' -%}
+          {%- else -%}{%- assign focal_cls = 'object-center' -%}
+        {%- endcase -%}
         <figure class="group flex flex-col {{ cell_cls }}" {{ block.shopify_attributes }}>
           <div class="relative {{ cell_ratio }} w-full overflow-hidden border border-border-hairline bg-surface-sunken">
             <div class="pointer-events-none absolute inset-x-0 top-0 z-20 flex justify-between px-3 py-2 font-mono text-[10px] uppercase tracking-label text-paper" style="background: rgba(10, 10, 10, 0.72);">
-              <span>Frame {% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
-              <span>Loadout map</span>
+              <span>{% if b.frame_label != blank %}{{ b.frame_label }}{% else %}Frame {% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% endif %}</span>
+              <span>{{ b.overlay_label | default: 'Loadout map' }}</span>
             </div>
             {%- if b.image != blank -%}
-              <div class="kx-media-effect absolute inset-0">
-                {{ b.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600,900,1200,1400', sizes: shot_sizes, alt: b.image_alt, class: 'h-full w-full object-cover' }}
+              <div class="kx-media-effect absolute inset-0" data-kx-effect="hotspot">
+                {{ b.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600,900,1200,1400', sizes: shot_sizes, alt: b.image_alt, class: 'absolute inset-0 h-full w-full object-cover ' | append: focal_cls }}
               </div>
             {%- else -%}
               {{ 'lifestyle-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
@@ -298,6 +343,47 @@
           "label": "t:sections.lookbook.blocks.shot.settings.image_alt.label"
         },
         {
+          "type": "select",
+          "id": "focal_point",
+          "label": "Focal point",
+          "default": "center",
+          "options": [
+            { "value": "center", "label": "Center" },
+            { "value": "top", "label": "Top" },
+            { "value": "bottom", "label": "Bottom" },
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" },
+            { "value": "left-top", "label": "Left top" },
+            { "value": "right-top", "label": "Right top" },
+            { "value": "left-bottom", "label": "Left bottom" },
+            { "value": "right-bottom", "label": "Right bottom" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "frame_size",
+          "label": "Frame size",
+          "default": "auto",
+          "options": [
+            { "value": "auto", "label": "Auto pattern" },
+            { "value": "feature", "label": "Feature wide" },
+            { "value": "tall", "label": "Tall side frame" },
+            { "value": "wide", "label": "Full wide" },
+            { "value": "square", "label": "Square" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "frame_label",
+          "label": "Frame label"
+        },
+        {
+          "type": "text",
+          "id": "overlay_label",
+          "label": "Overlay label",
+          "default": "Loadout map"
+        },
+        {
           "type": "text",
           "id": "caption",
           "label": "t:sections.lookbook.blocks.shot.settings.caption.label"
@@ -397,6 +483,51 @@
           "max": 100,
           "step": 1,
           "default": 30
+        }
+      ]
+    },
+    {
+      "type": "note",
+      "name": "Editorial note",
+      "settings": [
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Kicker",
+          "default": "Field note"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Built as a system"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Use notes between frames to explain the kit, material choices, or campaign context without breaking the shopping path.</p>"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "default": "medium",
+          "options": [
+            { "value": "narrow", "label": "Narrow" },
+            { "value": "medium", "label": "Medium" },
+            { "value": "wide", "label": "Wide" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link"
         }
       ]
     }

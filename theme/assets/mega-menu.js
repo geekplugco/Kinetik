@@ -31,15 +31,15 @@ if (!customElements.get('mega-menu')) {
         }
         this.addEventListener('focusout', this.onFocusOut.bind(this));
 
-        this.menuPanel = this.querySelector('[data-menu-panel]');
-        this.menuOverlay = this.querySelector('[data-menu-overlay]');
+        this.menuPanel = document.querySelector('[data-menu-panel]');
+        this.menuOverlay = document.querySelector('[data-menu-overlay]');
         this.openBtn = this.querySelector('[data-menu-open]');
-        var closeBtn = this.querySelector('[data-menu-close]');
+        var closeBtn = document.querySelector('[data-menu-close]');
         if (this.openBtn) this.openBtn.addEventListener('click', this.openMenu.bind(this));
         if (closeBtn) closeBtn.addEventListener('click', this.closeMenu.bind(this));
         if (this.menuOverlay) this.menuOverlay.addEventListener('click', this.closeMenu.bind(this));
 
-        this.querySelectorAll('[data-sub-toggle]').forEach(function (btn) {
+        document.querySelectorAll('[data-sub-toggle]').forEach(function (btn) {
           btn.addEventListener('click', this.toggleSub.bind(this, btn));
         }, this);
 
@@ -97,7 +97,7 @@ if (!customElements.get('mega-menu')) {
         }
         document.body.style.overflow = 'hidden';
         if (this.openBtn) this.openBtn.setAttribute('aria-expanded', 'true');
-        var close = this.querySelector('[data-menu-close]');
+        var close = document.querySelector('[data-menu-close]');
         if (close) close.focus();
         if (window.KinetikTrap && this.menuPanel) window.KinetikTrap.trap(this.menuPanel);
       }

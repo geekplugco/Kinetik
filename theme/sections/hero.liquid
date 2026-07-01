@@ -57,8 +57,8 @@
 {%- endcapture -%}
 
 {%- capture image_bits -%}
-  {%- if caption != blank -%}<span class="absolute bottom-5 left-5 font-mono text-[11px] uppercase tracking-label text-paper/85">{{ caption }}</span>{%- endif -%}
-  {%- if tag != blank -%}<span class="absolute right-5 top-5 bg-accent px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-accent-ink">{{ tag }}</span>{%- endif -%}
+  {%- if caption != blank -%}<span class="absolute bottom-5 left-5 z-10 font-mono text-[11px] uppercase tracking-label text-paper/85">{{ caption }}</span>{%- endif -%}
+  {%- if tag != blank -%}<span class="absolute right-5 top-5 z-10 bg-accent px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-accent-ink">{{ tag }}</span>{%- endif -%}
 {%- endcapture -%}
 
 {%- capture hero_image -%}
@@ -80,10 +80,10 @@
     style="--pt:{{ s.padding_top | default: 0 }}px;--pb:{{ s.padding_bottom | default: 0 }}px"
     class="theme-dark border-b border-border-strong pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
   >
-    <div class="relative mx-auto min-h-[440px] overflow-hidden bg-ink-900 text-paper md:min-h-[640px] {{ width_cls }} {{ ratio_cls }}">
+    <div class="group kx-media-effect relative mx-auto min-h-[440px] overflow-hidden bg-ink-900 text-paper md:min-h-[640px] {{ width_cls }} {{ ratio_cls }}" data-kx-effect="hero">
       {{ hero_image }}
       <div class="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/55 to-ink-950/25" aria-hidden="true"></div>
-      <div class="absolute inset-0 mx-auto flex max-w-[var(--page-width)] flex-col justify-center gap-6 px-7 py-16 md:px-14 md:py-20 {{ align_cls }}">
+      <div class="absolute inset-0 z-10 mx-auto flex max-w-[var(--page-width)] flex-col justify-center gap-6 px-7 py-16 md:px-14 md:py-20 {{ align_cls }}">
         {{ eyebrow }}
         {{ heading }}
         {{ body }}
@@ -99,7 +99,7 @@
     class="border-b border-border-strong pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
   >
     <div class="mx-auto {{ width_cls }}">
-      <div class="relative w-full bg-ink-900 {{ ratio_cls }}">
+      <div class="group kx-media-effect relative w-full overflow-hidden bg-ink-900 {{ ratio_cls }}" data-kx-effect="hero">
         {{ hero_image }}
         {{ image_bits }}
       </div>
@@ -125,7 +125,7 @@
           {{ body }}
         </div>
       </div>
-      <div class="relative min-h-[440px] overflow-hidden bg-ink-900 md:min-h-[640px] {% if image_left %}order-1 md:order-1{% else %}order-1 md:order-2{% endif %}">
+      <div class="group kx-media-effect relative min-h-[440px] overflow-hidden bg-ink-900 md:min-h-[640px] {% if image_left %}order-1 md:order-1{% else %}order-1 md:order-2{% endif %}" data-kx-effect="hero">
         {{ hero_image }}
         {{ image_bits }}
       </div>

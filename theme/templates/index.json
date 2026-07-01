@@ -31,6 +31,105 @@
         "columns_mobile": "2"
       }
     },
+    "systems": {
+      "type": "promo-grid",
+      "settings": {
+        "subheading": "Shop by use",
+        "heading": "Start with the condition",
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "image_ratio": "wide",
+        "padding_top": 56,
+        "padding_bottom": 56
+      },
+      "blocks": {
+        "sys1": {
+          "type": "promo",
+          "settings": {
+            "image": "shopify://shop_images/08-dark-set-banner.png",
+            "eyebrow": "Rain / commute",
+            "heading": "Weather shell system",
+            "text": "<p>Hard shell, sealed carry, low-noise layers for wet transit.</p>",
+            "button_label": "Shop outerwear",
+            "link": "shopify://collections/new-arrivals"
+          }
+        },
+        "sys2": {
+          "type": "promo",
+          "settings": {
+            "image": "shopify://shop_images/05-sling-worn.png",
+            "eyebrow": "Hands free",
+            "heading": "Carry and access",
+            "text": "<p>Sling, pockets, and quick-reach details for daily movement.</p>",
+            "button_label": "Shop carry",
+            "link": "shopify://collections/new-arrivals"
+          }
+        },
+        "sys3": {
+          "type": "promo",
+          "settings": {
+            "image": "shopify://shop_images/06-detail-trio.png",
+            "eyebrow": "Material proof",
+            "heading": "Fabric and hardware",
+            "text": "<p>Read the construction before you buy the silhouette.</p>",
+            "button_label": "View details",
+            "link": "shopify://pages/about"
+          }
+        }
+      },
+      "block_order": [
+        "sys1",
+        "sys2",
+        "sys3"
+      ]
+    },
+    "material_scan": {
+      "type": "material-scan",
+      "settings": {
+        "subheading": "Material scan",
+        "heading": "Proof before styling",
+        "image": "shopify://shop_images/06-detail-trio.png",
+        "cta_label": "Read the build notes",
+        "cta_url": "shopify://pages/about",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "ms1": {
+          "type": "point",
+          "settings": {
+            "x": 25,
+            "y": 40,
+            "label": "Ripstop face",
+            "detail": "<p>High-tenacity face fabric keeps the system sharp under abrasion.</p>"
+          }
+        },
+        "ms2": {
+          "type": "point",
+          "settings": {
+            "x": 55,
+            "y": 55,
+            "label": "Low-profile hardware",
+            "detail": "<p>Hardware is chosen for quiet operation and glove-friendly handling.</p>"
+          }
+        },
+        "ms3": {
+          "type": "point",
+          "settings": {
+            "x": 72,
+            "y": 72,
+            "label": "Modular carry",
+            "detail": "<p>Carry pieces are designed to sit cleanly over shells and base layers.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ms1",
+        "ms2",
+        "ms3"
+      ]
+    },
     "kit": {
       "type": "build-your-kit",
       "settings": {
@@ -105,6 +204,19 @@
         "button_link": "shopify://pages/about"
       }
     },
+    "manifesto": {
+      "type": "statement",
+      "settings": {
+        "eyebrow": "No noise",
+        "quote": "<p>Every feature has to earn its position.</p>",
+        "attribution": "Kinetik field standard",
+        "alignment": "left",
+        "height": "compact",
+        "button_label": "Shop the system",
+        "button_link": "shopify://collections/new-arrivals",
+        "button_style": "secondary"
+      }
+    },
     "route": {
       "type": "route-map",
       "settings": {
@@ -169,7 +281,22 @@
             "y_1": 42,
             "product_2": "field-sling",
             "x_2": 62,
-            "y_2": 56
+            "y_2": 56,
+            "focal_point": "right",
+            "frame_size": "feature",
+            "frame_label": "Frame 01",
+            "overlay_label": "System map"
+          }
+        },
+        "l_note": {
+          "type": "note",
+          "settings": {
+            "kicker": "Field note",
+            "heading": "The product stays attached to use",
+            "text": "<p>Each frame is a route: what layer is doing the work, where carry sits, and why the hardware is visible.</p>",
+            "width": "medium",
+            "link_label": "Open lookbook",
+            "link_url": "shopify://pages/lookbook"
           }
         },
         "l2": {
@@ -180,7 +307,10 @@
             "caption": "Carry system · hands free",
             "product_1": "field-sling",
             "x_1": 52,
-            "y_1": 48
+            "y_1": 48,
+            "frame_size": "tall",
+            "frame_label": "Frame 02",
+            "overlay_label": "Carry"
           }
         },
         "l3": {
@@ -191,12 +321,16 @@
             "caption": "Material readout · hardware, fabric, closure",
             "product_1": "merino-base-ls",
             "x_1": 45,
-            "y_1": 54
+            "y_1": 54,
+            "frame_size": "wide",
+            "frame_label": "Frame 03",
+            "overlay_label": "Detail"
           }
         }
       },
       "block_order": [
         "l1",
+        "l_note",
         "l2",
         "l3"
       ]
@@ -262,8 +396,11 @@
     "hero",
     "marquee",
     "arrivals",
+    "systems",
+    "material_scan",
     "kit",
     "editorial",
+    "manifesto",
     "route",
     "lookbook",
     "trust",

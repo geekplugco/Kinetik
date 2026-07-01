@@ -35,25 +35,26 @@
 -%}
 
 {%- capture logo_html -%}
-  <a href="{{ routes.root_url }}" class="font-display text-[1.375rem] font-bold uppercase leading-none tracking-tight text-text-strong" aria-label="Kinetik">
+  <a href="{{ routes.root_url }}" class="font-display text-[1.375rem] font-bold uppercase leading-none tracking-tight text-text-strong" aria-label="{{ shop.name | escape }}">
     {%- if settings.logo != blank -%}
       {%- assign logo_w = settings.logo_width | default: 120 -%}
       {%- capture logo_style -%}max-width:{{ logo_w }}px{%- endcapture -%}
       {%- if settings.logo_mobile != blank -%}
-        {{ settings.logo | image_url: width: 480 | image_tag: alt: 'Kinetik', widths: '120,240,360,480', loading: 'eager', style: logo_style, class: 'hidden h-auto w-auto md:block' }}
-        {{ settings.logo_mobile | image_url: width: 360 | image_tag: alt: 'Kinetik', widths: '120,240,360', loading: 'eager', style: logo_style, class: 'h-auto w-auto md:hidden' }}
+        {{ settings.logo | image_url: width: 480 | image_tag: alt: shop.name, widths: '120,240,360,480', loading: 'eager', style: logo_style, class: 'hidden h-auto w-auto md:block' }}
+        {{ settings.logo_mobile | image_url: width: 360 | image_tag: alt: shop.name, widths: '120,240,360', loading: 'eager', style: logo_style, class: 'h-auto w-auto md:hidden' }}
       {%- else -%}
-        {{ settings.logo | image_url: width: 480 | image_tag: alt: 'Kinetik', widths: '120,240,360,480', loading: 'eager', style: logo_style, class: 'h-auto w-auto' }}
+        {{ settings.logo | image_url: width: 480 | image_tag: alt: shop.name, widths: '120,240,360,480', loading: 'eager', style: logo_style, class: 'h-auto w-auto' }}
       {%- endif -%}
     {%- else -%}
-      {%- render 'brand-logo', class: 'h-6 w-auto text-current' -%}
+      {{ shop.name | upcase }}<span class="text-accent">.</span>
     {%- endif -%}
   </a>
 {%- endcapture -%}
 
 {%- capture primary_nav_html -%}
   <nav aria-label="Primary" data-nav class="hidden items-center gap-8 md:flex">
-    {%- for link in links -%}
+    {%- if links.size > 0 -%}
+      {%- for link in links -%}
       {%- if link.links.size > 0 -%}
         <div data-nav-item>
           <a href="{{ link.url }}" data-nav-trigger data-panel-key="{{ forloop.index }}" aria-haspopup="true" aria-expanded="false" class="flex items-center gap-1.5 py-2 font-mono text-xs uppercase tracking-label text-text-body transition-colors hover:text-text-strong aria-expanded:text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
@@ -64,7 +65,11 @@
       {%- else -%}
         <a href="{{ link.url }}" class="flex items-center gap-1.5 py-2 font-mono text-xs uppercase tracking-label text-text-body transition-colors hover:text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{{ link.title }}</a>
       {%- endif -%}
-    {%- endfor -%}
+      {%- endfor -%}
+    {%- else -%}
+      <a href="{{ routes.all_products_collection_url }}" class="flex items-center gap-1.5 py-2 font-mono text-xs uppercase tracking-label text-text-body transition-colors hover:text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Shop</a>
+      <a href="{{ routes.collections_url }}" class="flex items-center gap-1.5 py-2 font-mono text-xs uppercase tracking-label text-text-body transition-colors hover:text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Collections</a>
+    {%- endif -%}
   </nav>
 {%- endcapture -%}
 
@@ -128,12 +133,61 @@
   {%- for link in links -%}
     {%- if link.links.size == 0 -%}{%- continue -%}{%- endif -%}
     {%- assign mega_collection = link.object -%}
+    {%- assign link_handle = link.title | handleize -%}
+    {%- assign mega_has_block = false -%}
+    {%- assign mega_kicker = blank -%}
+    {%- assign mega_heading = blank -%}
+    {%- assign mega_text = blank -%}
+    {%- assign mega_links = blank -%}
+    {%- assign mega_product_list = blank -%}
+    {%- assign mega_products_heading = blank -%}
+    {%- assign mega_image = blank -%}
+    {%- assign mega_image_link = blank -%}
+    {%- assign mega_image_badge = blank -%}
+    {%- assign mega_image_label = blank -%}
+    {%- assign mega_cta_label = blank -%}
+    {%- assign mega_cta_link = blank -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type != 'mega_panel' -%}{%- continue -%}{%- endif -%}
+      {%- assign block_match = block.settings.menu_item | handleize -%}
+      {%- if block_match == link_handle and mega_has_block == false -%}
+        {%- assign mega_has_block = true -%}
+        {%- assign mega_kicker = block.settings.kicker -%}
+        {%- assign mega_heading = block.settings.heading -%}
+        {%- assign mega_text = block.settings.text -%}
+        {%- if block.settings.links != blank -%}
+          {%- assign mega_links = linklists[block.settings.links].links -%}
+        {%- endif -%}
+        {%- if block.settings.collection != blank -%}
+          {%- assign mega_collection = block.settings.collection -%}
+        {%- endif -%}
+        {%- assign mega_product_list = block.settings.products -%}
+        {%- assign mega_products_heading = block.settings.products_heading -%}
+        {%- assign mega_image = block.settings.image -%}
+        {%- assign mega_image_link = block.settings.image_link -%}
+        {%- assign mega_image_badge = block.settings.image_badge -%}
+        {%- assign mega_image_label = block.settings.image_label -%}
+        {%- assign mega_cta_label = block.settings.cta_label -%}
+        {%- assign mega_cta_link = block.settings.cta_link -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if mega_image == blank and mega_collection.featured_image -%}
+      {%- assign mega_image = mega_collection.featured_image -%}
+    {%- endif -%}
     <div data-panel="{{ forloop.index }}" class="absolute top-full hidden origin-top animate-[megaIn_.18s_ease] border-b border-border-hairline bg-surface-page shadow-[0_24px_40px_-24px_rgba(10,10,10,0.25)] {% if mega %}left-0 right-0{% else %}left-6 w-80{% endif %}">
       <div class="mx-auto px-6 py-10 {% if mega %}grid max-w-[var(--page-width)] gap-x-12 gap-y-8 {{ mega_cols }}{% else %}w-80 px-6 py-6{% endif %}">
         <div>
-          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ link.title }}</span>
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{% if mega_kicker != blank %}{{ mega_kicker }}{% else %}{{ link.title }}{% endif %}</span>
+          {%- if mega_heading != blank -%}
+            <p class="mt-3 font-display text-h3 tracking-tight text-text-strong">{{ mega_heading }}</p>
+          {%- endif -%}
+          {%- if mega_text != blank -%}
+            <div class="mt-3 max-w-xs text-sm text-text-muted [&_p]:m-0">{{ mega_text }}</div>
+          {%- endif -%}
           <ul class="mt-5 flex flex-col">
-            {%- for sub in link.links -%}
+            {%- assign menu_links = link.links -%}
+            {%- if mega_links != blank -%}{%- assign menu_links = mega_links -%}{%- endif -%}
+            {%- for sub in menu_links -%}
               <li>
                 <a href="{{ sub.url }}" class="group/sub flex items-center justify-between border-b border-border-hairline py-3 font-display text-h4 text-text-strong transition-colors hover:text-accent-press">
                   {{ sub.title }}
@@ -142,13 +196,40 @@
               </li>
             {%- endfor -%}
           </ul>
-          <a href="{{ link.url }}" class="mt-5 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-body hover:text-text-strong">View all {{ link.title }} {%- render 'icon', name: 'arrow', size: 14 -%}</a>
+          <a href="{% if mega_cta_link != blank %}{{ mega_cta_link }}{% else %}{{ link.url }}{% endif %}" class="mt-5 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-body hover:text-text-strong">{% if mega_cta_label != blank %}{{ mega_cta_label }}{% else %}View all {{ link.title }}{% endif %} {%- render 'icon', name: 'arrow', size: 14 -%}</a>
         </div>
 
-        {%- if show_products and mega_collection.products.size > 0 -%}
+        {%- if show_products and mega_product_list != blank -%}
           <div>
             <div class="mb-4 flex items-baseline justify-between">
-              <span class="font-mono text-xs uppercase tracking-label text-text-muted">Featured</span>
+              <span class="font-mono text-xs uppercase tracking-label text-text-muted">{% if mega_products_heading != blank %}{{ mega_products_heading }}{% else %}Featured{% endif %}</span>
+              <a href="{{ link.url }}" class="font-mono text-[11px] uppercase tracking-label text-text-body hover:text-text-strong">Shop all</a>
+            </div>
+            <ul class="grid grid-cols-3 gap-4">
+              {%- for product in mega_product_list limit: 3 -%}
+                {%- assign p_code = product.metafields.custom.product_code.value | default: product.selected_or_first_available_variant.sku -%}
+                {%- assign p_badge = product.metafields.custom.badge.value -%}
+                <li>
+                  <a href="{{ product.url }}" class="group/p block">
+                    <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+                      {%- if product.featured_media -%}
+                        {%- assign menu_product_alt = product.featured_media.alt | default: product.title | escape -%}
+                        {{ product.featured_media | image_url: width: 300 | image_tag: loading: 'lazy', widths: '150,300', sizes: '200px', alt: menu_product_alt, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover/p:scale-105' }}
+                      {%- endif -%}
+                      {%- if p_badge != blank -%}<span class="absolute left-2 top-2 bg-accent px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-label text-accent-ink">{{ p_badge }}</span>{%- endif -%}
+                    </div>
+                    {%- if p_code != blank -%}<span class="mt-2 block font-mono text-[10px] uppercase tracking-label text-text-muted">{{ p_code }}</span>{%- endif -%}
+                    <span class="block truncate font-sans text-sm text-text-strong">{{ product.title }}</span>
+                    <span class="font-mono text-xs text-text-muted">{{ product.price | money }}</span>
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- elsif show_products and mega_collection.products.size > 0 -%}
+          <div>
+            <div class="mb-4 flex items-baseline justify-between">
+              <span class="font-mono text-xs uppercase tracking-label text-text-muted">{% if mega_products_heading != blank %}{{ mega_products_heading }}{% else %}Featured{% endif %}</span>
               <a href="{{ link.url }}" class="font-mono text-[11px] uppercase tracking-label text-text-body hover:text-text-strong">Shop all</a>
             </div>
             <ul class="grid grid-cols-3 gap-4">
@@ -175,16 +256,16 @@
         {%- endif -%}
 
         {%- if show_featured -%}
-          <a href="{{ link.url }}" class="group/feat relative block aspect-[4/5] overflow-hidden bg-surface-sunken lg:aspect-auto">
-            {%- if mega_collection.featured_image -%}
-              {%- assign menu_collection_alt = mega_collection.featured_image.alt | default: mega_collection.title | escape -%}
-              {{ mega_collection.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,600', sizes: '24vw', alt: menu_collection_alt, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover/feat:scale-105' }}
+          <a href="{% if mega_image_link != blank %}{{ mega_image_link }}{% else %}{{ link.url }}{% endif %}" class="group/feat relative block aspect-[4/5] overflow-hidden bg-surface-sunken lg:aspect-auto">
+            {%- if mega_image != blank -%}
+              {%- assign menu_collection_alt = mega_image.alt | default: mega_collection.title | default: link.title | escape -%}
+              {{ mega_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '300,500,700', sizes: '24vw', alt: menu_collection_alt, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover/feat:scale-105' }}
             {%- else -%}
               {{ 'lifestyle-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
             {%- endif -%}
-            <span class="absolute left-4 top-4 font-mono text-[10px] uppercase tracking-label text-paper mix-blend-difference">The drop</span>
+            <span class="absolute left-4 top-4 font-mono text-[10px] uppercase tracking-label text-paper mix-blend-difference">{% if mega_image_badge != blank %}{{ mega_image_badge }}{% else %}The drop{% endif %}</span>
             <span class="absolute bottom-4 left-4 right-4 flex items-center justify-between bg-ink-950/85 px-3 py-2 font-mono text-[11px] uppercase tracking-label text-paper">
-              Shop {{ link.title }}
+              {% if mega_image_label != blank %}{{ mega_image_label }}{% else %}Shop {{ link.title }}{% endif %}
               {%- render 'icon', name: 'arrow', size: 14, class: 'text-accent' -%}
             </span>
           </a>
@@ -192,47 +273,53 @@
       </div>
     </div>
   {%- endfor -%}
-
-  <div data-menu-overlay class="pointer-events-none fixed inset-0 z-50 bg-ink-950/50 opacity-0 transition-opacity md:hidden" aria-hidden="true"></div>
-  <div id="HeaderMobileMenu" data-menu-panel role="dialog" aria-modal="true" aria-label="Menu" class="fixed inset-y-0 left-0 z-50 flex w-[88%] max-w-sm -translate-x-full flex-col bg-surface-page transition-transform duration-300 md:hidden">
-    <div class="flex items-center justify-between border-b border-border-hairline px-5 py-4">
-      {{ logo_html }}
-      <button type="button" aria-label="Close menu" data-menu-close class="flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'icon', name: 'close' -%}</button>
-    </div>
-    <nav aria-label="Mobile" class="flex-1 overflow-y-auto px-5 py-2">
-      <ul class="flex flex-col">
-        {%- for link in links -%}
-          <li class="border-b border-border-hairline">
-            <div class="flex items-center justify-between">
-              <a href="{{ link.url }}" class="flex-1 py-4 font-display text-h4 text-text-strong">{{ link.title }}</a>
-              {%- if link.links.size > 0 -%}
-                <button type="button" data-sub-toggle aria-expanded="false" aria-label="Expand {{ link.title | escape }}" class="flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
-                  <span data-sub-plus>{%- render 'icon', name: 'plus', size: 18 -%}</span>
-                  <span data-sub-minus class="hidden">{%- render 'icon', name: 'minus', size: 18 -%}</span>
-                </button>
-              {%- endif -%}
-            </div>
-            {%- if link.links.size > 0 -%}
-              <div data-sub-panel class="hidden pb-4">
-                <ul class="pl-1">
-                  {%- for sub in link.links -%}
-                    <li><a href="{{ sub.url }}" class="block py-2.5 font-sans text-body text-text-body">{{ sub.title }}</a></li>
-                  {%- endfor -%}
-                </ul>
-              </div>
-            {%- endif -%}
-          </li>
-        {%- endfor -%}
-      </ul>
-    </nav>
-    <div class="flex items-center gap-3 border-t border-border-hairline px-5 py-2 font-mono text-xs uppercase tracking-label text-text-body">
-      {%- if s.show_account_icon != false -%}
-        <a href="{{ routes.account_url }}" class="flex h-11 items-center gap-2 px-1">{%- render 'icon', name: 'user', size: 16 -%} Account</a>
-      {%- endif -%}
-      <button type="button" data-search-open class="flex h-11 items-center gap-2 px-1">{%- render 'icon', name: 'search', size: 16 -%} Search</button>
-    </div>
-  </div>
 </mega-menu>
+
+<div data-menu-overlay class="pointer-events-none fixed inset-0 z-[80] bg-ink-950/65 opacity-0 transition-opacity md:hidden" aria-hidden="true"></div>
+<div id="HeaderMobileMenu" data-menu-panel role="dialog" aria-modal="true" aria-label="Menu" class="fixed inset-y-0 left-0 z-[81] flex w-[92%] max-w-sm -translate-x-full flex-col border-r border-border-hairline bg-surface-page shadow-[24px_0_60px_-36px_rgba(10,10,10,0.65)] transition-transform duration-300 md:hidden">
+  <div class="flex items-center justify-between border-b border-border-hairline px-5 py-4">
+    {{ logo_html }}
+    <button type="button" aria-label="Close menu" data-menu-close class="flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'icon', name: 'close' -%}</button>
+  </div>
+  <nav aria-label="Mobile" class="flex-1 overflow-y-auto px-5 py-2">
+    <ul class="flex flex-col">
+      {%- if links.size > 0 -%}
+        {%- for link in links -%}
+        <li class="border-b border-border-hairline">
+          <div class="flex items-center justify-between">
+            <a href="{{ link.url }}" class="flex-1 py-4 font-display text-h4 text-text-strong">{{ link.title }}</a>
+            {%- if link.links.size > 0 -%}
+              <button type="button" data-sub-toggle aria-expanded="false" aria-label="Expand {{ link.title | escape }}" class="flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+                <span data-sub-plus>{%- render 'icon', name: 'plus', size: 18 -%}</span>
+                <span data-sub-minus class="hidden">{%- render 'icon', name: 'minus', size: 18 -%}</span>
+              </button>
+            {%- endif -%}
+          </div>
+          {%- if link.links.size > 0 -%}
+            <div data-sub-panel class="hidden pb-4">
+              <ul class="pl-1">
+                {%- for sub in link.links -%}
+                  <li><a href="{{ sub.url }}" class="block py-2.5 font-sans text-body text-text-body">{{ sub.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        </li>
+        {%- endfor -%}
+      {%- else -%}
+        <li class="border-b border-border-hairline"><a href="{{ routes.all_products_collection_url }}" class="block py-4 font-display text-h4 text-text-strong">Shop</a></li>
+        <li class="border-b border-border-hairline"><a href="{{ routes.collections_url }}" class="block py-4 font-display text-h4 text-text-strong">Collections</a></li>
+        <li class="border-b border-border-hairline"><a href="{{ routes.search_url }}" class="block py-4 font-display text-h4 text-text-strong">Search</a></li>
+      {%- endif -%}
+    </ul>
+  </nav>
+  <div class="flex items-center gap-3 border-t border-border-hairline px-5 py-2 font-mono text-xs uppercase tracking-label text-text-body">
+    {%- if s.show_account_icon != false -%}
+      <a href="{{ routes.account_url }}" class="flex h-11 items-center gap-2 px-1">{%- render 'icon', name: 'user', size: 16 -%} Account</a>
+    {%- endif -%}
+    <button type="button" data-search-open class="flex h-11 items-center gap-2 px-1">{%- render 'icon', name: 'search', size: 16 -%} Search</button>
+  </div>
+</div>
 
 {%- if settings.cart_type == 'drawer' -%}
 <cart-drawer data-currency="{{ currency }}">
@@ -480,6 +567,89 @@
       "id": "cart_upsell_heading",
       "label": "Upsell heading",
       "default": "Complete the kit"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_panel",
+      "name": "Mega menu panel",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item",
+          "label": "Menu item to replace",
+          "info": "Enter the exact top-level menu item title, for example Shop or Gear."
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Kicker"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "link_list",
+          "id": "links",
+          "label": "Override link list"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Featured collection"
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Featured products",
+          "limit": 4
+        },
+        {
+          "type": "text",
+          "id": "products_heading",
+          "label": "Products heading",
+          "default": "Featured"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Promo image"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Promo image link"
+        },
+        {
+          "type": "text",
+          "id": "image_badge",
+          "label": "Image badge",
+          "default": "The drop"
+        },
+        {
+          "type": "text",
+          "id": "image_label",
+          "label": "Image label"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA label"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "CTA link"
+        }
+      ]
     }
   ],
   "presets": [

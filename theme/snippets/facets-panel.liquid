@@ -1,3 +1,40 @@
+{%- liquid
+  assign has_color_filter = false
+  assign has_size_filter = false
+  assign color_values = '|'
+  assign size_values = '|'
+  for filter in collection.filters
+    assign flabel = filter.label | downcase
+    if flabel contains 'color' or flabel contains 'colour'
+      assign has_color_filter = true
+    endif
+    if flabel contains 'size'
+      assign has_size_filter = true
+    endif
+  endfor
+  for product in collection.products
+    for option in product.options_with_values
+      assign oname = option.name | downcase
+      if oname contains 'color' or oname contains 'colour'
+        for value in option.values
+          assign token = '|' | append: value | append: '|'
+          unless color_values contains token
+            assign color_values = color_values | append: value | append: '|'
+          endunless
+        endfor
+      elsif oname contains 'size'
+        for value in option.values
+          assign token = '|' | append: value | append: '|'
+          unless size_values contains token
+            assign size_values = size_values | append: value | append: '|'
+          endunless
+        endfor
+      endif
+    endfor
+  endfor
+  assign color_list = color_values | split: '|'
+  assign size_list = size_values | split: '|'
+-%}
 {%- for filter in collection.filters -%}
   <details class="border-b border-border-hairline py-4"{% if filter.active_values.size > 0 or filter.min_value.value != blank or filter.max_value.value != blank %} open{% endif %}>
     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-mono text-xs uppercase tracking-label text-text-strong [&::-webkit-details-marker]:hidden">
@@ -38,3 +75,43 @@
     </div>
   </details>
 {%- endfor -%}
+{%- unless has_color_filter -%}
+  {%- assign rendered_color = false -%}
+  {%- for value in color_list -%}
+    {%- if value != blank -%}{%- assign rendered_color = true -%}{%- break -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if rendered_color -%}
+    <details class="border-b border-border-hairline py-4">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-mono text-xs uppercase tracking-label text-text-strong [&::-webkit-details-marker]:hidden">Color<span aria-hidden="true">+</span></summary>
+      <div class="mt-4 flex flex-col gap-3">
+        {%- for value in color_list -%}
+          {%- if value == blank -%}{%- continue -%}{%- endif -%}
+          <label class="flex min-h-[44px] items-center gap-3 text-sm text-text-body">
+            <input type="checkbox" name="filter.v.option.color" value="{{ value | escape }}" class="h-4 w-4 border border-border-strong accent-[var(--accent)]">
+            <span>{{ value }}</span>
+          </label>
+        {%- endfor -%}
+      </div>
+    </details>
+  {%- endif -%}
+{%- endunless -%}
+{%- unless has_size_filter -%}
+  {%- assign rendered_size = false -%}
+  {%- for value in size_list -%}
+    {%- if value != blank -%}{%- assign rendered_size = true -%}{%- break -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if rendered_size -%}
+    <details class="border-b border-border-hairline py-4">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-mono text-xs uppercase tracking-label text-text-strong [&::-webkit-details-marker]:hidden">Size<span aria-hidden="true">+</span></summary>
+      <div class="mt-4 flex flex-col gap-3">
+        {%- for value in size_list -%}
+          {%- if value == blank -%}{%- continue -%}{%- endif -%}
+          <label class="flex min-h-[44px] items-center gap-3 text-sm text-text-body">
+            <input type="checkbox" name="filter.v.option.size" value="{{ value | escape }}" class="h-4 w-4 border border-border-strong accent-[var(--accent)]">
+            <span>{{ value }}</span>
+          </label>
+        {%- endfor -%}
+      </div>
+    </details>
+  {%- endif -%}
+{%- endunless -%}
