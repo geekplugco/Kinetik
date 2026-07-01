@@ -1,0 +1,142 @@
+<section
+  data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  class="mx-auto max-w-[900px] px-6"
+>
+  <a href="{{ routes.account_url }}" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-text-strong">&larr; {{ 'customer.account.title' | t | default: 'Account' }}</a>
+
+  <header class="mt-6 flex flex-wrap items-end justify-between gap-4 border-b border-border-hairline pb-6">
+    <div class="flex flex-col gap-2">
+      <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ order.name }}</h1>
+      <span class="font-mono text-xs uppercase tracking-label text-text-muted">Placed {{ order.created_at | date: '%b %d, %Y' }}</span>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      {%- render 'tag', label: order.financial_status_label -%}
+      {%- if order.fulfillment_status == 'fulfilled' -%}
+        {%- render 'tag', label: order.fulfillment_status_label, tone: 'accent' -%}
+      {%- else -%}
+        {%- render 'tag', label: order.fulfillment_status_label -%}
+      {%- endif -%}
+    </div>
+  </header>
+
+  <div class="mt-8 grid gap-10 md:grid-cols-[2fr_1fr]">
+    <div class="flex flex-col gap-6">
+      <table class="w-full border-collapse text-left text-sm">
+        <thead>
+          <tr class="border-b border-border-strong font-mono text-xs uppercase tracking-label text-text-muted">
+            <th class="py-3 pr-4">{{ 'customer.order.product' | t | default: 'Product' }}</th>
+            <th class="py-3 pr-4 text-center">{{ 'customer.order.quantity' | t | default: 'Qty' }}</th>
+            <th class="py-3 text-right">{{ 'customer.order.total' | t | default: 'Total' }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for line in order.line_items -%}
+            <tr class="border-b border-border-hairline align-top text-text-body">
+              <td class="py-4 pr-4">
+                <div class="flex items-start gap-4">
+                  <div class="relative hidden h-16 w-14 shrink-0 overflow-hidden bg-surface-sunken sm:block">
+                    {%- if line.image -%}
+                      {{ line.image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,120', sizes: '56px', alt: line.title, class: 'h-full w-full object-cover' }}
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
+                    {%- endif -%}
+                  </div>
+                  <div class="flex min-w-0 flex-col gap-1">
+                    {%- if line.product.url -%}
+                      <a href="{{ line.product.url }}" class="font-sans text-text-strong transition-colors hover:text-accent-press">{{ line.title }}</a>
+                    {%- else -%}
+                      <span class="font-sans text-text-strong">{{ line.title }}</span>
+                    {%- endif -%}
+                    {%- unless line.variant.title contains 'Default' -%}
+                      <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ line.variant.title }}</span>
+                    {%- endunless -%}
+                    {%- if line.sku != blank -%}
+                      <span class="font-mono text-xs text-text-faint">{{ line.sku }}</span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </td>
+              <td class="py-4 pr-4 text-center font-mono">{{ line.quantity }}</td>
+              <td class="py-4 text-right font-mono text-text-strong">{{ line.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <dl class="ml-auto grid w-full max-w-xs grid-cols-[1fr_auto] gap-x-8 gap-y-2 font-mono text-sm">
+        <dt class="text-text-muted">Subtotal</dt>
+        <dd class="text-right text-text-body">{{ order.line_items_subtotal_price | money }}</dd>
+        {%- if order.total_discounts > 0 -%}
+          <dt class="text-text-muted">Discount</dt>
+          <dd class="text-right text-text-body">&minus;{{ order.total_discounts | money }}</dd>
+        {%- endif -%}
+        <dt class="text-text-muted">Shipping</dt>
+        <dd class="text-right text-text-body">{{ order.shipping_price | money }}</dd>
+        <dt class="text-text-muted">Tax</dt>
+        <dd class="text-right text-text-body">{{ order.tax_price | money }}</dd>
+        <dt class="mt-2 border-t border-border-strong pt-2 uppercase tracking-label text-text-strong">{{ 'customer.order.total' | t | default: 'Total' }}</dt>
+        <dd class="mt-2 border-t border-border-strong pt-2 text-right text-text-strong">{{ order.total_price | money }}</dd>
+      </dl>
+    </div>
+
+    <aside class="flex flex-col gap-8">
+      {%- if order.shipping_address -%}
+        <div class="flex flex-col gap-2">
+          <h2 class="font-mono text-xs uppercase tracking-label text-text-muted">Shipping address</h2>
+          <address class="not-italic text-sm text-text-body">{{ order.shipping_address | format_address }}</address>
+        </div>
+      {%- endif -%}
+      {%- if order.billing_address -%}
+        <div class="flex flex-col gap-2">
+          <h2 class="font-mono text-xs uppercase tracking-label text-text-muted">Billing address</h2>
+          <address class="not-italic text-sm text-text-body">{{ order.billing_address | format_address }}</address>
+        </div>
+      {%- endif -%}
+    </aside>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.main-order.name",
+  "tag": "section",
+  "class": "section section--main-order",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main-order.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-order.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-order.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-order.settings.padding_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.main-order.presets.name"
+    }
+  ]
+}
+{% endschema %}

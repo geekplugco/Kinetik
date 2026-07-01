@@ -1,0 +1,73 @@
+<recently-viewed-products data-current="{{ product.handle }}" data-limit="{{ section.settings.products_to_show | default: 4 }}" hidden>
+  <section
+    data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+    style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+    class="bg-surface-page"
+  >
+    <div class="mx-auto max-w-[var(--page-width)] px-6">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="mb-8 font-display text-[clamp(2rem,4vw,3rem)] font-bold uppercase leading-[0.95] tracking-tight text-text-strong">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      <div data-rv-grid style="--cols:{{ section.settings.products_to_show | default: 4 }}" class="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-[repeat(var(--cols,4),minmax(0,1fr))]"></div>
+    </div>
+  </section>
+</recently-viewed-products>
+{% schema %}
+{
+  "name": "t:sections.recently-viewed.name",
+  "tag": "section",
+  "class": "section section--recently-viewed",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.recently-viewed.settings.heading.label",
+      "default": "Recently viewed"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "t:sections.recently-viewed.settings.products_to_show.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.recently-viewed.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.recently-viewed.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.recently-viewed.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.recently-viewed.settings.padding_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.recently-viewed.presets.name"
+    }
+  ]
+}
+{% endschema %}

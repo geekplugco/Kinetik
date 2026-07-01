@@ -5,6 +5,18 @@
   "settings": [
     { "type": "header", "content": "Layout" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "select", "id": "style", "label": "Style", "default": "plain",
+      "options": [
+        { "value": "plain", "label": "Plain" },
+        { "value": "panel", "label": "Dark panel" },
+        { "value": "accent-rule", "label": "Accent rule" }
+      ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "page",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" },
+        { "value": "narrow", "label": "Narrow" }
+      ] },
     { "type": "header", "content": "Content" },
     { "type": "inline_richtext", "id": "subheading", "label": "Subheading" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Rich text" },
@@ -18,5 +30,9 @@
     { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "default": 48, "unit": "px", "label": "Top padding" },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "default": 48, "unit": "px", "label": "Bottom padding" }
   ],
-  "presets": [{ "name": "Rich text" }]
+  "presets": [
+    { "name": "Rich text" },
+    { "name": "Rich text — Centered narrow", "settings": { "content_alignment": "center", "width": "narrow" } },
+    { "name": "Rich text — Dark panel", "settings": { "style": "panel", "content_alignment": "center", "color_scheme": "scheme-2" } }
+  ]
 }

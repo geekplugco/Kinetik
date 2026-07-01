@@ -1,0 +1,185 @@
+{%- liquid
+  assign show_filter = section.settings.enable_filtering
+  assign show_sort = section.settings.enable_sorting
+  assign cols = section.settings.columns_desktop | default: 4
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign active_filter_count = 0
+  for filter in collection.filters
+    assign active_filter_count = active_filter_count | plus: filter.active_values.size
+    if filter.type == 'price_range'
+      if filter.min_value.value != blank or filter.max_value.value != blank
+        assign active_filter_count = active_filter_count | plus: 1
+      endif
+    endif
+  endfor
+-%}
+{%- paginate collection.products by 50 -%}
+  <section
+    data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+    style="--cols-desktop:{{ cols }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+    class="mx-auto max-w-[var(--page-width)] px-6"
+  >
+    <collection-facets>
+      <header class="flex flex-col gap-2 border-b border-border-hairline pb-8">
+        <span class="font-mono text-xs uppercase tracking-label text-text-muted">Collection</span>
+        <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ collection.title }}</h1>
+        {%- if collection.description != blank -%}
+          <div class="max-w-prose text-body text-text-muted">{{ collection.description }}</div>
+        {%- endif -%}
+      </header>
+
+      {%- if show_filter or show_sort -%}
+        <form data-facet-form action="{{ collection.url }}" method="get" class="contents">
+        <div class="flex flex-wrap items-center justify-between gap-4 py-6">
+          {%- if show_filter -%}
+            <div class="flex flex-wrap items-center gap-3">
+              <button type="button" data-facet-open class="inline-flex min-h-[44px] items-center gap-2 border border-border-strong px-4 py-2 font-mono text-xs uppercase tracking-label text-text-strong transition-colors hover:bg-surface-sunken">
+                Filters
+                {%- if active_filter_count > 0 -%}<span class="bg-accent px-1.5 py-0.5 text-accent-ink">{{ active_filter_count }}</span>{%- endif -%}
+              </button>
+              {%- if active_filter_count > 0 -%}
+                <a href="{{ collection.url }}{% if sort_by != blank %}?sort_by={{ sort_by | url_encode }}{% endif %}" class="font-mono text-xs uppercase tracking-label text-text-muted underline underline-offset-4 hover:text-text-strong">Clear all</a>
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            <span></span>
+          {%- endif -%}
+          {%- if show_sort -%}
+            <label class="flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted">
+              Sort
+              <select name="sort_by" data-sort class="min-h-[44px] border border-border-strong bg-surface-page px-3 py-2 text-text-strong">
+                {%- for option in collection.sort_options -%}
+                  <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name }}</option>
+                {%- endfor -%}
+              </select>
+            </label>
+          {%- endif -%}
+        </div>
+
+        {%- if show_filter -%}
+          <div data-facet-overlay class="pointer-events-none fixed inset-0 z-50 bg-ink-950/50 opacity-0 transition-opacity motion-reduce:transition-none" aria-hidden="true"></div>
+          <aside data-facet-panel role="dialog" aria-modal="true" aria-label="Collection filters" class="fixed inset-y-0 left-0 z-50 flex w-[92vw] max-w-sm -translate-x-full flex-col bg-surface-page transition-transform duration-300 motion-reduce:transition-none md:sticky md:top-24 md:z-auto md:hidden">
+            <div class="flex items-center justify-between border-b border-border-hairline px-5 py-4">
+              <span class="font-mono text-xs uppercase tracking-label text-text-strong">Filters</span>
+              <button type="button" data-facet-close aria-label="Close filters" class="flex h-11 w-11 items-center justify-center text-text-strong">×</button>
+            </div>
+            <div class="flex-1 overflow-y-auto px-5 py-4">
+              {%- render 'facets-panel', collection: collection -%}
+            </div>
+            <div class="border-t border-border-hairline p-5">
+              <button type="submit" class="inline-flex min-h-[44px] w-full items-center justify-center bg-accent px-5 py-3 font-mono text-xs uppercase tracking-label text-accent-ink">Apply filters</button>
+            </div>
+          </aside>
+
+          <div class="hidden border-y border-border-hairline py-5 md:block">
+            {%- render 'facets-panel', collection: collection -%}
+          </div>
+
+          {%- if active_filter_count > 0 -%}
+            <div class="flex flex-wrap gap-2 pb-6">
+              {%- for filter in collection.filters -%}
+                {%- for value in filter.active_values -%}
+                  <a href="{{ value.url_to_remove }}" class="inline-flex min-h-8 items-center gap-2 border border-border-hairline px-2 py-1 font-mono text-[11px] uppercase tracking-label text-text-strong">{{ value.label }} <span aria-hidden="true">×</span></a>
+                {%- endfor -%}
+                {%- assign has_price_filter = false -%}
+                {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
+                  {%- assign has_price_filter = true -%}
+                {%- endif -%}
+                {%- if filter.type == 'price_range' and has_price_filter -%}
+                  <a href="{{ filter.url_to_remove }}" class="inline-flex min-h-8 items-center gap-2 border border-border-hairline px-2 py-1 font-mono text-[11px] uppercase tracking-label text-text-strong">Price <span aria-hidden="true">×</span></a>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+        </form>
+      {%- endif -%}
+
+      <p class="mb-6 font-mono text-xs text-text-muted" data-count>{{ collection.products_count }} products</p>
+
+      <div data-grid class="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-[repeat(var(--cols-desktop,4),minmax(0,1fr))]">
+        {%- for product in collection.products -%}
+          <div>
+            {%- render 'product-card', product: product -%}
+          </div>
+        {%- else -%}
+          <div class="col-span-full border border-border-hairline px-6 py-12 text-center">
+            <p class="font-display text-h3 text-text-strong">No products match this setup.</p>
+            <p class="mx-auto mt-2 max-w-md text-sm text-text-muted">Clear filters or browse the full collection to reset the grid.</p>
+            <a href="{{ collection.url }}" class="mt-5 inline-flex min-h-[44px] items-center justify-center border border-border-strong px-5 py-2 font-mono text-xs uppercase tracking-label text-text-strong">Clear filters</a>
+          </div>
+        {%- endfor -%}
+      </div>
+    </collection-facets>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="mt-10 font-mono text-xs uppercase tracking-label" aria-label="Pagination">{{ paginate | default_pagination }}</nav>
+    {%- endif -%}
+  </section>
+{%- endpaginate -%}
+<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+{% schema %}
+{
+  "name": "t:sections.main-collection.name",
+  "tag": "section",
+  "class": "section section--main-collection",
+  "enabled_on": {
+    "templates": [
+      "collection"
+    ]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "t:sections.main-collection.settings.enable_filtering.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "t:sections.main-collection.settings.enable_sorting.label",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "t:sections.main-collection.settings.columns_desktop.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main-collection.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-collection.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-collection.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-collection.settings.padding_bottom.label"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,134 @@
+<!-- @dsCard group="Storefront" viewport="1280x820" name="Storefront — Home · PLP · PDP" subtitle="Interactive techwear shop with smart cart" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kinetik — Storefront</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-page); }
+  #app { min-height: 100vh; display: flex; flex-direction: column; }
+  .upsell { display: flex; gap: 1px; overflow-x: auto; background: var(--border-hairline); border-top: 1px solid var(--border-hairline); }
+  .upsell::-webkit-scrollbar { height: 0; }
+</style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script src="data.js"></script>
+  <script type="text/babel" src="Header.jsx"></script>
+  <script type="text/babel" src="Footer.jsx"></script>
+  <script type="text/babel" src="HomeView.jsx"></script>
+  <script type="text/babel" src="PlpView.jsx"></script>
+  <script type="text/babel" src="PdpView.jsx"></script>
+  <script type="text/babel">
+    const { Drawer, CartLineItem, MediaTile, PriceTag, ShippingBar, Toast, Button, Tag, Icon } = window.KinetikDesignSystem_fefe1a;
+    const { useState, useEffect } = React;
+    const PRODUCTS = window.KINETIK_PRODUCTS;
+
+    function App() {
+      const [view, setView] = useState('home');      // home | plp | pdp
+      const [plpTitle, setPlpTitle] = useState('Shop All');
+      const [active, setActive] = useState(PRODUCTS[0]);
+      const [cart, setCart] = useState([]);
+      const [open, setOpen] = useState(false);
+      const [theme, setTheme] = useState('light');
+      const [toast, setToast] = useState(false);
+
+      useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+      }, [theme]);
+
+      const addToCart = (p) => {
+        const variant = [p.color, p.size].filter(Boolean).join(' · ') || 'One Size';
+        const key = p.id + variant;
+        setCart(prev => {
+          const found = prev.find(i => i.key === key);
+          if (found) return prev.map(i => i.key === key ? { ...i, qty: i.qty + (p.qty || 1) } : i);
+          return [...prev, { key, id: p.id, name: p.name, variant, price: p.price, compareAt: p.compareAt, code: p.code, qty: p.qty || 1 }];
+        });
+        setOpen(true);
+        setToast(true);
+      };
+      const setQty = (key, qty) => setCart(prev => prev.map(i => i.key === key ? { ...i, qty } : i));
+      const remove = (key) => setCart(prev => prev.filter(i => i.key !== key));
+
+      const openPdp = (p) => { if (p && p.id) { setActive(p); } setView('pdp'); window.scrollTo(0, 0); };
+      const nav = (v, label) => { setView(v); if (label) setPlpTitle(label === 'Shop All' ? 'Shop All' : label); window.scrollTo(0, 0); };
+
+      const count = cart.reduce((n, i) => n + i.qty, 0);
+      const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+
+      return (
+        <React.Fragment>
+          {window.Header && <window.Header cartCount={count} onCart={() => setOpen(true)} onNav={nav} active={view} theme={theme} onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')} />}
+
+          <main style={{ flex: 1 }}>
+            {view === 'home' && window.HomeView && <window.HomeView products={PRODUCTS} onAdd={addToCart} onOpen={openPdp} />}
+            {view === 'plp' && window.PlpView && <window.PlpView products={PRODUCTS} title={plpTitle} onAdd={addToCart} onOpen={openPdp} />}
+            {view === 'pdp' && window.PdpView && <window.PdpView product={active} onAdd={addToCart} />}
+          </main>
+
+          {window.Footer && <window.Footer />}
+
+          {/* SMART CART DRAWER */}
+          <Drawer open={open} onClose={() => setOpen(false)} title={`Cart · ${count}`}
+            footer={cart.length > 0 ? (
+              <React.Fragment>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Subtotal</span>
+                  <PriceTag price={subtotal} size="md" />
+                </div>
+                <Button variant="inverse" block size="lg" iconRight={<Icon name="arrowRight" size={18} />}>Checkout</Button>
+                <div style={{ textAlign: 'center', marginTop: 10, fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                  Free 24h shipping · 60-day returns
+                </div>
+              </React.Fragment>
+            ) : null}>
+            {cart.length === 0 ? (
+              <div style={{ padding: '64px 24px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                <Icon name="bag" size={28} style={{ margin: '0 auto 12px', color: 'var(--text-faint)' }} />
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Your cart is empty</p>
+              </div>
+            ) : (
+              <React.Fragment>
+                <div style={{ borderBottom: '1px solid var(--border-hairline)' }}><ShippingBar current={subtotal} threshold={200} /></div>
+                {cart.map(i => (
+                  <CartLineItem key={i.key} name={i.name} variant={i.variant} price={i.price} compareAt={i.compareAt} qty={i.qty} code={i.code}
+                    onQty={(q) => setQty(i.key, q)} onRemove={() => remove(i.key)} />
+                ))}
+                {/* Frequently bought together */}
+                <div style={{ padding: 'var(--space-5) var(--space-5) var(--space-3)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Frequently bought together</div>
+                </div>
+                <div className="upsell">
+                  {PRODUCTS.slice(4, 8).map(p => (
+                    <div key={p.id} style={{ minWidth: 132, background: 'var(--surface-card)', padding: 10, cursor: 'pointer' }} onClick={() => addToCart(p)}>
+                      <MediaTile code={p.code} ratio="1 / 1" />
+                      <div style={{ marginTop: 8, fontSize: 12, fontWeight: 600, color: 'var(--text-strong)' }}>{p.name}</div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
+                        <PriceTag price={p.price} size="sm" />
+                        <Icon name="plus" size={16} style={{ color: 'var(--text-strong)' }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </React.Fragment>
+            )}
+          </Drawer>
+
+          <Toast open={toast} onClose={() => setToast(false)} message="Added to cart"
+            action={{ label: 'View Cart', onClick: () => { setToast(false); setOpen(true); } }} />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+  </script>
+</body>
+</html>

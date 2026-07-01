@@ -1,0 +1,32 @@
+<!-- @dsCard group="Colors" viewport="700x200" name="Accent — Volt" subtitle="The single accent. Conversion only: CTA, Sale, focus." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface-page); display: flex; gap: 16px; align-items: stretch; }
+  .block { flex: 1; border: var(--border); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 130px; }
+  .code { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; }
+  .big { background: var(--volt-500); }
+  .swatch-row { display: flex; gap: 0; border: var(--border); }
+  .mini { flex: 1; height: 36px; }
+  .cta { background: var(--volt-500); color: var(--volt-ink); font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; padding: 10px 14px; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="block big">
+    <div class="code" style="color:var(--volt-ink)">VOLT-500</div>
+    <div class="code" style="color:var(--volt-ink)">#CCFF00</div>
+  </div>
+  <div class="block" style="justify-content:space-between">
+    <div class="swatch-row">
+      <div class="mini" style="background:var(--volt-600)"></div>
+      <div class="mini" style="background:var(--volt-500)"></div>
+      <div class="mini" style="background:var(--volt-400)"></div>
+    </div>
+    <div class="code" style="color:var(--text-muted)">600 PRESS · 500 BASE · 400 HOVER</div>
+    <div class="cta">ADD TO CART</div>
+  </div>
+</body>
+</html>

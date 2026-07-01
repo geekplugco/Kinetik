@@ -1,0 +1,104 @@
+{%- liquid
+  assign stops = section.blocks | where: 'type', 'stop'
+-%}
+{%- if stops.size > 0 -%}
+  <section
+    data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+    style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
+    class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)]"
+  >
+    <div class="mx-auto max-w-[var(--page-width)] px-6">
+      <div class="mb-10 flex max-w-2xl flex-col gap-3">
+        {%- if section.settings.subheading != blank -%}
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="font-display text-h1 tracking-tight text-text-strong">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+      <ol class="relative ml-3 border-l border-border-strong md:ml-4">
+        {%- for block in stops -%}
+          {%- assign p = block.settings.product -%}
+          <li class="relative pb-12 pl-8 last:pb-0 md:pl-12" {{ block.shopify_attributes }}>
+            <span aria-hidden="true" class="absolute left-0 top-1 flex h-6 w-6 -translate-x-1/2 items-center justify-center border border-border-strong bg-surface-page font-mono text-[11px] text-text-strong">{{ forloop.index }}</span>
+            <div class="grid gap-6 md:grid-cols-2 md:items-start">
+              <div class="relative aspect-[4/3] overflow-hidden border border-border-hairline bg-surface-sunken">
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: block.settings.image.alt | default: block.settings.place, class: 'h-full w-full object-cover' }}
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
+                {%- endif -%}
+              </div>
+              <div class="flex flex-col gap-3">
+                {%- if block.settings.place != blank -%}
+                  <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ block.settings.place }}</span>
+                {%- endif -%}
+                {%- if block.settings.heading != blank -%}
+                  <h3 class="font-display text-h3 tracking-tight text-text-strong">{{ block.settings.heading }}</h3>
+                {%- endif -%}
+                {%- if block.settings.caption != blank -%}
+                  <div class="text-body text-text-body [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ block.settings.caption }}</div>
+                {%- endif -%}
+                {%- if p != blank -%}
+                  {%- assign pv = p.selected_or_first_available_variant -%}
+                  <a href="{{ p.url }}" class="mt-2 flex items-center gap-4 border border-border-hairline p-3 transition-colors hover:border-border-strong">
+                    <div class="relative h-16 w-14 shrink-0 overflow-hidden bg-surface-sunken">
+                      {%- if p.featured_media -%}
+                        {%- assign route_product_alt = p.featured_media.alt | default: p.title | escape -%}
+                        {{ p.featured_media | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,120', sizes: '56px', alt: route_product_alt, class: 'h-full w-full object-cover' }}
+                      {%- endif -%}
+                    </div>
+                    <div class="flex min-w-0 flex-1 flex-col">
+                      <span class="font-mono text-[11px] uppercase tracking-label text-text-muted">{{ 'Featured' }}</span>
+                      <span class="truncate font-sans text-sm text-text-strong">{{ p.title }}</span>
+                      <span class="font-mono text-xs text-text-muted">{{ pv.price | money }}</span>
+                    </div>
+                    <span aria-hidden="true" class="font-mono text-text-muted">&#8599;</span>
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    </div>
+  </section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.route-map.name",
+  "tag": "section",
+  "class": "section section--route-map",
+  "settings": [
+    { "type": "inline_richtext", "id": "subheading", "label": "t:sections.route-map.settings.subheading.label", "default": "Field route" },
+    { "type": "text", "id": "heading", "label": "t:sections.route-map.settings.heading.label", "default": "The route" },
+    { "type": "header", "content": "t:sections.route-map.settings.header__style.content" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.route-map.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.route-map.settings.padding_top.label" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.route-map.settings.padding_bottom.label" }
+  ],
+  "blocks": [
+    {
+      "type": "stop",
+      "name": "t:sections.route-map.blocks.stop.name",
+      "settings": [
+        { "type": "text", "id": "place", "label": "t:sections.route-map.blocks.stop.settings.place.label", "default": "00.000 N / 00.000 W" },
+        { "type": "text", "id": "heading", "label": "t:sections.route-map.blocks.stop.settings.heading.label", "default": "Stop" },
+        { "type": "image_picker", "id": "image", "label": "t:sections.route-map.blocks.stop.settings.image.label" },
+        { "type": "richtext", "id": "caption", "label": "t:sections.route-map.blocks.stop.settings.caption.label" },
+        { "type": "product", "id": "product", "label": "t:sections.route-map.blocks.stop.settings.product.label" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.route-map.presets.name__1",
+      "blocks": [
+        { "type": "stop", "settings": { "place": "Transit", "heading": "Out the door", "caption": "<p>Shell on, pack loaded, headphones in. The system starts moving.</p>" } },
+        { "type": "stop", "settings": { "place": "Trail", "heading": "Off the grid", "caption": "<p>Weather turns. The membrane holds. Keep moving.</p>" } },
+        { "type": "stop", "settings": { "place": "Camp", "heading": "Hold position", "caption": "<p>Layer down, power up, reset for the next leg.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

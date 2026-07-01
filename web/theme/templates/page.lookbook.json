@@ -1,0 +1,64 @@
+{
+  "sections": {
+    "lookbook": {
+      "type": "lookbook",
+      "settings": {
+        "kicker": "SS26 / Field System",
+        "heading": "Shot in the field",
+        "text": "<p>Three looks, fully shoppable. Tap any point on the image to add the piece.</p>",
+        "layout": "single",
+        "image_ratio": "portrait",
+        "width": "page"
+      },
+      "blocks": {
+        "s1": {
+          "type": "shot",
+          "settings": {
+            "image": "/uploads/onmodel/02-fulllook-cropped.png",
+            "image_alt": "Full look — Shell-01 hardshell over cargo tech pant",
+            "caption": "Look 01 · Shell-01 + Cargo Tech",
+            "product_1": "shell-jacket",
+            "x_1": 48,
+            "y_1": 30,
+            "product_2": "cargo-pants",
+            "x_2": 50,
+            "y_2": 72
+          }
+        },
+        "s2": {
+          "type": "shot",
+          "settings": {
+            "image": "/uploads/onmodel/04-lowerbody-cargo.png",
+            "image_alt": "Lower body — cargo tech pant with trail runners and sling",
+            "caption": "Look 02 · Cargo + Trail Runner",
+            "product_1": "cargo-pants",
+            "x_1": 50,
+            "y_1": 42,
+            "product_2": "sneakers",
+            "x_2": 52,
+            "y_2": 86,
+            "product_3": "sling-bag",
+            "x_3": 30,
+            "y_3": 34
+          }
+        },
+        "s3": {
+          "type": "shot",
+          "settings": {
+            "image": "/uploads/onmodel/06-headphones-back.png",
+            "image_alt": "Audio look — field monitor headphones and field cap",
+            "caption": "Look 03 · Field Monitors + Cap",
+            "product_1": "headphones",
+            "x_1": 54,
+            "y_1": 32,
+            "product_2": "cap",
+            "x_2": 50,
+            "y_2": 15
+          }
+        }
+      },
+      "block_order": ["s1", "s2", "s3"]
+    }
+  },
+  "order": ["lookbook"]
+}

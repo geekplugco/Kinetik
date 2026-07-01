@@ -1,0 +1,19 @@
+{
+  "name": "Popup",
+  "tag": "section",
+  "class": "section section--popup",
+  "enabled_on": { "groups": ["custom.overlay"] },
+  "settings": [
+    { "type": "checkbox", "id": "enable", "label": "Enable popup", "default": true },
+    {
+      "type": "select",
+      "id": "trigger_open",
+      "label": "Trigger",
+      "default": "delay",
+      "options": [
+        { "value": "delay", "label": "Delay" },
+        { "value": "scroll", "label": "Scroll" }
+      ]
+    }
+  ]
+}

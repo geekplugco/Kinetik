@@ -1,0 +1,54 @@
+{% doc %}
+  Kinetik button. Renders <a> when href given, else <button>. Honors theme button_style/uppercase settings.
+  @param {string} label - visible text
+  @param {string} [href] - if present, renders a link
+  @param {string} [type] - button type when no href: button | submit (default button)
+  @param {string} [variant] - primary | secondary | link (default primary)
+  @param {string} [size] - sm | md | lg (default md)
+  @param {string} [icon] - optional icon name appended after label
+  @param {string} [name] - button name attribute
+  @param {string} [class] - extra classes
+  @param {boolean} [disabled] - disables the button
+{% enddoc %}
+{%- liquid
+  assign btn_variant = variant | default: 'primary'
+  assign btn_size = size | default: 'md'
+  assign base = 'group inline-flex items-center justify-center gap-2 transition-colors disabled:opacity-40 disabled:pointer-events-none'
+  case btn_variant
+    when 'secondary'
+      assign vcls = 'border border-border-strong text-text-strong hover:bg-surface-sunken font-mono tracking-wide'
+    when 'link'
+      assign vcls = 'text-text-strong underline underline-offset-4 hover:text-accent-press font-sans'
+    else
+      assign vcls = 'bg-accent text-accent-ink hover:bg-accent-hover font-mono tracking-wide'
+  endcase
+  assign case_cls = ''
+  if settings.button_uppercase and btn_variant != 'link'
+    assign case_cls = 'uppercase'
+  endif
+  case btn_size
+    when 'sm'
+      assign scls = 'px-4 py-2 text-xs'
+    when 'lg'
+      assign scls = 'px-8 py-4 text-sm'
+    else
+      assign scls = 'px-6 py-3 text-sm'
+  endcase
+  assign radius = ''
+  if settings.button_style == 'rounded'
+    assign radius = 'rounded-full'
+  endif
+  assign btn_style = ''
+  if btn_variant == 'secondary'
+    assign btn_style = 'border-width:var(--btn-border)'
+  endif
+  assign cls = base | append: ' ' | append: vcls | append: ' ' | append: case_cls | append: ' ' | append: scls | append: ' ' | append: radius
+  if class
+    assign cls = cls | append: ' ' | append: class
+  endif
+-%}
+{%- if href -%}
+  <a href="{{ href }}" class="{{ cls }}"{% if btn_style != blank %} style="{{ btn_style }}"{% endif %}>{{ label }}{% if icon %} <span class="inline-flex transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none">{% render 'icon', name: icon, size: 16 %}</span>{% endif %}</a>
+{%- else -%}
+  <button type="{{ type | default: 'button' }}"{% if name %} name="{{ name }}"{% endif %}{% if disabled %} disabled{% endif %} class="{{ cls }}">{{ label }}{% if icon %} <span class="inline-flex transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none">{% render 'icon', name: icon, size: 16 %}</span>{% endif %}</button>
+{%- endif -%}

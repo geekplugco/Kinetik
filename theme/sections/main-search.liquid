@@ -1,0 +1,135 @@
+<section
+  data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  class="mx-auto max-w-[var(--page-width)] px-6"
+>
+  <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ 'general.search.title' | t | default: 'Search' }}</h1>
+
+  <predictive-search class="relative mt-6 block">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="flex items-center gap-3 border-b border-border-strong pb-3">
+      <span class="text-text-muted">{%- render 'icon', name: 'search' -%}</span>
+      <input
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        autocomplete="off"
+        placeholder="{{ 'general.search.placeholder' | t | default: 'Search products…' }}"
+        aria-label="{{ 'general.search.placeholder' | t | default: 'Search products' }}"
+        class="w-full bg-transparent font-sans text-h4 text-text-strong outline-none placeholder:text-text-faint"
+      >
+      <input type="hidden" name="type" value="product">
+      <button type="submit" class="font-mono text-xs uppercase tracking-label text-text-strong hover:text-accent-press">{{ 'general.search.search' | t | default: 'Search' }}</button>
+    </form>
+    <div data-status class="sr-only" aria-live="polite"></div>
+    <div data-results hidden class="absolute inset-x-0 top-full z-20 mt-px max-h-[60vh] overflow-y-auto border border-border-hairline bg-surface-page shadow-[var(--shadow-pop)]"></div>
+  </predictive-search>
+
+  {%- if search.performed -%}
+    {%- if settings.search_show_count -%}
+      <p class="mt-4 font-mono text-xs text-text-muted">{{ search.results_count }} results for &ldquo;{{ search.terms | escape }}&rdquo;</p>
+    {%- endif -%}
+    {%- if section.settings.enable_filtering and search.filters.size > 0 -%}
+      <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 border-b border-border-hairline pb-4">
+        {%- for filter in search.filters -%}
+          <details class="group relative">
+            <summary class="flex min-h-[44px] cursor-pointer list-none items-center gap-1.5 font-mono text-xs uppercase tracking-label text-text-strong [&::-webkit-details-marker]:hidden">
+              {{ filter.label }}{%- if filter.active_values.size > 0 -%}&nbsp;<span class="text-accent-press">({{ filter.active_values.size }})</span>{%- endif -%}
+              <span aria-hidden="true" class="text-text-muted transition-transform group-open:rotate-180">&#9662;</span>
+            </summary>
+            <div class="absolute left-0 top-full z-20 mt-2 flex max-h-72 min-w-[13rem] flex-col gap-0.5 overflow-y-auto border border-border-hairline bg-surface-page p-3 shadow-[var(--shadow-pop)]">
+              {%- if filter.type == 'price_range' -%}
+                <form action="{{ routes.search_url }}" method="get" class="flex flex-col gap-2">
+                  <input type="hidden" name="q" value="{{ search.terms | escape }}">
+                  <input type="hidden" name="type" value="product">
+                  {%- for other in search.filters -%}{%- unless other.param_name == filter.param_name -%}{%- for av in other.active_values -%}<input type="hidden" name="{{ av.param_name }}" value="{{ av.value | escape }}">{%- endfor -%}{%- endunless -%}{%- endfor -%}
+                  <label class="flex items-center justify-between gap-2 text-sm text-text-body">From<input type="number" inputmode="decimal" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value }}" min="0" max="{{ filter.range_max }}" class="w-24 border border-border-hairline bg-transparent px-2 py-1 font-mono text-xs text-text-strong"></label>
+                  <label class="flex items-center justify-between gap-2 text-sm text-text-body">To<input type="number" inputmode="decimal" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value }}" min="0" max="{{ filter.range_max }}" class="w-24 border border-border-hairline bg-transparent px-2 py-1 font-mono text-xs text-text-strong"></label>
+                  <button type="submit" class="mt-1 min-h-[44px] bg-text-strong px-3 py-2 font-mono text-xs uppercase tracking-label text-surface-page">Apply</button>
+                </form>
+              {%- else -%}
+                {%- for value in filter.values -%}
+                  <a href="{% if value.active %}{{ value.url_to_remove }}{% else %}{{ value.url_to_add }}{% endif %}" class="flex min-h-[36px] items-center justify-between gap-3 px-1 py-1 text-sm {% if value.active %}text-text-strong{% else %}text-text-body hover:text-text-strong{% endif %}{% if value.count == 0 and value.active == false %} pointer-events-none opacity-40{% endif %}">
+                    <span class="flex items-center gap-2"><span aria-hidden="true" class="grid h-4 w-4 place-items-center border border-border-strong">{%- if value.active -%}<span class="h-2 w-2 bg-text-strong"></span>{%- endif -%}</span>{{ value.label }}</span>
+                    <span class="font-mono text-xs text-text-muted">{{ value.count }}</span>
+                  </a>
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+          </details>
+        {%- endfor -%}
+        {%- assign has_active_facet = false -%}
+        {%- for filter in search.filters -%}{%- if filter.active_values.size > 0 -%}{%- assign has_active_facet = true -%}{%- endif -%}{%- endfor -%}
+        {%- if has_active_facet -%}
+          <a href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&amp;type=product" class="font-mono text-xs uppercase tracking-label text-text-muted underline hover:text-text-strong">Clear all</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if search.results_count > 0 -%}
+      <div class="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {%- render 'product-card', product: item -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="mt-12 flex flex-col items-center gap-4 border-t border-border-hairline py-16 text-center">
+        <span class="font-mono text-xs uppercase tracking-label text-text-muted">No results found</span>
+        <p class="max-w-sm text-body text-text-muted">We couldn&rsquo;t find anything for that search. Try another term, or browse the full catalog.</p>
+        {%- assign search_browse_label = 'Browse all products' -%}
+        {%- render 'button', label: search_browse_label, href: routes.all_products_collection_url, variant: 'secondary' -%}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+</section>
+<script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+{% schema %}
+{
+  "name": "t:sections.main-search.name",
+  "tag": "section",
+  "class": "section section--main-search",
+  "enabled_on": {
+    "templates": [
+      "search"
+    ]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "t:sections.main-search.settings.enable_filtering.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main-search.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-search.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-search.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-search.settings.padding_bottom.label"
+    }
+  ]
+}
+{% endschema %}

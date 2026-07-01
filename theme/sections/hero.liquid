@@ -1,0 +1,357 @@
+{%- liquid
+  assign s = section.settings
+  assign layout = s.layout | default: 'split'
+
+  case s.width
+    when 'full'
+      assign width_cls = 'max-w-none'
+    when 'narrow'
+      assign width_cls = 'max-w-[var(--page-width-narrow,72rem)]'
+    else
+      assign width_cls = 'max-w-[var(--page-width)]'
+  endcase
+
+  case s.image_ratio
+    when '4/3'
+      assign ratio_cls = 'aspect-[4/3]'
+    when '1/1'
+      assign ratio_cls = 'aspect-square'
+    when '3/4'
+      assign ratio_cls = 'aspect-[3/4]'
+    else
+      assign ratio_cls = 'aspect-[16/9]'
+  endcase
+
+  assign image_left = false
+  if s.image_position == 'left'
+    assign image_left = true
+  endif
+
+  assign alt = s.image_alt | default: '' | escape
+  assign caption = s.image_caption
+  assign tag = s.tag
+  assign btn_link = s.button_link | default: routes.all_products_collection_url
+  assign btn_label = s.button_label | default: 'Shop the drop'
+-%}
+
+{%- capture eyebrow -%}
+  <span class="hp-reveal hp-reveal--fade font-mono text-xs uppercase tracking-label text-accent">{{ s.subheading }}</span>
+{%- endcapture -%}
+
+{%- capture heading -%}
+  <h1 class="hp-reveal hp-reveal--mask font-display text-[clamp(3rem,8.5vw,6rem)] font-bold uppercase leading-[0.88] tracking-hero" style="--reveal-delay:80ms">{{ s.heading }}</h1>
+{%- endcapture -%}
+
+{%- capture body -%}
+  <div class="hp-reveal flex flex-col gap-7" style="--reveal-delay:200ms">
+    <div class="max-w-sm text-body-lg leading-snug text-ink-300 [&_p]:m-0">
+      {%- if s.text != blank -%}{{ s.text }}{%- else -%}<p>High-resolution techwear that loads in a blink. Engineered for the city, the trail, and everything in transit.</p>{%- endif -%}
+    </div>
+    <div class="flex flex-wrap gap-3">
+      {%- render 'button', label: btn_label, href: btn_link, variant: 'primary', size: 'md', icon: 'arrow', class: 'min-h-[44px] gap-3 px-8 py-4 text-sm' -%}
+      {%- if s.button_label_2 != blank -%}
+        <a href="{{ s.button_link_2 | default: '#' }}" class="inline-flex min-h-[44px] items-center justify-center border border-ink-600 px-8 py-4 font-mono text-sm uppercase tracking-wide text-paper transition-colors hover:bg-ink-900">{{ s.button_label_2 }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endcapture -%}
+
+{%- capture image_bits -%}
+  {%- if caption != blank -%}<span class="absolute bottom-5 left-5 font-mono text-[11px] uppercase tracking-label text-paper/85">{{ caption }}</span>{%- endif -%}
+  {%- if tag != blank -%}<span class="absolute right-5 top-5 bg-accent px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-accent-ink">{{ tag }}</span>{%- endif -%}
+{%- endcapture -%}
+
+{%- capture hero_image -%}
+  {%- if s.image != blank -%}
+    {{ s.image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1600,2000', sizes: '100vw', alt: alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+  {%- else -%}
+    {{ 'lifestyle-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if layout == 'overlay' -%}
+  {%- if s.text_alignment == 'center' -%}
+    {%- assign align_cls = 'items-center text-center' -%}
+  {%- else -%}
+    {%- assign align_cls = 'items-start text-left' -%}
+  {%- endif -%}
+  <section
+    data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+    style="--pt:{{ s.padding_top | default: 0 }}px;--pb:{{ s.padding_bottom | default: 0 }}px"
+    class="theme-dark border-b border-border-strong pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
+  >
+    <div class="relative mx-auto min-h-[440px] bg-ink-900 text-paper md:min-h-[640px] {{ width_cls }} {{ ratio_cls }}">
+      {{ hero_image }}
+      <div class="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/45 to-ink-950/15" aria-hidden="true"></div>
+      <div class="absolute inset-0 mx-auto flex max-w-[var(--page-width)] flex-col justify-end gap-6 px-7 py-12 md:px-14 md:py-16 {{ align_cls }}">
+        {{ eyebrow }}
+        {{ heading }}
+        {{ body }}
+      </div>
+      {{ image_bits }}
+    </div>
+  </section>
+
+{%- elsif layout == 'stacked' -%}
+  <section
+    data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+    style="--pt:{{ s.padding_top | default: 0 }}px;--pb:{{ s.padding_bottom | default: 0 }}px"
+    class="border-b border-border-strong pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
+  >
+    <div class="mx-auto {{ width_cls }}">
+      <div class="relative w-full bg-ink-900 {{ ratio_cls }}">
+        {{ hero_image }}
+        {{ image_bits }}
+      </div>
+      <div class="flex flex-col gap-7 bg-ink-950 px-7 py-12 text-paper md:px-14 md:py-14">
+        {{ eyebrow }}
+        {{ heading }}
+        {{ body }}
+      </div>
+    </div>
+  </section>
+
+{%- else -%}
+  <section
+    data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+    style="--pt:{{ s.padding_top | default: 0 }}px;--pb:{{ s.padding_bottom | default: 0 }}px"
+    class="border-b border-border-strong pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
+  >
+    <div class="mx-auto grid {{ width_cls }} md:grid-cols-[1.05fr_1.25fr]">
+      <div class="flex flex-col justify-between gap-8 bg-ink-950 px-7 py-12 text-paper md:min-h-[640px] md:px-14 md:py-14 {% if image_left %}order-2 md:order-2{% else %}order-2 md:order-1{% endif %}">
+        {{ eyebrow }}
+        {{ heading }}
+        {{ body }}
+      </div>
+      <div class="relative min-h-[440px] bg-ink-900 md:min-h-[640px] {% if image_left %}order-1 md:order-1{% else %}order-1 md:order-2{% endif %}">
+        {{ hero_image }}
+        {{ image_bits }}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.hero.name",
+  "tag": "section",
+  "class": "section section--hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.hero.settings.header__1.content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.hero.settings.layout.label",
+      "default": "split",
+      "options": [
+        {
+          "value": "split",
+          "label": "t:sections.hero.settings.layout.options__1.label"
+        },
+        {
+          "value": "overlay",
+          "label": "t:sections.hero.settings.layout.options__2.label"
+        },
+        {
+          "value": "stacked",
+          "label": "t:sections.hero.settings.layout.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "t:sections.hero.settings.image_position.label",
+      "default": "right",
+      "options": [
+        {
+          "value": "right",
+          "label": "t:sections.hero.settings.image_position.options__1.label"
+        },
+        {
+          "value": "left",
+          "label": "t:sections.hero.settings.image_position.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.hero.settings.image_ratio.label",
+      "default": "16/9",
+      "options": [
+        {
+          "value": "16/9",
+          "label": "t:sections.hero.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "4/3",
+          "label": "t:sections.hero.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "1/1",
+          "label": "t:sections.hero.settings.image_ratio.options__3.label"
+        },
+        {
+          "value": "3/4",
+          "label": "t:sections.hero.settings.image_ratio.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:sections.hero.settings.text_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.hero.settings.text_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.hero.settings.text_alignment.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.hero.settings.width.label",
+      "default": "page",
+      "options": [
+        {
+          "value": "page",
+          "label": "t:sections.hero.settings.width.options__1.label"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.hero.settings.width.options__2.label"
+        },
+        {
+          "value": "narrow",
+          "label": "t:sections.hero.settings.width.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.hero.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.hero.settings.padding_top.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.hero.settings.padding_bottom.label",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:sections.hero.settings.header__2.content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "t:sections.hero.settings.subheading.label",
+      "default": "SS26 / Field System"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.hero.settings.heading.label",
+      "default": "Move faster."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.hero.settings.text.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.hero.settings.button_label.label",
+      "default": "Shop the drop"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.hero.settings.button_link.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "t:sections.hero.settings.button_label_2.label",
+      "default": "Lookbook"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "t:sections.hero.settings.button_link_2.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.hero.settings.header__3.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.hero.settings.image.label"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "t:sections.hero.settings.image_alt.label"
+    },
+    {
+      "type": "text",
+      "id": "image_caption",
+      "label": "t:sections.hero.settings.image_caption.label",
+      "default": "SS26 · Lookbook 01"
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "t:sections.hero.settings.tag.label",
+      "default": "Drop 04 Live"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.hero.presets.name__1"
+    },
+    {
+      "name": "t:sections.hero.presets.name__2",
+      "settings": {
+        "layout": "overlay",
+        "text_alignment": "left",
+        "image_ratio": "4/3"
+      }
+    },
+    {
+      "name": "t:sections.hero.presets.name__3",
+      "settings": {
+        "layout": "stacked",
+        "image_ratio": "16/9"
+      }
+    }
+  ]
+}
+{% endschema %}

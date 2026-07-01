@@ -32,10 +32,23 @@
   {
     "name": "Typography",
     "settings": [
-      { "type": "font_picker", "id": "font_heading", "label": "Heading font", "default": "assistant_n7" },
-      { "type": "font_picker", "id": "font_body", "label": "Body font", "default": "assistant_n4" },
+      { "type": "font_picker", "id": "font_heading", "label": "Heading font", "default": "space_grotesk_n7" },
+      { "type": "font_picker", "id": "font_body", "label": "Body font", "default": "inter_n4" },
+      { "type": "font_picker", "id": "font_accent", "label": "Accent / mono font", "info": "Used for spec labels and codes", "default": "space_mono_n4" },
       { "type": "range", "id": "font_body_scale", "min": 90, "max": 130, "step": 5, "unit": "%", "default": 100, "label": "Body scale" },
       { "type": "range", "id": "font_heading_scale", "min": 100, "max": 150, "step": 5, "unit": "%", "default": 100, "label": "Heading scale" }
+    ]
+  },
+  {
+    "name": "Theme CSS",
+    "settings": [
+      { "type": "paragraph", "content": "No-build Tailwind: 'production' serves the committed minified CSS (Theme Store). 'development' compiles tailwind.css live via the Tailwind browser CDN — use only while developing." },
+      { "type": "select", "id": "mode", "label": "CSS mode", "default": "production-css-inline",
+        "options": [
+          { "value": "production", "label": "Production (linked min.css)" },
+          { "value": "production-css-inline", "label": "Production (inlined min.css)" },
+          { "value": "development", "label": "Development (live Tailwind CDN)" }
+        ] }
     ]
   },
   {

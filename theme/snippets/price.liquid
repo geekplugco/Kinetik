@@ -1,0 +1,27 @@
+{% doc %}
+  Price with sale handling. Pass a product (uses price_min / compare_at) or a variant.
+  @param {object} [product] - product object
+  @param {object} [variant] - variant object (takes precedence)
+  @param {string} [class] - extra classes on the wrapper
+{% enddoc %}
+{%- liquid
+  if variant
+    assign price = variant.price
+    assign compare = variant.compare_at_price
+  else
+    assign price = product.price
+    assign compare = product.compare_at_price
+  endif
+  assign on_sale = false
+  if compare > price
+    assign on_sale = true
+  endif
+-%}
+<span class="flex items-baseline gap-2 font-mono text-sm{% if class %} {{ class }}{% endif %}">
+  <span class="text-text-strong{% if on_sale and settings.price_highlight_sale %} text-accent-press{% endif %}">{{ price | money }}{% if settings.price_show_currency_code %} {{ cart.currency.iso_code }}{% endif %}</span>
+  {%- if on_sale -%}<s class="text-text-muted">{{ compare | money }}</s>{%- endif -%}
+  {%- assign up_var = variant | default: product.selected_or_first_available_variant -%}
+  {%- if up_var.unit_price_measurement -%}
+    <span class="text-[11px] text-text-muted">({{ up_var.unit_price | money }}/{% if up_var.unit_price_measurement.reference_value != 1 %}{{ up_var.unit_price_measurement.reference_value }}{% endif %}{{ up_var.unit_price_measurement.reference_unit }})</span>
+  {%- endif -%}
+</span>

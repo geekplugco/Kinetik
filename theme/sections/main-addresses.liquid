@@ -1,0 +1,141 @@
+{%- liquid
+  assign field = 'border border-border-strong bg-transparent px-4 py-3 text-text-strong outline-none transition-colors focus-visible:border-accent'
+  assign label_cls = 'font-mono text-xs uppercase tracking-label text-text-muted'
+  assign submit_cls = 'mt-2 bg-accent px-6 py-3 font-mono text-xs uppercase tracking-label text-accent-ink transition-colors hover:bg-accent-hover'
+  if settings.button_style == 'rounded'
+    assign submit_cls = submit_cls | append: ' rounded-full'
+  endif
+-%}
+<section
+  data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  class="mx-auto max-w-[900px] px-6"
+>
+  <a href="{{ routes.account_url }}" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-text-strong">&larr; {{ 'customer.account.title' | t | default: 'Account' }}</a>
+  <h1 class="mt-6 font-display text-h1 tracking-tight text-text-strong">{{ 'customer.addresses.title' | t | default: 'Addresses' }}</h1>
+
+  <details class="mt-8 border border-border-strong p-6">
+    <summary class="cursor-pointer list-none font-mono text-xs uppercase tracking-label text-text-strong">+ {{ 'customer.addresses.add_new' | t | default: 'Add a new address' }}</summary>
+    {%- form 'customer_address', customer.new_address, class: 'mt-6 grid gap-4' -%}
+      {%- if form.errors -%}
+        <div class="border border-state-error px-4 py-3 text-sm text-state-error">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.register.first_name' | t | default: 'First name' }}</span><input type="text" name="address[first_name]" autocomplete="given-name" class="{{ field }}"></label>
+        <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.register.last_name' | t | default: 'Last name' }}</span><input type="text" name="address[last_name]" autocomplete="family-name" class="{{ field }}"></label>
+      </div>
+      <label class="grid gap-1"><span class="{{ label_cls }}">Company</span><input type="text" name="address[company]" autocomplete="organization" class="{{ field }}"></label>
+      <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.addresses.address1' | t | default: 'Address' }}</span><input type="text" name="address[address1]" autocomplete="address-line1" class="{{ field }}"></label>
+      <label class="grid gap-1"><span class="{{ label_cls }}">Apartment, suite, etc.</span><input type="text" name="address[address2]" autocomplete="address-line2" class="{{ field }}"></label>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.addresses.city' | t | default: 'City' }}</span><input type="text" name="address[city]" autocomplete="address-level2" class="{{ field }}"></label>
+        <label class="grid gap-1"><span class="{{ label_cls }}">Postal code</span><input type="text" name="address[zip]" autocomplete="postal-code" class="{{ field }}"></label>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="grid gap-1"><span class="{{ label_cls }}">State / Province</span><input type="text" name="address[province]" class="{{ field }}"></label>
+        <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.addresses.country' | t | default: 'Country/region' }}</span><select name="address[country]" class="{{ field }}">{{ country_option_tags }}</select></label>
+      </div>
+      <label class="grid gap-1"><span class="{{ label_cls }}">Phone</span><input type="tel" name="address[phone]" autocomplete="tel" class="{{ field }}"></label>
+      <label class="flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted"><input type="checkbox" name="address[default]" value="1" class="h-4 w-4 accent-accent"> Set as default address</label>
+      <button type="submit" class="{{ submit_cls }}">{{ 'customer.addresses.add' | t | default: 'Add address' }}</button>
+    {%- endform -%}
+  </details>
+
+  {%- paginate customer.addresses by 8 -%}
+    {%- if customer.addresses.size > 0 -%}
+      <div class="mt-8 grid gap-6 sm:grid-cols-2">
+        {%- for address in customer.addresses -%}
+          <div class="flex flex-col gap-4 border border-border-hairline p-6">
+            <div class="flex items-start justify-between gap-3">
+              {%- if address == customer.default_address -%}
+                {%- render 'tag', label: 'Default', tone: 'accent' -%}
+              {%- else -%}
+                <span></span>
+              {%- endif -%}
+              <form method="post" action="{{ address.url }}">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" class="font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-state-error">Delete</button>
+              </form>
+            </div>
+            <address class="not-italic text-body text-text-body">{{ address | format_address }}</address>
+            <details>
+              <summary class="cursor-pointer list-none font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 transition-colors hover:text-accent-press">Edit</summary>
+              {%- form 'customer_address', address, class: 'mt-5 grid gap-4' -%}
+                {%- if form.errors -%}
+                  <div class="border border-state-error px-4 py-3 text-sm text-state-error">{{ form.errors | default_errors }}</div>
+                {%- endif -%}
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.register.first_name' | t | default: 'First name' }}</span><input type="text" name="address[first_name]" value="{{ address.first_name | escape }}" autocomplete="given-name" class="{{ field }}"></label>
+                  <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.register.last_name' | t | default: 'Last name' }}</span><input type="text" name="address[last_name]" value="{{ address.last_name | escape }}" autocomplete="family-name" class="{{ field }}"></label>
+                </div>
+                <label class="grid gap-1"><span class="{{ label_cls }}">Company</span><input type="text" name="address[company]" value="{{ address.company | escape }}" autocomplete="organization" class="{{ field }}"></label>
+                <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.addresses.address1' | t | default: 'Address' }}</span><input type="text" name="address[address1]" value="{{ address.address1 | escape }}" autocomplete="address-line1" class="{{ field }}"></label>
+                <label class="grid gap-1"><span class="{{ label_cls }}">Apartment, suite, etc.</span><input type="text" name="address[address2]" value="{{ address.address2 | escape }}" autocomplete="address-line2" class="{{ field }}"></label>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.addresses.city' | t | default: 'City' }}</span><input type="text" name="address[city]" value="{{ address.city | escape }}" autocomplete="address-level2" class="{{ field }}"></label>
+                  <label class="grid gap-1"><span class="{{ label_cls }}">Postal code</span><input type="text" name="address[zip]" value="{{ address.zip | escape }}" autocomplete="postal-code" class="{{ field }}"></label>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <label class="grid gap-1"><span class="{{ label_cls }}">State / Province</span><input type="text" name="address[province]" value="{{ address.province | escape }}" class="{{ field }}"></label>
+                  <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.addresses.country' | t | default: 'Country/region' }}</span><select name="address[country]" class="{{ field }}">{{ country_option_tags }}</select></label>
+                </div>
+                <label class="grid gap-1"><span class="{{ label_cls }}">Phone</span><input type="tel" name="address[phone]" value="{{ address.phone | escape }}" autocomplete="tel" class="{{ field }}"></label>
+                <label class="flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted"><input type="checkbox" name="address[default]" value="1"{% if address == customer.default_address %} checked{% endif %} class="h-4 w-4 accent-accent"> Set as default address</label>
+                <button type="submit" class="{{ submit_cls }}">Update address</button>
+              {%- endform -%}
+            </details>
+          </div>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="mt-10 flex justify-center font-mono text-xs uppercase tracking-label text-text-muted" aria-label="Pagination">{{ paginate | default_pagination }}</nav>
+      {%- endif -%}
+    {%- else -%}
+      <p class="mt-8 text-body text-text-muted">{{ 'customer.addresses.none' | t | default: 'No saved addresses.' }}</p>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+{% schema %}
+{
+  "name": "t:sections.main-addresses.name",
+  "tag": "section",
+  "class": "section section--main-addresses",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main-addresses.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-addresses.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-addresses.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-addresses.settings.padding_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.main-addresses.presets.name"
+    }
+  ]
+}
+{% endschema %}

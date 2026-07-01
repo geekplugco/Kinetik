@@ -1,5 +1,41 @@
 { "name": "Blog posts", "tag": "section", "class": "section section--blog-posts",
-  "settings": [ { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Journal" },
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Journal" },
     { "type": "range", "id": "posts_to_show", "min": 2, "max": 6, "step": 1, "default": 3, "label": "Posts to show" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
-  "presets": [{ "name": "Blog posts" }] }
+    { "type": "checkbox", "id": "show_excerpt", "label": "Show excerpt", "default": true },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show \"All posts\" link", "default": true },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "card_style", "label": "Card style", "default": "minimal",
+      "options": [
+        { "value": "minimal", "label": "Minimal" },
+        { "value": "bordered", "label": "Bordered" },
+        { "value": "overlay", "label": "Image overlay" }
+      ] },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "3-2",
+      "options": [
+        { "value": "3-2", "label": "Landscape (3:2)" },
+        { "value": "4-3", "label": "Standard (4:3)" },
+        { "value": "1-1", "label": "Square (1:1)" },
+        { "value": "16-9", "label": "Wide (16:9)" }
+      ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "page",
+      "options": [
+        { "value": "narrow", "label": "Narrow" },
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" }
+      ] },
+    { "type": "header", "content": "Grid" },
+    { "type": "range", "id": "columns_desktop", "min": 1, "max": 5, "step": 1, "default": 3, "label": "Columns on desktop" },
+    { "type": "select", "id": "columns_mobile", "label": "Columns on mobile", "default": "1",
+      "options": [{ "value": "1", "label": "1" }, { "value": "2", "label": "2" }] },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px", "label": "Top padding" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px", "label": "Bottom padding" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "presets": [
+    { "name": "Blog posts" },
+    { "name": "Blog posts — overlay grid", "settings": { "card_style": "overlay", "image_ratio": "4-3", "columns_desktop": 3 } },
+    { "name": "Blog posts — bordered square", "settings": { "card_style": "bordered", "image_ratio": "1-1", "columns_desktop": 4 } }
+  ] }

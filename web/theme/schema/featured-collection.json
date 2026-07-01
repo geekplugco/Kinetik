@@ -7,6 +7,25 @@
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "New arrivals" },
     { "type": "collection", "id": "collection", "label": "Collection" },
     { "type": "range", "id": "products_to_show", "min": 2, "max": 12, "step": 1, "default": 8, "label": "Products to show" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "layout", "label": "Header layout", "default": "split",
+      "options": [
+        { "value": "split", "label": "Split (heading + view all)" },
+        { "value": "stacked", "label": "Stacked centered" },
+        { "value": "editorial", "label": "Editorial underline" }
+      ] },
+    { "type": "select", "id": "width", "label": "Section width", "default": "page",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" },
+        { "value": "narrow", "label": "Narrow" }
+      ] },
+    { "type": "select", "id": "grid_density", "label": "Grid density", "default": "comfortable",
+      "options": [
+        { "value": "compact", "label": "Compact" },
+        { "value": "comfortable", "label": "Comfortable" },
+        { "value": "spacious", "label": "Spacious" }
+      ] },
     { "type": "header", "content": "Grid" },
     { "type": "range", "id": "columns_desktop", "min": 2, "max": 5, "step": 1, "default": 4, "label": "Columns on desktop" },
     { "type": "select", "id": "columns_mobile", "label": "Columns on mobile", "default": "2",
@@ -16,5 +35,11 @@
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px", "label": "Bottom padding" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
   ],
-  "presets": [{ "name": "Featured collection" }]
+  "presets": [
+    { "name": "Featured collection" },
+    { "name": "Featured collection — Editorial",
+      "settings": { "heading": "The edit", "layout": "editorial", "width": "narrow", "grid_density": "spacious", "columns_desktop": 3 } },
+    { "name": "Featured collection — Dense grid",
+      "settings": { "heading": "Shop all", "layout": "stacked", "grid_density": "compact", "columns_desktop": 5, "columns_mobile": "2" } }
+  ]
 }

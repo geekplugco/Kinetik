@@ -4,22 +4,33 @@ import Image from "next/image";
 import type { SectionProps } from "../registry";
 import { useShopify } from "../shopify-context";
 import { useUI } from "../ui-context";
+import { sectionStyle } from "../section-style";
 import { Price } from "@/components/Price";
 import { Button } from "@/components/Button";
 
 export function FeaturedProduct({ section }: SectionProps) {
   const { products } = useShopify();
   const ui = useUI();
-  const handle = (section.settings.product as string) ?? Object.keys(products)[0];
+  const s = section.settings;
+  const handle = (s.product as string) ?? Object.keys(products)[0];
   const product = products[handle];
   if (!product) return null;
+  const reverse = (s.image_position as string) === "right";
+  const width = (s.width as string) ?? "page";
+  const ratio = (s.image_ratio as string) ?? "portrait";
+  const containerWidth = width === "full" ? "max-w-none" : width === "narrow" ? "max-w-[64rem]" : "max-w-[var(--page-width)]";
+  const ratioClass = ratio === "square" ? "aspect-square" : ratio === "landscape" ? "aspect-[4/3]" : "aspect-[4/5]";
   return (
-    <section data-color-scheme={(section.settings.color_scheme as string) ?? "scheme-1"} className="bg-surface-sunken">
-      <div className="mx-auto grid max-w-[var(--page-width)] items-stretch md:grid-cols-2">
-        <div className="relative aspect-[4/5] md:aspect-auto md:min-h-[640px]">
+    <section
+      data-color-scheme={(s.color_scheme as string) ?? "scheme-1"}
+      style={sectionStyle(s)}
+      className="bg-surface-sunken pt-[var(--pt,0px)] pb-[var(--pb,0px)]"
+    >
+      <div className={`mx-auto grid items-stretch ${containerWidth} md:grid-cols-2 ${reverse ? "md:[direction:rtl]" : ""}`}>
+        <div className={`relative ${ratioClass} md:aspect-auto md:min-h-[640px] ${reverse ? "md:[direction:ltr]" : ""}`}>
           <Image src={product.featured_image.src} alt={product.featured_image.alt} fill sizes="50vw" className="object-cover" />
         </div>
-        <div className="flex flex-col justify-center gap-5 px-6 py-16 md:px-16">
+        <div className={`flex flex-col justify-center gap-5 px-6 py-16 md:px-16 ${reverse ? "md:[direction:ltr]" : ""}`}>
           {typeof section.settings.heading === "string" && section.settings.heading && (
             <span className="font-mono text-xs uppercase tracking-label text-text-muted">{section.settings.heading}</span>
           )}

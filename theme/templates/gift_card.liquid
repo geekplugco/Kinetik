@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="origin">
+  <title>{{ shop.name }} {{ 'gift_cards.issued.title' | t | default: 'Gift card' }}</title>
+  {{ content_for_header }}
+  <style>{{ 'tailwind.min.css' | inline_asset_content }}</style>
+</head>
+<body class="bg-surface-page text-text-body">
+  <main class="mx-auto flex min-h-screen max-w-[480px] flex-col items-center justify-center gap-6 px-6 py-16 text-center">
+    <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ shop.name }}</span>
+    <div class="flex flex-col gap-1">
+      <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ 'gift_cards.issued.title' | t | default: 'Gift card' }}</h1>
+      <p class="font-mono text-xs uppercase tracking-label text-text-muted">{{ 'gift_cards.issued.subtext' | t | default: 'Here is your gift card' }}</p>
+    </div>
+
+    <div class="flex w-full flex-col items-center gap-5 border border-border-strong bg-surface-sunken p-8">
+      {%- if gift_card.expired or gift_card.enabled == false -%}
+        <span class="font-mono text-xs uppercase tracking-label text-state-error">
+          {%- if gift_card.expired -%}Expired{%- else -%}Disabled{%- endif -%}
+        </span>
+      {%- endif -%}
+
+      <span class="font-display text-display-2 leading-none tracking-hero text-text-strong">{{ gift_card.balance | money }}</span>
+
+      {%- if gift_card.balance != gift_card.initial_value -%}
+        <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ gift_card.balance | money }} of {{ gift_card.initial_value | money }} remaining</span>
+      {%- endif -%}
+
+      <div class="mt-2 border border-border-strong bg-surface-page px-6 py-4 font-mono text-base tracking-[0.3em] text-text-strong">{{ gift_card.code | format_code }}</div>
+
+      {%- if gift_card.expires_on and gift_card.expired == false -%}
+        <span class="font-mono text-xs uppercase tracking-label text-text-muted">Expires {{ gift_card.expires_on | date: '%b %d, %Y' }}</span>
+      {%- endif -%}
+    </div>
+
+    <p class="text-sm text-text-muted">Scan the QR code at checkout, or enter the code above. Apply it to any order.</p>
+
+    <div class="flex flex-wrap items-center justify-center gap-3">
+      <button
+        type="button"
+        data-copy="{{ gift_card.code | strip }}"
+        data-copied="Copied"
+        class="border border-border-strong px-6 py-3 font-mono text-xs uppercase tracking-label text-text-strong transition-colors hover:bg-surface-sunken{% if settings.button_style == 'rounded' %} rounded-full{% endif %}"
+      >{{ 'gift_cards.issued.copy_code' | t | default: 'Copy code' }}</button>
+      <button
+        type="button"
+        data-print
+        class="border border-border-strong px-6 py-3 font-mono text-xs uppercase tracking-label text-text-strong transition-colors hover:bg-surface-sunken{% if settings.button_style == 'rounded' %} rounded-full{% endif %}"
+      >Print</button>
+      {%- render 'button', label: 'Shop now', href: shop.url -%}
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll('[data-copy]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var code = btn.getAttribute('data-copy');
+        if (navigator.clipboard) { navigator.clipboard.writeText(code); }
+        var original = btn.textContent;
+        btn.textContent = btn.getAttribute('data-copied');
+        setTimeout(function () { btn.textContent = original; }, 2000);
+      });
+    });
+    document.querySelectorAll('[data-print]').forEach(function (btn) {
+      btn.addEventListener('click', function () { window.print(); });
+    });
+  </script>
+</body>
+</html>

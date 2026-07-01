@@ -1,8 +1,35 @@
 { "name": "Newsletter", "tag": "section", "class": "section section--newsletter",
   "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "inline_richtext", "id": "subheading", "label": "Subheading" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Join the movement" },
     { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "text", "id": "input_placeholder", "label": "Input placeholder", "default": "Email address" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "layout", "label": "Layout", "default": "centered",
+      "options": [
+        { "value": "centered", "label": "Centered" },
+        { "value": "split", "label": "Split (heading + form)" }
+      ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "narrow",
+      "options": [
+        { "value": "narrow", "label": "Narrow" },
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" }
+      ] },
+    { "type": "select", "id": "background_style", "label": "Background", "default": "dark",
+      "options": [
+        { "value": "dark", "label": "Dark panel" },
+        { "value": "light", "label": "Light" }
+      ] },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "default": 80, "unit": "px", "label": "Top padding" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "default": 80, "unit": "px", "label": "Bottom padding" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-2" }
   ],
-  "presets": [{ "name": "Newsletter" }] }
+  "presets": [
+    { "name": "Newsletter" },
+    { "name": "Newsletter — split light", "settings": { "layout": "split", "width": "page", "background_style": "light" } },
+    { "name": "Newsletter — wide dark", "settings": { "layout": "centered", "width": "page", "background_style": "dark" } }
+  ] }

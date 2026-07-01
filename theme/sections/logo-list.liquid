@@ -1,0 +1,301 @@
+{%- liquid
+  assign s = section.settings
+  case s.width
+    when 'narrow'
+      assign width = 'max-w-[820px]'
+    when 'full'
+      assign width = 'max-w-none'
+    else
+      assign width = 'max-w-[var(--page-width)]'
+  endcase
+  case s.logo_size
+    when 'small'
+      assign size = 'h-6 w-24'
+    when 'large'
+      assign size = 'h-10 w-36'
+    else
+      assign size = 'h-8 w-28'
+  endcase
+  case s.logo_style
+    when 'full'
+      assign style_class = 'opacity-100'
+    when 'grayscale'
+      assign style_class = 'opacity-60 grayscale transition hover:opacity-100 hover:grayscale-0'
+    else
+      assign style_class = 'opacity-60 transition-opacity hover:opacity-100'
+  endcase
+  if s.layout == 'grid'
+    assign container_class = 'grid items-center justify-items-center gap-x-8 gap-y-8 grid-cols-[repeat(var(--cols-mobile,2),minmax(0,1fr))] lg:grid-cols-[repeat(var(--cols-desktop,5),minmax(0,1fr))]'
+  else
+    assign container_class = 'flex flex-wrap items-center justify-center gap-x-12 gap-y-8'
+  endif
+  assign dark = ''
+  if s.color_scheme == 'scheme-3' or s.color_scheme == 'scheme-dark'
+    assign dark = 'theme-dark '
+  endif
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px;--cols-desktop:{{ s.columns_desktop }};--cols-mobile:{{ s.columns_mobile }}"
+  class="{{ dark }}border-y border-border-hairline bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
+>
+  <div class="mx-auto {{ width }} px-6">
+    {%- if s.heading != blank -%}
+      <p class="mb-8 text-center font-mono text-xs uppercase tracking-label text-text-muted">{{ s.heading }}</p>
+    {%- endif -%}
+    <div class="{{ container_class }}">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'logo' -%}
+          <div {{ block.shopify_attributes }} class="relative {{ size }} {{ style_class }}">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '120,200,300,400', alt: block.settings.alt, class: 'absolute inset-0 h-full w-full object-contain' }}
+            {%- else -%}
+              <span class="flex h-full items-center justify-center font-display text-h4 uppercase tracking-tight text-text-strong">{{ block.settings.alt | default: 'Logo' }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.logo-list.name",
+  "tag": "section",
+  "class": "section section--logo-list",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.logo-list.settings.heading.label",
+      "default": "As seen in"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.logo-list.settings.header__1.content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.logo-list.settings.layout.label",
+      "default": "row",
+      "options": [
+        {
+          "value": "row",
+          "label": "t:sections.logo-list.settings.layout.options__1.label"
+        },
+        {
+          "value": "grid",
+          "label": "t:sections.logo-list.settings.layout.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.logo-list.settings.width.label",
+      "default": "page",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:sections.logo-list.settings.width.options__1.label"
+        },
+        {
+          "value": "page",
+          "label": "t:sections.logo-list.settings.width.options__2.label"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.logo-list.settings.width.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "logo_size",
+      "label": "t:sections.logo-list.settings.logo_size.label",
+      "default": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.logo-list.settings.logo_size.options__1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.logo-list.settings.logo_size.options__2.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.logo-list.settings.logo_size.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "logo_style",
+      "label": "t:sections.logo-list.settings.logo_style.label",
+      "default": "muted",
+      "options": [
+        {
+          "value": "muted",
+          "label": "t:sections.logo-list.settings.logo_style.options__1.label"
+        },
+        {
+          "value": "grayscale",
+          "label": "t:sections.logo-list.settings.logo_style.options__2.label"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.logo-list.settings.logo_style.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "t:sections.logo-list.settings.columns_desktop.label",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "info": "t:sections.logo-list.settings.columns_desktop.info"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:sections.logo-list.settings.columns_mobile.label",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.logo-list.settings.columns_mobile.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.logo-list.settings.columns_mobile.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.logo-list.settings.header__2.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.logo-list.settings.padding_top.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.logo-list.settings.padding_bottom.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.logo-list.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "t:sections.logo-list.blocks.logo.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.logo-list.blocks.logo.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "t:sections.logo-list.blocks.logo.settings.alt.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.logo-list.presets.name__1",
+      "blocks": [
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        }
+      ]
+    },
+    {
+      "name": "t:sections.logo-list.presets.name__2",
+      "settings": {
+        "layout": "grid",
+        "columns_desktop": 5,
+        "columns_mobile": "2",
+        "logo_style": "grayscale"
+      },
+      "blocks": [
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        }
+      ]
+    },
+    {
+      "name": "t:sections.logo-list.presets.name__3",
+      "settings": {
+        "layout": "grid",
+        "columns_desktop": 4,
+        "logo_style": "full",
+        "color_scheme": "scheme-3"
+      },
+      "blocks": [
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

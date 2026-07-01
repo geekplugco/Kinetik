@@ -1,0 +1,46 @@
+
+# Node / Bun — generated artifacts, never commit
+node_modules/
+dist/
+build/
+*.lock
+bun.lockb
+.cache/
+coverage/
+*.tsbuildinfo
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# macOS
+.DS_Store
+.t/
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+.beads/
+shopify-connect.json
+
+# Secrets / local env — NEVER commit (holds SHOPIFY_ACCESS_TOKEN)
+.envrc
+*.env
+app-env.txt
+
+# Next.js build output
+.next/
+web/.next/
+web/.next.old-*/
+web/.next.prod-*/
+
+# Agent / assistant tooling
+.claude/
+.codex/
+.agents/
+.tmp-*
+
+teifi-connect/

@@ -1,0 +1,13 @@
+{ "name": "Drop system", "tag": "section", "class": "section section--drop-system",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Next drop" },
+    { "type": "inline_richtext", "id": "heading", "label": "Drop name", "default": "Drop 05 · Field System" },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "text", "id": "target_date", "label": "Drop date/time", "info": "ISO format, e.g. 2026-07-15T10:00:00", "default": "2026-07-15T10:00:00" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Notify me" },
+    { "type": "checkbox", "id": "show_ticker", "label": "Show live activity ticker", "default": true },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "presets": [{ "name": "Drop system" }] }

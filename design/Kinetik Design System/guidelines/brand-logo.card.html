@@ -1,0 +1,26 @@
+<!-- @dsCard group="Brand" viewport="700x200" name="Logo Lockup" subtitle="Typographic wordmark — Space Grotesk, tight tracking" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-page); display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { display: flex; align-items: center; justify-content: center; padding: 28px; min-height: 150px; }
+  .pane + .pane { border-left: var(--border); }
+  .dark { background: var(--ink-950); }
+  .wm { font-family: var(--font-display); font-weight: 700; font-size: 40px; letter-spacing: -0.04em; }
+  .wm .dot { color: var(--volt-500); }
+  .light .wm { color: var(--ink-950); }
+  .dark .wm { color: var(--paper); }
+</style>
+</head>
+<body>
+  <div class="pane light">
+    <div class="wm">KINETIK<span class="dot">.</span></div>
+  </div>
+  <div class="pane dark">
+    <div class="wm">KINETIK<span class="dot">.</span></div>
+  </div>
+</body>
+</html>

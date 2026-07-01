@@ -1,0 +1,38 @@
+{ "name": "Lookbook", "tag": "section", "class": "section section--lookbook", "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Lookbook" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Shot in the field" },
+    { "type": "richtext", "id": "text", "label": "Intro text" },
+    { "type": "select", "id": "layout", "label": "Layout", "default": "single",
+      "options": [{ "value": "single", "label": "Editorial stack" }, { "value": "grid", "label": "Two-up grid" }] },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "portrait",
+      "options": [{ "value": "portrait", "label": "Portrait" }, { "value": "square", "label": "Square" }, { "value": "landscape", "label": "Landscape" }, { "value": "wide", "label": "Wide" }] },
+    { "type": "select", "id": "width", "label": "Width", "default": "page",
+      "options": [{ "value": "page", "label": "Page" }, { "value": "full", "label": "Full" }, { "value": "narrow", "label": "Narrow" }] },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    { "type": "shot", "name": "Shot", "settings": [
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "image_alt", "label": "Image alt" },
+      { "type": "text", "id": "caption", "label": "Caption" },
+      { "type": "header", "content": "Hotspots (tag up to 4 products)" },
+      { "type": "product", "id": "product_1", "label": "Product 1" },
+      { "type": "range", "id": "x_1", "label": "Product 1 — X %", "min": 0, "max": 100, "step": 1, "default": 25 },
+      { "type": "range", "id": "y_1", "label": "Product 1 — Y %", "min": 0, "max": 100, "step": 1, "default": 40 },
+      { "type": "product", "id": "product_2", "label": "Product 2" },
+      { "type": "range", "id": "x_2", "label": "Product 2 — X %", "min": 0, "max": 100, "step": 1, "default": 60 },
+      { "type": "range", "id": "y_2", "label": "Product 2 — Y %", "min": 0, "max": 100, "step": 1, "default": 65 },
+      { "type": "product", "id": "product_3", "label": "Product 3" },
+      { "type": "range", "id": "x_3", "label": "Product 3 — X %", "min": 0, "max": 100, "step": 1, "default": 45 },
+      { "type": "range", "id": "y_3", "label": "Product 3 — Y %", "min": 0, "max": 100, "step": 1, "default": 80 },
+      { "type": "product", "id": "product_4", "label": "Product 4" },
+      { "type": "range", "id": "x_4", "label": "Product 4 — X %", "min": 0, "max": 100, "step": 1, "default": 75 },
+      { "type": "range", "id": "y_4", "label": "Product 4 — Y %", "min": 0, "max": 100, "step": 1, "default": 30 } ] }
+  ],
+  "presets": [
+    { "name": "Lookbook", "blocks": [{ "type": "shot" }, { "type": "shot" }, { "type": "shot" }] },
+    { "name": "Lookbook grid", "settings": { "layout": "grid" }, "blocks": [{ "type": "shot" }, { "type": "shot" }, { "type": "shot" }, { "type": "shot" }] }
+  ] }

@@ -1,0 +1,103 @@
+{%- liquid
+  assign b = block.settings
+  case b.alignment
+    when 'center'
+      assign align = 'justify-center'
+    when 'right'
+      assign align = 'justify-end'
+    else
+      assign align = 'justify-start'
+  endcase
+-%}
+<div class="flex {{ align }}" {{ block.shopify_attributes }}>
+  {%- if b.label != blank -%}
+    {%- if b.link != blank -%}
+      {%- render 'button', label: b.label, href: b.link, variant: b.variant, size: b.size -%}
+    {%- else -%}
+      {%- render 'button', label: b.label, variant: b.variant, size: b.size -%}
+    {%- endif -%}
+  {%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "t:blocks.button.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:blocks.button.settings.label.label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:blocks.button.settings.link.label"
+    },
+    {
+      "type": "select",
+      "id": "variant",
+      "label": "t:blocks.button.settings.variant.label",
+      "default": "primary",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:blocks.button.settings.variant.options__1.label"
+        },
+        {
+          "value": "secondary",
+          "label": "t:blocks.button.settings.variant.options__2.label"
+        },
+        {
+          "value": "link",
+          "label": "t:blocks.button.settings.variant.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "t:blocks.button.settings.size.label",
+      "default": "md",
+      "options": [
+        {
+          "value": "sm",
+          "label": "t:blocks.button.settings.size.options__1.label"
+        },
+        {
+          "value": "md",
+          "label": "t:blocks.button.settings.size.options__2.label"
+        },
+        {
+          "value": "lg",
+          "label": "t:blocks.button.settings.size.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:blocks.button.settings.alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:blocks.button.settings.alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:blocks.button.settings.alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:blocks.button.settings.alignment.options__3.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.button.presets.name"
+    }
+  ]
+}
+{% endschema %}

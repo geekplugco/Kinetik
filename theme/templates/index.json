@@ -1,0 +1,294 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "tag": "Drop 04 Live",
+        "subheading": "SS26 / Field System",
+        "heading": "Move faster.",
+        "text": "<p>High-resolution techwear that loads in a blink. Engineered for the city, the trail, and everything in transit.</p>",
+        "button_label": "Shop the drop",
+        "button_link": "shopify://collections/new-arrivals",
+        "button_label_2": "Lookbook",
+        "button_link_2": "shopify://pages/lookbook",
+        "image": "shopify://shop_images/08-hero-back-wide.png",
+        "image_caption": "SS26 · Lookbook 01"
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "Ships in 24h · Gore-Tex 3L · Free returns 60d · Engineered for movement · Carbon-neutral · Field-tested"
+      }
+    },
+    "drop": {
+      "type": "drop-system",
+      "settings": {
+        "kicker": "Next drop",
+        "heading": "Drop 05 · Field System",
+        "text": "<p>The SS26 field kit lands in full. Lock your access — limited first run.</p>",
+        "target_date": "2026-07-15T10:00:00"
+      }
+    },
+    "arrivals": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "New arrivals",
+        "collection": "new-arrivals",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "columns_mobile": "2"
+      }
+    },
+    "categories": {
+      "type": "collection-list",
+      "settings": {
+        "heading": "Shop by category",
+        "collection_list": [
+          "apparel",
+          "tech",
+          "new-arrivals"
+        ]
+      }
+    },
+    "editorial": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "shopify://shop_images/08-dark-set-banner.png",
+        "layout": "image_first",
+        "subheading": "The system",
+        "heading": "Engineered for movement",
+        "text": "<p>Technical materials, considered construction, zero noise. Built to be worn, not displayed.</p>",
+        "button_label": "Our story",
+        "button_link": "shopify://pages/about"
+      }
+    },
+    "featured": {
+      "type": "featured-product",
+      "settings": {
+        "heading": "Drop of the week",
+        "product": "shell-jacket"
+      }
+    },
+    "kit": {
+      "type": "build-your-kit",
+      "settings": {
+        "kicker": "The system",
+        "heading": "Build your kit",
+        "text": "<p>Layer the system. Pick a shell, a mid, a bottom and gear — three pieces or more unlocks the kit price.</p>",
+        "bundle_discount": 12,
+        "min_pieces": 3
+      },
+      "blocks": {
+        "s1": {
+          "type": "slot",
+          "settings": {
+            "label": "Shell",
+            "types": "Outerwear"
+          }
+        },
+        "s2": {
+          "type": "slot",
+          "settings": {
+            "label": "Layer",
+            "types": "Tops"
+          }
+        },
+        "s3": {
+          "type": "slot",
+          "settings": {
+            "label": "Bottom",
+            "types": "Bottoms"
+          }
+        },
+        "s4": {
+          "type": "slot",
+          "settings": {
+            "label": "Footwear",
+            "types": "Footwear"
+          }
+        },
+        "s5": {
+          "type": "slot",
+          "settings": {
+            "label": "Carry",
+            "types": "Bags"
+          }
+        },
+        "s6": {
+          "type": "slot",
+          "settings": {
+            "label": "Gear",
+            "types": "Accessories, Audio, Tech, Wearables"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ]
+    },
+    "gallery": {
+      "type": "image-gallery",
+      "settings": {
+        "heading": "In the field"
+      },
+      "blocks": {
+        "g1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/09-paired-hero.png",
+            "size": "wide"
+          }
+        },
+        "g2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/05-sling-worn.png"
+          }
+        },
+        "g3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/07-cap-shadow.png"
+          }
+        },
+        "g4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/06-detail-trio.png"
+          }
+        },
+        "g5": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/03b-vest-alt.png"
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "g4",
+        "g5"
+      ]
+    },
+    "trust": {
+      "type": "multicolumn",
+      "settings": {
+        "subheading": "The system",
+        "heading": "Why Kinetik",
+        "text": "<p>No seasonal noise. A tight kit of technical pieces, engineered to outlast the trend cycle.</p>"
+      },
+      "blocks": {
+        "c1": {
+          "type": "column",
+          "settings": {
+            "title": "Field-tested, not focus-grouped",
+            "text": "<p>Every piece is worn hard before it ships — trail, transit, weather. If it doesn't earn its place in the kit, it doesn't make the line.</p>"
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "title": "Materials with a spec sheet",
+            "text": "<p>Gore-Tex 3L shells, ripstop nylon, recycled hardware. We publish the build so you know exactly what you're moving in.</p>"
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "title": "Built to be repaired",
+            "text": "<p>Replaceable zips, reinforced stress points, a lifetime warranty on every seam. Keep it in rotation for years, not seasons.</p>"
+          }
+        },
+        "c4": {
+          "type": "column",
+          "settings": {
+            "title": "Carbon-neutral by default",
+            "text": "<p>Offset shipping, low-impact dye houses, and take-back recycling. Movement that doesn't cost the planet its own.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ]
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "kicker": "Field reports",
+        "heading": "What people say"
+      },
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>The shell has been to three continents and back. Still the best technical jacket I've owned &mdash; nothing else holds up like it.</p>",
+            "author": "A. Mercer",
+            "role": "Photographer, Reykjavík"
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Considered, quiet, built to last.</p>",
+            "author": "J. Okafor",
+            "role": "Architect, Lagos"
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Audio that actually holds up on the move.</p>",
+            "author": "R. Vale",
+            "role": "Sound engineer, Berlin"
+          }
+        },
+        "t4": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Packs flat, wears light, takes a beating.</p>",
+            "author": "S. Haddad",
+            "role": "Bike courier, Montréal"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
+    },
+    "blogposts": {
+      "type": "blog-posts",
+      "settings": {
+        "heading": "From the journal",
+        "posts_to_show": 3
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "arrivals",
+    "categories",
+    "drop",
+    "featured",
+    "kit",
+    "editorial",
+    "gallery",
+    "trust",
+    "testimonials",
+    "blogposts"
+  ]
+}

@@ -1,0 +1,56 @@
+{%- liquid
+  assign app_blocks = 0
+  for block in section.blocks
+    if block.type == '@app'
+      assign app_blocks = app_blocks | plus: 1
+    endif
+  endfor
+-%}
+{%- if app_blocks > 0 -%}
+  <section
+    id="{{ section.settings.anchor_id | default: 'reviews' }}"
+    data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+    style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
+    class="bg-surface-page pt-[var(--pt,64px)] pb-[var(--pb,64px)]"
+  >
+    <div class="mx-auto max-w-[var(--page-width)] px-6">
+      {%- if section.settings.heading != blank -%}
+        <div class="mb-8 flex flex-col gap-3">
+          {%- if section.settings.subheading != blank -%}
+            <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
+          {%- endif -%}
+          <h2 class="font-display text-h2 tracking-tight text-text-strong">{{ section.settings.heading }}</h2>
+        </div>
+      {%- endif -%}
+      <div class="kinetik-app-host flex flex-col gap-6 [&_a]:underline-offset-2">
+        {%- for block in section.blocks -%}
+          {%- if block.type == '@app' -%}
+            <div {{ block.shopify_attributes }}>{%- render block -%}</div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.product-apps.name",
+  "tag": "section",
+  "class": "section section--product-apps",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "paragraph", "content": "t:sections.product-apps.settings.paragraph.content" },
+    { "type": "inline_richtext", "id": "subheading", "label": "t:sections.product-apps.settings.subheading.label" },
+    { "type": "text", "id": "heading", "label": "t:sections.product-apps.settings.heading.label", "default": "Reviews" },
+    { "type": "text", "id": "anchor_id", "label": "t:sections.product-apps.settings.anchor_id.label", "default": "reviews", "info": "t:sections.product-apps.settings.anchor_id.info" },
+    { "type": "header", "content": "t:sections.product-apps.settings.header__style.content" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.product-apps.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 64, "unit": "px", "label": "t:sections.product-apps.settings.padding_top.label" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "default": 64, "unit": "px", "label": "t:sections.product-apps.settings.padding_bottom.label" }
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [
+    { "name": "t:sections.product-apps.presets.name__1" }
+  ]
+}
+{% endschema %}

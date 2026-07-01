@@ -4,10 +4,13 @@
    ============================================================ */
 
 :root {
-  /* ---- Families ---- */
-  --font-display: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
-  --font-sans:    'Inter', 'Helvetica Neue', Arial, sans-serif;
-  --font-mono:    'Space Mono', 'SFMono-Regular', ui-monospace, monospace;
+  /* ---- Families ----
+     Shopify-standard: the Liquid theme.liquid sets --font-heading/body/accent-family
+     from the font_picker settings (via | font_face). The brand fonts here are the
+     fallback used by the Next prototype (no theme.liquid). One source, both targets. */
+  --font-display: var(--font-heading-family, 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif);
+  --font-sans:    var(--font-body-family, 'Inter', 'Helvetica Neue', Arial, sans-serif);
+  --font-mono:    var(--font-accent-family, 'Space Mono', 'SFMono-Regular', ui-monospace, monospace);
 
   /* ---- Weights ---- */
   --weight-regular:  400;
@@ -15,12 +18,12 @@
   --weight-semibold: 600;
   --weight-bold:     700;
 
-  /* ---- Type scale (rem @ 16px base) ---- */
-  --fs-display-1: 6rem;     /* 96 — hero statements */
-  --fs-display-2: 4.25rem;  /* 68 */
-  --fs-h1:        2.75rem;  /* 44 */
-  --fs-h2:        2rem;     /* 32 */
-  --fs-h3:        1.5rem;   /* 24 */
+  /* ---- Type scale (fluid; rem @ 16px base) ---- */
+  --fs-display-1: clamp(3rem, 1rem + 8.5vw, 6rem);       /* 48 → 96 — hero statements */
+  --fs-display-2: clamp(2.5rem, 1.4rem + 4.6vw, 4.25rem);/* 40 → 68 */
+  --fs-h1:        clamp(2.25rem, 1.55rem + 2.9vw, 3.25rem);/* 36 → 52 */
+  --fs-h2:        clamp(1.875rem, 1.45rem + 1.8vw, 2.5rem);/* 30 → 40 */
+  --fs-h3:        clamp(1.375rem, 1.18rem + 0.8vw, 1.625rem);/* 22 → 26 */
   --fs-h4:        1.25rem;  /* 20 */
   --fs-body-lg:   1.125rem; /* 18 */
   --fs-body:      1rem;     /* 16 */

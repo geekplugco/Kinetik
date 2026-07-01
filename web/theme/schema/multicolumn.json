@@ -1,12 +1,12 @@
 { "name": "Multicolumn", "tag": "section", "class": "section section--multicolumn", "max_blocks": 8,
   "settings": [
-    { "type": "inline_richtext", "id": "heading", "label": "Heading" },
+    { "type": "text", "id": "subheading", "label": "Kicker", "default": "The system" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Why Kinetik" },
+    { "type": "richtext", "id": "text", "label": "Intro text" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
   ],
   "blocks": [
     { "type": "column", "name": "Column", "settings": [
-      { "type": "select", "id": "icon", "label": "Icon", "default": "star",
-        "options": [{ "value": "star", "label": "Star" }, { "value": "cart", "label": "Cart" }, { "value": "search", "label": "Search" }, { "value": "user", "label": "User" }] },
       { "type": "text", "id": "title", "label": "Title", "default": "Feature" },
       { "type": "richtext", "id": "text", "label": "Text" } ] }
   ],

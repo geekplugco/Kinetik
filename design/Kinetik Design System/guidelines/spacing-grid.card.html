@@ -1,0 +1,31 @@
+<!-- @dsCard group="Spacing" viewport="700x230" name="Exposed Grid" subtitle="Bento cells split by 1px hairlines — never floating" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 24px; background: var(--surface-page); }
+  .bento { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 0;
+           border: var(--border); background: var(--border-hairline); }
+  .cell { background: var(--surface-card); padding: 14px; min-height: 64px; }
+  .cell.tall { grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; }
+  /* 1px gap shows the hairline color behind the grid */
+  .bento { gap: 1px; }
+  .k-label { font-size: 10px; }
+  h4 { font-size: 20px; }
+</style>
+</head>
+<body>
+  <div class="bento">
+    <div class="cell tall">
+      <span class="k-label">Featured</span>
+      <h4>Shell System</h4>
+    </div>
+    <div class="cell"><span class="k-label">New</span></div>
+    <div class="cell"><span class="k-label">Audio</span></div>
+    <div class="cell"><span class="k-label">Gear</span></div>
+    <div class="cell"><span class="k-label">Sale</span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+{%- liquid
+  assign s = section.settings
+  assign slot_blocks = section.blocks | where: 'type', 'slot'
+  assign all_products = collections.all.products
+  assign discount_pct = s.bundle_discount | default: 10
+  assign min_pieces = s.min_pieces | default: 3
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+  style="--pt:{{ s.padding_top | default: 0 }}px;--pb:{{ s.padding_bottom | default: 0 }}px"
+  class="border-y border-border-hairline bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
+>
+  <div class="mx-auto max-w-[var(--page-width)] px-6">
+    <div class="mb-8 flex flex-col gap-3 md:mb-12 md:flex-row md:items-end md:justify-between">
+      <div>
+        <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.kicker | default: 'The system' }}</span>
+        <h2 class="mt-3 font-display text-display-2 uppercase text-text-strong">{{ s.heading | default: 'Build your kit' }}</h2>
+      </div>
+      {%- if s.text != blank -%}<div class="max-w-sm text-body text-text-muted [&_p]:m-0">{{ s.text }}</div>{%- endif -%}
+    </div>
+
+    <build-your-kit
+      class="grid gap-10 lg:grid-cols-[1.7fr_1fr]"
+      data-discount-pct="{{ discount_pct }}"
+      data-min-pieces="{{ min_pieces }}"
+      data-currency="{{ cart.currency.iso_code | default: shop.currency }}"
+    >
+      <ol class="flex min-w-0 flex-col">
+        {%- for block in slot_blocks -%}
+          {%- assign slot_id = block.id -%}
+          {%- assign slot_label = block.settings.label | default: 'Slot' -%}
+          {%- assign types = block.settings.types | split: ',' -%}
+          {%- assign opt_count = 0 -%}
+          {%- capture options_html -%}
+            {%- for product in all_products -%}
+              {%- assign ptype = product.type | strip -%}
+              {%- assign is_match = false -%}
+              {%- for t in types -%}
+                {%- assign tt = t | strip -%}
+                {%- if tt == ptype -%}{%- assign is_match = true -%}{%- break -%}{%- endif -%}
+              {%- endfor -%}
+              {%- unless is_match -%}{%- continue -%}{%- endunless -%}
+              {%- assign opt_count = opt_count | plus: 1 -%}
+              {%- assign opt_variant = product.selected_or_first_available_variant -%}
+              <li class="shrink-0">
+                <button
+                  type="button"
+                  data-kit-option
+                  data-slot="{{ slot_id }}"
+                  data-handle="{{ product.handle }}"
+                  data-variant="{{ opt_variant.id }}"
+                  data-price="{{ product.price }}"
+                  data-title="{{ product.title | escape }}"
+                  data-image="{{ product.featured_media | image_url: width: 80 }}"
+                  data-image-alt="{{ product.featured_media.alt | default: product.title | escape }}"
+                  aria-pressed="false"
+                  class="group/opt block w-32 border border-border-hairline text-left transition-colors hover:border-border-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                >
+                  <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+                    {%- if product.featured_media -%}
+                      {%- assign kit_alt = product.featured_media.alt | default: product.title | escape -%}
+                      {{ product.featured_media | image_url: width: 256 | image_tag: loading: 'lazy', widths: '128,256', sizes: '128px', alt: kit_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+                    {%- endif -%}
+                    <span data-badge class="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center bg-surface-page/80 text-text-muted transition-colors">
+                      <span data-icon-plus>{%- render 'icon', name: 'plus', size: 12 -%}</span>
+                      <span data-icon-close class="hidden">{%- render 'icon', name: 'close', size: 12 -%}</span>
+                    </span>
+                  </div>
+                  <div class="flex flex-col gap-0.5 p-2">
+                    <span class="truncate font-sans text-xs text-text-strong">{{ product.title }}</span>
+                    <span class="font-mono text-[11px] text-text-muted">{{ product.price | money }}</span>
+                  </div>
+                </button>
+              </li>
+            {%- endfor -%}
+          {%- endcapture -%}
+          {%- if opt_count > 0 -%}
+            <li class="border-t border-border-hairline py-6 first:border-t-0 first:pt-0" data-slot-row="{{ slot_id }}">
+              <div class="mb-4 flex items-baseline gap-3">
+                <span class="font-mono text-sm tabular-nums text-text-muted">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                <span class="font-mono text-xs uppercase tracking-label text-text-strong">{{ slot_label }}</span>
+                <span data-slot-status="{{ slot_id }}"{% if block.settings.required %} data-required{% endif %} class="font-mono text-[11px] uppercase tracking-label text-text-muted">{% if block.settings.required %}Required{% else %}Optional{% endif %}</span>
+              </div>
+              <ul class="flex gap-3 overflow-x-auto pb-2">{{ options_html }}</ul>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ol>
+
+      <div class="lg:sticky lg:top-24 lg:self-start">
+        <div class="border border-border-strong bg-surface-card p-5">
+          <div class="flex items-center justify-between border-b border-border-hairline pb-3">
+            <span class="font-mono text-xs uppercase tracking-label text-text-strong">Your kit</span>
+            <span data-count class="font-mono text-xs tabular-nums text-text-muted">0 pieces</span>
+          </div>
+
+          <p data-kit-empty class="py-8 text-center text-sm text-text-muted">Select pieces to build your kit.</p>
+          <ul data-kit-list class="hidden flex-col divide-y divide-border-hairline"></ul>
+
+          <div class="mt-3 flex flex-col gap-1.5 border-t border-border-hairline pt-3 font-mono text-xs">
+            <div class="flex justify-between text-text-muted"><span>Subtotal</span><span data-subtotal class="tabular-nums">{{ 0 | money }}</span></div>
+            <div data-discount-row class="flex justify-between text-text-muted">
+              <span data-discount-label>Kit discount &minus;{{ discount_pct }}% ({{ min_pieces }}+ pieces)</span>
+              <span data-discount class="tabular-nums">&minus;{{ 0 | money }}</span>
+            </div>
+            <div class="mt-1 flex justify-between border-t border-border-hairline pt-2 text-base text-text-strong"><span class="uppercase tracking-label">Total</span><span data-total class="tabular-nums">{{ 0 | money }}</span></div>
+          </div>
+
+          <button type="button" data-add-kit disabled class="mt-4 inline-flex w-full items-center justify-center gap-2 bg-accent px-6 py-3 font-mono text-sm uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40">
+            Add kit to cart {%- render 'icon', name: 'arrow', size: 15 -%}
+          </button>
+          <p class="mt-2 text-center font-mono text-[11px] text-text-muted">Mix any pieces. Discount applies at {{ min_pieces }}+.</p>
+        </div>
+      </div>
+    </build-your-kit>
+  </div>
+</section>
+<script src="{{ 'build-your-kit.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "t:sections.build-your-kit.name",
+  "tag": "section",
+  "class": "section section--build-your-kit",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "t:sections.build-your-kit.settings.kicker.label",
+      "default": "The system"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.build-your-kit.settings.heading.label",
+      "default": "Build your kit"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.build-your-kit.settings.text.label"
+    },
+    {
+      "type": "range",
+      "id": "bundle_discount",
+      "label": "t:sections.build-your-kit.settings.bundle_discount.label",
+      "info": "t:sections.build-your-kit.settings.bundle_discount.info",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "min_pieces",
+      "label": "t:sections.build-your-kit.settings.min_pieces.label",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.build-your-kit.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.build-your-kit.settings.padding_top.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.build-your-kit.settings.padding_bottom.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slot",
+      "name": "t:sections.build-your-kit.blocks.slot.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.build-your-kit.blocks.slot.settings.label.label",
+          "default": "Shell"
+        },
+        {
+          "type": "text",
+          "id": "types",
+          "label": "t:sections.build-your-kit.blocks.slot.settings.types.label",
+          "info": "t:sections.build-your-kit.blocks.slot.settings.types.info",
+          "default": "Outerwear"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "t:sections.build-your-kit.blocks.slot.settings.required.label",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.build-your-kit.presets.name",
+      "blocks": [
+        {
+          "type": "slot",
+          "settings": {
+            "label": "Shell",
+            "types": "Outerwear"
+          }
+        },
+        {
+          "type": "slot",
+          "settings": {
+            "label": "Layer",
+            "types": "Tops"
+          }
+        },
+        {
+          "type": "slot",
+          "settings": {
+            "label": "Bottom",
+            "types": "Bottoms"
+          }
+        },
+        {
+          "type": "slot",
+          "settings": {
+            "label": "Footwear",
+            "types": "Footwear"
+          }
+        },
+        {
+          "type": "slot",
+          "settings": {
+            "label": "Carry",
+            "types": "Bags"
+          }
+        },
+        {
+          "type": "slot",
+          "settings": {
+            "label": "Gear",
+            "types": "Accessories, Audio, Tech, Wearables"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

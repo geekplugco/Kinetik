@@ -19,6 +19,7 @@
         { "value": "thumbnail_slider", "label": "t:labels.gallery_thumbnail_slider" }
       ] },
     { "type": "checkbox", "id": "enable_sticky_info", "label": "t:labels.enable_sticky_info", "default": true },
+    { "type": "checkbox", "id": "enable_sticky_atc", "label": "Sticky add-to-cart bar", "default": true },
     { "type": "checkbox", "id": "enable_image_zoom", "label": "t:labels.enable_image_zoom", "default": true },
     { "type": "header", "content": "t:labels.section_padding" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "default": 36, "unit": "px", "label": "t:labels.padding_top" },

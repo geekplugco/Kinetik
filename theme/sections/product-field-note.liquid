@@ -1,0 +1,48 @@
+{%- liquid
+  assign quote = section.settings.quote
+-%}
+{%- if quote != blank -%}
+  <section
+    data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+    style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
+    class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)]"
+  >
+    <figure class="mx-auto flex max-w-4xl flex-col gap-8 px-6 text-center">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <blockquote class="font-display text-[clamp(1.6rem,4vw,3rem)] leading-[1.05] tracking-tight text-text-strong [&_p]:m-0">{{ quote }}</blockquote>
+      {%- if section.settings.attribution != blank or section.settings.role != blank -%}
+        <figcaption class="flex flex-col items-center gap-1">
+          {%- if section.settings.attribution != blank -%}
+            <span class="font-mono text-xs uppercase tracking-label text-text-strong">{{ section.settings.attribution }}</span>
+          {%- endif -%}
+          {%- if section.settings.role != blank -%}
+            <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.role }}</span>
+          {%- endif -%}
+        </figcaption>
+      {%- endif -%}
+    </figure>
+  </section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.product-field-note.name",
+  "tag": "section",
+  "class": "section section--product-field-note",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "inline_richtext", "id": "eyebrow", "label": "t:sections.product-field-note.settings.eyebrow.label", "default": "Field note" },
+    { "type": "richtext", "id": "quote", "label": "t:sections.product-field-note.settings.quote.label", "default": "<p>Three days on the trail, one storm, zero compromises. The shell just disappears and lets you move.</p>" },
+    { "type": "text", "id": "attribution", "label": "t:sections.product-field-note.settings.attribution.label", "default": "Tester #07" },
+    { "type": "text", "id": "role", "label": "t:sections.product-field-note.settings.role.label", "default": "Alpine field program" },
+    { "type": "header", "content": "t:sections.product-field-note.settings.header__style.content" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.product-field-note.settings.color_scheme.label", "default": "scheme-2" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.product-field-note.settings.padding_top.label" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.product-field-note.settings.padding_bottom.label" }
+  ],
+  "presets": [
+    { "name": "t:sections.product-field-note.presets.name__1" }
+  ]
+}
+{% endschema %}

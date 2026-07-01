@@ -1,0 +1,38 @@
+{% doc %}
+  Inline SVG icon from the Kinetik set. Stroke-based, inherits currentColor.
+  @param {string} name - cart | search | menu | user | arrow | close | star | chevron | arrow-up-right | plus | minus
+  @param {number} [size] - px width/height, default 20
+  @param {string} [class] - extra classes on the svg
+{% enddoc %}
+{%- liquid
+  assign icon_size = size | default: 20
+  case name
+    when 'cart'
+      assign d = 'M3 3h2l2 12h10l2-8H6 M9 19a1 1 0 100 2 1 1 0 000-2 M16 19a1 1 0 100 2 1 1 0 000-2'
+    when 'search'
+      assign d = 'M11 4a7 7 0 105.2 11.7L21 21 M11 4a7 7 0 11-7 7 7 7 0 017-7'
+    when 'menu'
+      assign d = 'M3 6h18 M3 12h18 M3 18h18'
+    when 'user'
+      assign d = 'M12 12a4 4 0 100-8 4 4 0 000 8 M4 20a8 8 0 0116 0'
+    when 'arrow'
+      assign d = 'M5 12h14 M13 6l6 6-6 6'
+    when 'close'
+      assign d = 'M6 6l12 12 M18 6L6 18'
+    when 'star'
+      assign d = 'M12 3l2.9 6 6.1.9-4.5 4.3 1.1 6.1L12 17.8 6.4 20.4l1.1-6.1L3 9.9 9.1 9z'
+    when 'chevron'
+      assign d = 'M6 9l6 6 6-6'
+    when 'arrow-up-right'
+      assign d = 'M7 17L17 7 M8 7h9v9'
+    when 'plus'
+      assign d = 'M12 5v14 M5 12h14'
+    when 'minus'
+      assign d = 'M5 12h14'
+    else
+      assign d = ''
+  endcase
+-%}
+{%- if d != blank -%}
+  <svg width="{{ icon_size }}" height="{{ icon_size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ settings.icon_stroke | default: 2 }}" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"{% if class %} class="{{ class }}"{% endif %}><path d="{{ d }}"></path></svg>
+{%- endif -%}

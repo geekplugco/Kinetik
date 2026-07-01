@@ -1,7 +1,22 @@
 { "name": "Collapsible content", "tag": "section", "class": "section section--collapsible", "max_blocks": 12,
   "settings": [ { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "FAQ" },
+    { "type": "text", "id": "subheading", "label": "Overline label" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "layout", "label": "Layout", "default": "stacked",
+      "options": [ { "value": "stacked", "label": "Stacked" }, { "value": "split", "label": "Split (heading aside)" } ] },
+    { "type": "select", "id": "row_style", "label": "Row style", "default": "divided",
+      "options": [ { "value": "divided", "label": "Divided" }, { "value": "boxed", "label": "Boxed" }, { "value": "plain", "label": "Plain" } ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "narrow",
+      "options": [ { "value": "narrow", "label": "Narrow" }, { "value": "wide", "label": "Wide" }, { "value": "page", "label": "Page" } ] },
+    { "type": "checkbox", "id": "open_first", "label": "Open first item by default", "default": true },
+    { "type": "header", "content": "Section" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
   "blocks": [ { "type": "item", "name": "Item", "settings": [
     { "type": "text", "id": "heading", "label": "Question", "default": "Question" },
     { "type": "richtext", "id": "content", "label": "Answer" } ] } ],
-  "presets": [{ "name": "Collapsible content", "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }] }] }
+  "presets": [
+    { "name": "Collapsible content", "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }] },
+    { "name": "FAQ — split aside", "settings": { "layout": "split", "row_style": "divided", "width": "page", "subheading": "Support" }, "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }, { "type": "item" }] },
+    { "name": "FAQ — boxed", "settings": { "row_style": "boxed", "width": "wide", "open_first": false }, "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }] } ] }

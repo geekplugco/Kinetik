@@ -1,0 +1,115 @@
+{% doc %}
+  Kinetik product card. Reused by collection grids and product-listing sections.
+  Rich fields are metafield-driven with graceful fallback, so the card works on any store.
+  @param {object} product - the product to render
+  @param {string} [ratio] - adapt | square | portrait (default = settings.card_image_ratio)
+  @param {boolean} [show_quick_add] - override settings.card_quick_add
+  @param {string} [sizes] - responsive image sizes attr
+{% enddoc %}
+{%- liquid
+  assign card_ratio = ratio | default: settings.card_image_ratio | default: 'portrait'
+  assign card_mode = settings.card_mode | default: 'technical'
+  case card_ratio
+    when 'square'
+      assign ratio_cls = 'aspect-square'
+    when 'adapt'
+      assign ratio_cls = ''
+    else
+      assign ratio_cls = 'aspect-[4/5]'
+  endcase
+  assign img_sizes = sizes | default: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw'
+  assign card_alt = product.title | escape
+  if product.featured_media.alt != blank
+    assign card_alt = product.featured_media.alt | escape
+  endif
+
+  assign code = product.metafields.custom.product_code.value | default: product.selected_or_first_available_variant.sku
+  assign spec = product.metafields.custom.spec.value | default: product.type
+  assign badge = product.metafields.custom.badge.value
+
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+    assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+
+  assign quick_add = settings.card_quick_add
+  if show_quick_add != null
+    assign quick_add = show_quick_add
+  endif
+  assign color_option = null
+  assign swatch_trigger = settings.color_swatch_trigger | default: 'Color' | downcase
+  for opt in product.options_with_values
+    assign oname = opt.name | downcase
+    if oname == swatch_trigger or oname contains 'color' or oname contains 'colour'
+      assign color_option = opt
+      break
+    endif
+  endfor
+-%}
+<article class="group hp-reveal hp-reveal--fade hp-hover-lift flex flex-col {% if card_mode == 'commerce' %}gap-2{% elsif card_mode == 'editorial' %}gap-4{% else %}gap-3{% endif %}" data-card-mode="{{ card_mode }}">
+  <div data-card-media class="kx-media-effect relative {{ ratio_cls }} overflow-hidden border border-border-hairline bg-surface-sunken">
+    <a href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_media -%}
+        {%- assign show_second = false -%}
+        {%- if settings.card_show_second_image and product.media[1] -%}{%- assign show_second = true -%}{%- endif -%}
+        {{ product.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600,900', sizes: img_sizes, alt: card_alt, class: 'h-full w-full object-cover motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
+        {%- if show_second -%}
+          {{ product.media[1] | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600,900', sizes: img_sizes, alt: card_alt, class: 'absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100' }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
+      {%- endif -%}
+    </a>
+    {%- if card_mode != 'editorial' -%}
+      <div class="kx-card-spec font-mono text-[10px] uppercase tracking-label text-paper mix-blend-difference" aria-hidden="true">
+        <span>{{ code | default: product.vendor | default: 'Kinetik' }}</span>
+        <span>{{ spec | default: 'System' }}</span>
+      </div>
+    {%- endif -%}
+    <button type="button" data-quick-view data-product-url="{{ product.url }}" aria-label="Quick view {{ product.title | escape }}" class="absolute left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 border border-paper/70 bg-ink-950/40 px-4 py-2 font-mono text-[11px] uppercase tracking-label text-paper opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 focus-visible:opacity-100 md:block">Quick view</button>
+    {%- if card_mode == 'editorial' -%}
+      <a href="{{ product.url }}" class="absolute inset-x-3 bottom-3 hidden min-h-[44px] items-center justify-center bg-paper px-4 py-2 font-mono text-[11px] uppercase tracking-label text-ink-950 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 md:flex">View details</a>
+    {%- endif -%}
+    {%- assign badge_pos = 'left-3' -%}
+    {%- if settings.badge_position == 'top-right' -%}{%- assign badge_pos = 'right-3' -%}{%- endif -%}
+    {%- if product.available == false and settings.badge_show_sold_out -%}
+      <span class="absolute {{ badge_pos }} top-3 bg-ink-950 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-paper" style="border-radius:var(--badge-radius)">{{ 'products.product.sold_out' | t | default: 'Sold out' }}</span>
+    {%- elsif on_sale and settings.badge_show_sale -%}
+      <span class="absolute {{ badge_pos }} top-3 bg-accent px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-accent-ink" style="border-radius:var(--badge-radius)">&minus;{{ discount }}%</span>
+    {%- elsif badge != blank -%}
+      <span class="absolute {{ badge_pos }} top-3 bg-ink-950 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-paper" style="border-radius:var(--badge-radius)">{{ badge }}</span>
+    {%- endif -%}
+    {%- if quick_add and product.available and card_mode != 'editorial' -%}
+      {%- render 'quick-add', product: product -%}
+    {%- endif -%}
+  </div>
+
+  <div class="flex flex-col {% if card_mode == 'commerce' %}gap-1{% else %}gap-1.5{% endif %}">
+    {%- if settings.card_show_vendor and product.vendor != blank and card_mode != 'commerce' -%}<span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ product.vendor }}</span>{%- endif -%}
+    {%- if code != blank and card_mode != 'editorial' -%}<span class="font-mono text-[10px] uppercase tracking-label text-text-faint">{{ code }}</span>{%- endif -%}
+    <a href="{{ product.url }}" class="font-sans {% if card_mode == 'editorial' %}text-body-lg{% else %}text-body{% endif %} leading-tight text-text-strong hover:text-accent-press">{{ product.title }}</a>
+    {%- if spec != blank and card_mode != 'commerce' -%}<span class="font-mono text-[11px] text-text-muted">{{ spec }}</span>{%- endif -%}
+    <div class="pt-0.5">{%- render 'price', product: product -%}</div>
+    {%- if color_option and color_option.values.size > 1 and settings.card_show_swatches -%}
+      <div class="flex gap-1.5 pt-1">
+        {%- for value in color_option.values limit: settings.card_max_swatches -%}
+          {%- assign v_img = '' -%}
+          {%- for variant in product.variants -%}
+            {%- if variant.options contains value and variant.featured_media != blank -%}
+              {%- assign v_img = variant.featured_media | image_url: width: 600 -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <button type="button" data-card-swatch{% if v_img != blank %} data-img="{{ v_img }}"{% endif %} aria-label="{{ value | escape }}" class="block h-3.5 w-3.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'swatch', value: value, title: value, size_class: 'h-3.5 w-3.5' -%}</button>
+        {%- endfor -%}
+        {%- if color_option.values.size > settings.card_max_swatches -%}
+          <span class="font-mono text-[10px] text-text-muted">+{{ color_option.values.size | minus: settings.card_max_swatches }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if card_mode == 'editorial' -%}
+      <a href="{{ product.url }}" class="mt-1 inline-flex min-h-[44px] items-center font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 md:hidden">View product</a>
+    {%- endif -%}
+  </div>
+</article>

@@ -1,0 +1,24 @@
+<!-- @dsCard group="Brand" viewport="700x190" name="Borders & Elevation" subtitle="Hairline first. Shadow only for things that float." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 24px; background: var(--surface-sunken); display: flex; gap: 16px; align-items: stretch; }
+  .card { flex: 1; background: var(--surface-card); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; }
+  .n { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.05em; }
+  h4 { font-size: 16px; }
+  .hair { border: var(--border); }
+  .ink { border: var(--border-ink); }
+  .pop { box-shadow: var(--shadow-pop); }
+  .float { box-shadow: var(--shadow-drawer); }
+</style>
+</head>
+<body>
+  <div class="card hair"><h4>Hairline</h4><span class="n">DEFAULT · 1px ink-200</span></div>
+  <div class="card ink"><h4>Ink Border</h4><span class="n">EMPHASIS · 1px ink-950</span></div>
+  <div class="card pop"><h4>Pop</h4><span class="n">POPOVER · y4 b16 / .08</span></div>
+  <div class="card float"><h4>Float</h4><span class="n">DRAWER · −x16 b48 / .16</span></div>
+</body>
+</html>

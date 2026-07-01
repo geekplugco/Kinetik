@@ -8,6 +8,10 @@ const paths: Record<string, string> = {
   arrow: "M5 12h14 M13 6l6 6-6 6",
   close: "M6 6l12 12 M18 6L6 18",
   star: "M12 3l2.9 6 6.1.9-4.5 4.3 1.1 6.1L12 17.8 6.4 20.4l1.1-6.1L3 9.9 9.1 9z",
+  chevron: "M6 9l6 6 6-6",
+  "arrow-up-right": "M7 17L17 7 M8 7h9v9",
+  plus: "M12 5v14 M5 12h14",
+  minus: "M5 12h14",
 };
 
 export type IconName = keyof typeof paths;

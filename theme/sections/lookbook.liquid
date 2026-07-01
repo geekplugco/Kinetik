@@ -1,0 +1,429 @@
+{%- liquid
+  assign s = section.settings
+  assign shots = section.blocks | where: 'type', 'shot'
+
+  case s.image_ratio
+    when 'square'
+      assign ratio_cls = 'aspect-square'
+    when 'landscape'
+      assign ratio_cls = 'aspect-[4/3]'
+    when 'wide'
+      assign ratio_cls = 'aspect-[16/9]'
+    else
+      assign ratio_cls = 'aspect-[4/5]'
+  endcase
+
+  case s.width
+    when 'full'
+      assign width_cls = 'max-w-none'
+    when 'narrow'
+      assign width_cls = 'max-w-4xl'
+    else
+      assign width_cls = 'max-w-[var(--page-width)]'
+  endcase
+
+  assign is_grid = false
+  if s.layout == 'grid'
+    assign is_grid = true
+  endif
+  assign is_editorial = false
+  if s.layout == 'editorial'
+    assign is_editorial = true
+  endif
+  if is_grid or is_editorial
+    assign shot_sizes = '(min-width:750px) 50vw, 100vw'
+  else
+    assign shot_sizes = '(min-width:990px) 80vw, 100vw'
+  endif
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+  style="--pt:{{ s.padding_top | default: 0 }}px;--pb:{{ s.padding_bottom | default: 0 }}px"
+  class="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
+>
+  <look-book class="mx-auto block {{ width_cls }} px-6">
+    <div class="mb-8 flex flex-col gap-3 md:mb-12 md:flex-row md:items-end md:justify-between">
+      <div>
+        <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.kicker | default: 'Lookbook' }}</span>
+        {%- if s.heading != blank -%}<h2 class="mt-3 font-display text-display-2 uppercase text-text-strong">{{ s.heading }}</h2>{%- endif -%}
+      </div>
+      {%- if s.text != blank -%}<div class="max-w-sm text-body text-text-muted [&_p]:m-0">{{ s.text }}</div>{%- endif -%}
+    </div>
+
+    <div class="{% if is_editorial %}grid grid-cols-12 items-start gap-x-6 gap-y-10 md:gap-y-16{% elsif is_grid %}grid gap-6 md:grid-cols-2{% else %}flex flex-col gap-16 md:gap-24{% endif %}">
+      {%- for block in shots -%}
+        {%- assign b = block.settings -%}
+        {%- assign cell_cls = '' -%}
+        {%- assign cell_ratio = ratio_cls -%}
+        {%- if is_editorial -%}
+          {%- assign pat = forloop.index0 | modulo: 3 -%}
+          {%- if pat == 0 -%}
+            {%- assign cell_cls = 'col-span-12 md:col-span-8' -%}
+            {%- assign cell_ratio = 'aspect-[4/5]' -%}
+          {%- elsif pat == 1 -%}
+            {%- assign cell_cls = 'col-span-12 md:col-span-4 md:mt-28' -%}
+            {%- assign cell_ratio = 'aspect-[3/4]' -%}
+          {%- else -%}
+            {%- assign cell_cls = 'col-span-12' -%}
+            {%- assign cell_ratio = 'aspect-[16/9]' -%}
+          {%- endif -%}
+        {%- endif -%}
+        <figure class="flex flex-col {{ cell_cls }}" {{ block.shopify_attributes }}>
+          <div class="relative {{ cell_ratio }} w-full overflow-hidden bg-surface-sunken">
+            {%- if b.image != blank -%}
+              {{ b.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600,900,1200,1400', sizes: shot_sizes, alt: b.image_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
+            {%- endif -%}
+
+            {%- assign has_hotspot = false -%}
+            {%- for i in (1..4) -%}
+              {%- assign pkey = 'product_' | append: i -%}
+              {%- assign xkey = 'x_' | append: i -%}
+              {%- assign ykey = 'y_' | append: i -%}
+              {%- assign p = b[pkey] -%}
+              {%- if p == blank -%}{%- continue -%}{%- endif -%}
+              {%- assign has_hotspot = true -%}
+              {%- assign hx = b[xkey] | default: 50 -%}
+              {%- assign hy = b[ykey] | default: 50 -%}
+              {%- assign code = p.metafields.custom.product_code.value | default: p.selected_or_first_available_variant.sku -%}
+              <div class="group/hs absolute z-10 -translate-x-1/2 -translate-y-1/2" style="left:{{ hx }}%;top:{{ hy }}%" data-hotspot-item>
+                <button type="button" aria-label="Shop {{ p.title | escape }}" aria-expanded="false" data-hotspot class="relative flex h-7 w-7 items-center justify-center rounded-full bg-paper text-ink-950 shadow-[0_2px_10px_rgba(10,10,10,0.35)] outline-none ring-accent transition-transform hover:scale-110 focus-visible:ring-2">
+                  <span class="absolute inset-0 animate-ping rounded-full bg-accent/60" aria-hidden="true"></span>
+                  {%- render 'icon', name: 'plus', size: 14 -%}
+                </button>
+                <div data-tip class="pointer-events-none absolute bottom-[calc(100%+10px)] left-1/2 z-20 w-56 -translate-x-1/2 translate-y-1 border border-border-hairline bg-surface-page p-3 opacity-0 shadow-xl transition-[transform,opacity] duration-200 motion-reduce:transition-none group-hover/hs:pointer-events-auto group-hover/hs:translate-y-0 group-hover/hs:opacity-100 group-focus-within/hs:pointer-events-auto group-focus-within/hs:translate-y-0 group-focus-within/hs:opacity-100">
+                  <a href="{{ p.url }}" class="flex gap-3">
+                    <span class="relative block h-16 w-14 shrink-0 overflow-hidden bg-surface-sunken">
+                      {%- if p.featured_media -%}
+                        {%- assign hotspot_alt = p.featured_media.alt | default: p.title | escape -%}
+                        {{ p.featured_media | image_url: width: 112 | image_tag: loading: 'lazy', widths: '56,112', sizes: '56px', alt: hotspot_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+                      {%- endif -%}
+                    </span>
+                    <span class="flex min-w-0 flex-col gap-0.5">
+                      {%- if code != blank -%}<span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ code }}</span>{%- endif -%}
+                      <span class="truncate font-sans text-sm text-text-strong">{{ p.title }}</span>
+                      <span class="font-mono text-sm text-text-strong">{{ p.price | money }}</span>
+                    </span>
+                  </a>
+                  {%- if p.available -%}
+                    <quick-add>
+                      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+                        <button type="submit" class="mt-3 flex w-full items-center justify-center gap-2 bg-accent px-3 py-2 font-mono text-[11px] uppercase tracking-label text-accent-ink transition-colors hover:bg-accent-hover">
+                          {{ 'products.product.add_to_cart' | t | default: 'Add to cart' }} {%- render 'icon', name: 'arrow', size: 13 -%}
+                        </button>
+                      </form>
+                    </quick-add>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          {%- if has_hotspot -%}
+            <ul class="mt-4 flex gap-3 overflow-x-auto pb-2 md:hidden">
+              {%- for i in (1..4) -%}
+                {%- assign pkey = 'product_' | append: i -%}
+                {%- assign p = b[pkey] -%}
+                {%- if p == blank -%}{%- continue -%}{%- endif -%}
+                <li class="shrink-0">
+                  <a href="{{ p.url }}" class="flex w-44 items-center gap-3 border border-border-hairline p-2">
+                    <span class="relative block h-14 w-12 shrink-0 overflow-hidden bg-surface-sunken">
+                      {%- if p.featured_media -%}
+                        {%- assign mobile_hotspot_alt = p.featured_media.alt | default: p.title | escape -%}
+                        {{ p.featured_media | image_url: width: 96 | image_tag: loading: 'lazy', sizes: '48px', alt: mobile_hotspot_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+                      {%- endif -%}
+                    </span>
+                    <span class="flex min-w-0 flex-col">
+                      <span class="truncate font-sans text-sm text-text-strong">{{ p.title }}</span>
+                      <span class="font-mono text-xs text-text-muted">{{ p.price | money }}</span>
+                    </span>
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          {%- if b.caption != blank -%}
+            <figcaption class="mt-4 font-mono text-xs uppercase tracking-label text-text-muted">{{ b.caption }}</figcaption>
+          {%- endif -%}
+        </figure>
+      {%- endfor -%}
+    </div>
+  </look-book>
+</section>
+<script src="{{ 'lookbook.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "t:sections.lookbook.name",
+  "tag": "section",
+  "class": "section section--lookbook",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "t:sections.lookbook.settings.kicker.label",
+      "default": "Lookbook"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.lookbook.settings.heading.label",
+      "default": "Shot in the field"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.lookbook.settings.text.label"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.lookbook.settings.layout.label",
+      "default": "single",
+      "options": [
+        {
+          "value": "single",
+          "label": "t:sections.lookbook.settings.layout.options__1.label"
+        },
+        {
+          "value": "grid",
+          "label": "t:sections.lookbook.settings.layout.options__2.label"
+        },
+        {
+          "value": "editorial",
+          "label": "t:sections.lookbook.settings.layout.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.lookbook.settings.image_ratio.label",
+      "default": "portrait",
+      "options": [
+        {
+          "value": "portrait",
+          "label": "t:sections.lookbook.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.lookbook.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.lookbook.settings.image_ratio.options__3.label"
+        },
+        {
+          "value": "wide",
+          "label": "t:sections.lookbook.settings.image_ratio.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.lookbook.settings.width.label",
+      "default": "page",
+      "options": [
+        {
+          "value": "page",
+          "label": "t:sections.lookbook.settings.width.options__1.label"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.lookbook.settings.width.options__2.label"
+        },
+        {
+          "value": "narrow",
+          "label": "t:sections.lookbook.settings.width.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.lookbook.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.lookbook.settings.padding_top.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.lookbook.settings.padding_bottom.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "shot",
+      "name": "t:sections.lookbook.blocks.shot.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.lookbook.blocks.shot.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "t:sections.lookbook.blocks.shot.settings.image_alt.label"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "t:sections.lookbook.blocks.shot.settings.caption.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.lookbook.blocks.shot.settings.header__1.content"
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "t:sections.lookbook.blocks.shot.settings.product_1.label"
+        },
+        {
+          "type": "range",
+          "id": "x_1",
+          "label": "t:sections.lookbook.blocks.shot.settings.x_1.label",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "y_1",
+          "label": "t:sections.lookbook.blocks.shot.settings.y_1.label",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 40
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "t:sections.lookbook.blocks.shot.settings.product_2.label"
+        },
+        {
+          "type": "range",
+          "id": "x_2",
+          "label": "t:sections.lookbook.blocks.shot.settings.x_2.label",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 60
+        },
+        {
+          "type": "range",
+          "id": "y_2",
+          "label": "t:sections.lookbook.blocks.shot.settings.y_2.label",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 65
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "t:sections.lookbook.blocks.shot.settings.product_3.label"
+        },
+        {
+          "type": "range",
+          "id": "x_3",
+          "label": "t:sections.lookbook.blocks.shot.settings.x_3.label",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 45
+        },
+        {
+          "type": "range",
+          "id": "y_3",
+          "label": "t:sections.lookbook.blocks.shot.settings.y_3.label",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 80
+        },
+        {
+          "type": "product",
+          "id": "product_4",
+          "label": "t:sections.lookbook.blocks.shot.settings.product_4.label"
+        },
+        {
+          "type": "range",
+          "id": "x_4",
+          "label": "t:sections.lookbook.blocks.shot.settings.x_4.label",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 75
+        },
+        {
+          "type": "range",
+          "id": "y_4",
+          "label": "t:sections.lookbook.blocks.shot.settings.y_4.label",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 30
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.lookbook.presets.name__1",
+      "blocks": [
+        {
+          "type": "shot"
+        },
+        {
+          "type": "shot"
+        },
+        {
+          "type": "shot"
+        }
+      ]
+    },
+    {
+      "name": "t:sections.lookbook.presets.name__2",
+      "settings": {
+        "layout": "grid"
+      },
+      "blocks": [
+        {
+          "type": "shot"
+        },
+        {
+          "type": "shot"
+        },
+        {
+          "type": "shot"
+        },
+        {
+          "type": "shot"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

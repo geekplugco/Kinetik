@@ -1,0 +1,7 @@
+{
+  "name": "Search drawer",
+  "tag": "section",
+  "class": "section section--search-drawer",
+  "enabled_on": { "groups": ["custom.overlay"] },
+  "settings": []
+}

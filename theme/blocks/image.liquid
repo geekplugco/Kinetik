@@ -1,0 +1,151 @@
+{%- liquid
+  assign b = block.settings
+  assign image = b.image
+  assign img_alt = b.alt
+  if img_alt == blank
+    assign img_alt = image.alt
+  endif
+  if img_alt == blank
+    assign img_alt = ''
+  endif
+  case b.ratio
+    when 'square'
+      assign ratio = 'aspect-square'
+    when 'portrait'
+      assign ratio = 'aspect-[3/4]'
+    when 'wide'
+      assign ratio = 'aspect-[16/9]'
+    when 'landscape'
+      assign ratio = 'aspect-[4/3]'
+    else
+      assign ratio = ''
+  endcase
+  case b.width
+    when 'small'
+      assign width = 'max-w-sm'
+    when 'medium'
+      assign width = 'max-w-2xl'
+    when 'large'
+      assign width = 'max-w-4xl'
+    else
+      assign width = 'max-w-none'
+  endcase
+  case b.alignment
+    when 'center'
+      assign align = 'mx-auto'
+    when 'right'
+      assign align = 'ml-auto'
+    else
+      assign align = 'mr-auto'
+  endcase
+-%}
+<figure class="m-0 {{ width }} {{ align }}" {{ block.shopify_attributes }}>
+  {%- if image != blank -%}
+    {%- if ratio == blank -%}
+      {{ image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '100vw', widths: '300,500,700,900,1200,1600', alt: img_alt, class: 'block h-auto w-full' }}
+    {%- else -%}
+      <div class="relative w-full overflow-hidden {{ ratio }}">
+        {{ image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '100vw', widths: '300,500,700,900,1200,1600', alt: img_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="flex aspect-[4/3] w-full items-center justify-center bg-surface-sunken text-text-faint">
+      {{ 'image' | placeholder_svg_tag: 'h-full w-full object-cover' }}
+    </div>
+  {%- endif -%}
+</figure>
+{% schema %}
+{
+  "name": "t:blocks.image.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:blocks.image.settings.image.label"
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "t:blocks.image.settings.alt.label",
+      "info": "t:blocks.image.settings.alt.info"
+    },
+    {
+      "type": "select",
+      "id": "ratio",
+      "label": "t:blocks.image.settings.ratio.label",
+      "default": "natural",
+      "options": [
+        {
+          "value": "natural",
+          "label": "t:blocks.image.settings.ratio.options__1.label"
+        },
+        {
+          "value": "square",
+          "label": "t:blocks.image.settings.ratio.options__2.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:blocks.image.settings.ratio.options__3.label"
+        },
+        {
+          "value": "landscape",
+          "label": "t:blocks.image.settings.ratio.options__4.label"
+        },
+        {
+          "value": "wide",
+          "label": "t:blocks.image.settings.ratio.options__5.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:blocks.image.settings.width.label",
+      "default": "full",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:blocks.image.settings.width.options__1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:blocks.image.settings.width.options__2.label"
+        },
+        {
+          "value": "large",
+          "label": "t:blocks.image.settings.width.options__3.label"
+        },
+        {
+          "value": "full",
+          "label": "t:blocks.image.settings.width.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:blocks.image.settings.alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:blocks.image.settings.alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:blocks.image.settings.alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:blocks.image.settings.alignment.options__3.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.image.presets.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,86 @@
+/* ============================================================
+   KINETIK — Color tokens
+   Monochrome, adaptive. Paper/ink base. One Volt-green accent
+   reserved exclusively for conversion (Add to Cart, Sale, focus).
+   ============================================================ */
+
+:root {
+  /* ---- Ink ramp (neutral, cool-neutral grays) ---- */
+  --ink-950: #0A0A0A;   /* near-black — primary text, dark surface */
+  --ink-900: #131313;
+  --ink-800: #1F1F1F;
+  --ink-700: #2E2E2E;
+  --ink-600: #4A4A4A;
+  --ink-500: #6B6B6B;   /* muted text */
+  --ink-400: #909090;
+  --ink-300: #BFBFBF;
+  --ink-200: #E2E2E2;   /* hairline borders */
+  --ink-150: #ECECEC;
+  --ink-100: #F4F4F4;   /* sunken / subtle fill */
+  --ink-050: #FAFAFA;
+  --paper:   #FFFFFF;   /* pure white */
+
+  /* ---- Accent — Volt ---- */
+  --volt-500: #CCFF00;  /* signature accent */
+  --volt-400: #D9FF3D;  /* hover (lighter) */
+  --volt-600: #B2E000;  /* press (darker) */
+  --volt-ink: #0A0A0A;  /* text/icons sitting ON volt */
+
+  /* ---- Support semantics (used sparingly) ---- */
+  --positive: #0E8A4A;
+  --negative: #D7263D;  /* hard-stop errors only — NOT for sale tags */
+  --warning:  #E08A00;
+
+  /* ============================================================
+     Semantic aliases — LIGHT (default)
+     ============================================================ */
+  --surface-page:    var(--paper);
+  --surface-card:    var(--paper);
+  --surface-sunken:  var(--ink-100);
+  --surface-inverse: var(--ink-950);
+  --surface-overlay: rgba(10, 10, 10, 0.45);
+
+  --text-strong:  var(--ink-950);
+  --text-body:    var(--ink-800);
+  --text-muted:   var(--ink-500);
+  --text-faint:   var(--ink-400);
+  --text-inverse: var(--paper);
+  --text-on-accent: var(--volt-ink);
+
+  --border-hairline: var(--ink-200);
+  --border-strong:   var(--ink-950);
+  --border-muted:    var(--ink-150);
+
+  --accent:        var(--volt-500);
+  --accent-hover:  var(--volt-400);
+  --accent-press:  var(--volt-600);
+  --accent-ink:    var(--volt-ink);
+
+  --focus-ring: var(--ink-950);
+}
+
+/* ============================================================
+   Semantic aliases — DARK
+   Pure black canvas; volt unchanged (it reads on both).
+   Apply with <html data-theme="dark"> or .theme-dark wrapper.
+   ============================================================ */
+:root[data-theme="dark"],
+.theme-dark {
+  --surface-page:    var(--ink-950);
+  --surface-card:    var(--ink-900);
+  --surface-sunken:  var(--ink-800);
+  --surface-inverse: var(--paper);
+  --surface-overlay: rgba(0, 0, 0, 0.6);
+
+  --text-strong:  var(--paper);
+  --text-body:    var(--ink-200);
+  --text-muted:   var(--ink-400);
+  --text-faint:   var(--ink-500);
+  --text-inverse: var(--ink-950);
+
+  --border-hairline: var(--ink-700);
+  --border-strong:   var(--paper);
+  --border-muted:    var(--ink-800);
+
+  --focus-ring: var(--volt-500);
+}

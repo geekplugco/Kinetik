@@ -1,0 +1,12 @@
+/* Kinetik — Breakpoints (mobile-first, min-width).
+   CSS @media cannot read custom properties, so these are the canonical source of truth:
+   mirror them in tailwind.config screens and use the literal px in @media queries.
+   Author base styles for mobile; layer wider layouts up via min-width. */
+
+:root {
+  --bp-md: 750px;
+  --bp-lg: 990px;
+  --bp-xl: 1200px;
+
+  --container-max: 1440px;
+}

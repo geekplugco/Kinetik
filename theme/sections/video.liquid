@@ -1,0 +1,242 @@
+{%- liquid
+  assign s = section.settings
+  assign vu = s.video_url
+  assign embed = ''
+  if vu != blank
+    if vu.type == 'youtube'
+      assign embed = 'https://www.youtube.com/embed/' | append: vu.id | append: '?autoplay=1'
+    elsif vu.type == 'vimeo'
+      assign embed = 'https://player.vimeo.com/video/' | append: vu.id | append: '?autoplay=1'
+    endif
+  endif
+  case s.width
+    when 'narrow'
+      assign width = 'max-w-[820px]'
+    when 'page'
+      assign width = 'max-w-[var(--page-width)]'
+    when 'full'
+      assign width = 'max-w-none'
+    else
+      assign width = 'max-w-[1100px]'
+  endcase
+  case s.media_ratio
+    when '21/9'
+      assign ratio = 'aspect-[21/9]'
+    when '4/3'
+      assign ratio = 'aspect-[4/3]'
+    when '1/1'
+      assign ratio = 'aspect-square'
+    else
+      assign ratio = 'aspect-video'
+  endcase
+  if s.heading_alignment == 'center'
+    assign heading_align = 'text-center'
+  else
+    assign heading_align = 'text-left'
+  endif
+  case s.overlay_style
+    when 'none'
+      assign overlay_class = 'bg-transparent'
+    when 'strong'
+      assign overlay_class = 'bg-ink-950/55'
+    else
+      assign overlay_class = 'bg-ink-950/30'
+  endcase
+  assign dark = ''
+  if s.color_scheme == 'scheme-3' or s.color_scheme == 'scheme-dark'
+    assign dark = 'theme-dark '
+  endif
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px"
+  class="{{ dark }}bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
+>
+  <div class="mx-auto {{ width }} px-6">
+    {%- if s.heading != blank -%}
+      <h2 class="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong {{ heading_align }}">{{ s.heading }}</h2>
+    {%- endif -%}
+    <video-embed data-embed="{{ embed }}" data-title="{{ s.heading | escape }}" class="relative {{ ratio }} block overflow-hidden bg-ink-950">
+      <button type="button" data-play class="group absolute inset-0" aria-label="Play video">
+        {%- if s.cover_image != blank -%}
+          {%- assign cover_alt = s.cover_image.alt | default: s.heading | default: 'Video cover' | escape -%}
+          {{ s.cover_image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '100vw', widths: '600,900,1200,1600', alt: cover_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+        {%- endif -%}
+        <span class="absolute inset-0 flex items-center justify-center {{ overlay_class }}">
+          <span class="flex h-[max(44px,4rem)] w-[max(44px,4rem)] items-center justify-center rounded-full bg-accent text-accent-ink transition-transform group-hover:scale-110">{% render 'icon', name: 'arrow', size: 28 %}</span>
+        </span>
+      </button>
+    </video-embed>
+  </div>
+</section>
+<script src="{{ 'video.js' | asset_url }}" defer="defer"></script>
+{% schema %}
+{
+  "name": "t:sections.video.name",
+  "tag": "section",
+  "class": "section section--video",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.video.settings.heading.label"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "t:sections.video.settings.video_url.label",
+      "accept": [
+        "youtube",
+        "vimeo"
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "t:sections.video.settings.cover_image.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video.settings.header__1.content"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.video.settings.width.label",
+      "default": "wide",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:sections.video.settings.width.options__1.label"
+        },
+        {
+          "value": "wide",
+          "label": "t:sections.video.settings.width.options__2.label"
+        },
+        {
+          "value": "page",
+          "label": "t:sections.video.settings.width.options__3.label"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.video.settings.width.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_ratio",
+      "label": "t:sections.video.settings.media_ratio.label",
+      "default": "16/9",
+      "options": [
+        {
+          "value": "16/9",
+          "label": "t:sections.video.settings.media_ratio.options__1.label"
+        },
+        {
+          "value": "21/9",
+          "label": "t:sections.video.settings.media_ratio.options__2.label"
+        },
+        {
+          "value": "4/3",
+          "label": "t:sections.video.settings.media_ratio.options__3.label"
+        },
+        {
+          "value": "1/1",
+          "label": "t:sections.video.settings.media_ratio.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.video.settings.heading_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.video.settings.heading_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.video.settings.heading_alignment.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "t:sections.video.settings.overlay_style.label",
+      "default": "tint",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.video.settings.overlay_style.options__1.label"
+        },
+        {
+          "value": "tint",
+          "label": "t:sections.video.settings.overlay_style.options__2.label"
+        },
+        {
+          "value": "strong",
+          "label": "t:sections.video.settings.overlay_style.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video.settings.header__2.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.video.settings.padding_top.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.video.settings.padding_bottom.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.video.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.video.presets.name__1"
+    },
+    {
+      "name": "t:sections.video.presets.name__2",
+      "settings": {
+        "media_ratio": "21/9",
+        "width": "full",
+        "heading_alignment": "center",
+        "overlay_style": "strong",
+        "color_scheme": "scheme-3"
+      }
+    },
+    {
+      "name": "t:sections.video.presets.name__3",
+      "settings": {
+        "media_ratio": "1/1",
+        "width": "narrow",
+        "heading_alignment": "center",
+        "overlay_style": "tint"
+      }
+    }
+  ]
+}
+{% endschema %}

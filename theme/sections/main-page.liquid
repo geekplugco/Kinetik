@@ -1,0 +1,63 @@
+{%- liquid
+  assign has_content = page.content | strip | strip_newlines
+-%}
+<section
+  data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  class="mx-auto max-w-[760px] px-6"
+>
+  <header class="flex flex-col gap-3 text-center">
+    <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ shop.name }}</span>
+    <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ page.title }}</h1>
+  </header>
+
+  {%- if has_content != blank -%}
+    <div class="mt-10 flex flex-col gap-4 text-body-lg leading-relaxed text-text-body [&_a]:text-accent-press [&_a]:underline [&_a]:underline-offset-4 [&_h2]:mt-6 [&_h2]:font-display [&_h2]:text-h3 [&_h2]:text-text-strong [&_h3]:font-display [&_h3]:text-h4 [&_h3]:text-text-strong [&_img]:my-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5">
+      {{ page.content }}
+    </div>
+  {%- endif -%}
+</section>
+{% schema %}
+{
+  "name": "t:sections.main-page.name",
+  "tag": "section",
+  "class": "section section--main-page",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main-page.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-page.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-page.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-page.settings.padding_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.main-page.presets.name"
+    }
+  ]
+}
+{% endschema %}

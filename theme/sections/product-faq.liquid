@@ -1,0 +1,92 @@
+{%- liquid
+  assign questions = section.blocks | where: 'type', 'question'
+-%}
+{%- if questions.size > 0 -%}
+  <section
+    data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+    style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
+    class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)]"
+  >
+    <div class="mx-auto grid max-w-[var(--page-width)] gap-10 px-6 md:grid-cols-[1fr_2fr]">
+      <div class="flex flex-col gap-3">
+        {%- if section.settings.subheading != blank -%}
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
+        {%- endif -%}
+        <h2 class="font-display text-h2 tracking-tight text-text-strong">{{ section.settings.heading | default: 'FAQ' }}</h2>
+      </div>
+      <div class="border-t border-border-hairline">
+        {%- for block in questions -%}
+          {%- if block.settings.question != blank -%}
+            <details class="border-b border-border-hairline" {{ block.shopify_attributes }}>
+              <summary class="flex cursor-pointer items-center justify-between gap-4 py-5 font-mono text-sm uppercase tracking-label text-text-strong">
+                {{ block.settings.question }}
+                <span class="shrink-0 text-text-muted">{%- render 'icon', name: 'plus', size: 16 -%}</span>
+              </summary>
+              <div class="pb-6 text-body text-text-body [&_a]:underline [&_a]:underline-offset-4 [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ block.settings.answer }}</div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+  {%- capture faq_ld -%}
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- assign q_index = 0 -%}
+        {%- for block in questions -%}
+          {%- if block.settings.question != blank and block.settings.answer != blank -%}
+            {%- if q_index > 0 -%},{%- endif -%}
+            {
+              "@type": "Question",
+              "name": {{ block.settings.question | strip_html | json }},
+              "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} }
+            }
+            {%- assign q_index = q_index | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  {%- endcapture -%}
+  {%- assign faq_check = faq_ld | strip | remove: ' ' | remove: '"mainEntity":[]' -%}
+  {%- if faq_check contains '"@type":"Question"' -%}
+    <script type="application/ld+json">{{ faq_ld }}</script>
+  {%- endif -%}
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.product-faq.name",
+  "tag": "section",
+  "class": "section section--product-faq",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "inline_richtext", "id": "subheading", "label": "t:sections.product-faq.settings.subheading.label", "default": "Good to know" },
+    { "type": "text", "id": "heading", "label": "t:sections.product-faq.settings.heading.label", "default": "Questions" },
+    { "type": "header", "content": "t:sections.product-faq.settings.header__style.content" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.product-faq.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.product-faq.settings.padding_top.label" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.product-faq.settings.padding_bottom.label" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "t:sections.product-faq.blocks.question.name",
+      "settings": [
+        { "type": "text", "id": "question", "label": "t:sections.product-faq.blocks.question.settings.question.label", "default": "How does it fit?" },
+        { "type": "richtext", "id": "answer", "label": "t:sections.product-faq.blocks.question.settings.answer.label", "default": "<p>True to size with room to layer. Check the size guide for exact measurements.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product-faq.presets.name__1",
+      "blocks": [
+        { "type": "question", "settings": { "question": "How does it fit?", "answer": "<p>True to size with room to layer underneath. See the size guide for exact measurements.</p>" } },
+        { "type": "question", "settings": { "question": "How do I care for it?", "answer": "<p>Machine wash cold and hang dry. Reproof technical shells to restore water repellency.</p>" } },
+        { "type": "question", "settings": { "question": "What is the return policy?", "answer": "<p>Unworn items can be returned per our refund policy, linked in the footer.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

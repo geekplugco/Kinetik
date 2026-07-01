@@ -1,0 +1,173 @@
+{
+  "sections": {
+    "lookbook": {
+      "type": "lookbook",
+      "settings": {
+        "kicker": "SS26 · Field System",
+        "heading": "Shot in the field",
+        "text": "<p>One kit, every condition. Tap a piece to shop the look.</p>",
+        "layout": "editorial",
+        "image_ratio": "portrait",
+        "width": "page",
+        "color_scheme": "scheme-1",
+        "padding_top": 48,
+        "padding_bottom": 24
+      },
+      "blocks": {
+        "s1": {
+          "type": "shot",
+          "settings": {
+            "image": "shopify://shop_images/02-fulllook-cropped.png",
+            "image_alt": "Full Field System look, front",
+            "caption": "01 — The full system",
+            "product_1": "shell-jacket",
+            "x_1": 50,
+            "y_1": 32,
+            "product_2": "cargo-pants",
+            "x_2": 46,
+            "y_2": 72
+          }
+        },
+        "s2": {
+          "type": "shot",
+          "settings": {
+            "image": "shopify://shop_images/07-cap-shadow.png",
+            "image_alt": "Field cap detail in hard shadow",
+            "caption": "02 — 6-Panel Field Cap",
+            "product_1": "cap",
+            "x_1": 52,
+            "y_1": 44
+          }
+        },
+        "s3": {
+          "type": "shot",
+          "settings": {
+            "image": "shopify://shop_images/08-hero-back-wide.png",
+            "image_alt": "Back panel, wide",
+            "caption": "03 — Roll-Top + Shell, back",
+            "product_1": "shell-jacket",
+            "x_1": 44,
+            "y_1": 40,
+            "product_2": "backpack",
+            "x_2": 50,
+            "y_2": 56
+          }
+        },
+        "s4": {
+          "type": "shot",
+          "settings": {
+            "image": "shopify://shop_images/03-vest-torso.png",
+            "image_alt": "Utility vest torso detail",
+            "caption": "04 — Utility Vest 6P",
+            "product_1": "utility-vest",
+            "x_1": 50,
+            "y_1": 48,
+            "product_2": "base-layer",
+            "x_2": 40,
+            "y_2": 70
+          }
+        },
+        "s5": {
+          "type": "shot",
+          "settings": {
+            "image": "shopify://shop_images/05-sling-worn.png",
+            "image_alt": "Sling bag worn across the body",
+            "caption": "05 — Sling 4L",
+            "product_1": "sling-bag",
+            "x_1": 54,
+            "y_1": 52
+          }
+        },
+        "s6": {
+          "type": "shot",
+          "settings": {
+            "image": "shopify://shop_images/09-paired-hero.png",
+            "image_alt": "Paired layers, hero",
+            "caption": "06 — Storm Hoodie + Trail Runner",
+            "product_1": "tech-hoodie",
+            "x_1": 38,
+            "y_1": 38,
+            "product_2": "sneakers",
+            "x_2": 58,
+            "y_2": 80
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ]
+    },
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "SS26 · Field System · Shop the look",
+        "separator": "—",
+        "style": "outline",
+        "speed": "normal",
+        "width": "full",
+        "color_scheme": "scheme-3"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Join the system",
+        "text": "<p>Drop alerts, restocks, and field notes.</p>",
+        "button_label": "Subscribe",
+        "layout": "centered",
+        "width": "page",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "route_map": {
+      "type": "route-map",
+      "blocks": {
+        "s1": {
+          "type": "stop",
+          "settings": {
+            "place": "Transit",
+            "heading": "Out the door",
+            "caption": "<p>Shell on, pack loaded. The system starts moving.</p>"
+          }
+        },
+        "s2": {
+          "type": "stop",
+          "settings": {
+            "place": "Trail",
+            "heading": "Off the grid",
+            "caption": "<p>Weather turns. The membrane holds.</p>"
+          }
+        },
+        "s3": {
+          "type": "stop",
+          "settings": {
+            "place": "Camp",
+            "heading": "Hold position",
+            "caption": "<p>Layer down, power up, reset.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "heading": "The route",
+        "subheading": "Field route",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "lookbook",
+    "marquee",
+    "newsletter",
+    "route_map"
+  ]
+}

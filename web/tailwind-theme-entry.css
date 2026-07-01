@@ -1,0 +1,9 @@
+@import "./app/globals-core.css";
+
+@source "../theme/layout/**/*.liquid";
+@source "../theme/sections/**/*.liquid";
+@source "../theme/snippets/**/*.liquid";
+@source "../theme/blocks/**/*.liquid";
+@source "../theme/templates/**/*.json";
+
+@source inline("opacity-40 opacity-50 line-through cursor-zoom-in text-warning");

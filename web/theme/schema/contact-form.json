@@ -1,1 +1,35 @@
-{ "name": "contact form", "tag": "section", "class": "section section--contact-form", "settings": [ { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ], "presets": [{ "name": "contact form" }] }
+{ "name": "Contact form", "tag": "section", "class": "section section--contact-form",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "inline_richtext", "id": "subheading", "label": "Subheading" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading" },
+    { "type": "richtext", "id": "details", "label": "Contact details", "info": "Shown beside the form in split layout" },
+    { "type": "header", "content": "Fields" },
+    { "type": "text", "id": "name_placeholder", "label": "Name placeholder", "default": "Name" },
+    { "type": "text", "id": "email_placeholder", "label": "Email placeholder", "default": "Email" },
+    { "type": "checkbox", "id": "show_phone", "label": "Show phone field", "default": false },
+    { "type": "text", "id": "phone_placeholder", "label": "Phone placeholder", "default": "Phone" },
+    { "type": "text", "id": "message_placeholder", "label": "Message placeholder", "default": "Message" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send message" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "layout", "label": "Layout", "default": "stacked",
+      "options": [
+        { "value": "stacked", "label": "Stacked" },
+        { "value": "split", "label": "Split (details + form)" }
+      ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "narrow",
+      "options": [
+        { "value": "narrow", "label": "Narrow" },
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" }
+      ] },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "default": 0, "unit": "px", "label": "Top padding" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px", "label": "Bottom padding" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "presets": [
+    { "name": "Contact form" },
+    { "name": "Contact — split with details", "settings": { "layout": "split", "width": "page", "heading": "Get in touch", "show_phone": true } },
+    { "name": "Contact — wide", "settings": { "layout": "stacked", "width": "page", "heading": "Contact us" } }
+  ] }

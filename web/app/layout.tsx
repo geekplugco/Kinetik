@@ -10,7 +10,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: "(function(){var d=document.documentElement;d.classList.add('has-js');try{var p=localStorage.getItem('hp-preset');if(p&&p!=='field')d.setAttribute('data-preset',p);}catch(e){}})()" }} />
+      </head>
       <body>{children}</body>
     </html>
   );

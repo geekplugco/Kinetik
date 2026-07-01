@@ -1,0 +1,175 @@
+{%- liquid
+  assign s = section.settings
+  case s.width
+    when 'full'
+      assign width = 'max-w-none'
+    when 'narrow'
+      assign width = 'max-w-3xl'
+    else
+      assign width = 'max-w-[var(--page-width)]'
+  endcase
+  case s.content_alignment
+    when 'center'
+      assign align = 'items-center text-center'
+    when 'end'
+      assign align = 'items-end text-right'
+    else
+      assign align = 'items-start text-left'
+  endcase
+  case s.gap
+    when 'small'
+      assign gap = 'gap-4'
+    when 'large'
+      assign gap = 'gap-10'
+    else
+      assign gap = 'gap-6'
+  endcase
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px"
+  class="bg-surface-page pt-[var(--pt,clamp(3rem,6vw,5rem))] pb-[var(--pb,clamp(3rem,6vw,5rem))]"
+>
+  <div class="mx-auto px-6">
+    <div class="mx-auto flex flex-col {{ gap }} {{ width }} {{ align }}">
+      {%- content_for 'blocks' -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.section.name",
+  "tag": "section",
+  "class": "section section--flex",
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.section.settings.header__1.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.section.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.section.settings.width.label",
+      "default": "page",
+      "options": [
+        {
+          "value": "page",
+          "label": "t:sections.section.settings.width.options__1.label"
+        },
+        {
+          "value": "narrow",
+          "label": "t:sections.section.settings.width.options__2.label"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.section.settings.width.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "t:sections.section.settings.content_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.section.settings.content_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.section.settings.content_alignment.options__2.label"
+        },
+        {
+          "value": "end",
+          "label": "t:sections.section.settings.content_alignment.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "gap",
+      "label": "t:sections.section.settings.gap.label",
+      "default": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.section.settings.gap.options__1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.section.settings.gap.options__2.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.section.settings.gap.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.section.settings.header__2.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 64,
+      "unit": "px",
+      "label": "t:sections.section.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 64,
+      "unit": "px",
+      "label": "t:sections.section.settings.padding_bottom.label"
+    }
+  ],
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
+  "presets": [
+    {
+      "name": "t:sections.section.presets.name",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Build a flexible section",
+            "size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Add blocks to compose this section — text, images, buttons, icons, dividers, and groups stack however you like.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text"
+      ]
+    }
+  ]
+}
+{% endschema %}

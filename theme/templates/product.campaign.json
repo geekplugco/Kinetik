@@ -1,0 +1,225 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "gallery_layout": "stacked",
+        "media_size": "large",
+        "enable_sticky_info": true,
+        "enable_sticky_atc": true,
+        "enable_image_zoom": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "field_spec": {
+      "type": "field-spec",
+      "settings": {
+        "color_scheme": "scheme-2"
+      }
+    },
+    "field_assurance": {
+      "type": "field-assurance",
+      "blocks": {
+        "pay": {
+          "type": "item",
+          "settings": {
+            "heading": "Payments",
+            "text": "Shop Pay, Apple Pay, Google Pay & major cards at checkout."
+          }
+        },
+        "support": {
+          "type": "item",
+          "settings": {
+            "heading": "Support",
+            "text": "Questions about fit or specs? Reach the Kinetik team."
+          }
+        },
+        "pickup": {
+          "type": "pickup"
+        },
+        "policies": {
+          "type": "policies"
+        }
+      },
+      "block_order": [
+        "pay",
+        "support",
+        "pickup",
+        "policies"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "material": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "shopify://shop_images/material-macro.png",
+        "layout": "image_first",
+        "media_style": "split",
+        "image_ratio": "portrait",
+        "content_alignment": "left",
+        "width": "full",
+        "subheading": "The build",
+        "heading": "Materials with a spec sheet",
+        "text": "<p>Gore-Tex 3L membrane, fully taped seams, ripstop face. We publish the build so you know exactly what you're moving in.</p>",
+        "color_scheme": "scheme-3"
+      }
+    },
+    "detail": {
+      "type": "image-gallery",
+      "settings": {
+        "heading": "In detail",
+        "layout": "masonry",
+        "image_style": "sharp",
+        "spacing": "normal",
+        "width": "page",
+        "columns_desktop": 2,
+        "columns_mobile": "1",
+        "color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "g1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/06-detail-trio.png",
+            "alt": "Hardware and construction detail trio",
+            "size": "wide"
+          }
+        },
+        "g2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/01-jacket-hood-back.png",
+            "alt": "Hood and back panel detail"
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2"
+      ]
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "heading": "More from the system",
+        "products_to_show": 4,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "field_note": {
+      "type": "product-field-note",
+      "settings": {
+        "eyebrow": "Field note",
+        "quote": "<p>Three days on the trail, one storm, zero compromises. The shell just disappears and lets you move.</p>",
+        "attribution": "Tester #07",
+        "role": "Alpine field program",
+        "color_scheme": "scheme-2"
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "How does it fit?",
+            "answer": "<p>True to size with room to layer underneath. See the size guide for exact measurements.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "How do I care for it?",
+            "answer": "<p>Machine wash cold and hang dry. Reproof technical shells to restore water repellency.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "What is the return policy?",
+            "answer": "<p>Unworn items can be returned per our refund policy, linked in the footer.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {
+        "heading": "Questions",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "loadout": {
+      "type": "product-loadout"
+    },
+    "reviews": {
+      "type": "product-apps",
+      "settings": {
+        "heading": "Reviews",
+        "anchor_id": "reviews"
+      }
+    },
+    "material_scan": {
+      "type": "material-scan",
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "x": 30,
+            "y": 35,
+            "label": "GORE-TEX 3L shell",
+            "detail": "<p>Waterproof, windproof, breathable membrane bonded to a ripstop face.</p>"
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "x": 64,
+            "y": 52,
+            "label": "Taped seams",
+            "detail": "<p>Every seam fully taped to keep water out under pressure.</p>"
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "x": 45,
+            "y": 78,
+            "label": "YKK AquaGuard",
+            "detail": "<p>Water-resistant zippers with bonded storm flaps.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/material-macro.png",
+        "heading": "Engineered, not decorated",
+        "subheading": "Material scan",
+        "color_scheme": "scheme-3"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "field_spec",
+    "field_assurance",
+    "material_scan",
+    "material",
+    "detail",
+    "field_note",
+    "faq",
+    "loadout",
+    "reviews",
+    "related"
+  ]
+}

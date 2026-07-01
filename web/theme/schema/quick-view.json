@@ -1,0 +1,7 @@
+{
+  "name": "Quick view",
+  "tag": "section",
+  "class": "section section--quick-view",
+  "enabled_on": { "groups": ["custom.overlay"] },
+  "settings": []
+}

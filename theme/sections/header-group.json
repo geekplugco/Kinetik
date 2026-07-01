@@ -1,0 +1,20 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "header_style": "utility",
+        "submenu_style": "mega",
+        "sticky_header": true,
+        "show_free_shipping_goal": true,
+        "free_shipping_threshold": 150,
+        "show_cart_note": true
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

@@ -1,0 +1,88 @@
+/* ============================================================
+   HP — House primitives library  (prefix: hp-)
+   ------------------------------------------------------------
+   The stable, shared base every HP theme reuses. Keep this file
+   theme-agnostic: it consumes design tokens (colors/type/space/
+   motion) by CSS variable, never hard-codes brand values, so a
+   new theme only swaps tokens — the hp- classes stay identical.
+
+   Framework-agnostic by design: these classes + the data-hp-*
+   hooks port 1:1 to Shopify Liquid. .hp-reveal / .hp-rule-draw
+   are driven by an IntersectionObserver (React: <Reveal>; Liquid:
+   assets/hp-reveal.js) that toggles the .is-in state class.
+
+   Versioned as a unit — bump HP_VERSION on any breaking change.
+   ============================================================ */
+
+/* HP_VERSION: 0.1.0 */
+
+/* ---- Layout ---- */
+.hp-container {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.hp-container--narrow { max-width: 48rem; }
+.hp-container--full   { max-width: 100%; }
+
+/* ---- Spec-sheet mono label ---- */
+.hp-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ---- Exposed hairline frame ---- */
+.hp-hairline   { border: var(--border); }
+.hp-hairline-t { border-top: var(--border); }
+.hp-hairline-b { border-bottom: var(--border); }
+
+/* ---- Motion: reveal on scroll ---- */
+.hp-reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-shift));
+  transition:
+    opacity var(--dur-slow) var(--ease-enter) var(--reveal-delay, 0ms),
+    transform var(--dur-slow) var(--ease-enter) var(--reveal-delay, 0ms),
+    clip-path var(--dur-slower) var(--ease-enter) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.hp-reveal--fade { transform: none; }
+.hp-reveal--mask { transform: none; clip-path: inset(0 100% 0 0); }
+.hp-reveal--zoom { transform: scale(1.04); transform-origin: center; }
+.hp-reveal.is-in { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+
+/* ---- Motion: hairline rule that draws in (spec-sheet motif) ---- */
+.hp-rule-draw {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-technical) var(--reveal-delay, 0ms);
+}
+.hp-rule-draw.is-in { transform: scaleX(1); }
+
+/* ---- Motion: GPU-friendly hover lift ---- */
+.hp-hover-lift {
+  transition: transform var(--dur-base) var(--ease-out-quart);
+  will-change: transform;
+}
+.hp-hover-lift:hover { transform: translateY(-4px); }
+
+/* No-JS / pre-hydration fallback — never leave content hidden */
+html:not(.has-js) :is(.hp-reveal, .hp-reveal--mask, .hp-reveal--zoom, .hp-rule-draw) {
+  opacity: 1;
+  transform: none;
+  clip-path: none;
+}
+
+/* Respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .hp-reveal, .hp-reveal--mask, .hp-reveal--zoom, .hp-rule-draw {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,266 @@
+{%- liquid
+  assign s = section.settings
+  if s.layout == 'text_first'
+    assign reverse = 'md:[direction:rtl]'
+  else
+    assign reverse = ''
+  endif
+  case s.width
+    when 'full'
+      assign width = 'max-w-none'
+    when 'narrow'
+      assign width = 'max-w-4xl'
+    else
+      assign width = 'max-w-[var(--page-width)]'
+  endcase
+  case s.image_ratio
+    when 'square'
+      assign ratio = 'aspect-square'
+    when 'portrait'
+      assign ratio = 'aspect-[3/4]'
+    when 'wide'
+      assign ratio = 'aspect-[16/9]'
+    else
+      assign ratio = 'aspect-[4/3]'
+  endcase
+  assign overlap_media = ''
+  assign overlap_text = ''
+  if s.media_style == 'overlap'
+    assign overlap_media = 'md:scale-[1.02]'
+    assign overlap_text = 'md:-ml-12 md:py-20'
+  endif
+  assign panel = ''
+  if s.text_panel == 'dark'
+    assign panel = 'theme-dark bg-surface-page'
+  endif
+  if s.content_alignment == 'center'
+    assign content_align = 'items-center justify-center text-center'
+  else
+    assign content_align = 'items-start justify-center'
+  endif
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px"
+  class="bg-surface-page pt-[var(--pt,0px)] pb-[var(--pb,0px)]"
+>
+  <div class="mx-auto grid items-stretch md:grid-cols-2 {{ width }} {{ reverse }}">
+    <div class="relative {{ ratio }} md:aspect-auto md:min-h-[60vh] [direction:ltr] {{ overlap_media }}">
+      {%- if s.image != blank -%}
+        {{ s.image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '50vw', widths: '400,600,800,1000,1400,1600', alt: s.image.alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+      {%- else -%}
+        <div class="absolute inset-0 bg-surface-sunken"></div>
+      {%- endif -%}
+    </div>
+    <div class="flex flex-col gap-5 px-6 py-16 md:px-16 [direction:ltr] {{ panel }} {{ content_align }} {{ overlap_text }}">
+      {%- if s.subheading != blank -%}
+        <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.subheading }}</span>
+      {%- endif -%}
+      <h2 class="font-display text-h1 tracking-tight text-text-strong">{{ s.heading | default: 'Built to last' }}</h2>
+      {%- if s.text != blank -%}
+        <div class="max-w-prose text-body-lg text-text-body">{{ s.text }}</div>
+      {%- endif -%}
+      {%- if s.button_label != blank -%}
+        {%- render 'button', label: s.button_label, href: s.button_link, variant: 'secondary' -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.image-with-text.name",
+  "tag": "section",
+  "class": "section section--image-with-text",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.image-with-text.settings.image.label"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.image-with-text.settings.layout.label",
+      "default": "image_first",
+      "options": [
+        {
+          "value": "image_first",
+          "label": "t:sections.image-with-text.settings.layout.options__1.label"
+        },
+        {
+          "value": "text_first",
+          "label": "t:sections.image-with-text.settings.layout.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_style",
+      "label": "t:sections.image-with-text.settings.media_style.label",
+      "default": "split",
+      "options": [
+        {
+          "value": "split",
+          "label": "t:sections.image-with-text.settings.media_style.options__1.label"
+        },
+        {
+          "value": "overlap",
+          "label": "t:sections.image-with-text.settings.media_style.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.image-with-text.settings.image_ratio.label",
+      "default": "landscape",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "t:sections.image-with-text.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.image-with-text.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.image-with-text.settings.image_ratio.options__3.label"
+        },
+        {
+          "value": "wide",
+          "label": "t:sections.image-with-text.settings.image_ratio.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "t:sections.image-with-text.settings.content_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.image-with-text.settings.content_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.image-with-text.settings.content_alignment.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_panel",
+      "label": "t:sections.image-with-text.settings.text_panel.label",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "t:sections.image-with-text.settings.text_panel.options__1.label"
+        },
+        {
+          "value": "dark",
+          "label": "t:sections.image-with-text.settings.text_panel.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.image-with-text.settings.width.label",
+      "default": "page",
+      "options": [
+        {
+          "value": "page",
+          "label": "t:sections.image-with-text.settings.width.options__1.label"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.image-with-text.settings.width.options__2.label"
+        },
+        {
+          "value": "narrow",
+          "label": "t:sections.image-with-text.settings.width.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "t:sections.image-with-text.settings.subheading.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.image-with-text.settings.heading.label",
+      "default": "Built to last"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.image-with-text.settings.text.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.image-with-text.settings.button_label.label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.image-with-text.settings.button_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.image-with-text.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px",
+      "label": "t:sections.image-with-text.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px",
+      "label": "t:sections.image-with-text.settings.padding_bottom.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.image-with-text.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.image-with-text.presets.name__1"
+    },
+    {
+      "name": "t:sections.image-with-text.presets.name__2",
+      "settings": {
+        "media_style": "overlap",
+        "image_ratio": "portrait"
+      }
+    },
+    {
+      "name": "t:sections.image-with-text.presets.name__3",
+      "settings": {
+        "text_panel": "dark",
+        "content_alignment": "center",
+        "color_scheme": "scheme-2"
+      }
+    }
+  ]
+}
+{% endschema %}

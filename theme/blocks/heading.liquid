@@ -1,0 +1,89 @@
+{%- liquid
+  assign b = block.settings
+  case b.size
+    when 'display-1'
+      assign size = 'text-display-1'
+    when 'h1'
+      assign size = 'text-h1'
+    when 'h3'
+      assign size = 'text-h3'
+    else
+      assign size = 'text-h2'
+  endcase
+  case b.text_alignment
+    when 'center'
+      assign align = 'text-center'
+    when 'right'
+      assign align = 'text-right'
+    else
+      assign align = 'text-left'
+  endcase
+-%}
+<h2
+  class="font-display tracking-tight text-text-strong {{ size }} {{ align }}"
+  {{ block.shopify_attributes }}
+>
+  {{ b.heading }}
+</h2>
+{% schema %}
+{
+  "name": "t:blocks.heading.name",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:blocks.heading.settings.heading.label",
+      "default": "Talk about your brand"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "t:blocks.heading.settings.size.label",
+      "default": "h2",
+      "options": [
+        {
+          "value": "display-1",
+          "label": "t:blocks.heading.settings.size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:blocks.heading.settings.size.options__2.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:blocks.heading.settings.size.options__3.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:blocks.heading.settings.size.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:blocks.heading.settings.text_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:blocks.heading.settings.text_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:blocks.heading.settings.text_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:blocks.heading.settings.text_alignment.options__3.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.heading.presets.name"
+    }
+  ]
+}
+{% endschema %}

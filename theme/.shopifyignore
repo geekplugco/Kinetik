@@ -1,0 +1,8 @@
+.gitignore
+.shopifyignore
+node_modules
+package.json
+package-lock.json
+README.md
+PORT-REFERENCE.md
+schema/

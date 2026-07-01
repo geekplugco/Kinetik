@@ -4,11 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack -p 5555",
-    "build": "next build --turbopack",
+    "dev": "next dev -p 5555",
+    "build": "next build",
     "start": "next start -p 5555",
     "typecheck": "tsc --noEmit",
-    "validate": "tsc --noEmit && bun run scripts/validate.ts"
+    "validate": "tsc --noEmit && bun run scripts/validate.ts",
+    "guard:comments": "node scripts/guard-comments.mjs ../theme",
+    "guard:settings": "node scripts/guard-settings.mjs ../theme",
+    "guard:perf": "node scripts/guard-perf.mjs ../theme",
+    "smoke:sections": "SMOKE_THEME_DIR=../theme node scripts/smoke-sections.mjs",
+    "gate:theme": "node scripts/guard-comments.mjs ../theme && node scripts/guard-settings.mjs ../theme && node scripts/guard-perf.mjs ../theme && shopify theme check --path ../theme && node ~/.claude/skills/teifi-theme-json/src/validate.mjs gate ../theme --strict"
   },
   "dependencies": {
     "next": "^15.5.0",

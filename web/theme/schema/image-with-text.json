@@ -3,11 +3,37 @@
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "select", "id": "layout", "label": "Layout", "default": "image_first",
       "options": [{ "value": "image_first", "label": "Image first" }, { "value": "text_first", "label": "Text first" }] },
+    { "type": "select", "id": "media_style", "label": "Media style", "default": "split",
+      "options": [{ "value": "split", "label": "Split" }, { "value": "overlap", "label": "Overlap" }] },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "landscape",
+      "options": [
+        { "value": "landscape", "label": "Landscape (4:3)" },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "portrait", "label": "Portrait (3:4)" },
+        { "value": "wide", "label": "Wide (16:9)" }
+      ] },
+    { "type": "select", "id": "content_alignment", "label": "Content alignment", "default": "left",
+      "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }] },
+    { "type": "select", "id": "text_panel", "label": "Text panel", "default": "light",
+      "options": [{ "value": "light", "label": "Light" }, { "value": "dark", "label": "Dark" }] },
+    { "type": "select", "id": "width", "label": "Width", "default": "page",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" },
+        { "value": "narrow", "label": "Narrow" }
+      ] },
     { "type": "inline_richtext", "id": "subheading", "label": "Subheading" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Built to last" },
     { "type": "richtext", "id": "text", "label": "Text" },
     { "type": "text", "id": "button_label", "label": "Button label" },
     { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "default": 0, "unit": "px", "label": "Top padding" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "default": 0, "unit": "px", "label": "Bottom padding" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
   ],
-  "presets": [{ "name": "Image with text" }] }
+  "presets": [
+    { "name": "Image with text" },
+    { "name": "Image with text — Overlap", "settings": { "media_style": "overlap", "image_ratio": "portrait" } },
+    { "name": "Image with text — Dark panel", "settings": { "text_panel": "dark", "content_alignment": "center", "color_scheme": "scheme-2" } }
+  ] }

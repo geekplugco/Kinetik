@@ -1,0 +1,193 @@
+{%- liquid
+  assign s = section.settings
+  assign raw = s.text | default: 'KINETIK'
+  assign sep = s.separator | default: '—'
+  assign parts = raw | split: '·'
+  case s.style
+    when 'ink'
+      assign style_class = 'theme-dark bg-ink-950 text-paper'
+    when 'outline'
+      assign style_class = 'bg-paper text-ink-950'
+    else
+      assign style_class = 'bg-accent text-accent-ink'
+  endcase
+  case s.speed
+    when 'slow'
+      assign duration = '60s'
+    when 'fast'
+      assign duration = '22s'
+    else
+      assign duration = '38s'
+  endcase
+  if s.direction == 'right'
+    assign anim_dir = 'reverse'
+  else
+    assign anim_dir = 'normal'
+  endif
+  if s.width == 'page'
+    assign fixed = 'mx-auto max-w-[var(--page-width)] px-6'
+  else
+    assign fixed = ''
+  endif
+-%}
+<div
+  data-color-scheme="{{ s.color_scheme }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px"
+  class="group overflow-hidden border-y border-border-strong pb-[var(--pb,0.75rem)] pt-[var(--pt,0.75rem)] {{ style_class }}"
+>
+  <div class="overflow-hidden {{ fixed }}">
+    <div class="flex w-max animate-[marquee_38s_linear_infinite] items-center group-hover:[animation-play-state:paused] motion-reduce:animate-none" style="animation-duration:{{ duration }};animation-direction:{{ anim_dir }}">
+      {%- for r in (1..4) -%}
+        {%- for t in parts -%}
+          {%- assign tt = t | strip -%}
+          {%- if tt != blank -%}
+            <span class="flex items-center font-mono text-xs font-bold uppercase tracking-label">{{ tt }}<span class="px-6 opacity-50" aria-hidden="true">{{ sep }}</span></span>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.marquee.name",
+  "tag": "div",
+  "class": "section section--marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:sections.marquee.settings.text.label",
+      "default": "KINETIK",
+      "info": "t:sections.marquee.settings.text.info"
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "t:sections.marquee.settings.separator.label",
+      "default": "—"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.marquee.settings.header__1.content"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:sections.marquee.settings.style.label",
+      "default": "accent",
+      "options": [
+        {
+          "value": "accent",
+          "label": "t:sections.marquee.settings.style.options__1.label"
+        },
+        {
+          "value": "ink",
+          "label": "t:sections.marquee.settings.style.options__2.label"
+        },
+        {
+          "value": "outline",
+          "label": "t:sections.marquee.settings.style.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "t:sections.marquee.settings.direction.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.marquee.settings.direction.options__1.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.marquee.settings.direction.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "speed",
+      "label": "t:sections.marquee.settings.speed.label",
+      "default": "normal",
+      "options": [
+        {
+          "value": "slow",
+          "label": "t:sections.marquee.settings.speed.options__1.label"
+        },
+        {
+          "value": "normal",
+          "label": "t:sections.marquee.settings.speed.options__2.label"
+        },
+        {
+          "value": "fast",
+          "label": "t:sections.marquee.settings.speed.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.marquee.settings.width.label",
+      "default": "full",
+      "options": [
+        {
+          "value": "full",
+          "label": "t:sections.marquee.settings.width.options__1.label"
+        },
+        {
+          "value": "page",
+          "label": "t:sections.marquee.settings.width.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.marquee.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.marquee.settings.padding_top.label",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.marquee.settings.padding_bottom.label",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.marquee.presets.name__1"
+    },
+    {
+      "name": "t:sections.marquee.presets.name__2",
+      "settings": {
+        "style": "ink",
+        "speed": "slow"
+      }
+    },
+    {
+      "name": "t:sections.marquee.presets.name__3",
+      "settings": {
+        "style": "outline",
+        "direction": "right"
+      }
+    }
+  ]
+}
+{% endschema %}

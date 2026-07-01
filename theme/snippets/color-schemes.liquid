@@ -1,0 +1,29 @@
+{% doc %}
+  Emits per-scheme Kinetik design-token overrides scoped to [data-color-scheme="<id>"].
+  Any section that sets section.settings.color_scheme switches its subtree's tokens (surface,
+  text, border, accent) to that scheme. Rendered once from layout/theme.liquid.
+{% enddoc %}
+{%- style -%}
+  {%- for scheme in settings.color_schemes -%}
+    {%- assign s = scheme.settings -%}
+    [data-color-scheme="{{ scheme.id }}"] {
+      --surface-page: {{ s.background }};
+      --surface-card: {{ s.background }};
+      --surface-sunken: {{ s.text | color_mix: s.background, 6 }};
+      --surface-inverse: {{ s.text }};
+      --text-strong: {{ s.text }};
+      --text-body: {{ s.text | color_mix: s.background, 86 }};
+      --text-muted: {{ s.text | color_mix: s.background, 66 }};
+      --text-faint: {{ s.text | color_mix: s.background, 60 }};
+      --text-inverse: {{ s.background }};
+      --border-hairline: {{ s.text | color_mix: s.background, 14 }};
+      --border-strong: {{ s.text }};
+      --accent: {{ s.button }};
+      --accent-hover: {{ s.button | color_mix: s.text, 82 }};
+      --accent-press: {{ s.button | color_mix: s.text, 70 }};
+      --accent-ink: {{ s.button_label }};
+      color: {{ s.text }};
+      background-color: {{ s.background }};
+    }
+  {%- endfor -%}
+{%- endstyle -%}

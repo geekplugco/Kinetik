@@ -1,0 +1,131 @@
+{%- liquid
+  assign s = section.settings
+  assign kicker = s.subheading | default: 'The system'
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  class="border-y border-border-hairline bg-surface-page"
+>
+  <div class="mx-auto grid max-w-[var(--page-width)] gap-x-12 gap-y-10 px-6 md:grid-cols-[0.85fr_1.15fr]">
+    <div class="md:sticky md:top-24 md:self-start">
+      <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ kicker }}</span>
+      {%- if s.heading != blank -%}
+        <h2 class="hp-reveal hp-reveal--fade mt-4 font-display text-display-2 uppercase text-text-strong">{{ s.heading }}</h2>
+      {%- endif -%}
+      {%- if s.text != blank -%}
+        <div class="mt-5 max-w-sm text-body-lg leading-snug text-text-muted [&_p]:m-0">{{ s.text }}</div>
+      {%- endif -%}
+    </div>
+
+    <ol class="flex flex-col">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'column' -%}
+          {%- assign num = forloop.index -%}
+          <li
+            {{ block.shopify_attributes }}
+            class="grid grid-cols-[2.5rem_1fr] gap-x-5 gap-y-2 border-t border-border-hairline py-6 first:border-t-0 first:pt-0 md:grid-cols-[3rem_1fr] md:py-7"
+          >
+            <span class="font-mono text-sm tabular-nums text-text-muted md:text-base">{% if num < 10 %}0{% endif %}{{ num }}</span>
+            <h3 class="font-display text-h3 text-text-strong">{{ block.settings.title }}</h3>
+            {%- if block.settings.text != blank -%}
+              <div class="col-start-2 max-w-md text-body leading-relaxed text-text-muted [&_p]:m-0">{{ block.settings.text }}</div>
+            {%- endif -%}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.multicolumn.name",
+  "tag": "section",
+  "class": "section section--multicolumn",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.multicolumn.settings.subheading.label",
+      "default": "The system"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.multicolumn.settings.heading.label",
+      "default": "Why Kinetik"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.multicolumn.settings.text.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.multicolumn.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.multicolumn.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.multicolumn.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.multicolumn.settings.padding_bottom.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "t:sections.multicolumn.blocks.column.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.multicolumn.blocks.column.settings.title.label",
+          "default": "Feature"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.multicolumn.blocks.column.settings.text.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.multicolumn.presets.name",
+      "blocks": [
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

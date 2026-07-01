@@ -1,0 +1,41 @@
+{% doc %}
+  Renders one color swatch. Resolution order: native option swatch (color/image) →
+  custom settings.swatch_list mapping (Name:#hex or Name:image.png) → last-word CSS color name.
+  @param {object} value - an option value from product.options_with_values[].values[]
+  @param {string} [title] - accessible label
+  @param {string} [size_class] - sizing utility classes for the swatch element
+{% enddoc %}
+{%- liquid
+  assign sw_bg = ''
+  assign sw_img = ''
+  if value.swatch.color
+    assign sw_bg = value.swatch.color
+  elsif value.swatch.image
+    assign sw_img = value.swatch.image | image_url: width: 48
+  else
+    assign val_dc = value | downcase | strip
+    assign rows = settings.swatch_list | newline_to_br | split: '<br />'
+    for row in rows
+      assign parts = row | strip | split: ':'
+      assign sw_name = parts.first | downcase | strip
+      if sw_name == val_dc
+        assign sw_val = parts.last | strip
+        if sw_val contains '.'
+          assign sw_img = sw_val
+        else
+          assign sw_bg = sw_val
+        endif
+        break
+      endif
+    endfor
+    if sw_bg == blank and sw_img == blank
+      assign sw_bg = value | split: ' ' | last | handle
+    endif
+  endif
+  assign shape_cls = 'rounded-full'
+  if settings.swatch_shape == 'square'
+    assign shape_cls = 'rounded-none'
+  endif
+  assign sizing = size_class | default: 'h-4 w-4'
+-%}
+<span class="block {{ sizing }} {{ shape_cls }} border border-border-hairline bg-cover bg-center" title="{{ title | default: value | escape }}" style="background-color: {{ sw_bg }};{% if sw_img != blank %} background-image: url({{ sw_img }});{% endif %}"></span>

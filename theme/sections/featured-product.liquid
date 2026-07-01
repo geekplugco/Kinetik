@@ -1,0 +1,290 @@
+{%- liquid
+  assign product = section.settings.product
+  unless product
+    for p in collections.all.products limit: 1
+      assign product = p
+    endfor
+  endunless
+  assign width = section.settings.width | default: 'page'
+  assign ratio = section.settings.image_ratio | default: 'portrait'
+  assign reverse = false
+  if section.settings.image_position == 'right'
+    assign reverse = true
+  endif
+
+  case width
+    when 'full'
+      assign container_w = 'max-w-none'
+    when 'narrow'
+      assign container_w = 'max-w-[64rem]'
+    else
+      assign container_w = 'max-w-[var(--page-width)]'
+  endcase
+
+  case ratio
+    when 'square'
+      assign ratio_cls = 'aspect-square'
+    when 'landscape'
+      assign ratio_cls = 'aspect-[4/3]'
+    else
+      assign ratio_cls = 'aspect-[4/5]'
+  endcase
+
+  assign current_variant = product.selected_or_first_available_variant
+  assign atc_label = 'products.product.add_to_cart' | t | default: 'Add to cart'
+  assign sold_label = 'products.product.sold_out' | t | default: 'Sold out'
+-%}
+{%- if product != blank -%}
+  <section
+    data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+    style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px;"
+    class="bg-surface-sunken pt-[var(--pt,0px)] pb-[var(--pb,0px)]"
+  >
+    <div class="mx-auto grid items-stretch {{ container_w }} md:grid-cols-2{% if reverse %} md:[direction:rtl]{% endif %}">
+      {%- assign fp_alt = product.featured_media.alt | default: product.title | escape -%}
+      <div data-variant-image data-variant-image-default="{{ product.featured_media | image_url: width: 1200 }}" class="relative {{ ratio_cls }} md:aspect-auto md:min-h-[640px]{% if reverse %} md:[direction:ltr]{% endif %}">
+        {%- if product.featured_media -%}
+          {{ product.featured_media | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '50vw', alt: fp_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
+        {%- endif -%}
+      </div>
+
+      <variant-picker class="flex flex-col justify-center gap-7 px-6 py-12 md:px-16 md:py-16{% if reverse %} md:[direction:ltr]{% endif %}">
+        <script type="application/json">
+          [
+            {%- for variant in product.variants -%}
+              {"id":{{ variant.id }},"options":{{ variant.options | json }},"available":{{ variant.available }},"price":{{ variant.price | money | json }},"compare_at":{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},"on_sale":{% if variant.compare_at_price > variant.price %}true{% else %}false{% endif %},"sku":{{ variant.sku | json }},"featured_image":{% if variant.featured_media %}{{ variant.featured_media | image_url: width: 1200 | json }}{% else %}null{% endif %}}{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          ]
+        </script>
+
+        <div class="flex flex-col gap-3">
+          {%- if section.settings.heading != blank -%}
+            <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.heading }}</span>
+          {%- endif -%}
+          <h2 class="font-display text-display-2 leading-[0.95] tracking-tight text-text-strong">{{ product.title }}</h2>
+          <div data-price data-price-class="text-body-lg">{%- render 'price', variant: current_variant, class: 'text-body-lg' -%}</div>
+          <p data-variant-readout class="font-mono text-xs uppercase tracking-label text-text-muted{% unless current_variant.sku != blank %} hidden{% endunless %}">SKU &middot; <span data-variant-sku class="text-text-strong">{{ current_variant.sku }}</span></p>
+        </div>
+        <p class="max-w-md text-body text-text-body">{{ product.description | strip_html | truncatewords: 50 }}</p>
+
+        {%- form 'product', product, class: 'flex flex-col gap-6' -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+          {%- if product.has_only_default_variant == false -%}
+            <div class="flex flex-col gap-4">
+              {%- for option in product.options_with_values -%}
+                {%- assign is_color = false -%}
+                {%- assign oname = option.name | downcase -%}
+                {%- if oname contains 'color' or oname contains 'colour' -%}{%- assign is_color = true -%}{%- endif -%}
+                <fieldset class="flex flex-col gap-2 border-0 p-0 m-0">
+                  <legend class="mb-3 font-mono text-xs uppercase tracking-label text-text-muted">{{ option.name }}</legend>
+                  <div class="flex flex-wrap gap-2.5">
+                    {%- for value in option.values -%}
+                      {%- assign opt_id = section.id | append: '-' | append: option.position | append: '-' | append: forloop.index -%}
+                      <label for="{{ opt_id }}" class="cursor-pointer">
+                        <input
+                          type="radio"
+                          id="{{ opt_id }}"
+                          class="peer sr-only"
+                          name="option-{{ option.position }}"
+                          value="{{ value | escape }}"
+                          data-option-position="{{ option.position }}"
+                          {% if is_color %}data-option-color{% endif %}
+                          {% if option.selected_value == value %}checked{% endif %}
+                        >
+                        {%- if is_color -%}
+                          {%- liquid
+                            assign sw_bg = ''
+                            assign sw_img = ''
+                            if value.swatch.color
+                              assign sw_bg = value.swatch.color
+                            elsif value.swatch.image
+                              assign sw_img = value.swatch.image | image_url: width: 40
+                            else
+                              assign val_dc = value | downcase | strip
+                              assign rows = settings.swatch_list | newline_to_br | split: '<br />'
+                              for row in rows
+                                assign parts = row | strip | split: ':'
+                                assign sw_name = parts.first | downcase | strip
+                                if sw_name == val_dc
+                                  assign sw_val = parts.last | strip
+                                  if sw_val contains '.'
+                                    assign sw_img = sw_val
+                                  else
+                                    assign sw_bg = sw_val
+                                  endif
+                                  break
+                                endif
+                              endfor
+                              if sw_bg == blank and sw_img == blank
+                                assign sw_bg = value | split: ' ' | last | handle
+                              endif
+                            endif
+                          -%}
+                          <span title="{{ value | escape }}" class="block h-9 w-9 rounded-full border border-border-hairline bg-cover bg-center peer-checked:ring-2 peer-checked:ring-text-strong peer-checked:ring-offset-2 peer-checked:ring-offset-surface-sunken peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-surface-sunken" style="background-color: {{ sw_bg }};{% if sw_img != blank %} background-image: url({{ sw_img }});{% endif %}"></span>
+                        {%- else -%}
+                          <span class="block border border-border-hairline px-4 py-2 font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-page peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">{{ value }}</span>
+                        {%- endif -%}
+                      </label>
+                    {%- endfor -%}
+                  </div>
+                </fieldset>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          <div class="flex flex-wrap items-center gap-3">
+            <button
+              type="submit"
+              data-add-to-cart
+              data-label-available="{{ atc_label | escape }}"
+              data-label-soldout="{{ sold_label | escape }}"
+              class="inline-flex items-center justify-center gap-2 bg-accent px-8 py-4 font-mono text-sm uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40{% if settings.button_style == 'rounded' %} rounded-full{% endif %}"
+              {% unless current_variant.available %}disabled{% endunless %}
+            >{% if current_variant.available %}{{ atc_label }}{% else %}{{ sold_label }}{% endif %}</button>
+            {%- render 'button', label: 'View details', href: product.url, variant: 'secondary' -%}
+          </div>
+        {%- endform -%}
+      </variant-picker>
+    </div>
+  </section>
+  <script src="{{ 'variant-picker.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.featured-product.name",
+  "tag": "section",
+  "class": "section section--featured-product",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.featured-product.settings.header__1.content"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:sections.featured-product.settings.product.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.featured-product.settings.heading.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.featured-product.settings.header__2.content"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "t:sections.featured-product.settings.image_position.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.featured-product.settings.image_position.options__1.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.featured-product.settings.image_position.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.featured-product.settings.image_ratio.label",
+      "default": "portrait",
+      "options": [
+        {
+          "value": "portrait",
+          "label": "t:sections.featured-product.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.featured-product.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.featured-product.settings.image_ratio.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.featured-product.settings.width.label",
+      "default": "page",
+      "options": [
+        {
+          "value": "page",
+          "label": "t:sections.featured-product.settings.width.options__1.label"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.featured-product.settings.width.options__2.label"
+        },
+        {
+          "value": "narrow",
+          "label": "t:sections.featured-product.settings.width.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.featured-product.settings.header__3.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px",
+      "label": "t:sections.featured-product.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px",
+      "label": "t:sections.featured-product.settings.padding_bottom.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.featured-product.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.featured-product.presets.name__1"
+    },
+    {
+      "name": "t:sections.featured-product.presets.name__2",
+      "settings": {
+        "heading": "Spotlight",
+        "image_position": "right",
+        "image_ratio": "square",
+        "width": "narrow"
+      }
+    },
+    {
+      "name": "t:sections.featured-product.presets.name__3",
+      "settings": {
+        "heading": "Hero product",
+        "image_position": "left",
+        "image_ratio": "landscape",
+        "width": "full"
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,8 +1,42 @@
 { "name": "Image gallery", "tag": "section", "class": "section section--image-gallery", "max_blocks": 12,
-  "settings": [ { "type": "inline_richtext", "id": "heading", "label": "Heading" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading" },
+    { "type": "select", "id": "layout", "label": "Layout", "default": "masonry",
+      "options": [
+        { "value": "masonry", "label": "Masonry (featured tiles)" },
+        { "value": "square", "label": "Uniform square" },
+        { "value": "portrait", "label": "Uniform portrait" },
+        { "value": "landscape", "label": "Uniform landscape" }
+      ] },
+    { "type": "select", "id": "image_style", "label": "Image style", "default": "sharp",
+      "options": [{ "value": "sharp", "label": "Sharp" }, { "value": "rounded", "label": "Rounded" }] },
+    { "type": "select", "id": "spacing", "label": "Spacing", "default": "normal",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "normal", "label": "Normal" },
+        { "value": "wide", "label": "Wide" }
+      ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "page",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" },
+        { "value": "narrow", "label": "Narrow" }
+      ] },
+    { "type": "range", "id": "columns_desktop", "min": 2, "max": 5, "step": 1, "default": 4, "label": "Columns on desktop" },
+    { "type": "select", "id": "columns_mobile", "label": "Columns on mobile", "default": "2",
+      "options": [{ "value": "1", "label": "1" }, { "value": "2", "label": "2" }] },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px", "label": "Top padding" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px", "label": "Bottom padding" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
   "blocks": [ { "type": "image", "name": "Image", "settings": [
     { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "alt", "label": "Alt text" },
     { "type": "url", "id": "link", "label": "Link" },
     { "type": "select", "id": "size", "label": "Size", "default": "regular", "options": [ { "value": "regular", "label": "Regular" }, { "value": "wide", "label": "Wide" } ] } ] } ],
-  "presets": [{ "name": "Image gallery", "blocks": [{ "type": "image" }, { "type": "image" }, { "type": "image" }] }] }
+  "presets": [
+    { "name": "Image gallery", "blocks": [{ "type": "image" }, { "type": "image" }, { "type": "image" }] },
+    { "name": "Image gallery — Uniform grid", "settings": { "layout": "square", "columns_desktop": 3, "spacing": "wide" }, "blocks": [{ "type": "image" }, { "type": "image" }, { "type": "image" }, { "type": "image" }, { "type": "image" }, { "type": "image" }] },
+    { "name": "Image gallery — Full-bleed", "settings": { "layout": "landscape", "width": "full", "spacing": "none", "columns_desktop": 4 }, "blocks": [{ "type": "image" }, { "type": "image" }, { "type": "image" }, { "type": "image" }] }
+  ] }

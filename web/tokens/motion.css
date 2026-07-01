@@ -1,0 +1,25 @@
+/* ============================================================
+   KINETIK — Motion tokens
+   Technical, precise easing. Premium, never bouncy.
+   Framework-agnostic: these vars + the .reveal classes port
+   straight to Liquid (a tiny IntersectionObserver toggles is-in).
+   ============================================================ */
+
+:root {
+  /* ---- Easings ---- */
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);     /* smooth settle — reveals */
+  --ease-technical: cubic-bezier(0.65, 0, 0.35, 1);    /* sharp in-out — UI */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ---- Durations ---- */
+  --dur-instant: 120ms;
+  --dur-fast:    220ms;
+  --dur-base:    380ms;
+  --dur-slow:    640ms;
+  --dur-slower:  900ms;
+
+  /* ---- Reveal motion knobs ---- */
+  --reveal-shift: 18px;     /* fade-up travel */
+  --reveal-stagger: 70ms;   /* per-index delay */
+}

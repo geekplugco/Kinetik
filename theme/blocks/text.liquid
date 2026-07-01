@@ -1,0 +1,132 @@
+{%- liquid
+  assign b = block.settings
+  case b.text_alignment
+    when 'center'
+      assign align = 'text-center mx-auto'
+    when 'right'
+      assign align = 'text-right ml-auto'
+    else
+      assign align = 'text-left'
+  endcase
+  case b.max_width
+    when 'narrow'
+      assign width = 'max-w-prose'
+    when 'full'
+      assign width = 'max-w-none'
+    else
+      assign width = 'max-w-3xl'
+  endcase
+  case b.color
+    when 'strong'
+      assign color = 'text-text-strong'
+    when 'muted'
+      assign color = 'text-text-muted'
+    else
+      assign color = 'text-text-body'
+  endcase
+  if b.size == 'large'
+    assign size = 'text-body-lg'
+  else
+    assign size = 'text-body'
+  endif
+-%}
+<div
+  class="kinetik-richtext {{ width }} {{ align }} {{ color }} {{ size }} [&_a]:underline [&_a]:underline-offset-4 [&_p]:my-0 [&_p+p]:mt-4"
+  {{ block.shopify_attributes }}
+>
+  {{ b.text }}
+</div>
+{% schema %}
+{
+  "name": "t:blocks.text.name",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:blocks.text.settings.text.label",
+      "default": "<p>Pair text with imagery to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "t:blocks.text.settings.size.label",
+      "default": "regular",
+      "options": [
+        {
+          "value": "regular",
+          "label": "t:blocks.text.settings.size.options__1.label"
+        },
+        {
+          "value": "large",
+          "label": "t:blocks.text.settings.size.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "color",
+      "label": "t:blocks.text.settings.color.label",
+      "default": "body",
+      "options": [
+        {
+          "value": "body",
+          "label": "t:blocks.text.settings.color.options__1.label"
+        },
+        {
+          "value": "strong",
+          "label": "t:blocks.text.settings.color.options__2.label"
+        },
+        {
+          "value": "muted",
+          "label": "t:blocks.text.settings.color.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:blocks.text.settings.text_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:blocks.text.settings.text_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:blocks.text.settings.text_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:blocks.text.settings.text_alignment.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "max_width",
+      "label": "t:blocks.text.settings.max_width.label",
+      "default": "medium",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:blocks.text.settings.max_width.options__1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:blocks.text.settings.max_width.options__2.label"
+        },
+        {
+          "value": "full",
+          "label": "t:blocks.text.settings.max_width.options__3.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.text.presets.name"
+    }
+  ]
+}
+{% endschema %}

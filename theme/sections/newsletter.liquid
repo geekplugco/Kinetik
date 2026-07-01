@@ -1,0 +1,226 @@
+{%- liquid
+  assign s = section.settings
+  case s.width
+    when 'page'
+      assign width = 'max-w-[var(--page-width)]'
+    when 'full'
+      assign width = 'max-w-none'
+    else
+      assign width = 'max-w-2xl'
+  endcase
+  assign split = false
+  if s.layout == 'split'
+    assign split = true
+  endif
+  assign dark = true
+  if s.background_style == 'light'
+    assign dark = false
+  endif
+  if dark
+    assign bg = 'bg-ink-950 text-paper'
+    assign sub_color = 'text-paper/60'
+    assign text_color = 'text-paper/70'
+    assign input_color = 'border-paper/40 text-paper placeholder:text-paper/50'
+  else
+    assign bg = 'bg-surface-page text-text-strong'
+    assign sub_color = 'text-text-muted'
+    assign text_color = 'text-text-muted'
+    assign input_color = 'border-border-strong text-text-strong placeholder:text-text-faint'
+  endif
+  if split
+    assign outer = 'flex flex-col gap-8 text-center md:flex-row md:items-center md:justify-between md:text-left'
+    assign textwrap = 'md:max-w-md'
+    assign formextra = 'md:mt-0 md:shrink-0'
+  else
+    assign outer = 'flex flex-col items-center gap-5 text-center'
+    assign textwrap = 'items-center'
+    assign formextra = ''
+  endif
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px"
+  class="pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))] {{ bg }}"
+>
+  <div class="mx-auto {{ width }} px-6 {{ outer }}">
+    <div class="flex flex-col gap-3 {{ textwrap }}">
+      {%- if s.subheading != blank -%}
+        <span class="font-mono text-xs uppercase tracking-label {{ sub_color }}">{{ s.subheading }}</span>
+      {%- endif -%}
+      <h2 class="font-display text-h1 tracking-tight">{{ s.heading | default: 'Join the movement' }}</h2>
+      {%- if s.text != blank -%}
+        <div class="text-body-lg [&_p]:m-0 {{ text_color }}">{{ s.text }}</div>
+      {%- endif -%}
+    </div>
+    {%- assign form_class = 'mt-2 flex w-full max-w-md flex-wrap gap-2 ' | append: formextra -%}
+    {%- form 'customer', class: form_class -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      {%- if form.posted_successfully? -%}
+        <p role="status" class="flex-1 self-center font-mono text-xs uppercase tracking-label {{ sub_color }}">{{ 'newsletter.success' | t | default: 'Thanks for subscribing.' }}</p>
+      {%- else -%}
+        {%- if form.errors -%}
+          <p role="alert" class="w-full font-mono text-xs text-negative">{%- for field in form.errors -%}{% if field == 'form' %}{{ form.errors.messages[field] }}{% else %}{{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}{% endif %}{%- unless forloop.last %}. {% endunless -%}{%- endfor -%}</p>
+        {%- endif -%}
+        <label class="sr-only" for="Newsletter-{{ section.id }}">{{ 'newsletter.label' | t | default: 'Email address' }}</label>
+        <input
+          id="Newsletter-{{ section.id }}"
+          type="email"
+          name="contact[email]"
+          required
+          aria-label="Email address"
+          placeholder="{{ s.input_placeholder | default: 'Email address' }}"
+          class="min-h-[44px] min-w-0 flex-1 border bg-transparent px-4 py-3 font-mono text-sm {{ input_color }}"
+        >
+        {%- render 'button', label: s.button_label, type: 'submit' -%}
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.newsletter.name",
+  "tag": "section",
+  "class": "section section--newsletter",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.newsletter.settings.header__1.content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "t:sections.newsletter.settings.subheading.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.newsletter.settings.heading.label",
+      "default": "Join the movement"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.newsletter.settings.text.label"
+    },
+    {
+      "type": "text",
+      "id": "input_placeholder",
+      "label": "t:sections.newsletter.settings.input_placeholder.label",
+      "default": "Email address"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.newsletter.settings.button_label.label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.newsletter.settings.header__2.content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.newsletter.settings.layout.label",
+      "default": "centered",
+      "options": [
+        {
+          "value": "centered",
+          "label": "t:sections.newsletter.settings.layout.options__1.label"
+        },
+        {
+          "value": "split",
+          "label": "t:sections.newsletter.settings.layout.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.newsletter.settings.width.label",
+      "default": "narrow",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:sections.newsletter.settings.width.options__1.label"
+        },
+        {
+          "value": "page",
+          "label": "t:sections.newsletter.settings.width.options__2.label"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.newsletter.settings.width.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "background_style",
+      "label": "t:sections.newsletter.settings.background_style.label",
+      "default": "dark",
+      "options": [
+        {
+          "value": "dark",
+          "label": "t:sections.newsletter.settings.background_style.options__1.label"
+        },
+        {
+          "value": "light",
+          "label": "t:sections.newsletter.settings.background_style.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.newsletter.settings.header__3.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 80,
+      "unit": "px",
+      "label": "t:sections.newsletter.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 80,
+      "unit": "px",
+      "label": "t:sections.newsletter.settings.padding_bottom.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.newsletter.settings.color_scheme.label",
+      "default": "scheme-2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.newsletter.presets.name__1"
+    },
+    {
+      "name": "t:sections.newsletter.presets.name__2",
+      "settings": {
+        "layout": "split",
+        "width": "page",
+        "background_style": "light"
+      }
+    },
+    {
+      "name": "t:sections.newsletter.presets.name__3",
+      "settings": {
+        "layout": "centered",
+        "width": "page",
+        "background_style": "dark"
+      }
+    }
+  ]
+}
+{% endschema %}

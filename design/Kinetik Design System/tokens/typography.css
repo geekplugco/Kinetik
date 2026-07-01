@@ -1,0 +1,47 @@
+/* ============================================================
+   KINETIK — Typography tokens
+   Oversized, angular display + neutral UI + mono spec labels.
+   ============================================================ */
+
+:root {
+  /* ---- Families ---- */
+  --font-display: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans:    'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:    'Space Mono', 'SFMono-Regular', ui-monospace, monospace;
+
+  /* ---- Weights ---- */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ---- Type scale (rem @ 16px base) ---- */
+  --fs-display-1: 6rem;     /* 96 — hero statements */
+  --fs-display-2: 4.25rem;  /* 68 */
+  --fs-h1:        2.75rem;  /* 44 */
+  --fs-h2:        2rem;     /* 32 */
+  --fs-h3:        1.5rem;   /* 24 */
+  --fs-h4:        1.25rem;  /* 20 */
+  --fs-body-lg:   1.125rem; /* 18 */
+  --fs-body:      1rem;     /* 16 */
+  --fs-sm:        0.875rem; /* 14 */
+  --fs-xs:        0.75rem;  /* 12 — mono labels */
+
+  /* ---- Fluid display (oversized, viewport-aware) ---- */
+  --fs-fluid-hero: clamp(2.75rem, 9vw, 7.5rem); /* @kind font */
+  --fs-fluid-h1:   clamp(2rem, 5vw, 3.5rem);    /* @kind font */
+
+  /* ---- Line heights ---- */
+  --leading-hero:   0.95;
+  --leading-tight:  1.05;
+  --leading-snug:   1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed:1.65;
+
+  /* ---- Letter spacing ---- */
+  --tracking-hero:   -0.04em; /* tighten oversized display */
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.02em;
+  --tracking-label:  0.12em;  /* uppercase mono labels */
+}

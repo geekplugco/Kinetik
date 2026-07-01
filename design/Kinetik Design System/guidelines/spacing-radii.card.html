@@ -1,0 +1,22 @@
+<!-- @dsCard group="Spacing" viewport="700x170" name="Corner Radii" subtitle="Tight by default — square is the brand" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 24px; background: var(--surface-page); display: flex; gap: 20px; align-items: flex-end; }
+  .col { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .box { width: 76px; height: 76px; background: var(--surface-sunken); border: var(--border-ink); }
+  .n { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.04em; }
+  .pill { width: 96px; height: 40px; border-radius: var(--radius-pill); background: var(--surface-sunken); border: var(--border-ink); }
+</style>
+</head>
+<body>
+  <div class="col"><div class="box" style="border-radius:var(--radius-0)"></div><span class="n">0 · SQUARE</span></div>
+  <div class="col"><div class="box" style="border-radius:var(--radius-sm)"></div><span class="n">SM · 2</span></div>
+  <div class="col"><div class="box" style="border-radius:var(--radius-md)"></div><span class="n">MD · 4</span></div>
+  <div class="col"><div class="box" style="border-radius:var(--radius-lg)"></div><span class="n">LG · 8</span></div>
+  <div class="col"><div class="pill"></div><span class="n">PILL · TAGS</span></div>
+</body>
+</html>

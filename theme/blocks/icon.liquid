@@ -1,0 +1,136 @@
+{%- liquid
+  assign b = block.settings
+  case b.alignment
+    when 'center'
+      assign align = 'justify-center'
+    when 'right'
+      assign align = 'justify-end'
+    else
+      assign align = 'justify-start'
+  endcase
+  case b.color
+    when 'accent'
+      assign color = 'text-accent'
+    when 'muted'
+      assign color = 'text-text-muted'
+    else
+      assign color = 'text-text-strong'
+  endcase
+-%}
+<div class="flex {{ align }} {{ color }}" {{ block.shopify_attributes }}>
+  {%- render 'icon', name: b.icon, size: b.size -%}
+</div>
+{% schema %}
+{
+  "name": "t:blocks.icon.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:blocks.icon.settings.icon.label",
+      "default": "star",
+      "options": [
+        {
+          "value": "cart",
+          "label": "t:blocks.icon.settings.icon.options__1.label"
+        },
+        {
+          "value": "search",
+          "label": "t:blocks.icon.settings.icon.options__2.label"
+        },
+        {
+          "value": "menu",
+          "label": "t:blocks.icon.settings.icon.options__3.label"
+        },
+        {
+          "value": "user",
+          "label": "t:blocks.icon.settings.icon.options__4.label"
+        },
+        {
+          "value": "arrow",
+          "label": "t:blocks.icon.settings.icon.options__5.label"
+        },
+        {
+          "value": "arrow-up-right",
+          "label": "t:blocks.icon.settings.icon.options__6.label"
+        },
+        {
+          "value": "close",
+          "label": "t:blocks.icon.settings.icon.options__7.label"
+        },
+        {
+          "value": "star",
+          "label": "t:blocks.icon.settings.icon.options__8.label"
+        },
+        {
+          "value": "chevron",
+          "label": "t:blocks.icon.settings.icon.options__9.label"
+        },
+        {
+          "value": "plus",
+          "label": "t:blocks.icon.settings.icon.options__10.label"
+        },
+        {
+          "value": "minus",
+          "label": "t:blocks.icon.settings.icon.options__11.label"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "size",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "default": 32,
+      "unit": "px",
+      "label": "t:blocks.icon.settings.size.label"
+    },
+    {
+      "type": "select",
+      "id": "color",
+      "label": "t:blocks.icon.settings.color.label",
+      "default": "strong",
+      "options": [
+        {
+          "value": "strong",
+          "label": "t:blocks.icon.settings.color.options__1.label"
+        },
+        {
+          "value": "muted",
+          "label": "t:blocks.icon.settings.color.options__2.label"
+        },
+        {
+          "value": "accent",
+          "label": "t:blocks.icon.settings.color.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:blocks.icon.settings.alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:blocks.icon.settings.alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:blocks.icon.settings.alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:blocks.icon.settings.alignment.options__3.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.icon.presets.name"
+    }
+  ]
+}
+{% endschema %}

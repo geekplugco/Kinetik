@@ -1,0 +1,172 @@
+{
+  "current": {
+    "mode": "production-css-inline",
+    "font_heading": "space_grotesk_n7",
+    "font_body": "inter_n4",
+    "font_accent": "space_mono_n4",
+    "page_width": 1440,
+    "spacing_sections": 0,
+    "corner_radius": 0,
+    "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A",
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "background": "#FFFFFF",
+          "text": "#0A0A0A",
+          "button": "#CCFF00",
+          "button_label": "#0A0A0A",
+          "secondary_button_label": "#0A0A0A",
+          "shadow": "#0A0A0A"
+        }
+      },
+      "scheme-2": {
+        "settings": {
+          "background": "#F4F4F4",
+          "text": "#0A0A0A",
+          "button": "#CCFF00",
+          "button_label": "#0A0A0A",
+          "secondary_button_label": "#0A0A0A",
+          "shadow": "#0A0A0A"
+        }
+      },
+      "scheme-3": {
+        "settings": {
+          "background": "#0A0A0A",
+          "text": "#FFFFFF",
+          "button": "#CCFF00",
+          "button_label": "#0A0A0A",
+          "secondary_button_label": "#FFFFFF",
+          "shadow": "#000000"
+        }
+      }
+    }
+  },
+  "presets": {
+    "Field System": {
+      "mode": "production-css-inline",
+      "font_heading": "space_grotesk_n7",
+      "font_body": "inter_n4",
+      "font_accent": "space_mono_n4",
+      "page_width": 1440,
+      "spacing_sections": 0,
+      "corner_radius": 0,
+      "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A",
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#FFFFFF",
+            "text": "#0A0A0A",
+            "button": "#CCFF00",
+            "button_label": "#0A0A0A",
+            "secondary_button_label": "#0A0A0A",
+            "shadow": "#0A0A0A"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#F4F4F4",
+            "text": "#0A0A0A",
+            "button": "#CCFF00",
+            "button_label": "#0A0A0A",
+            "secondary_button_label": "#0A0A0A",
+            "shadow": "#0A0A0A"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#0A0A0A",
+            "text": "#FFFFFF",
+            "button": "#CCFF00",
+            "button_label": "#0A0A0A",
+            "secondary_button_label": "#FFFFFF",
+            "shadow": "#000000"
+          }
+        }
+      }
+    },
+    "Carbon": {
+      "mode": "production-css-inline",
+      "font_heading": "space_grotesk_n7",
+      "font_body": "inter_n4",
+      "font_accent": "space_mono_n4",
+      "page_width": 1440,
+      "spacing_sections": 0,
+      "corner_radius": 0,
+      "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A",
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#0B0B0B",
+            "text": "#FFFFFF",
+            "button": "#CCFF00",
+            "button_label": "#0A0A0A",
+            "secondary_button_label": "#FFFFFF",
+            "shadow": "#000000"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#161616",
+            "text": "#FFFFFF",
+            "button": "#CCFF00",
+            "button_label": "#0A0A0A",
+            "secondary_button_label": "#FFFFFF",
+            "shadow": "#000000"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#FFFFFF",
+            "text": "#0B0B0B",
+            "button": "#CCFF00",
+            "button_label": "#0A0A0A",
+            "secondary_button_label": "#0B0B0B",
+            "shadow": "#0B0B0B"
+          }
+        }
+      }
+    },
+    "Sand": {
+      "mode": "production-css-inline",
+      "font_heading": "space_grotesk_n7",
+      "font_body": "inter_n4",
+      "font_accent": "space_mono_n4",
+      "page_width": 1440,
+      "spacing_sections": 0,
+      "corner_radius": 0,
+      "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A",
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#F3EFE7",
+            "text": "#1A1613",
+            "button": "#C04417",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#1A1613",
+            "shadow": "#1A1613"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#E8E1D4",
+            "text": "#1A1613",
+            "button": "#C04417",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#1A1613",
+            "shadow": "#1A1613"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#1A1613",
+            "text": "#F3EFE7",
+            "button": "#C04417",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#F3EFE7",
+            "shadow": "#000000"
+          }
+        }
+      }
+    }
+  }
+}

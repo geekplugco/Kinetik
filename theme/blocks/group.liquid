@@ -1,0 +1,146 @@
+{%- liquid
+  assign b = block.settings
+  if b.direction == 'horizontal'
+    assign direction = 'flex-row flex-wrap'
+  else
+    assign direction = 'flex-col'
+  endif
+  case b.gap
+    when 'none'
+      assign gap = 'gap-0'
+    when 'small'
+      assign gap = 'gap-2'
+    when 'large'
+      assign gap = 'gap-8'
+    else
+      assign gap = 'gap-4'
+  endcase
+  case b.alignment
+    when 'center'
+      assign align = 'items-center'
+    when 'end'
+      assign align = 'items-end'
+    when 'stretch'
+      assign align = 'items-stretch'
+    else
+      assign align = 'items-start'
+  endcase
+  case b.justify
+    when 'center'
+      assign justify = 'justify-center'
+    when 'end'
+      assign justify = 'justify-end'
+    when 'between'
+      assign justify = 'justify-between'
+    else
+      assign justify = 'justify-start'
+  endcase
+-%}
+<div class="flex {{ direction }} {{ gap }} {{ align }} {{ justify }}" {{ block.shopify_attributes }}>
+  {%- content_for 'blocks' -%}
+</div>
+{% schema %}
+{
+  "name": "t:blocks.group.name",
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "t:blocks.group.settings.direction.label",
+      "default": "vertical",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "t:blocks.group.settings.direction.options__1.label"
+        },
+        {
+          "value": "horizontal",
+          "label": "t:blocks.group.settings.direction.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "gap",
+      "label": "t:blocks.group.settings.gap.label",
+      "default": "medium",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:blocks.group.settings.gap.options__1.label"
+        },
+        {
+          "value": "small",
+          "label": "t:blocks.group.settings.gap.options__2.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:blocks.group.settings.gap.options__3.label"
+        },
+        {
+          "value": "large",
+          "label": "t:blocks.group.settings.gap.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:blocks.group.settings.alignment.label",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "t:blocks.group.settings.alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:blocks.group.settings.alignment.options__2.label"
+        },
+        {
+          "value": "end",
+          "label": "t:blocks.group.settings.alignment.options__3.label"
+        },
+        {
+          "value": "stretch",
+          "label": "t:blocks.group.settings.alignment.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "justify",
+      "label": "t:blocks.group.settings.justify.label",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "t:blocks.group.settings.justify.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:blocks.group.settings.justify.options__2.label"
+        },
+        {
+          "value": "end",
+          "label": "t:blocks.group.settings.justify.options__3.label"
+        },
+        {
+          "value": "between",
+          "label": "t:blocks.group.settings.justify.options__4.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.group.presets.name"
+    }
+  ]
+}
+{% endschema %}

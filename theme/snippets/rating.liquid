@@ -1,0 +1,34 @@
+{%- doc -%}
+  Star rating row from a Shopify rating metafield value + count. Dependency-free
+  (unicode stars with a clipped accent overlay for partial fill). Renders nothing
+  when there is no rating, so review-app metafield paths never leave blank space.
+
+  @param rating {number} - rating value, e.g. 4.5
+  @param [scale_max] {number} - rating scale maximum, default 5
+  @param [count] {number} - number of reviews
+  @param [class] {string} - extra classes on the wrapper
+
+  @example
+  {%- assign r = product.metafields.reviews.rating.value -%}
+  {%- render 'rating', rating: r.rating, scale_max: r.scale_max, count: product.metafields.reviews.rating_count -%}
+{%- enddoc -%}
+{%- liquid
+  assign max = scale_max | default: 5.0
+  assign value = rating | default: 0
+  assign pct = 0
+  if max > 0
+    assign pct = value | times: 100.0 | divided_by: max
+  endif
+-%}
+{%- if value > 0 -%}
+  <div class="flex items-center gap-2 {{ class }}">
+    <span class="relative inline-block font-sans text-sm leading-none" aria-hidden="true">
+      <span class="text-border-strong">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span class="absolute inset-0 overflow-hidden text-accent-press" style="width:{{ pct }}%">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    </span>
+    {%- if count != blank and count != 0 -%}
+      <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ count }}</span>
+    {%- endif -%}
+    <span class="sr-only">{{ value }} out of {{ max | round }} stars{% if count != blank and count != 0 %}, {{ count }} reviews{% endif %}</span>
+  </div>
+{%- endif -%}

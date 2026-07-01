@@ -1,0 +1,218 @@
+{%- liquid
+  assign s = section.settings
+  assign field = 'min-h-[44px] border border-border-strong bg-surface-page px-4 py-3 font-sans text-body text-text-strong placeholder:text-text-faint'
+  case s.width
+    when 'page'
+      assign width = 'max-w-[var(--page-width)]'
+    when 'full'
+      assign width = 'max-w-none'
+    else
+      assign width = 'max-w-[640px]'
+  endcase
+  assign split = false
+  if s.layout == 'split'
+    assign split = true
+  endif
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px"
+  class="bg-surface-page pt-[var(--pt,0)] pb-[var(--pb,4rem)]"
+>
+  <div class="mx-auto {{ width }} px-6{% if split %} grid gap-10 md:grid-cols-2{% endif %}">
+    {%- if s.heading != blank or s.subheading != blank or split -%}
+      <div class="mb-8 flex flex-col gap-3 md:mb-0">
+        {%- if s.subheading != blank -%}
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.subheading }}</span>
+        {%- endif -%}
+        {%- if s.heading != blank -%}
+          <h2 class="font-display text-h2 tracking-tight text-text-strong">{{ s.heading }}</h2>
+        {%- endif -%}
+        {%- if s.details != blank -%}
+          <div class="text-body text-text-body [&_a]:underline [&_a]:underline-offset-4 [&_p]:m-0">{{ s.details }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- form 'contact', class: 'flex flex-col gap-4' -%}
+      {%- if form.posted_successfully? -%}
+        <p role="status" class="font-mono text-xs uppercase tracking-label text-accent-press">Thanks — we will be in touch.</p>
+      {%- elsif form.errors -%}
+        <div role="alert" class="border border-negative px-4 py-3 font-mono text-xs text-negative">
+          <ul class="list-disc space-y-1 pl-4">
+            {%- for field in form.errors -%}
+              <li>{% if field == 'form' %}{{ form.errors.messages[field] }}{% else %}{{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}{% endif %}</li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+      <input type="text" name="contact[name]" required placeholder="{{ s.name_placeholder | default: 'Name' }}" aria-label="Name" class="{{ field }}">
+      <input type="email" name="contact[email]" required placeholder="{{ s.email_placeholder | default: 'Email' }}" aria-label="Email" class="{{ field }}">
+      {%- if s.show_phone -%}
+        <input type="tel" name="contact[phone]" placeholder="{{ s.phone_placeholder | default: 'Phone' }}" aria-label="Phone" class="{{ field }}">
+      {%- endif -%}
+      <textarea name="contact[body]" required rows="5" placeholder="{{ s.message_placeholder | default: 'Message' }}" aria-label="Message" class="{{ field }}"></textarea>
+      {%- render 'button', label: s.button_label, type: 'submit', class: 'self-start' -%}
+    {%- endform -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.contact-form.name",
+  "tag": "section",
+  "class": "section section--contact-form",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.contact-form.settings.header__1.content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "t:sections.contact-form.settings.subheading.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.contact-form.settings.heading.label"
+    },
+    {
+      "type": "richtext",
+      "id": "details",
+      "label": "t:sections.contact-form.settings.details.label",
+      "info": "t:sections.contact-form.settings.details.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.contact-form.settings.header__2.content"
+    },
+    {
+      "type": "text",
+      "id": "name_placeholder",
+      "label": "t:sections.contact-form.settings.name_placeholder.label",
+      "default": "Name"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "t:sections.contact-form.settings.email_placeholder.label",
+      "default": "Email"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "t:sections.contact-form.settings.show_phone.label",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "t:sections.contact-form.settings.phone_placeholder.label",
+      "default": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "message_placeholder",
+      "label": "t:sections.contact-form.settings.message_placeholder.label",
+      "default": "Message"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.contact-form.settings.button_label.label",
+      "default": "Send message"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.contact-form.settings.header__3.content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.contact-form.settings.layout.label",
+      "default": "stacked",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "t:sections.contact-form.settings.layout.options__1.label"
+        },
+        {
+          "value": "split",
+          "label": "t:sections.contact-form.settings.layout.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.contact-form.settings.width.label",
+      "default": "narrow",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:sections.contact-form.settings.width.options__1.label"
+        },
+        {
+          "value": "page",
+          "label": "t:sections.contact-form.settings.width.options__2.label"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.contact-form.settings.width.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.contact-form.settings.header__4.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px",
+      "label": "t:sections.contact-form.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 64,
+      "unit": "px",
+      "label": "t:sections.contact-form.settings.padding_bottom.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.contact-form.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.contact-form.presets.name__1"
+    },
+    {
+      "name": "t:sections.contact-form.presets.name__2",
+      "settings": {
+        "layout": "split",
+        "width": "page",
+        "heading": "Get in touch",
+        "show_phone": true
+      }
+    },
+    {
+      "name": "t:sections.contact-form.presets.name__3",
+      "settings": {
+        "layout": "stacked",
+        "width": "page",
+        "heading": "Contact us"
+      }
+    }
+  ]
+}
+{% endschema %}

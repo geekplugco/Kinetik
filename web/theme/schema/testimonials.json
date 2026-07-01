@@ -1,8 +1,10 @@
 { "name": "Testimonials", "tag": "section", "class": "section section--testimonials", "max_blocks": 9,
-  "settings": [ { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "What people say" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Field reports" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading (screen reader)", "default": "What people say" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" } ],
   "blocks": [ { "type": "testimonial", "name": "Testimonial", "settings": [
     { "type": "richtext", "id": "quote", "label": "Quote" },
     { "type": "text", "id": "author", "label": "Author" },
-    { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "default": 5, "label": "Rating" } ] } ],
+    { "type": "text", "id": "role", "label": "Role / location" } ] } ],
   "presets": [{ "name": "Testimonials", "blocks": [{ "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" }] }] }

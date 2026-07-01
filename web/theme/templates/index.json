@@ -6,6 +6,15 @@
         "text": "Ships in 24h \u00b7 Gore-Tex 3L \u00b7 Free returns 60d \u00b7 Engineered for movement \u00b7 Carbon-neutral \u00b7 Field-tested"
       }
     },
+    "drop": {
+      "type": "drop-system",
+      "settings": {
+        "kicker": "Next drop",
+        "heading": "Drop 05 · Field System",
+        "text": "<p>The SS26 field kit lands in full. Lock your access — limited first run.</p>",
+        "target_date": "2026-07-15T10:00:00"
+      }
+    },
     "arrivals": {
       "type": "featured-collection",
       "settings": {
@@ -31,38 +40,45 @@
     "trust": {
       "type": "multicolumn",
       "settings": {
-        "heading": "Why Kinetik"
+        "subheading": "The system",
+        "heading": "Why Kinetik",
+        "text": "<p>No seasonal noise. A tight kit of technical pieces, engineered to outlast the trend cycle.</p>"
       },
       "blocks": {
         "c1": {
           "type": "column",
           "settings": {
-            "icon": "star",
-            "title": "Field-tested",
-            "text": "<p>Every piece earns its place.</p>"
+            "title": "Field-tested, not focus-grouped",
+            "text": "<p>Every piece is worn hard before it ships — trail, transit, weather. If it doesn't earn its place in the kit, it doesn't make the line.</p>"
           }
         },
         "c2": {
           "type": "column",
           "settings": {
-            "icon": "cart",
-            "title": "Free shipping",
-            "text": "<p>On orders over $150.</p>"
+            "title": "Materials with a spec sheet",
+            "text": "<p>Gore-Tex 3L shells, ripstop nylon, recycled hardware. We publish the build so you know exactly what you're moving in.</p>"
           }
         },
         "c3": {
           "type": "column",
           "settings": {
-            "icon": "user",
-            "title": "Lifetime support",
-            "text": "<p>We stand behind the build.</p>"
+            "title": "Built to be repaired",
+            "text": "<p>Replaceable zips, reinforced stress points, a lifetime warranty on every seam. Keep it in rotation for years, not seasons.</p>"
+          }
+        },
+        "c4": {
+          "type": "column",
+          "settings": {
+            "title": "Carbon-neutral by default",
+            "text": "<p>Offset shipping, low-impact dye houses, and take-back recycling. Movement that doesn't cost the planet its own.</p>"
           }
         }
       },
       "block_order": [
         "c1",
         "c2",
-        "c3"
+        "c3",
+        "c4"
       ]
     },
     "categories": {
@@ -76,6 +92,16 @@
       "settings": {
         "heading": "Drop of the week",
         "product": "shell-jacket"
+      }
+    },
+    "kit": {
+      "type": "build-your-kit",
+      "settings": {
+        "kicker": "The system",
+        "heading": "Build your kit",
+        "text": "<p>Layer the system. Pick a shell, a mid, a bottom and gear — three pieces or more unlocks the kit price.</p>",
+        "bundle_discount": 12,
+        "min_pieces": 3
       }
     },
     "gallery": {
@@ -127,15 +153,16 @@
     "testimonials": {
       "type": "testimonials",
       "settings": {
+        "kicker": "Field reports",
         "heading": "What people say"
       },
       "blocks": {
         "t1": {
           "type": "testimonial",
           "settings": {
-            "quote": "<p>The shell is the best technical jacket I've owned.</p>",
+            "quote": "<p>The shell has been to three continents and back. Still the best technical jacket I've owned &mdash; nothing else holds up like it.</p>",
             "author": "A. Mercer",
-            "rating": 5
+            "role": "Photographer, Reykjavík"
           }
         },
         "t2": {
@@ -143,7 +170,7 @@
           "settings": {
             "quote": "<p>Considered, quiet, built to last.</p>",
             "author": "J. Okafor",
-            "rating": 5
+            "role": "Architect, Lagos"
           }
         },
         "t3": {
@@ -151,14 +178,23 @@
           "settings": {
             "quote": "<p>Audio that actually holds up on the move.</p>",
             "author": "R. Vale",
-            "rating": 4
+            "role": "Sound engineer, Berlin"
+          }
+        },
+        "t4": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Packs flat, wears light, takes a beating.</p>",
+            "author": "S. Haddad",
+            "role": "Bike courier, Montréal"
           }
         }
       },
       "block_order": [
         "t1",
         "t2",
-        "t3"
+        "t3",
+        "t4"
       ]
     },
     "blogposts": {
@@ -177,7 +213,7 @@
         "button_label": "Shop the drop",
         "button_link": "/collections/new-arrivals",
         "button_label_2": "Lookbook",
-        "button_link_2": "/blog",
+        "button_link_2": "/pages/lookbook",
         "image": "/uploads/onmodel/08-hero-back-wide.png",
         "image_caption": "SS26 \u00b7 Lookbook 01",
         "tag": "Drop 04 Live"
@@ -187,10 +223,12 @@
   "order": [
     "hero",
     "marquee",
+    "drop",
     "arrivals",
     "categories",
     "editorial",
     "featured",
+    "kit",
     "gallery",
     "trust",
     "testimonials",

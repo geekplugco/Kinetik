@@ -1,0 +1,36 @@
+<!-- @dsCard group="Colors" viewport="700x200" name="Dark Mode" subtitle="Pure-black canvas — volt holds on both themes" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface-page); display: flex; gap: 16px; }
+  .panel { flex: 1; background: var(--surface-card); border: var(--border); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  h4 { font-size: 18px; }
+  .lbl { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  p { font-size: 13px; color: var(--text-body); }
+  .cta { background: var(--accent); color: var(--accent-ink); font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; padding: 10px; text-align: center; margin-top: auto; }
+  .swatches { display: flex; gap: 0; border: var(--border); }
+  .m { flex: 1; height: 40px; }
+</style>
+</head>
+<body>
+  <div class="panel">
+    <div class="lbl">Product · Card</div>
+    <h4>SHELL-01 / Volt</h4>
+    <p>Hairlines invert to ink-700; text to paper.</p>
+    <div class="cta">Add to Cart — $420</div>
+  </div>
+  <div class="panel">
+    <div class="lbl">Canvas</div>
+    <div class="swatches">
+      <div class="m" style="background:var(--ink-950)"></div>
+      <div class="m" style="background:var(--ink-900)"></div>
+      <div class="m" style="background:var(--ink-800)"></div>
+      <div class="m" style="background:var(--volt-500)"></div>
+    </div>
+    <div class="lbl">950 page · 900 card · 800 sunken · volt</div>
+  </div>
+</body>
+</html>

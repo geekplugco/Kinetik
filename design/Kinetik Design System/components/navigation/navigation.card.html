@@ -1,0 +1,52 @@
+<!-- @dsCard group="Components" viewport="700x420" name="Navigation — Tabs · Breadcrumbs · Pagination" subtitle="Wayfinding & promo bar" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-page); }
+  .pad { padding: 0 24px; }
+  .block { padding: 20px 24px; border-bottom: 1px solid var(--border-hairline); }
+  .rule { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script type="text/babel">
+    const { AnnouncementBar, Breadcrumbs, Tabs, Pagination } = window.KinetikDesignSystem_fefe1a;
+    const { useState } = React;
+    function Demo() {
+      const [page, setPage] = useState(3);
+      return (
+        <div>
+          <AnnouncementBar messages={['Free 24h shipping over $200 · 60-day returns', 'SS26 Field System — live now']} />
+          <div className="block pad">
+            <div className="rule">Breadcrumbs</div>
+            <Breadcrumbs items={['Home', 'Outerwear', 'Shell-01 Hardshell']} />
+          </div>
+          <div className="block">
+            <div className="rule pad">Tabs</div>
+            <div className="pad">
+              <Tabs tabs={[
+                { id:'desc', label:'Description', content:<p style={{fontSize:14,color:'var(--text-body)',lineHeight:1.6,margin:0}}>3-layer Gore-Tex shell engineered for movement. Laser-cut vents, magnetic storm placket, fully taped seams.</p> },
+                { id:'specs', label:'Specs', content:<p style={{fontFamily:'var(--font-mono)',fontSize:13,color:'var(--text-strong)',margin:0}}>MEMBRANE GORE-TEX 3L · 480G · MADE IN JP</p> },
+                { id:'ship', label:'Shipping', content:<p style={{fontSize:14,color:'var(--text-body)',margin:0}}>Ships in 24h. Free over $200. 60-day returns.</p> },
+              ]} />
+            </div>
+          </div>
+          <div className="block pad" style={{borderBottom:'none'}}>
+            <div className="rule">Pagination · page {page}</div>
+            <Pagination page={page} total={12} onChange={setPage} />
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+  </script>
+</body>
+</html>

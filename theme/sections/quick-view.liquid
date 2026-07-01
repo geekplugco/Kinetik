@@ -1,0 +1,74 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign code = product.metafields.custom.product_code.value | default: current_variant.sku
+  assign spec = product.metafields.custom.spec.value | default: product.type
+  assign atc_label = 'products.product.add_to_cart' | t | default: 'Add to cart'
+  assign sold_label = 'products.product.sold_out' | t | default: 'Sold out'
+-%}
+<div class="grid gap-6 md:grid-cols-2">
+  <div data-variant-image data-variant-image-default="{{ product.featured_media | image_url: width: 800 }}" class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'eager', widths: '400,600,800', sizes: '(min-width:750px) 40vw, 90vw', alt: product.title, class: 'h-full w-full object-cover' }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
+    {%- endif -%}
+  </div>
+
+  <variant-picker class="flex flex-col gap-5">
+    <script type="application/json">
+      [
+        {%- for variant in product.variants -%}
+          {"id":{{ variant.id }},"options":{{ variant.options | json }},"available":{{ variant.available }},"price":{{ variant.price | money | json }},"compare_at":{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},"on_sale":{% if variant.compare_at_price > variant.price %}true{% else %}false{% endif %},"featured_image":{% if variant.featured_media %}{{ variant.featured_media | image_url: width: 800 | json }}{% else %}null{% endif %}}{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    </script>
+
+    <div class="flex flex-col gap-2">
+      <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ product.vendor }}{% if code != blank %} &middot; {{ code }}{% endif %}</span>
+      <h2 class="font-display text-h2 tracking-tight text-text-strong">{{ product.title }}</h2>
+      <div data-price data-price-class="text-body-lg">{%- render 'price', variant: current_variant, class: 'text-body-lg' -%}</div>
+      {%- if spec != blank -%}<span class="font-mono text-xs text-text-muted">{{ spec }}</span>{%- endif -%}
+    </div>
+
+    {%- form 'product', product, class: 'flex flex-col gap-5' -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+      {%- unless product.has_only_default_variant -%}
+        <div class="flex flex-col gap-4">
+          {%- for option in product.options_with_values -%}
+            {%- assign oname = option.name | downcase -%}
+            {%- assign is_color = false -%}
+            {%- if oname contains 'color' or oname contains 'colour' -%}{%- assign is_color = true -%}{%- endif -%}
+            <fieldset class="m-0 flex flex-col gap-2 border-0 p-0">
+              <legend class="mb-2 font-mono text-xs uppercase tracking-label text-text-muted">{{ option.name }}</legend>
+              <div class="flex flex-wrap gap-2.5">
+                {%- for value in option.values -%}
+                  {%- assign opt_id = 'qv-' | append: option.position | append: '-' | append: forloop.index -%}
+                  <label for="{{ opt_id }}" class="cursor-pointer">
+                    <input type="radio" id="{{ opt_id }}" class="peer sr-only" name="option-{{ option.position }}" value="{{ value | escape }}" data-option-position="{{ option.position }}"{% if is_color %} data-option-color{% endif %}{% if option.selected_value == value %} checked{% endif %}>
+                    {%- if is_color -%}
+                      {%- render 'swatch', value: value, title: value, size_class: 'h-8 w-8' -%}
+                    {%- else -%}
+                      <span class="block border border-border-hairline px-3 py-1.5 font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong">{{ value }}</span>
+                    {%- endif -%}
+                  </label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        </div>
+      {%- endunless -%}
+
+      <button type="submit" data-add-to-cart data-label-available="{{ atc_label | escape }}" data-label-soldout="{{ sold_label | escape }}" class="inline-flex w-full items-center justify-center gap-2 bg-accent px-6 py-3 font-mono text-sm uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40"{% unless current_variant.available %} disabled{% endunless %}>{% if current_variant.available %}{{ atc_label }}{% else %}{{ sold_label }}{% endif %}</button>
+    {%- endform -%}
+
+    <a href="{{ product.url }}" class="font-mono text-xs uppercase tracking-label text-text-muted underline underline-offset-4 hover:text-accent-press">View full details</a>
+  </variant-picker>
+</div>
+{% schema %}
+{
+  "name": "t:sections.quick-view.name",
+  "tag": "div",
+  "class": "section section--quick-view"
+}
+{% endschema %}

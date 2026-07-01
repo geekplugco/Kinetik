@@ -1,0 +1,64 @@
+/* ============================================================
+   KINETIK — Style presets (theme "styles", like a public theme's
+   2-3 demo variants). Each is a complete semantic-token re-skin
+   applied via data-preset on the root. Default (no attr) = Field
+   System (mono ink/paper + Volt). All WCAG 2.1 AA validated.
+
+   Shopify port: these map to settings_data.json `presets` (named
+   style configs) + a color_scheme_group; the merchant picks one
+   at install. In the prototype the StyleSwitcher sets data-preset.
+   ============================================================ */
+
+/* ---- Carbon — blackout / stealth (dark mirror of Field System) ---- */
+:root[data-preset="carbon"] {
+  --surface-page:    #0B0B0B;
+  --surface-sunken:  #131313;
+  --surface-card:    #1F1F1F;
+  --surface-inverse: #FFFFFF;
+  --surface-overlay: rgba(0, 0, 0, 0.72);
+
+  --text-strong:    #FFFFFF;
+  --text-body:      #E2E2E2;
+  --text-muted:     #909090;
+  --text-faint:     #6B6B6B;
+  --text-inverse:   #0A0A0A;
+  --text-on-accent: #0A0A0A;
+
+  --border-hairline: #2E2E2E;
+  --border-strong:   #6B6B6B;
+  --border-muted:    #1F1F1F;
+
+  --accent:       #CCFF00;
+  --accent-hover: #D9FF3D;
+  --accent-press: #B2E000;
+  --accent-ink:   #0A0A0A;
+
+  --focus-ring:   #D9FF3D;
+}
+
+/* ---- Sand — warm expedition / utilitarian, safety-orange accent ---- */
+:root[data-preset="sand"] {
+  --surface-page:    #F3EFE7;
+  --surface-card:    #FBF8F2;
+  --surface-sunken:  #E8E1D4;
+  --surface-inverse: #1A1613;
+  --surface-overlay: rgba(26, 22, 19, 0.45);
+
+  --text-strong:    #1A1613;
+  --text-body:      #3A332C;
+  --text-muted:     #6A5F4F;
+  --text-faint:     #8A7E6B;
+  --text-inverse:   #F3EFE7;
+  --text-on-accent: #FFFFFF;
+
+  --border-hairline: #CEC3AE;
+  --border-strong:   #1A1613;
+  --border-muted:    #E0D8C8;
+
+  --accent:       #C04417;
+  --accent-hover: #D9531E;
+  --accent-press: #A6390F;
+  --accent-ink:   #FFFFFF;
+
+  --focus-ring:   #C04417;
+}

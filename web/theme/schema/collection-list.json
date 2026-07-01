@@ -1,6 +1,44 @@
-{ "name": "Collection list", "tag": "section", "class": "section section--collection-list",
+{
+  "name": "Collection list",
+  "tag": "section",
+  "class": "section section--collection-list",
   "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Browse the system" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Shop by category" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "layout", "label": "Card style", "default": "overlay",
+      "options": [
+        { "value": "overlay", "label": "Overlay caption" },
+        { "value": "below", "label": "Caption below image" }
+      ] },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "tall",
+      "options": [
+        { "value": "tall", "label": "Tall (3:4)" },
+        { "value": "portrait", "label": "Portrait (4:5)" },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "landscape", "label": "Landscape (4:3)" }
+      ] },
+    { "type": "select", "id": "width", "label": "Section width", "default": "page",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" },
+        { "value": "narrow", "label": "Narrow" }
+      ] },
+    { "type": "header", "content": "Grid" },
+    { "type": "range", "id": "columns_desktop", "min": 1, "max": 5, "step": 1, "default": 3, "label": "Columns on desktop" },
+    { "type": "select", "id": "columns_mobile", "label": "Columns on mobile", "default": "1",
+      "options": [{ "value": "1", "label": "1" }, { "value": "2", "label": "2" }] },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px", "label": "Top padding" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px", "label": "Bottom padding" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
   ],
-  "presets": [{ "name": "Collection list" }] }
+  "presets": [
+    { "name": "Collection list" },
+    { "name": "Collection list — Captions below",
+      "settings": { "heading": "Categories", "layout": "below", "image_ratio": "square", "columns_desktop": 4, "columns_mobile": "2" } },
+    { "name": "Collection list — Editorial pair",
+      "settings": { "heading": "The collections", "layout": "overlay", "image_ratio": "landscape", "width": "narrow", "columns_desktop": 2 } }
+  ]
+}

@@ -1,0 +1,438 @@
+{%- liquid
+  assign s = section.settings
+  assign slides = section.blocks | where: 'type', 'slide'
+  assign autoplay = false
+  if s.autoplay
+    assign autoplay = true
+  endif
+  assign delay_ms = s.autoplay_delay | default: 5 | times: 1000
+  assign is_slide = false
+  if s.transition == 'slide'
+    assign is_slide = true
+  endif
+  assign fixed = false
+  if s.container == 'fixed'
+    assign fixed = true
+  endif
+
+  case s.slide_height
+    when 'adapt'
+      assign height_cls = 'aspect-[16/9]'
+    when 'small'
+      assign height_cls = 'min-h-[50vh]'
+    when 'large'
+      assign height_cls = 'min-h-[88vh]'
+    else
+      assign height_cls = 'min-h-[70vh]'
+  endcase
+
+  case s.text_alignment_mobile
+    when 'left'
+      assign mobile_align = 'items-end justify-start text-left'
+    else
+      assign mobile_align = 'items-center justify-center text-center'
+  endcase
+-%}
+{%- if slides.size > 0 -%}
+<slideshow-carousel
+  data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+  data-autoplay="{% if autoplay %}true{% else %}false{% endif %}"
+  data-delay="{{ delay_ms }}"
+  data-transition="{% if is_slide %}slide{% else %}fade{% endif %}"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="{{ s.accessibility_info | default: 'Slideshow' | escape }}"
+  style="--pt:{{ s.padding_top | default: 0 }}px;--pb:{{ s.padding_bottom | default: 0 }}px"
+  class="relative isolate block overflow-hidden bg-ink-950 pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
+>
+  <div class="relative {{ height_cls }}{% if fixed %} mx-auto max-w-[var(--page-width)]{% endif %}" data-slides>
+    {%- for block in slides -%}
+      {%- liquid
+        assign b = block.settings
+        case b.content_position
+          when 'top-left'
+            assign align = 'md:items-start md:justify-start md:text-left'
+          when 'bottom-left'
+            assign align = 'md:items-end md:justify-start md:text-left'
+          else
+            assign align = 'md:items-center md:justify-center md:text-center'
+        endcase
+        assign overlay = b.image_overlay_opacity | default: 0
+        if b.heading_size == 'h2'
+          assign heading_cls = 'text-h2'
+        else
+          assign heading_cls = 'text-fluid-hero'
+        endif
+        if is_slide
+          assign slide_state = 'transition-transform'
+        else
+          if forloop.first
+            assign slide_state = 'transition-opacity opacity-100'
+          else
+            assign slide_state = 'transition-opacity opacity-0 pointer-events-none'
+          endif
+        endif
+        assign slide_alt = b.image.alt | default: b.heading | default: s.accessibility_info | default: 'Slideshow image' | escape
+        assign slide_mobile_alt = b.image_mobile.alt | default: slide_alt | escape
+      -%}
+      <div
+        class="absolute inset-0 duration-700 {{ slide_state }}"
+        data-slide
+        role="group"
+        aria-roledescription="slide"
+        aria-label="{{ forloop.index }} / {{ forloop.length }}"
+        aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+        {% if is_slide %}style="transform:translateX({{ forloop.index0 | times: 100 }}%)"{% endif %}
+        {{ block.shopify_attributes }}
+      >
+        {%- if b.image != blank -%}
+          {%- if b.image_mobile != blank -%}
+            {{ b.image_mobile | image_url: width: 1100 | image_tag: loading: 'lazy', widths: '550,750,1100', sizes: '100vw', alt: slide_mobile_alt, class: 'absolute inset-0 h-full w-full object-cover md:hidden' }}
+          {%- else -%}
+            {{ b.image | image_url: width: 1100 | image_tag: loading: 'lazy', widths: '550,750,1100', sizes: '100vw', alt: slide_alt, class: 'absolute inset-0 h-full w-full object-cover md:hidden' }}
+          {%- endif -%}
+          {{ b.image | image_url: width: 2000 | image_tag: loading: 'lazy', widths: '990,1200,1600,2000', sizes: '100vw', alt: slide_alt, class: 'absolute inset-0 hidden h-full w-full object-cover md:block' }}
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
+        {%- endif -%}
+        <div class="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/35 to-ink-950/10" aria-hidden="true"></div>
+        {%- if overlay > 50 -%}
+          <div class="absolute inset-0 bg-ink-950" style="opacity:{{ overlay | minus: 50 | divided_by: 100.0 }}" aria-hidden="true"></div>
+        {%- endif -%}
+        <div data-color-scheme="{{ b.color_scheme | default: s.color_scheme }}" class="relative mx-auto flex h-full max-w-[var(--page-width)] flex-col gap-6 px-6 pb-20 pt-16 {{ mobile_align }} {{ align }}">
+          <span class="h-1 w-12 bg-accent" aria-hidden="true"></span>
+          {%- if b.subheading != blank -%}<span class="font-mono text-xs uppercase tracking-label text-paper/90">{{ b.subheading }}</span>{%- endif -%}
+          {%- if b.heading != blank -%}<h2 class="max-w-3xl font-display font-bold leading-[0.92] tracking-hero text-paper {{ heading_cls }}">{{ b.heading }}</h2>{%- endif -%}
+          {%- if b.description != blank -%}<div class="max-w-xl text-body-lg leading-snug text-paper/85 [&_p]:m-0">{{ b.description }}</div>{%- endif -%}
+          {%- if b.button_label != blank -%}
+            {%- render 'button', label: b.button_label, href: b.button_link | default: '#', variant: b.button_style | default: 'primary', size: 'md', class: 'mt-2 min-h-[44px] px-8 py-4 text-sm' -%}
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if slides.size > 1 and s.show_controls -%}
+    <button type="button" aria-label="Previous slide" data-prev class="absolute left-4 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center border border-paper/40 bg-ink-950/40 text-paper transition-colors hover:bg-ink-950/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'icon', name: 'arrow', class: 'rotate-180' -%}</button>
+    <button type="button" aria-label="Next slide" data-next class="absolute right-4 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center border border-paper/40 bg-ink-950/40 text-paper transition-colors hover:bg-ink-950/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'icon', name: 'arrow' -%}</button>
+    <div class="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 gap-2" role="group" aria-label="Slide controls">
+      {%- for block in slides -%}
+        <button type="button" aria-label="Go to slide {{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}" data-dot class="h-1.5 w-6 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent {% if forloop.first %}bg-accent{% else %}bg-paper/40{% endif %}"></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</slideshow-carousel>
+<script src="{{ 'slideshow.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.slideshow.name",
+  "tag": "section",
+  "class": "section section--slideshow",
+  "max_blocks": 6,
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.slideshow.settings.header__1.content"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "t:sections.slideshow.settings.container.label",
+      "default": "full",
+      "options": [
+        {
+          "value": "full",
+          "label": "t:sections.slideshow.settings.container.options__1.label"
+        },
+        {
+          "value": "fixed",
+          "label": "t:sections.slideshow.settings.container.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "slide_height",
+      "label": "t:sections.slideshow.settings.slide_height.label",
+      "default": "medium",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.slideshow.settings.slide_height.options__1.label"
+        },
+        {
+          "value": "small",
+          "label": "t:sections.slideshow.settings.slide_height.options__2.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.slideshow.settings.slide_height.options__3.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.slideshow.settings.slide_height.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "transition",
+      "label": "t:sections.slideshow.settings.transition.label",
+      "default": "fade",
+      "options": [
+        {
+          "value": "fade",
+          "label": "t:sections.slideshow.settings.transition.options__1.label"
+        },
+        {
+          "value": "slide",
+          "label": "t:sections.slideshow.settings.transition.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.slideshow.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.slideshow.settings.padding_top.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.slideshow.settings.padding_bottom.label",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:sections.slideshow.settings.header__2.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:sections.slideshow.settings.autoplay.label",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "min": 3,
+      "max": 9,
+      "step": 1,
+      "unit": "s",
+      "default": 5,
+      "label": "t:sections.slideshow.settings.autoplay_delay.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_controls",
+      "label": "t:sections.slideshow.settings.show_controls.label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "text_alignment_mobile",
+      "label": "t:sections.slideshow.settings.text_alignment_mobile.label",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.slideshow.settings.text_alignment_mobile.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.slideshow.settings.text_alignment_mobile.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "accessibility_info",
+      "label": "t:sections.slideshow.settings.accessibility_info.label",
+      "default": "Slideshow"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "t:sections.slideshow.blocks.slide.name",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.slideshow.blocks.slide.settings.image.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "t:sections.slideshow.blocks.slide.settings.image_mobile.label"
+        },
+        {
+          "type": "range",
+          "id": "image_overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 0,
+          "label": "t:sections.slideshow.blocks.slide.settings.image_overlay_opacity.label"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "t:sections.slideshow.blocks.slide.settings.color_scheme.label",
+          "default": "scheme-1"
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "t:sections.slideshow.blocks.slide.settings.content_position.label",
+          "default": "middle-center",
+          "options": [
+            {
+              "value": "top-left",
+              "label": "t:sections.slideshow.blocks.slide.settings.content_position.options__1.label"
+            },
+            {
+              "value": "middle-center",
+              "label": "t:sections.slideshow.blocks.slide.settings.content_position.options__2.label"
+            },
+            {
+              "value": "bottom-left",
+              "label": "t:sections.slideshow.blocks.slide.settings.content_position.options__3.label"
+            }
+          ]
+        },
+        {
+          "type": "inline_richtext",
+          "id": "subheading",
+          "label": "t:sections.slideshow.blocks.slide.settings.subheading.label"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "t:sections.slideshow.blocks.slide.settings.heading.label",
+          "default": "Slide heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "t:sections.slideshow.blocks.slide.settings.heading_size.label",
+          "default": "h1",
+          "options": [
+            {
+              "value": "h1",
+              "label": "t:sections.slideshow.blocks.slide.settings.heading_size.options__1.label"
+            },
+            {
+              "value": "h2",
+              "label": "t:sections.slideshow.blocks.slide.settings.heading_size.options__2.label"
+            }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "t:sections.slideshow.blocks.slide.settings.description.label"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:sections.slideshow.blocks.slide.settings.button_label.label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.slideshow.blocks.slide.settings.button_link.label"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "t:sections.slideshow.blocks.slide.settings.button_style.label",
+          "default": "primary",
+          "options": [
+            {
+              "value": "primary",
+              "label": "t:sections.slideshow.blocks.slide.settings.button_style.options__1.label"
+            },
+            {
+              "value": "secondary",
+              "label": "t:sections.slideshow.blocks.slide.settings.button_style.options__2.label"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.slideshow.presets.name__1",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    },
+    {
+      "name": "t:sections.slideshow.presets.name__2",
+      "settings": {
+        "slide_height": "large",
+        "transition": "fade",
+        "container": "full"
+      },
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    },
+    {
+      "name": "t:sections.slideshow.presets.name__3",
+      "settings": {
+        "slide_height": "medium",
+        "transition": "slide",
+        "autoplay": true
+      },
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

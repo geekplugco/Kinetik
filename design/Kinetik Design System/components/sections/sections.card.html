@@ -1,0 +1,41 @@
+<!-- @dsCard group="Components" viewport="700x520" name="Sections — Heading · Article Cards" subtitle="Editorial blocks for homepage & blog" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; padding: 24px; background: var(--surface-page); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 24px; }
+  .feat { border: 1px solid var(--border-hairline); margin-top: 16px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script type="text/babel">
+    const { SectionHeading, ArticleCard } = window.KinetikDesignSystem_fefe1a;
+    function Demo() {
+      return (
+        <div>
+          <SectionHeading eyebrow="The Field Journal" title="Latest Dispatches" action={{label:'All Articles'}} />
+          <div className="feat">
+            <ArticleCard layout="row" category="Field Notes" date="Mar 12" readTime="6 min"
+              title="Engineering the Shell-01" code="Journal · Shell-01"
+              excerpt="How a 3-layer Gore-Tex membrane, laser-cut vents, and fully taped seams add up to a shell that moves with you — and loads in a blink." />
+          </div>
+          <div className="grid">
+            <ArticleCard category="Gear" date="Mar 04" readTime="4 min" title="Carry, Compressed: The Sling 4L" code="Journal · Sling" />
+            <ArticleCard category="Audio" date="Feb 22" readTime="5 min" title="Tuning the Field Monitors" code="Journal · Audio" />
+            <ArticleCard category="Studio" date="Feb 10" readTime="3 min" title="A 60fps Storefront" code="Journal · Studio" />
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+  </script>
+</body>
+</html>

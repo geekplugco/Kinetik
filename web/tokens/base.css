@@ -5,7 +5,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
 
 body {
   margin: 0;
@@ -16,6 +16,8 @@ body {
   background: var(--surface-page);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-feature-settings: "kern", "liga", "calt";
+  overflow-x: clip;
 }
 
 /* Display headings default to the angular family + tight tracking */
@@ -23,10 +25,14 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
   color: var(--text-strong);
   letter-spacing: var(--tracking-tight);
-  line-height: var(--leading-snug);
+  line-height: var(--leading-tight);
   margin: 0;
   font-weight: var(--weight-bold);
+  text-wrap: balance;
 }
+
+/* Oversized display headings tighten further */
+h1 { line-height: var(--leading-hero); letter-spacing: var(--tracking-hero); }
 
 p { margin: 0; }
 
@@ -38,18 +44,4 @@ button { font-family: inherit; }
 
 ::selection { background: var(--accent); color: var(--accent-ink); }
 
-/* Shared visual primitives ------------------------------------ */
-
-/* Uppercase mono label — the recurring "spec sheet" motif */
-.k-label {
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-/* The exposed hairline grid frame */
-.k-hairline { border: var(--border); }
-.k-hairline-t { border-top: var(--border); }
-.k-hairline-b { border-bottom: var(--border); }
+/* Shared visual primitives live in the hp- house library (tokens/hp.css). */

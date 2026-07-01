@@ -1,0 +1,219 @@
+{%- liquid
+  assign s = section.settings
+  assign address = s.address | default: '382 NE 191st St, Miami, FL'
+  assign query = address | url_encode
+  case s.width
+    when 'full'
+      assign width = 'max-w-none'
+    when 'narrow'
+      assign width = 'max-w-4xl'
+    else
+      assign width = 'max-w-[var(--page-width)]'
+  endcase
+  assign image_left = false
+  if s.layout == 'image-left'
+    assign image_left = true
+  endif
+  assign grayscale = ''
+  if s.map_style == 'grayscale'
+    assign grayscale = 'grayscale'
+  endif
+  assign map_height = s.map_height | default: 320
+-%}
+{%- capture info -%}
+<div class="flex flex-col justify-center gap-4 px-6 py-16 md:px-16">
+  <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.subheading | default: 'Visit us' }}</span>
+  <h2 class="font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{{ s.heading | default: 'The studio' }}</h2>
+  <p class="flex items-start gap-2 text-body text-text-body">{% render 'icon', name: 'user', size: 18, class: 'mt-1 text-accent-press' %}{{ address }}</p>
+  {%- if s.hours != blank -%}
+    <div class="text-body text-text-muted [&_p]:m-0">{{ s.hours }}</div>
+  {%- endif -%}
+  {%- if s.show_directions -%}
+    <a href="https://maps.google.com/?q={{ query }}" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-[44px] items-center font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 hover:text-accent-press">{{ s.directions_label | default: 'Get directions' }}</a>
+  {%- endif -%}
+</div>
+{%- endcapture -%}
+{%- capture map_block -%}
+<div class="min-h-[var(--map-h,320px)] bg-surface-sunken">
+  <iframe title="Map" src="https://maps.google.com/maps?q={{ query }}&output=embed" class="h-full min-h-[var(--map-h,320px)] w-full {{ grayscale }}" loading="lazy"></iframe>
+</div>
+{%- endcapture -%}
+<section
+  data-color-scheme="{{ s.color_scheme }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px;--map-h:{{ map_height }}px"
+  class="bg-surface-page pt-[var(--pt,0)] pb-[var(--pb,0)]"
+>
+  <div class="mx-auto grid {{ width }} md:grid-cols-2">
+    {%- if image_left -%}
+      <div class="order-2 md:order-1">{{ map_block }}</div>
+      <div class="order-1 md:order-2">{{ info }}</div>
+    {%- else -%}
+      {{ info }}
+      {{ map_block }}
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.map.name",
+  "tag": "section",
+  "class": "section section--map",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.map.settings.header__1.content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "t:sections.map.settings.subheading.label",
+      "default": "Visit us"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.map.settings.heading.label",
+      "default": "The studio"
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "t:sections.map.settings.address.label",
+      "default": "382 NE 191st St, Miami, FL"
+    },
+    {
+      "type": "richtext",
+      "id": "hours",
+      "label": "t:sections.map.settings.hours.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_directions",
+      "label": "t:sections.map.settings.show_directions.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "directions_label",
+      "label": "t:sections.map.settings.directions_label.label",
+      "default": "Get directions"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.map.settings.header__2.content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.map.settings.layout.label",
+      "default": "image-right",
+      "options": [
+        {
+          "value": "image-right",
+          "label": "t:sections.map.settings.layout.options__1.label"
+        },
+        {
+          "value": "image-left",
+          "label": "t:sections.map.settings.layout.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "map_style",
+      "label": "t:sections.map.settings.map_style.label",
+      "default": "grayscale",
+      "options": [
+        {
+          "value": "grayscale",
+          "label": "t:sections.map.settings.map_style.options__1.label"
+        },
+        {
+          "value": "color",
+          "label": "t:sections.map.settings.map_style.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.map.settings.width.label",
+      "default": "page",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:sections.map.settings.width.options__1.label"
+        },
+        {
+          "value": "page",
+          "label": "t:sections.map.settings.width.options__2.label"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.map.settings.width.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "map_height",
+      "min": 240,
+      "max": 720,
+      "step": 20,
+      "default": 320,
+      "unit": "px",
+      "label": "t:sections.map.settings.map_height.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.map.settings.header__3.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px",
+      "label": "t:sections.map.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px",
+      "label": "t:sections.map.settings.padding_bottom.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.map.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.map.presets.name__1"
+    },
+    {
+      "name": "t:sections.map.presets.name__2",
+      "settings": {
+        "layout": "image-left",
+        "map_style": "color",
+        "map_height": 480
+      }
+    },
+    {
+      "name": "t:sections.map.presets.name__3",
+      "settings": {
+        "width": "full",
+        "map_height": 560
+      }
+    }
+  ]
+}
+{% endschema %}

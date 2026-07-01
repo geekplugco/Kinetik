@@ -1,0 +1,23 @@
+<!-- @dsCard group="Brand" viewport="700x180" name="Motion & Easing" subtitle="Snappy expo-out. Transform + opacity only — 60fps." -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 22px; background: var(--surface-page); display: flex; flex-direction: column; gap: 14px; }
+  .track { position: relative; height: 34px; border: var(--border); overflow: hidden; }
+  .runner { position: absolute; top: 0; left: 0; height: 100%; width: 34px; background: var(--accent); }
+  .r1 { animation: slide var(--dur-base) var(--ease-out) infinite alternate; }
+  .r2 { animation: slide 1s var(--ease-standard) infinite alternate; }
+  @keyframes slide { to { left: calc(100% - 34px); } }
+  .meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+  <div class="meta"><span>EASE-OUT · cubic-bezier(.16,1,.3,1)</span><span>220MS</span></div>
+  <div class="track"><div class="runner r1"></div></div>
+  <div class="meta"><span>EASE-STANDARD · cubic-bezier(.4,0,.2,1)</span><span>DRAWERS / MENUS</span></div>
+  <div class="track"><div class="runner r2"></div></div>
+</body>
+</html>

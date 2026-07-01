@@ -1,0 +1,9 @@
+{
+  "name": "Cart drawer",
+  "tag": "section",
+  "class": "section section--cart-drawer",
+  "enabled_on": { "groups": ["custom.overlay"] },
+  "settings": [
+    { "type": "checkbox", "id": "show_free_shipping_goal", "label": "Show free shipping goal", "default": true }
+  ]
+}

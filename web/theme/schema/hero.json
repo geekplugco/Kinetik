@@ -1,5 +1,38 @@
 { "name": "Hero", "tag": "section", "class": "section section--hero",
   "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "layout", "label": "Layout", "default": "split",
+      "options": [
+        { "value": "split", "label": "Split (text + image)" },
+        { "value": "overlay", "label": "Text over image" },
+        { "value": "stacked", "label": "Stacked (image above text)" }
+      ] },
+    { "type": "select", "id": "image_position", "label": "Image position (split)", "default": "right",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left", "label": "Left" }
+      ] },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio (overlay / stacked)", "default": "16/9",
+      "options": [
+        { "value": "16/9", "label": "Landscape (16:9)" },
+        { "value": "4/3", "label": "Classic (4:3)" },
+        { "value": "1/1", "label": "Square (1:1)" },
+        { "value": "3/4", "label": "Portrait (3:4)" }
+      ] },
+    { "type": "select", "id": "text_alignment", "label": "Text alignment (overlay)", "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "page",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" },
+        { "value": "narrow", "label": "Narrow" }
+      ] },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom", "default": 0 },
     { "type": "header", "content": "Text panel" },
     { "type": "inline_richtext", "id": "subheading", "label": "Eyebrow", "default": "SS26 / Field System" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Move faster." },
@@ -10,7 +43,12 @@
     { "type": "url", "id": "button_link_2", "label": "Secondary link" },
     { "type": "header", "content": "Image panel" },
     { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text" },
     { "type": "text", "id": "image_caption", "label": "Caption", "default": "SS26 · Lookbook 01" },
     { "type": "text", "id": "tag", "label": "Tag", "default": "Drop 04 Live" }
   ],
-  "presets": [{ "name": "Hero" }] }
+  "presets": [
+    { "name": "Hero" },
+    { "name": "Hero — overlay", "settings": { "layout": "overlay", "text_alignment": "left", "image_ratio": "4/3" } },
+    { "name": "Hero — stacked", "settings": { "layout": "stacked", "image_ratio": "16/9" } }
+  ] }

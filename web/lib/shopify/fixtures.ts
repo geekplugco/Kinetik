@@ -1,4 +1,5 @@
 import type { Product, Variant, Collection, Cart, Shop, Menu, ShopifyContextValue, Article, Page } from "./objects";
+import { productDescriptions } from "./descriptions";
 
 const INK = "#0A0A0A";
 const VOLT = "#CCFF00";
@@ -14,6 +15,7 @@ interface CatalogEntry {
   spec: string;
   colors: { name: string; swatch: string }[];
   img: string;
+  desc?: string;
 }
 
 const catalog: CatalogEntry[] = [
@@ -27,10 +29,31 @@ const catalog: CatalogEntry[] = [
   { handle: "earbuds", title: "Pulse Earbuds", code: "KX-AUD-08", type: "Audio", price: 16000, badge: "New", spec: "IPX5 · 32h case", colors: [{ name: "Ink", swatch: INK }], img: "card-08-earbuds.png" },
   { handle: "smartwatch", title: "Kinetik Watch", code: "KX-WTCH-09", type: "Wearables", price: 38000, spec: "GPS · 18h active", colors: [{ name: "Ink", swatch: INK }, { name: "Volt", swatch: VOLT }], img: "card-09-smartwatch.png" },
   { handle: "speaker", title: "Field Speaker 02", code: "KX-SPK-10", type: "Audio", price: 17500, compareAt: 21500, spec: "IP67 · 24h play", colors: [{ name: "Ink", swatch: INK }], img: "card-10-speaker.png" },
+  { handle: "tech-hoodie", title: "Storm Hoodie", code: "KX-HOOD-11", type: "Tops", price: 14800, badge: "New", spec: "Heavyweight loopback · storm hood", colors: [{ name: "Ink", swatch: INK }, { name: "Graphite", swatch: "#3A3A3A" }], img: "card-11-tech-hoodie.png" },
+  { handle: "insulated-parka", title: "Field Parka 3L", code: "KX-PARKA-12", type: "Outerwear", price: 48000, compareAt: 56000, spec: "3L insulated · taped seams", colors: [{ name: "Ink", swatch: INK }], img: "card-12-parka.png" },
+  { handle: "base-layer", title: "Merino Base LS", code: "KX-BASE-13", type: "Tops", price: 9000, spec: "Merino 200 · flatlock", colors: [{ name: "Charcoal", swatch: "#3A3A3A" }, { name: "Ink", swatch: INK }], img: "card-13-base-layer.png" },
+  { handle: "backpack", title: "Roll-Top 22L", code: "KX-PACK-14", type: "Bags", price: 19500, badge: "New", spec: "22L roll-top · weatherproof", colors: [{ name: "Ink", swatch: INK }], img: "card-14-backpack.png" },
+  { handle: "hip-pack", title: "Hip Pack 2L", code: "KX-HIP-15", type: "Bags", price: 8500, spec: "2L · weatherproof zip", colors: [{ name: "Ink", swatch: INK }], img: "card-15-hip-pack.png" },
+  { handle: "beanie", title: "Merino Beanie", code: "KX-BEAN-16", type: "Accessories", price: 4500, spec: "Merino rib · cuffed", colors: [{ name: "Ink", swatch: INK }, { name: "Graphite", swatch: "#3A3A3A" }], img: "card-16-beanie.png" },
+  { handle: "tech-gloves", title: "Touch Gloves", code: "KX-GLOVE-17", type: "Accessories", price: 5500, spec: "Touchscreen · articulated", colors: [{ name: "Ink", swatch: INK }], img: "card-17-gloves.png" },
+  { handle: "power-bank", title: "Power Cell 10K", code: "KX-POWER-18", type: "Tech", price: 7900, badge: "New", spec: "10000mAh · USB-C PD", colors: [{ name: "Ink", swatch: INK }, { name: "Volt", swatch: VOLT }], img: "card-18-power-bank.png" },
 ];
 
+const lifestyleShots: Record<string, string> = {
+  "shell-jacket": "onmodel/01-jacket-hood-back.png",
+  "utility-vest": "onmodel/03-vest-torso.png",
+  "cargo-pants": "onmodel/04-lowerbody-cargo.png",
+  "sling-bag": "onmodel/05-sling-worn.png",
+  "headphones": "onmodel/06-headphones-back.png",
+  "cap": "onmodel/07-cap-shadow.png",
+};
+
 export const products: Product[] = catalog.map((c, i) => {
-  const image = { id: `img-${i}`, src: `/uploads/${c.img}`, alt: c.title, width: 1200, height: 1500 };
+  const mkImg = (src: string, j: number) => ({ id: `img-${i}-${j}`, src: `/uploads/${src}`, alt: c.title, width: 1024, height: 1280 });
+  const image = mkImg(c.img, 0);
+  const extras = [c.img.replace(/\.png$/, "-b.png")];
+  if (lifestyleShots[c.handle]) extras.push(lifestyleShots[c.handle]);
+  const images = [image, ...extras.map((src, j) => mkImg(src, j + 1))];
   const variants: Variant[] = c.colors.map((col, j) => ({ id: `v-${i}-${j}`, title: col.name, price: c.price, compare_at_price: c.compareAt, available: true, options: [col.name] }));
   return {
     id: `p-${i}`,
@@ -41,14 +64,14 @@ export const products: Product[] = catalog.map((c, i) => {
     code: c.code,
     spec: c.spec,
     badge: c.badge,
-    description: `${c.title} — ${c.spec}. Engineered for movement; built monochrome, field-tested.`,
+    description: productDescriptions[c.handle] ?? c.desc ?? `${c.title} — ${c.spec}. Engineered for movement; built monochrome, field-tested.`,
     price: c.price,
     price_min: c.price,
     price_max: c.price,
     compare_at_price: c.compareAt,
     available: true,
     featured_image: image,
-    images: [image],
+    images,
     variants,
     options: ["Color"],
     colors: c.colors,
@@ -74,7 +97,7 @@ function makeCollection(id: string, title: string, handle: string, description: 
   };
 }
 
-const apparelTypes = ["Outerwear", "Bottoms", "Bags", "Footwear", "Accessories"];
+const apparelTypes = ["Outerwear", "Bottoms", "Bags", "Footwear", "Accessories", "Tops"];
 export const collection = makeCollection("c-arrivals", "New Arrivals", "new-arrivals", "The latest Kinetik drop.", products);
 const apparel = makeCollection("c-apparel", "Apparel", "apparel", "Technical apparel, field-tested.", products.filter((p) => apparelTypes.includes(p.type)));
 const tech = makeCollection("c-tech", "Tech", "tech", "Audio and wearables.", products.filter((p) => !apparelTypes.includes(p.type)));
@@ -138,7 +161,7 @@ export const mainMenu: Menu = {
       ],
     },
     { title: "Gear", url: "/collections/apparel" },
-    { title: "Lookbook", url: "/blog" },
+    { title: "Lookbook", url: "/pages/lookbook" },
   ],
 };
 
@@ -151,6 +174,7 @@ export const articles: Article[] = [
 export const pagesByHandle: Record<string, Page> = {
   about: { title: "About Kinetik", handle: "about", content: "<p>Kinetik builds field-tested apparel and audio for people who move. Technical materials, considered construction, zero noise.</p><p>Designed in studio, tested in the world.</p>" },
   contact: { title: "Contact", handle: "contact", content: "<p>Questions, press, or wholesale — send a note and the studio will reply within two business days.</p>" },
+  lookbook: { title: "Lookbook", handle: "lookbook", content: "" },
 };
 
 export const shopifyFixture: ShopifyContextValue = {

@@ -1,0 +1,491 @@
+{%- liquid
+  assign s = section.settings
+  assign menu = linklists[s.menu]
+  assign links = menu.links
+  assign header_style = s.header_style | default: 'utility'
+  assign sticky = true
+  if s.sticky_header == false
+    assign sticky = false
+  endif
+  assign mega = true
+  if s.submenu_style == 'dropdown'
+    assign mega = false
+  endif
+  assign show_products = false
+  assign show_featured = false
+  if mega
+    unless s.show_menu_products == false
+      assign show_products = true
+    endunless
+    unless s.show_menu_featured == false
+      assign show_featured = true
+    endunless
+  endif
+  assign mega_cols = ''
+  if mega
+    if show_products and show_featured
+      assign mega_cols = 'lg:grid-cols-[0.8fr_1.85fr_0.9fr]'
+    elsif show_products
+      assign mega_cols = 'lg:grid-cols-[0.9fr_2fr]'
+    elsif show_featured
+      assign mega_cols = 'lg:grid-cols-[1.6fr_1fr]'
+    endif
+  endif
+  assign currency = cart.currency.iso_code | default: shop.currency
+-%}
+
+{%- capture logo_html -%}
+  <a href="{{ routes.root_url }}" class="font-display text-[1.375rem] font-bold uppercase leading-none tracking-tight text-text-strong" aria-label="{{ shop.name | escape }}">
+    {%- if settings.logo != blank -%}
+      {%- assign logo_w = settings.logo_width | default: 120 -%}
+      {%- capture logo_style -%}max-width:{{ logo_w }}px{%- endcapture -%}
+      {%- if settings.logo_mobile != blank -%}
+        {{ settings.logo | image_url: width: 480 | image_tag: alt: shop.name, widths: '120,240,360,480', loading: 'eager', style: logo_style, class: 'hidden h-auto w-auto md:block' }}
+        {{ settings.logo_mobile | image_url: width: 360 | image_tag: alt: shop.name, widths: '120,240,360', loading: 'eager', style: logo_style, class: 'h-auto w-auto md:hidden' }}
+      {%- else -%}
+        {{ settings.logo | image_url: width: 480 | image_tag: alt: shop.name, widths: '120,240,360,480', loading: 'eager', style: logo_style, class: 'h-auto w-auto' }}
+      {%- endif -%}
+    {%- else -%}
+      {{ shop.name | upcase }}<span class="text-accent">.</span>
+    {%- endif -%}
+  </a>
+{%- endcapture -%}
+
+{%- capture primary_nav_html -%}
+  <nav aria-label="Primary" data-nav class="hidden items-center gap-8 md:flex">
+    {%- for link in links -%}
+      {%- if link.links.size > 0 -%}
+        <div data-nav-item>
+          <a href="{{ link.url }}" data-nav-trigger data-panel-key="{{ forloop.index }}" aria-haspopup="true" aria-expanded="false" class="flex items-center gap-1.5 py-2 font-mono text-xs uppercase tracking-label text-text-body transition-colors hover:text-text-strong aria-expanded:text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+            {{ link.title }}
+            {%- render 'icon', name: 'chevron', size: 12, class: 'transition-transform' -%}
+          </a>
+        </div>
+      {%- else -%}
+        <a href="{{ link.url }}" class="flex items-center gap-1.5 py-2 font-mono text-xs uppercase tracking-label text-text-body transition-colors hover:text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{{ link.title }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+  </nav>
+{%- endcapture -%}
+
+{%- capture header_actions_html -%}
+  <div class="flex items-center gap-1 text-text-strong">
+    <button type="button" aria-label="{{ 'general.search.search' | t | default: 'Search' }}" data-search-open class="flex h-11 w-11 items-center justify-center hover:text-accent-press focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'icon', name: 'search' -%}</button>
+    {%- if s.show_account_icon != false -%}
+      <a href="{{ routes.account_url }}" aria-label="{{ 'customer.account.title' | t | default: 'Account' }}" class="hidden h-11 w-11 items-center justify-center hover:text-accent-press focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:flex">{%- render 'icon', name: 'user' -%}</a>
+    {%- endif -%}
+    {%- capture cart_icon_inner -%}
+      {%- render 'icon', name: 'cart' -%}
+      <span data-header-cart-count class="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center bg-accent px-1 font-mono text-[10px] text-accent-ink{% if cart.item_count == 0 %} hidden{% endif %}">{{ cart.item_count }}</span>
+    {%- endcapture -%}
+    {%- if settings.cart_type == 'page' -%}
+      <a href="{{ routes.cart_url }}" aria-label="{{ 'sections.cart.title' | t | default: 'Cart' }}" class="relative flex h-11 w-11 items-center justify-center hover:text-accent-press focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{{ cart_icon_inner }}</a>
+    {%- else -%}
+      <button type="button" aria-label="{{ 'sections.cart.title' | t | default: 'Cart' }}" data-cart-open class="relative flex h-11 w-11 items-center justify-center hover:text-accent-press focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{{ cart_icon_inner }}</button>
+    {%- endif -%}
+  </div>
+{%- endcapture -%}
+
+<mega-menu
+  data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+  class="{% if sticky %}sticky top-0 z-40{% else %}relative z-40{% endif %} block border-b border-border-hairline bg-surface-page/90 backdrop-blur"
+>
+  {%- if header_style == 'editorial' -%}
+    <div class="mx-auto grid max-w-[var(--page-width)] grid-cols-[auto_1fr_auto] items-center gap-4 px-6 py-4 md:grid-cols-3">
+      <div class="flex items-center gap-3 md:justify-start">
+        <button type="button" aria-label="Open menu" aria-expanded="false" aria-controls="HeaderMobileMenu" data-menu-open class="-ml-1 flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:hidden">{%- render 'icon', name: 'menu', size: 22 -%}</button>
+        <div class="hidden md:block">{{ primary_nav_html }}</div>
+      </div>
+      <div class="justify-self-center">{{ logo_html }}</div>
+      <div class="justify-self-end">{{ header_actions_html }}</div>
+    </div>
+  {%- elsif header_style == 'commerce' -%}
+    <div class="border-b border-border-hairline bg-surface-raised/70">
+      <div class="mx-auto flex max-w-[var(--page-width)] items-center justify-between gap-4 px-6 py-2 font-mono text-[11px] uppercase tracking-label text-text-muted">
+        <span>{{ s.utility_text | default: 'Free shipping and returns on qualifying orders' }}</span>
+        <a href="{{ routes.all_products_collection_url }}" class="hidden items-center gap-2 text-text-body transition-colors hover:text-text-strong md:inline-flex">Shop all {%- render 'icon', name: 'arrow', size: 12 -%}</a>
+      </div>
+    </div>
+    <div class="mx-auto flex max-w-[var(--page-width)] items-center justify-between gap-4 px-6 py-3">
+      <div class="flex items-center gap-3">
+        <button type="button" aria-label="Open menu" aria-expanded="false" aria-controls="HeaderMobileMenu" data-menu-open class="-ml-1 flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:hidden">{%- render 'icon', name: 'menu', size: 22 -%}</button>
+        {{ logo_html }}
+      </div>
+      {{ primary_nav_html }}
+      {{ header_actions_html }}
+    </div>
+  {%- else -%}
+    <div class="mx-auto flex max-w-[var(--page-width)] items-center justify-between gap-4 px-6 py-4">
+      <div class="flex items-center gap-3">
+        <button type="button" aria-label="Open menu" aria-expanded="false" aria-controls="HeaderMobileMenu" data-menu-open class="-ml-1 flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent md:hidden">{%- render 'icon', name: 'menu', size: 22 -%}</button>
+        {{ logo_html }}
+      </div>
+      {{ primary_nav_html }}
+      {{ header_actions_html }}
+    </div>
+  {%- endif -%}
+
+  {%- for link in links -%}
+    {%- if link.links.size == 0 -%}{%- continue -%}{%- endif -%}
+    {%- assign mega_collection = link.object -%}
+    <div data-panel="{{ forloop.index }}" class="absolute top-full hidden origin-top animate-[megaIn_.18s_ease] border-b border-border-hairline bg-surface-page shadow-[0_24px_40px_-24px_rgba(10,10,10,0.25)] {% if mega %}left-0 right-0{% else %}left-6 w-80{% endif %}">
+      <div class="mx-auto px-6 py-10 {% if mega %}grid max-w-[var(--page-width)] gap-x-12 gap-y-8 {{ mega_cols }}{% else %}w-80 px-6 py-6{% endif %}">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ link.title }}</span>
+          <ul class="mt-5 flex flex-col">
+            {%- for sub in link.links -%}
+              <li>
+                <a href="{{ sub.url }}" class="group/sub flex items-center justify-between border-b border-border-hairline py-3 font-display text-h4 text-text-strong transition-colors hover:text-accent-press">
+                  {{ sub.title }}
+                  {%- render 'icon', name: 'arrow', size: 16, class: '-translate-x-1 opacity-0 transition-[transform,opacity] motion-reduce:transition-none group-hover/sub:translate-x-0 group-hover/sub:opacity-100' -%}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+          <a href="{{ link.url }}" class="mt-5 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-body hover:text-text-strong">View all {{ link.title }} {%- render 'icon', name: 'arrow', size: 14 -%}</a>
+        </div>
+
+        {%- if show_products and mega_collection.products.size > 0 -%}
+          <div>
+            <div class="mb-4 flex items-baseline justify-between">
+              <span class="font-mono text-xs uppercase tracking-label text-text-muted">Featured</span>
+              <a href="{{ link.url }}" class="font-mono text-[11px] uppercase tracking-label text-text-body hover:text-text-strong">Shop all</a>
+            </div>
+            <ul class="grid grid-cols-3 gap-4">
+              {%- for product in mega_collection.products limit: 3 -%}
+                {%- assign p_code = product.metafields.custom.product_code.value | default: product.selected_or_first_available_variant.sku -%}
+                {%- assign p_badge = product.metafields.custom.badge.value -%}
+                <li>
+                  <a href="{{ product.url }}" class="group/p block">
+                    <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+                      {%- if product.featured_media -%}
+                        {%- assign menu_product_alt = product.featured_media.alt | default: product.title | escape -%}
+                        {{ product.featured_media | image_url: width: 300 | image_tag: loading: 'lazy', widths: '150,300', sizes: '200px', alt: menu_product_alt, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover/p:scale-105' }}
+                      {%- endif -%}
+                      {%- if p_badge != blank -%}<span class="absolute left-2 top-2 bg-accent px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-label text-accent-ink">{{ p_badge }}</span>{%- endif -%}
+                    </div>
+                    {%- if p_code != blank -%}<span class="mt-2 block font-mono text-[10px] uppercase tracking-label text-text-muted">{{ p_code }}</span>{%- endif -%}
+                    <span class="block truncate font-sans text-sm text-text-strong">{{ product.title }}</span>
+                    <span class="font-mono text-xs text-text-muted">{{ product.price | money }}</span>
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        {%- if show_featured -%}
+          <a href="{{ link.url }}" class="group/feat relative block aspect-[4/5] overflow-hidden bg-surface-sunken lg:aspect-auto">
+            {%- if mega_collection.featured_image -%}
+              {%- assign menu_collection_alt = mega_collection.featured_image.alt | default: mega_collection.title | escape -%}
+              {{ mega_collection.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,600', sizes: '24vw', alt: menu_collection_alt, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover/feat:scale-105' }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
+            {%- endif -%}
+            <span class="absolute left-4 top-4 font-mono text-[10px] uppercase tracking-label text-paper mix-blend-difference">The drop</span>
+            <span class="absolute bottom-4 left-4 right-4 flex items-center justify-between bg-ink-950/85 px-3 py-2 font-mono text-[11px] uppercase tracking-label text-paper">
+              Shop {{ link.title }}
+              {%- render 'icon', name: 'arrow', size: 14, class: 'text-accent' -%}
+            </span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endfor -%}
+
+  <div data-menu-overlay class="pointer-events-none fixed inset-0 z-50 bg-ink-950/50 opacity-0 transition-opacity md:hidden" aria-hidden="true"></div>
+  <div id="HeaderMobileMenu" data-menu-panel role="dialog" aria-modal="true" aria-label="Menu" class="fixed inset-y-0 left-0 z-50 flex w-[88%] max-w-sm -translate-x-full flex-col bg-surface-page transition-transform duration-300 md:hidden">
+    <div class="flex items-center justify-between border-b border-border-hairline px-5 py-4">
+      {{ logo_html }}
+      <button type="button" aria-label="Close menu" data-menu-close class="flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'icon', name: 'close' -%}</button>
+    </div>
+    <nav aria-label="Mobile" class="flex-1 overflow-y-auto px-5 py-2">
+      <ul class="flex flex-col">
+        {%- for link in links -%}
+          <li class="border-b border-border-hairline">
+            <div class="flex items-center justify-between">
+              <a href="{{ link.url }}" class="flex-1 py-4 font-display text-h4 text-text-strong">{{ link.title }}</a>
+              {%- if link.links.size > 0 -%}
+                <button type="button" data-sub-toggle aria-expanded="false" aria-label="Expand {{ link.title | escape }}" class="flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+                  <span data-sub-plus>{%- render 'icon', name: 'plus', size: 18 -%}</span>
+                  <span data-sub-minus class="hidden">{%- render 'icon', name: 'minus', size: 18 -%}</span>
+                </button>
+              {%- endif -%}
+            </div>
+            {%- if link.links.size > 0 -%}
+              <div data-sub-panel class="hidden pb-4">
+                <ul class="pl-1">
+                  {%- for sub in link.links -%}
+                    <li><a href="{{ sub.url }}" class="block py-2.5 font-sans text-body text-text-body">{{ sub.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+    <div class="flex items-center gap-3 border-t border-border-hairline px-5 py-2 font-mono text-xs uppercase tracking-label text-text-body">
+      {%- if s.show_account_icon != false -%}
+        <a href="{{ routes.account_url }}" class="flex h-11 items-center gap-2 px-1">{%- render 'icon', name: 'user', size: 16 -%} Account</a>
+      {%- endif -%}
+      <button type="button" data-search-open class="flex h-11 items-center gap-2 px-1">{%- render 'icon', name: 'search', size: 16 -%} Search</button>
+    </div>
+  </div>
+</mega-menu>
+
+{%- if settings.cart_type == 'drawer' -%}
+<cart-drawer data-currency="{{ currency }}">
+  <div data-cart-overlay class="pointer-events-none fixed inset-0 z-50 bg-ink-950/50 opacity-0 transition-opacity" aria-hidden="true"></div>
+  <div data-cart-panel role="dialog" aria-modal="true" aria-label="{{ 'sections.cart.title' | t | default: 'Cart' }}" class="fixed inset-y-0 right-0 z-50 flex w-[88%] max-w-md translate-x-full flex-col bg-surface-page transition-transform duration-300">
+    <div class="flex items-center justify-between border-b border-border-hairline px-5 py-4">
+      <span class="font-mono text-xs uppercase tracking-label text-text-strong">{{ 'sections.cart.title' | t | default: 'Cart' }} (<span data-cart-count>{{ cart.item_count }}</span>)</span>
+      <button type="button" aria-label="Close cart" data-cart-close class="flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'icon', name: 'close' -%}</button>
+    </div>
+    {%- assign fs_cents = s.free_shipping_threshold | default: 0 | times: 100 -%}
+    {%- if s.show_free_shipping_goal and fs_cents > 0 -%}
+      {%- assign fs_remaining = fs_cents | minus: cart.total_price -%}
+      {%- assign fs_pct = cart.total_price | times: 100 | divided_by: fs_cents -%}
+      {%- if fs_pct > 100 -%}{%- assign fs_pct = 100 -%}{%- endif -%}
+      <div data-cart-progress data-threshold="{{ fs_cents }}" class="border-b border-border-hairline px-5 py-4{% if cart.item_count == 0 %} hidden{% endif %}">
+        <p data-cart-progress-text class="mb-2 font-mono text-xs uppercase tracking-label text-text-muted">
+          {%- if fs_remaining > 0 -%}{{ 'Add' }} {{ fs_remaining | money }} {{ 'for free shipping' }}{%- else -%}{{ 'Free shipping unlocked' }}{%- endif -%}
+        </p>
+        <div class="h-1 w-full bg-surface-sunken">
+          <div data-cart-progress-bar class="h-full bg-accent transition-[width] duration-300 motion-reduce:transition-none" style="width:{{ fs_pct }}%"></div>
+        </div>
+      </div>
+    {%- endif -%}
+    <div data-cart-items class="flex-1 overflow-y-auto px-5">
+      {%- if cart.item_count == 0 -%}
+        <div class="py-12 text-center">
+          <p class="font-display text-h4 text-text-strong">{{ 'sections.cart.empty' | t | default: 'Your cart is empty.' }}</p>
+          <p class="mx-auto mt-2 max-w-xs text-sm text-text-muted">Start with field-ready essentials or return to the latest drop.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="mt-5 inline-flex min-h-[44px] items-center justify-center border border-border-strong px-5 py-2 font-mono text-xs uppercase tracking-label text-text-strong">Shop all</a>
+        </div>
+      {%- else -%}
+        {%- for item in cart.items -%}
+          <div class="flex gap-4 border-b border-border-hairline py-4" data-cart-line="{{ forloop.index }}">
+            <div class="relative h-24 w-20 shrink-0 overflow-hidden bg-surface-sunken">
+              {%- if item.image -%}{{ item.image | image_url: width: 160 | image_tag: loading: 'lazy', sizes: '80px', alt: item.product.title, class: 'absolute inset-0 h-full w-full object-cover' }}{%- endif -%}
+            </div>
+            <div class="flex flex-1 flex-col gap-1">
+              <a href="{{ item.url }}" class="font-sans text-sm text-text-strong">{{ item.product.title }}</a>
+              {%- unless item.variant.title contains 'Default' -%}<span class="font-mono text-[11px] text-text-muted">{{ item.variant.title }}</span>{%- endunless -%}
+              <div class="mt-auto flex items-center gap-3 pt-2">
+                <div class="flex items-center border border-border-hairline">
+                  <button type="button" data-cart-qty data-line="{{ forloop.index }}" data-to="{{ item.quantity | minus: 1 }}" aria-label="Decrease quantity of {{ item.product.title | escape }}" class="flex h-9 w-9 items-center justify-center text-text-strong">&minus;</button>
+                  <span class="w-6 text-center font-mono text-xs">{{ item.quantity }}</span>
+                  <button type="button" data-cart-qty data-line="{{ forloop.index }}" data-to="{{ item.quantity | plus: 1 }}" aria-label="Increase quantity of {{ item.product.title | escape }}" class="flex h-9 w-9 items-center justify-center text-text-strong">+</button>
+                </div>
+                <button type="button" data-cart-qty data-line="{{ forloop.index }}" data-to="0" class="font-mono text-[10px] uppercase tracking-label text-text-muted underline underline-offset-2 hover:text-text-strong">{{ 'Remove' }}</button>
+              </div>
+            </div>
+            <span class="font-mono text-sm text-text-strong">{{ item.final_line_price | money }}</span>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+    {%- assign cart_upsell_collection = s.cart_upsell_collection -%}
+    {%- if cart_upsell_collection != blank and cart_upsell_collection.products_count > 0 -%}
+      <div class="border-t border-border-hairline px-5 py-4">
+        <div class="mb-3 flex items-center justify-between gap-3">
+          <span class="font-mono text-xs uppercase tracking-label text-text-strong">{{ s.cart_upsell_heading | default: 'Complete the kit' }}</span>
+          <a href="{{ cart_upsell_collection.url }}" class="font-mono text-[10px] uppercase tracking-label text-text-muted hover:text-text-strong">View all</a>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          {%- for product in cart_upsell_collection.products limit: 2 -%}
+            {%- unless cart.items contains product -%}
+              <a href="{{ product.url }}" class="group block">
+                <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+                  {%- if product.featured_media -%}
+                    {%- assign upsell_alt = product.featured_media.alt | default: product.title | escape -%}
+                    {{ product.featured_media | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,240', sizes: '160px', alt: upsell_alt, class: 'h-full w-full object-cover transition-transform duration-500 group-hover:scale-105' }}
+                  {%- endif -%}
+                </div>
+                <span class="mt-2 block truncate text-sm text-text-strong">{{ product.title }}</span>
+                <span class="font-mono text-xs text-text-muted">{{ product.price | money }}</span>
+              </a>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+    <div class="border-t border-border-hairline px-5 py-4">
+      {%- if s.show_cart_note -%}
+        <details class="mb-3 border-b border-border-hairline pb-3">
+          <summary class="cursor-pointer font-mono text-xs uppercase tracking-label text-text-muted">{{ 'Add order note' }}</summary>
+          <textarea data-cart-note name="note" rows="2" aria-label="Order note" placeholder="Special instructions" class="mt-2 w-full border border-border-hairline bg-surface-page px-3 py-2 font-sans text-sm text-text-strong placeholder:text-text-faint focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">{{ cart.note }}</textarea>
+        </details>
+      {%- endif -%}
+      <div class="mb-3 flex items-center justify-between">
+        <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ 'sections.cart.subtotal' | t | default: 'Subtotal' }}</span>
+        <span data-cart-subtotal class="font-mono text-h4 text-text-strong">{{ cart.total_price | money }}</span>
+      </div>
+      {%- assign drawer_checkout_label = 'sections.cart.checkout' | t | default: 'Checkout' -%}
+      {%- assign drawer_view_label = 'sections.cart.view' | t | default: 'View cart' -%}
+      {%- assign drawer_checkout_href = routes.cart_url | append: '?checkout' -%}
+      {%- render 'button', label: drawer_checkout_label, href: drawer_checkout_href, size: 'lg', class: 'w-full' -%}
+      {%- render 'button', label: drawer_view_label, href: routes.cart_url, variant: 'secondary', size: 'md', class: 'mt-2 w-full' -%}
+    </div>
+  </div>
+</cart-drawer>
+{%- endif -%}
+
+<search-modal>
+  <div data-search-overlay class="pointer-events-none fixed inset-0 z-50 bg-ink-950/60 opacity-0 transition-opacity" aria-hidden="true"></div>
+  <div data-search-panel role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t | default: 'Search' }}" class="fixed inset-x-0 top-0 z-50 -translate-y-full bg-surface-page shadow-[0_24px_40px_-24px_rgba(10,10,10,0.25)] transition-transform duration-300">
+    <div class="mx-auto max-w-[var(--page-width)] px-6 py-6">
+      {%- if settings.search_predictive -%}<predictive-search class="block">{%- endif -%}
+        <form action="{{ routes.search_url }}" method="get" role="search" class="flex items-center gap-3 border-b border-border-strong pb-3">
+          <input type="hidden" name="type" value="product">
+          <span class="text-text-muted">{%- render 'icon', name: 'search' -%}</span>
+          <label for="HeaderSearchInput" class="sr-only">{{ 'general.search.search' | t | default: 'Search' }}</label>
+          <input id="HeaderSearchInput" data-search-input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t | default: 'Search products' }}" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="PredictiveResults" aria-autocomplete="list" aria-haspopup="listbox" class="flex-1 bg-transparent py-2 font-sans text-body text-text-strong outline-none placeholder:text-text-muted">
+          <button type="submit" class="font-mono text-xs uppercase tracking-label text-text-body hover:text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{{ 'general.search.search' | t | default: 'Search' }}</button>
+          <button type="button" aria-label="Close search" data-search-close class="flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'icon', name: 'close' -%}</button>
+        </form>
+        {%- if settings.search_predictive -%}
+          <div id="PredictiveResults" data-results role="listbox" aria-label="{{ 'general.search.search' | t | default: 'Search' }}" hidden class="mt-2 max-h-[60vh] overflow-y-auto"></div>
+          <p data-status role="status" aria-live="polite" class="sr-only"></p>
+        </predictive-search>
+        {%- endif -%}
+    </div>
+  </div>
+</search-modal>
+
+<script src="{{ 'mega-menu.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'search-modal.js' | asset_url }}" defer="defer"></script>
+{%- if settings.search_predictive -%}<script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "tag": "header",
+  "class": "section section--header",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.header.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "header_style",
+      "label": "Header style",
+      "default": "utility",
+      "options": [
+        {
+          "value": "utility",
+          "label": "Utility nav"
+        },
+        {
+          "value": "editorial",
+          "label": "Editorial center logo"
+        },
+        {
+          "value": "commerce",
+          "label": "Commerce strip"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "utility_text",
+      "label": "Commerce strip text",
+      "default": "Free shipping and returns on qualifying orders"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:sections.header.settings.menu.label",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "t:sections.header.settings.sticky_header.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__1.content"
+    },
+    {
+      "type": "select",
+      "id": "submenu_style",
+      "label": "t:sections.header.settings.submenu_style.label",
+      "default": "mega",
+      "options": [
+        {
+          "value": "mega",
+          "label": "t:sections.header.settings.submenu_style.options__1.label"
+        },
+        {
+          "value": "dropdown",
+          "label": "t:sections.header.settings.submenu_style.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_menu_products",
+      "label": "t:sections.header.settings.show_menu_products.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_menu_featured",
+      "label": "t:sections.header.settings.show_menu_featured.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account_icon",
+      "label": "t:sections.header.settings.show_account_icon.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Cart drawer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_free_shipping_goal",
+      "label": "Show free shipping goal",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "label": "Free shipping threshold",
+      "default": 150,
+      "info": "Amount in store currency units."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_note",
+      "label": "Show order note",
+      "default": true
+    },
+    {
+      "type": "collection",
+      "id": "cart_upsell_collection",
+      "label": "Upsell collection"
+    },
+    {
+      "type": "text",
+      "id": "cart_upsell_heading",
+      "label": "Upsell heading",
+      "default": "Complete the kit"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.header.presets.name"
+    }
+  ]
+}
+{% endschema %}

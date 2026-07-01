@@ -1,0 +1,126 @@
+{%- liquid
+  assign stat_blocks = section.blocks | where: 'type', 'stat'
+  assign has_media = false
+  if section.settings.video != blank or section.settings.image != blank
+    assign has_media = true
+  endif
+  assign show_section = false
+  if stat_blocks.size > 0 or has_media
+    assign show_section = true
+  endif
+  if has_media
+    assign stat_grid = 'md:grid-cols-2'
+  else
+    assign stat_grid = 'md:grid-cols-4'
+  endif
+-%}
+{%- if show_section -%}
+  <section
+    data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-3' }}"
+    style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
+    class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)] text-text-strong"
+  >
+    <div class="mx-auto max-w-[var(--page-width)] px-6">
+      {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+        <div class="mb-10 flex max-w-2xl flex-col gap-3">
+          {%- if section.settings.subheading != blank -%}
+            <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="font-display text-h1 tracking-tight">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if section.settings.text != blank -%}
+            <div class="text-body-lg text-text-body [&_p]:m-0">{{ section.settings.text }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- capture spec_grid -%}
+        {%- if stat_blocks.size > 0 -%}
+          <div class="grid grid-cols-2 gap-y-10 {{ stat_grid }} md:gap-x-6">
+            {%- for block in stat_blocks -%}
+              <div class="flex flex-col gap-2" {{ block.shopify_attributes }}>
+                <span class="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.9] tracking-tight">{{ block.settings.value | default: '—' }}</span>
+                <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ block.settings.label }}</span>
+                {%- if block.settings.note != blank -%}
+                  <span class="font-mono text-xs text-text-muted">{{ block.settings.note }}</span>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endcapture -%}
+      {%- if has_media -%}
+        <div class="grid gap-10 border-t border-border-strong pt-10 md:grid-cols-2 md:items-center">
+          <figure class="m-0 flex flex-col gap-3 {% if section.settings.media_position == 'right' %}md:order-2{% endif %}">
+            <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+              {%- if section.settings.video != blank -%}
+                {{ section.settings.video | video_tag: image_size: '1200x', loop: true, controls: true, preload: 'none', class: 'h-full w-full object-cover' }}
+              {%- else -%}
+                {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading, class: 'h-full w-full object-cover' }}
+              {%- endif -%}
+            </div>
+            {%- if section.settings.proof_caption != blank -%}
+              <figcaption class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.proof_caption }}</figcaption>
+            {%- endif -%}
+          </figure>
+          <div>{{ spec_grid }}</div>
+        </div>
+      {%- else -%}
+        <div class="border-t border-border-strong pt-10">{{ spec_grid }}</div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.product-motion-spec.name",
+  "tag": "section",
+  "class": "section section--product-motion-spec",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "inline_richtext", "id": "subheading", "label": "t:sections.product-motion-spec.settings.subheading.label", "default": "The numbers" },
+    { "type": "text", "id": "heading", "label": "t:sections.product-motion-spec.settings.heading.label", "default": "Built to spec" },
+    { "type": "richtext", "id": "text", "label": "t:sections.product-motion-spec.settings.text.label" },
+    { "type": "header", "content": "t:sections.product-motion-spec.settings.header__media.content" },
+    { "type": "image_picker", "id": "image", "label": "t:sections.product-motion-spec.settings.image.label" },
+    { "type": "video", "id": "video", "label": "t:sections.product-motion-spec.settings.video.label", "info": "t:sections.product-motion-spec.settings.video.info" },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "t:sections.product-motion-spec.settings.media_position.label",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "t:sections.product-motion-spec.settings.media_position.options__1.label" },
+        { "value": "right", "label": "t:sections.product-motion-spec.settings.media_position.options__2.label" }
+      ]
+    },
+    { "type": "text", "id": "proof_caption", "label": "t:sections.product-motion-spec.settings.proof_caption.label", "info": "t:sections.product-motion-spec.settings.proof_caption.info" },
+    { "type": "header", "content": "t:sections.product-motion-spec.settings.header__style.content" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.product-motion-spec.settings.color_scheme.label", "default": "scheme-3" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.product-motion-spec.settings.padding_top.label" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.product-motion-spec.settings.padding_bottom.label" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "t:sections.product-motion-spec.blocks.stat.name",
+      "settings": [
+        { "type": "text", "id": "value", "label": "t:sections.product-motion-spec.blocks.stat.settings.value.label", "default": "480g" },
+        { "type": "text", "id": "label", "label": "t:sections.product-motion-spec.blocks.stat.settings.label.label", "default": "Weight" },
+        { "type": "text", "id": "note", "label": "t:sections.product-motion-spec.blocks.stat.settings.note.label" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product-motion-spec.presets.name__1",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "480g", "label": "Weight" } },
+        { "type": "stat", "settings": { "value": "20K", "label": "Waterproof", "note": "mm" } },
+        { "type": "stat", "settings": { "value": "3L", "label": "Construction" } },
+        { "type": "stat", "settings": { "value": "100%", "label": "Taped seams" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -3,8 +3,38 @@
   "tag": "div",
   "class": "section section--marquee",
   "settings": [
-    { "type": "text", "id": "text", "label": "Text", "default": "KINETIK" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+    { "type": "text", "id": "text", "label": "Text", "default": "KINETIK", "info": "Separate items with ·" },
+    { "type": "text", "id": "separator", "label": "Separator", "default": "—" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "style", "label": "Style", "default": "accent",
+      "options": [
+        { "value": "accent", "label": "Volt accent" },
+        { "value": "ink", "label": "Ink (dark)" },
+        { "value": "outline", "label": "Paper outline" }
+      ] },
+    { "type": "select", "id": "direction", "label": "Direction", "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ] },
+    { "type": "select", "id": "speed", "label": "Speed", "default": "normal",
+      "options": [
+        { "value": "slow", "label": "Slow" },
+        { "value": "normal", "label": "Normal" },
+        { "value": "fast", "label": "Fast" }
+      ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "full",
+      "options": [
+        { "value": "full", "label": "Full width" },
+        { "value": "page", "label": "Page" }
+      ] },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top", "default": 12 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom", "default": 12 }
   ],
-  "presets": [{ "name": "Marquee" }]
+  "presets": [
+    { "name": "Marquee" },
+    { "name": "Marquee — ink", "settings": { "style": "ink", "speed": "slow" } },
+    { "name": "Marquee — paper outline", "settings": { "style": "outline", "direction": "right" } }
+  ]
 }

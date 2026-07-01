@@ -1,0 +1,99 @@
+{%- liquid
+  assign points = section.blocks | where: 'type', 'point'
+  assign has_image = false
+  if section.settings.image != blank
+    assign has_image = true
+  endif
+  assign show_section = false
+  if has_image and points.size > 0
+    assign show_section = true
+  endif
+-%}
+{%- if show_section -%}
+  <section
+    data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-3' }}"
+    style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
+    class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)] text-text-strong"
+  >
+    <div class="mx-auto max-w-[var(--page-width)] px-6">
+      <div class="mb-8 flex max-w-2xl flex-col gap-3">
+        {%- if section.settings.subheading != blank -%}
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="font-display text-h1 tracking-tight">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+      <material-scan class="grid gap-8 md:grid-cols-2 md:items-start">
+        <div data-scan-stage class="relative overflow-hidden border border-border-hairline bg-surface-sunken">
+          <div class="relative aspect-[4/3]">
+            {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700,1050,1400', sizes: '(min-width:990px) 45vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading, class: 'h-full w-full object-cover' }}
+            <span data-scan-line aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent opacity-0"></span>
+            {%- for point in points -%}
+              <button type="button" data-scan-point data-index="{{ forloop.index }}" aria-label="{{ point.settings.label | default: 'Detail' | escape }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" style="left:{{ point.settings.x | default: 50 }}%;top:{{ point.settings.y | default: 50 }}%" class="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center border border-accent bg-ink-950/70 font-mono text-[11px] text-paper backdrop-blur transition-transform hover:scale-110 aria-pressed:scale-110 aria-pressed:bg-accent aria-pressed:text-accent-ink" {{ point.shopify_attributes }}>{{ forloop.index }}</button>
+            {%- endfor -%}
+          </div>
+        </div>
+        <ul class="flex flex-col">
+          {%- for point in points -%}
+            <li>
+              <button type="button" data-scan-detail data-index="{{ forloop.index }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" class="flex w-full items-start gap-4 border-b border-border-hairline py-4 text-left">
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center border border-border-strong font-mono text-[11px] text-text-strong">{{ forloop.index }}</span>
+                <span class="flex flex-col gap-1">
+                  <span class="font-mono text-xs uppercase tracking-label text-text-strong">{{ point.settings.label | default: 'Detail' }}</span>
+                  {%- if point.settings.detail != blank -%}
+                    <span data-scan-detail-body class="text-sm text-text-body {% unless forloop.first %}hidden{% endunless %} [&_p]:m-0">{{ point.settings.detail }}</span>
+                  {%- endif -%}
+                </span>
+              </button>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </material-scan>
+      {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+        <div class="mt-8">{%- render 'button', label: section.settings.cta_label, href: section.settings.cta_url, variant: 'secondary' -%}</div>
+      {%- endif -%}
+    </div>
+  </section>
+  <script src="{{ 'material-scan.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.material-scan.name",
+  "tag": "section",
+  "class": "section section--material-scan",
+  "settings": [
+    { "type": "inline_richtext", "id": "subheading", "label": "t:sections.material-scan.settings.subheading.label", "default": "Material scan" },
+    { "type": "text", "id": "heading", "label": "t:sections.material-scan.settings.heading.label", "default": "Engineered, not decorated" },
+    { "type": "image_picker", "id": "image", "label": "t:sections.material-scan.settings.image.label" },
+    { "type": "text", "id": "cta_label", "label": "t:sections.material-scan.settings.cta_label.label" },
+    { "type": "url", "id": "cta_url", "label": "t:sections.material-scan.settings.cta_url.label" },
+    { "type": "header", "content": "t:sections.material-scan.settings.header__style.content" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.material-scan.settings.color_scheme.label", "default": "scheme-3" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.material-scan.settings.padding_top.label" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.material-scan.settings.padding_bottom.label" }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "t:sections.material-scan.blocks.point.name",
+      "settings": [
+        { "type": "range", "id": "x", "min": 0, "max": 100, "step": 1, "default": 50, "unit": "%", "label": "t:sections.material-scan.blocks.point.settings.x.label" },
+        { "type": "range", "id": "y", "min": 0, "max": 100, "step": 1, "default": 50, "unit": "%", "label": "t:sections.material-scan.blocks.point.settings.y.label" },
+        { "type": "text", "id": "label", "label": "t:sections.material-scan.blocks.point.settings.label.label", "default": "GORE-TEX 3L" },
+        { "type": "richtext", "id": "detail", "label": "t:sections.material-scan.blocks.point.settings.detail.label" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.material-scan.presets.name__1",
+      "blocks": [
+        { "type": "point", "settings": { "x": 30, "y": 35, "label": "GORE-TEX 3L shell", "detail": "<p>Waterproof, windproof, breathable membrane bonded to a ripstop face.</p>" } },
+        { "type": "point", "settings": { "x": 65, "y": 55, "label": "Taped seams", "detail": "<p>Every seam fully taped to keep water out under pressure.</p>" } },
+        { "type": "point", "settings": { "x": 45, "y": 78, "label": "YKK AquaGuard", "detail": "<p>Water-resistant zippers with bonded storm flaps.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

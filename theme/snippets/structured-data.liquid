@@ -1,0 +1,107 @@
+{% doc %}
+  Emits schema.org JSON-LD based on the current template. Rendered once from layout/theme.liquid.
+  Product + Offers + BreadcrumbList on product pages; Organization + WebSite on the homepage; Article on blog posts.
+{% enddoc %}
+{%- liquid
+  assign social_list = ''
+  if settings.social_instagram != blank
+    assign social_list = social_list | append: settings.social_instagram | append: '|'
+  endif
+  if settings.social_tiktok != blank
+    assign social_list = social_list | append: settings.social_tiktok | append: '|'
+  endif
+  if settings.social_youtube != blank
+    assign social_list = social_list | append: settings.social_youtube | append: '|'
+  endif
+  assign social_arr = social_list | split: '|'
+-%}
+{%- case request.page_type -%}
+  {%- when 'product' -%}
+    {%- assign pv = product.selected_or_first_available_variant -%}
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ canonical_url | json }},
+  {%- if product.featured_media %}
+  "image": [{{ product.featured_media | image_url: width: 1200 | prepend: 'https:' | json }}],
+  {%- endif %}
+  "description": {{ product.description | strip_html | truncate: 320 | json }},
+  {%- if product.vendor != blank %}
+  "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+  {%- endif %}
+  "sku": {{ pv.sku | json }},
+  "offers": [
+    {%- for variant in product.variants -%}
+    {
+      "@type": "Offer",
+      "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+      "price": {{ variant.price | divided_by: 100.0 | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "sku": {{ variant.sku | json }},
+      "url": {{ request.origin | append: variant.url | json }}
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ request.origin | json }} },
+    {%- if collection %}
+    { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ request.origin | append: collection.url | json }} },
+    {%- endif %}
+    { "@type": "ListItem", "position": {% if collection %}3{% else %}2{% endif %}, "name": {{ product.title | json }} }
+  ]
+}
+    </script>
+  {%- when 'index' -%}
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  "url": {{ request.origin | json }}
+  {%- if settings.logo %},
+  "logo": {{ settings.logo | image_url: width: 400 | prepend: 'https:' | json }}
+  {%- endif %}
+  {%- if social_arr.size > 0 %},
+  "sameAs": [{% for s in social_arr %}{{ s | json }}{% unless forloop.last %},{% endunless %}{% endfor %}]
+  {%- endif %}
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "url": {{ request.origin | json }}
+}
+    </script>
+  {%- when 'article' -%}
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Article",
+  "headline": {{ article.title | json }},
+  "url": {{ canonical_url | json }},
+  {%- if article.image %}
+  "image": [{{ article.image | image_url: width: 1200 | prepend: 'https:' | json }}],
+  {%- endif %}
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "author": { "@type": "Person", "name": {{ article.author | json }} },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }}
+    {%- if settings.logo %},
+    "logo": { "@type": "ImageObject", "url": {{ settings.logo | image_url: width: 400 | prepend: 'https:' | json }} }
+    {%- endif %}
+  }
+}
+    </script>
+{%- endcase -%}

@@ -1,0 +1,25 @@
+{ "name": "Build your kit", "tag": "section", "class": "section section--build-your-kit", "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The system" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Build your kit" },
+    { "type": "richtext", "id": "text", "label": "Intro text" },
+    { "type": "range", "id": "bundle_discount", "label": "Kit discount %", "min": 0, "max": 40, "step": 1, "unit": "%", "default": 10 },
+    { "type": "range", "id": "min_pieces", "label": "Min pieces for discount", "min": 2, "max": 6, "step": 1, "default": 3 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    { "type": "slot", "name": "Slot", "settings": [
+      { "type": "text", "id": "label", "label": "Slot label", "default": "Shell" },
+      { "type": "text", "id": "types", "label": "Product types (comma-separated)", "info": "e.g. Outerwear, Tops", "default": "Outerwear" } ] }
+  ],
+  "presets": [
+    { "name": "Build your kit", "blocks": [
+      { "type": "slot", "settings": { "label": "Shell", "types": "Outerwear" } },
+      { "type": "slot", "settings": { "label": "Layer", "types": "Tops" } },
+      { "type": "slot", "settings": { "label": "Bottom", "types": "Bottoms" } },
+      { "type": "slot", "settings": { "label": "Footwear", "types": "Footwear" } },
+      { "type": "slot", "settings": { "label": "Carry", "types": "Bags" } },
+      { "type": "slot", "settings": { "label": "Gear", "types": "Accessories, Audio, Tech, Wearables" } } ] }
+  ] }

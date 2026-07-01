@@ -1,0 +1,108 @@
+{%- liquid
+  assign limit = section.settings.products_to_show | default: 3
+  assign source = product.metafields.shopify--discovery--product_recommendation.complementary_products.value
+  if source == blank
+    if recommendations.performed and recommendations.products_count > 0
+      assign source = recommendations.products
+    elsif product != blank
+      assign source = product.collections.first.products
+    endif
+  endif
+-%}
+{%- if source != blank -%}
+  <section
+    data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+    style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+    class="mx-auto max-w-[var(--page-width)] px-6"
+  >
+    <h2 class="mb-6 font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.heading | default: 'Pairs well with' }}</h2>
+    <div class="flex flex-col divide-y divide-border-hairline border-y border-border-hairline">
+      {%- assign shown = 0 -%}
+      {%- for cp in source -%}
+        {%- if cp.id != product.id and shown < limit -%}
+          {%- assign cp_variant = cp.selected_or_first_available_variant -%}
+          {%- assign cp_alt = cp.title | escape -%}
+          <div class="flex items-center gap-4 py-4">
+            <a href="{{ cp.url }}" class="relative h-16 w-14 shrink-0 overflow-hidden bg-surface-sunken" aria-label="{{ cp_alt }}">
+              {%- if cp.featured_media -%}
+                {{ cp.featured_media | image_url: width: 112 | image_tag: loading: 'lazy', widths: '56,112', sizes: '56px', alt: cp_alt, class: 'h-full w-full object-cover' }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
+              {%- endif -%}
+            </a>
+            <a href="{{ cp.url }}" class="flex-1 font-sans text-body text-text-strong hover:text-accent-press">{{ cp.title }}</a>
+            <div class="shrink-0">{%- render 'price', product: cp -%}</div>
+            {%- if cp.available -%}
+              <quick-add>
+                <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="shrink-0">
+                  <input type="hidden" name="id" value="{{ cp_variant.id }}">
+                  {%- render 'button', label: 'Add', type: 'submit', variant: 'secondary', size: 'sm' -%}
+                </form>
+              </quick-add>
+            {%- endif -%}
+          </div>
+          {%- assign shown = shown | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.complementary-products.name",
+  "tag": "section",
+  "class": "section section--complementary",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.complementary-products.settings.heading.label",
+      "default": "Pairs well with"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.complementary-products.settings.products_to_show.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.complementary-products.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.complementary-products.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.complementary-products.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.complementary-products.settings.padding_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.complementary-products.presets.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,256 @@
+{%- liquid
+  assign s = section.settings
+  case s.width
+    when 'wide'
+      assign width = 'max-w-[960px]'
+    when 'page'
+      assign width = 'max-w-[var(--page-width)]'
+    else
+      assign width = 'max-w-[760px]'
+  endcase
+  assign split = false
+  if s.layout == 'split'
+    assign split = true
+  endif
+  case s.row_style
+    when 'boxed'
+      assign list_class = 'space-y-3'
+      assign item_pad = 'border border-border-hairline px-5'
+    when 'plain'
+      assign list_class = 'divide-y divide-border-hairline'
+      assign item_pad = ''
+    else
+      assign list_class = 'divide-y divide-border-hairline border-y border-border-hairline'
+      assign item_pad = ''
+  endcase
+  assign dark = ''
+  if s.color_scheme == 'scheme-3' or s.color_scheme == 'scheme-dark'
+    assign dark = 'theme-dark '
+  endif
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px"
+  class="{{ dark }}bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
+>
+  <div class="mx-auto {{ width }} px-6{% if split %} lg:grid lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:gap-12{% endif %}">
+    <div{% if split %} class="lg:pt-2"{% endif %}>
+      {%- if s.subheading != blank -%}
+        <p class="mb-3 font-mono text-xs uppercase tracking-label text-text-muted">{{ s.subheading }}</p>
+      {%- endif -%}
+      {%- if s.heading != blank -%}
+        <h2 class="mb-8 font-display text-[clamp(2.25rem,4.5vw,4rem)] font-bold leading-[0.95] tracking-tight text-text-strong">{{ s.heading }}</h2>
+      {%- endif -%}
+    </div>
+    <collapsible-content data-open-first="{% if s.open_first %}true{% else %}false{% endif %}" class="block {{ list_class }}">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'item' -%}
+          {%- assign panel_id = 'Collapsible-' | append: section.id | append: '-' | append: forloop.index -%}
+          <div data-acc-item{% if item_pad != blank %} class="{{ item_pad }}"{% endif %}>
+            <button type="button" data-acc-trigger aria-expanded="false" aria-controls="{{ panel_id }}" class="flex min-h-[44px] w-full items-center justify-between gap-4 py-5 text-left">
+              <span class="font-sans text-h4 text-text-strong">{{ block.settings.heading | default: 'Question' }}</span>
+              <span data-acc-icon-closed>{% render 'icon', name: 'arrow', class: 'rotate-90' %}</span>
+              <span data-acc-icon-open class="hidden">{% render 'icon', name: 'close' %}</span>
+            </button>
+            <div id="{{ panel_id }}" data-acc-panel hidden class="pb-5 text-body text-text-body">{{ block.settings.content }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </collapsible-content>
+  </div>
+</section>
+<script src="{{ 'collapsible-content.js' | asset_url }}" defer="defer"></script>
+{% schema %}
+{
+  "name": "t:sections.collapsible-content.name",
+  "tag": "section",
+  "class": "section section--collapsible",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.collapsible-content.settings.heading.label",
+      "default": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.collapsible-content.settings.subheading.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.collapsible-content.settings.header__1.content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.collapsible-content.settings.layout.label",
+      "default": "stacked",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "t:sections.collapsible-content.settings.layout.options__1.label"
+        },
+        {
+          "value": "split",
+          "label": "t:sections.collapsible-content.settings.layout.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "row_style",
+      "label": "t:sections.collapsible-content.settings.row_style.label",
+      "default": "divided",
+      "options": [
+        {
+          "value": "divided",
+          "label": "t:sections.collapsible-content.settings.row_style.options__1.label"
+        },
+        {
+          "value": "boxed",
+          "label": "t:sections.collapsible-content.settings.row_style.options__2.label"
+        },
+        {
+          "value": "plain",
+          "label": "t:sections.collapsible-content.settings.row_style.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.collapsible-content.settings.width.label",
+      "default": "narrow",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:sections.collapsible-content.settings.width.options__1.label"
+        },
+        {
+          "value": "wide",
+          "label": "t:sections.collapsible-content.settings.width.options__2.label"
+        },
+        {
+          "value": "page",
+          "label": "t:sections.collapsible-content.settings.width.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "t:sections.collapsible-content.settings.open_first.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.collapsible-content.settings.header__2.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.collapsible-content.settings.padding_top.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.collapsible-content.settings.padding_bottom.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.collapsible-content.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "t:sections.collapsible-content.blocks.item.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.collapsible-content.blocks.item.settings.heading.label",
+          "default": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.collapsible-content.blocks.item.settings.content.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.collapsible-content.presets.name__1",
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        }
+      ]
+    },
+    {
+      "name": "t:sections.collapsible-content.presets.name__2",
+      "settings": {
+        "layout": "split",
+        "row_style": "divided",
+        "width": "page",
+        "subheading": "Support"
+      },
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        }
+      ]
+    },
+    {
+      "name": "t:sections.collapsible-content.presets.name__3",
+      "settings": {
+        "row_style": "boxed",
+        "width": "wide",
+        "open_first": false
+      },
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

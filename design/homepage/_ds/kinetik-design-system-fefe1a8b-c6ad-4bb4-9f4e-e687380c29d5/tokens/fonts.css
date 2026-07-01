@@ -1,0 +1,11 @@
+/* ============================================================
+   KINETIK — Webfonts
+   Display : Space Grotesk (geometric, angular sans)
+   UI/Body : Inter (neutral workhorse)
+   Mono    : Space Mono (prices, specs, labels — spec-sheet feel)
+
+   NOTE: Loaded from the Google Fonts CDN. To self-host, drop the
+   .woff2 files into /assets/fonts and swap the src() URLs below.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');

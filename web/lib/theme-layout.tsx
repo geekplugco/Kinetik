@@ -3,6 +3,7 @@ import { SectionRenderer } from "./section-renderer";
 import { ShopifyProvider } from "./shopify-context";
 import { UIProvider } from "./ui-context";
 import { Overlays } from "./overlays";
+import { StyleSwitcher } from "@/components/StyleSwitcher";
 import { shopifyFixture } from "./shopify/fixtures";
 import type { SectionGroup } from "./types";
 import type { ShopifyContextValue } from "./shopify/objects";
@@ -19,6 +20,7 @@ export function ThemeShell({ children, context = shopifyFixture }: { children: R
         <main id="main">{children}</main>
         <SectionRenderer template={footerGroup as SectionGroup} />
         <Overlays />
+        <StyleSwitcher />
       </UIProvider>
     </ShopifyProvider>
   );

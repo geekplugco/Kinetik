@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Drop Landing" description="Oversized hero + featured product grid for a techwear drop — Kinetik brand." -->
+<helmet>
+  <script src="./ds-base.js"></script>
+  <style>
+    .dl-grid-ph {
+      background-image:
+        linear-gradient(var(--ink-150) 1px, transparent 1px),
+        linear-gradient(90deg, var(--ink-150) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+  </style>
+</helmet>
+
+<div style="font-family: var(--font-sans); color: var(--text-body); background: var(--surface-page);">
+
+  <!-- HERO -->
+  <section style="display:grid; grid-template-columns: 1.15fr 1fr; border-bottom: 1px solid var(--border-strong);">
+    <div style="background: var(--ink-950); color: var(--paper); padding: 80px 64px; display:flex; flex-direction:column; justify-content:space-between; min-height: 520px;">
+      <div style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--volt-500);">SS26 / Field System</div>
+      <h1 style="font-family: var(--font-display); font-weight: 700; font-size: clamp(3rem, 7vw, 6.5rem); line-height: 0.92; letter-spacing: -0.04em; color: var(--paper); margin: 24px 0;">MOVE<br>FASTER.</h1>
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; gap: 24px; flex-wrap: wrap;">
+        <p style="max-width: 360px; color: var(--ink-300); font-size: 16px; line-height: 1.5; margin: 0;">High-resolution techwear that loads in a blink. Engineered for the city, the trail, and everything in transit.</p>
+        <x-import component-from-global-scope="KinetikDesignSystem_fefe1a.Button" variant="primary" size="lg" hint-size="180px,52px">Shop the Drop</x-import>
+      </div>
+    </div>
+    <div class="dl-grid-ph" style="position: relative; min-height: 520px; background-color: var(--ink-100); display:flex; align-items:center; justify-content:center;">
+      <span style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-400);">SS26 · Lookbook</span>
+    </div>
+  </section>
+
+  <!-- FEATURED GRID -->
+  <section style="padding: 48px 24px 64px;">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom: 24px;">
+      <h2 style="font-family: var(--font-display); font-weight: 700; font-size: 32px; letter-spacing: -0.02em; color: var(--text-strong); margin: 0;">New Arrivals</h2>
+      <span style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-strong);">View All</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-hairline); border: 1px solid var(--border-hairline);">
+      <sc-for list="{{ products }}" as="p" hint-placeholder-count="4">
+        <div style="background: var(--surface-card); display:flex; flex-direction:column;">
+          <div class="dl-grid-ph" style="position: relative; aspect-ratio: 4 / 5; background-color: var(--ink-100); display:flex; align-items:center; justify-content:center;">
+            <span style="position:absolute; top:10px; left:10px;">
+              <x-import component-from-global-scope="KinetikDesignSystem_fefe1a.Tag" tone="sale" hint-size="48px,22px">{{ p.off }}</x-import>
+            </span>
+            <span style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-400);">{{ p.code }}</span>
+          </div>
+          <div style="padding: 16px; display:flex; flex-direction:column; gap: 8px;">
+            <span style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">{{ p.category }}</span>
+            <h4 style="font-family: var(--font-display); font-weight: 700; font-size: 16px; line-height: 1.15; letter-spacing: -0.02em; color: var(--text-strong); margin: 0;">{{ p.name }}</h4>
+            <span style="font-family: var(--font-mono); font-weight: 700; font-size: 14px; color: var(--text-strong);">{{ p.price }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      products: [
+        { code: 'KX-SHELL-01', category: 'Outerwear', name: 'Shell-01 Hardshell', price: '$336', off: '−20%' },
+        { code: 'KX-PANT-02',  category: 'Bottoms',   name: 'Cargo Tech Pant',    price: '$210', off: 'New' },
+        { code: 'KX-AUD-03',   category: 'Audio',     name: 'Field Monitors',     price: '$290', off: '−15%' },
+        { code: 'KX-BAG-05',   category: 'Gear',      name: 'Sling 4L',           price: '$145', off: 'New' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

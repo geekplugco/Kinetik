@@ -1,0 +1,29 @@
+<!-- @dsCard group="Colors" viewport="700x180" name="Ink Ramp" subtitle="Neutral mono scale — text, surfaces, hairlines" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface-page); }
+  .ramp { display: grid; grid-template-columns: repeat(11, 1fr); gap: 0; border: var(--border); }
+  .sw { aspect-ratio: 1 / 1.15; display: flex; align-items: flex-end; padding: 6px; }
+  .sw span { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+  <div class="ramp">
+    <div class="sw" style="background:var(--ink-950)"><span style="color:#fff">950</span></div>
+    <div class="sw" style="background:var(--ink-900)"><span style="color:#fff">900</span></div>
+    <div class="sw" style="background:var(--ink-800)"><span style="color:#fff">800</span></div>
+    <div class="sw" style="background:var(--ink-700)"><span style="color:#fff">700</span></div>
+    <div class="sw" style="background:var(--ink-600)"><span style="color:#fff">600</span></div>
+    <div class="sw" style="background:var(--ink-500)"><span style="color:#fff">500</span></div>
+    <div class="sw" style="background:var(--ink-400)"><span style="color:#fff">400</span></div>
+    <div class="sw" style="background:var(--ink-300)"><span style="color:#111">300</span></div>
+    <div class="sw" style="background:var(--ink-200)"><span style="color:#111">200</span></div>
+    <div class="sw" style="background:var(--ink-100)"><span style="color:#111">100</span></div>
+    <div class="sw" style="background:var(--paper);box-shadow:inset 0 0 0 1px var(--ink-200)"><span style="color:#111">PAPER</span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product"
+    },
+    "field_spec": {
+      "type": "field-spec"
+    },
+    "field_assurance": {
+      "type": "field-assurance",
+      "blocks": {
+        "pay": {
+          "type": "item",
+          "settings": {
+            "heading": "Payments",
+            "text": "Shop Pay, Apple Pay, Google Pay & major cards at checkout."
+          }
+        },
+        "support": {
+          "type": "item",
+          "settings": {
+            "heading": "Support",
+            "text": "Questions about fit or specs? Reach the Kinetik team."
+          }
+        },
+        "pickup": {
+          "type": "pickup"
+        },
+        "policies": {
+          "type": "policies"
+        }
+      },
+      "block_order": [
+        "pay",
+        "support",
+        "pickup",
+        "policies"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "recently_viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "heading": "Recently viewed",
+        "products_to_show": 4,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "What is included?",
+            "answer": "<p>See the product description for what ships in the box.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "How is it warrantied?",
+            "answer": "<p>Covered by our standard warranty. Contact support with any issue.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "What is the return policy?",
+            "answer": "<p>Unused items can be returned per our refund policy, linked in the footer.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {
+        "heading": "Questions",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "loadout": {
+      "type": "product-loadout"
+    },
+    "reviews": {
+      "type": "product-apps",
+      "settings": {
+        "heading": "Reviews",
+        "anchor_id": "reviews"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "field_spec",
+    "field_assurance",
+    "faq",
+    "loadout",
+    "reviews",
+    "recently_viewed"
+  ]
+}

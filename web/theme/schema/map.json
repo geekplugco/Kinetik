@@ -1,6 +1,37 @@
 { "name": "Map", "tag": "section", "class": "section section--map",
-  "settings": [ { "type": "inline_richtext", "id": "subheading", "label": "Subheading", "default": "Visit us" },
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "inline_richtext", "id": "subheading", "label": "Subheading", "default": "Visit us" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "The studio" },
     { "type": "text", "id": "address", "label": "Address", "default": "382 NE 191st St, Miami, FL" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" } ],
-  "presets": [{ "name": "Map" }] }
+    { "type": "richtext", "id": "hours", "label": "Opening hours" },
+    { "type": "checkbox", "id": "show_directions", "label": "Show directions link", "default": true },
+    { "type": "text", "id": "directions_label", "label": "Directions label", "default": "Get directions" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "layout", "label": "Layout", "default": "image-right",
+      "options": [
+        { "value": "image-right", "label": "Map on right" },
+        { "value": "image-left", "label": "Map on left" }
+      ] },
+    { "type": "select", "id": "map_style", "label": "Map style", "default": "grayscale",
+      "options": [
+        { "value": "grayscale", "label": "Grayscale" },
+        { "value": "color", "label": "Color" }
+      ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "page",
+      "options": [
+        { "value": "narrow", "label": "Narrow" },
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" }
+      ] },
+    { "type": "range", "id": "map_height", "min": 240, "max": 720, "step": 20, "default": 320, "unit": "px", "label": "Map height" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "default": 0, "unit": "px", "label": "Top padding" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "default": 0, "unit": "px", "label": "Bottom padding" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "presets": [
+    { "name": "Map" },
+    { "name": "Map — color, map left", "settings": { "layout": "image-left", "map_style": "color", "map_height": 480 } },
+    { "name": "Map — full width", "settings": { "width": "full", "map_height": 560 } }
+  ] }

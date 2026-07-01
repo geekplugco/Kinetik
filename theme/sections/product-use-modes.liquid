@@ -1,0 +1,103 @@
+{%- liquid
+  assign modes = section.blocks | where: 'type', 'mode'
+-%}
+{%- if modes.size > 0 -%}
+  <section
+    data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+    style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
+    class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)]"
+  >
+    <div class="mx-auto max-w-[var(--page-width)] px-6">
+      {%- if section.settings.heading != blank -%}
+        <div class="mb-8 flex flex-col gap-3">
+          {%- if section.settings.subheading != blank -%}
+            <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
+          {%- endif -%}
+          <h2 class="font-display text-h2 tracking-tight text-text-strong">{{ section.settings.heading }}</h2>
+        </div>
+      {%- endif -%}
+      <use-modes class="block">
+        <div role="tablist" aria-label="{{ section.settings.heading | default: 'Use cases' | escape }}" class="flex flex-wrap gap-2 border-b border-border-hairline pb-4">
+          {%- for block in modes -%}
+            <button
+              type="button"
+              role="tab"
+              id="mode-tab-{{ section.id }}-{{ forloop.index }}"
+              aria-controls="mode-panel-{{ section.id }}-{{ forloop.index }}"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+              data-mode-tab
+              class="inline-flex min-h-[44px] items-center justify-center border border-border-hairline px-4 py-2 font-mono text-xs uppercase tracking-label text-text-muted transition-colors aria-selected:border-border-strong aria-selected:bg-surface-sunken aria-selected:text-text-strong"
+            >{{ block.settings.label | default: 'Mode' }}</button>
+          {%- endfor -%}
+        </div>
+        {%- for block in modes -%}
+          <div
+            role="tabpanel"
+            id="mode-panel-{{ section.id }}-{{ forloop.index }}"
+            aria-labelledby="mode-tab-{{ section.id }}-{{ forloop.index }}"
+            data-mode-panel
+            {% unless forloop.first %}hidden{% endunless %}
+            class="mt-8 grid gap-8 md:grid-cols-2 md:items-center"
+            {{ block.shopify_attributes }}
+          >
+            <div class="relative aspect-[4/3] overflow-hidden bg-surface-sunken">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: block.settings.image.alt | default: block.settings.label, class: 'h-full w-full object-cover' }}
+              {%- else -%}
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
+              {%- endif -%}
+            </div>
+            <div class="flex flex-col gap-3">
+              {%- if block.settings.heading != blank -%}
+                <h3 class="font-display text-h3 tracking-tight text-text-strong">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <div class="text-body text-text-body [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ block.settings.text }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </use-modes>
+    </div>
+    <script src="{{ 'use-modes.js' | asset_url }}" defer="defer"></script>
+  </section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.product-use-modes.name",
+  "tag": "section",
+  "class": "section section--product-use-modes",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "inline_richtext", "id": "subheading", "label": "t:sections.product-use-modes.settings.subheading.label", "default": "One kit, many modes" },
+    { "type": "text", "id": "heading", "label": "t:sections.product-use-modes.settings.heading.label", "default": "Where it runs" },
+    { "type": "header", "content": "t:sections.product-use-modes.settings.header__style.content" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.product-use-modes.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.product-use-modes.settings.padding_top.label" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.product-use-modes.settings.padding_bottom.label" }
+  ],
+  "blocks": [
+    {
+      "type": "mode",
+      "name": "t:sections.product-use-modes.blocks.mode.name",
+      "settings": [
+        { "type": "text", "id": "label", "label": "t:sections.product-use-modes.blocks.mode.settings.label.label", "default": "Urban" },
+        { "type": "image_picker", "id": "image", "label": "t:sections.product-use-modes.blocks.mode.settings.image.label" },
+        { "type": "text", "id": "heading", "label": "t:sections.product-use-modes.blocks.mode.settings.heading.label", "default": "Built for the city" },
+        { "type": "richtext", "id": "text", "label": "t:sections.product-use-modes.blocks.mode.settings.text.label" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product-use-modes.presets.name__1",
+      "blocks": [
+        { "type": "mode", "settings": { "label": "Urban", "heading": "Built for the city", "text": "<p>Clean lines, packable shell, pockets where you need them. Moves from transit to street without missing a beat.</p>" } },
+        { "type": "mode", "settings": { "label": "Trail", "heading": "Ready for the climb", "text": "<p>Articulated for movement, sealed against weather, light enough to forget you're wearing it.</p>" } },
+        { "type": "mode", "settings": { "label": "Transit", "heading": "Made for the commute", "text": "<p>Layer it, pack it, run for the train. Wrinkle-resistant and quick to dry.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

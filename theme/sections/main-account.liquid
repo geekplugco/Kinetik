@@ -1,0 +1,112 @@
+<section
+  data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  class="mx-auto max-w-[900px] px-6"
+>
+  <div class="flex flex-wrap items-baseline justify-between gap-4">
+    <div class="flex flex-col gap-1">
+      <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ customer.first_name | default: customer.name }}</span>
+      <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ 'customer.account.title' | t | default: 'Account' }}</h1>
+    </div>
+    <a href="{{ routes.account_logout_url }}" class="font-mono text-xs uppercase tracking-label text-text-muted underline underline-offset-4 transition-colors hover:text-accent-press">{{ 'customer.log_out' | t | default: 'Log out' }}</a>
+  </div>
+
+  <div class="mt-10 grid gap-10 md:grid-cols-[2fr_1fr]">
+    <div>
+      <h2 class="font-mono text-xs uppercase tracking-label text-text-muted">{{ 'customer.orders.title' | t | default: 'Order history' }}</h2>
+      {%- paginate customer.orders by 12 -%}
+        {%- if customer.orders.size > 0 -%}
+          <table class="mt-4 w-full border-collapse text-left text-sm">
+            <thead>
+              <tr class="border-b border-border-strong font-mono text-xs uppercase tracking-label text-text-muted">
+                <th class="py-3 pr-4">{{ 'customer.orders.order_number' | t | default: 'Order' }}</th>
+                <th class="py-3 pr-4">{{ 'customer.orders.date' | t | default: 'Date' }}</th>
+                <th class="py-3 pr-4">Status</th>
+                <th class="py-3 text-right">{{ 'customer.orders.total' | t | default: 'Total' }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr class="border-b border-border-hairline text-text-body">
+                  <td class="py-4 pr-4"><a href="{{ order.customer_url }}" class="font-mono text-text-strong transition-colors hover:text-accent-press">{{ order.name }}</a></td>
+                  <td class="py-4 pr-4">{{ order.created_at | date: '%b %d, %Y' }}</td>
+                  <td class="py-4 pr-4">
+                    {%- if order.fulfillment_status == 'fulfilled' -%}
+                      {%- render 'tag', label: order.fulfillment_status_label, tone: 'accent' -%}
+                    {%- else -%}
+                      {%- render 'tag', label: order.fulfillment_status_label -%}
+                    {%- endif -%}
+                  </td>
+                  <td class="py-4 text-right font-mono text-text-strong">{{ order.total_net_amount | money }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+          {%- if paginate.pages > 1 -%}
+            <nav class="mt-8 flex justify-center font-mono text-xs uppercase tracking-label text-text-muted" aria-label="Pagination">
+              {{ paginate | default_pagination }}
+            </nav>
+          {%- endif -%}
+        {%- else -%}
+          <p class="mt-4 text-body text-text-muted">{{ 'customer.orders.none' | t | default: 'No orders yet.' }}</p>
+        {%- endif -%}
+      {%- endpaginate -%}
+    </div>
+
+    <aside class="flex flex-col gap-3">
+      <h2 class="font-mono text-xs uppercase tracking-label text-text-muted">{{ 'customer.account.details' | t | default: 'Account details' }}</h2>
+      <p class="text-body text-text-body">{{ customer.name }}</p>
+      {%- if customer.email != blank -%}
+        <p class="font-mono text-xs text-text-muted">{{ customer.email }}</p>
+      {%- endif -%}
+      {%- if customer.default_address -%}
+        <address class="mt-1 not-italic text-sm text-text-muted">{{ customer.default_address | format_address }}</address>
+      {%- endif -%}
+      <a href="{{ routes.account_addresses_url }}" class="mt-2 inline-flex font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 transition-colors hover:text-accent-press">{{ 'customer.addresses.title' | t | default: 'Manage addresses' }}</a>
+    </aside>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.main-account.name",
+  "tag": "section",
+  "class": "section section--main-account",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main-account.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-account.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-account.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-account.settings.padding_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.main-account.presets.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,178 @@
+{%- liquid
+  assign b = block.settings
+  case b.style
+    when 'dashed'
+      assign line = 'border-dashed'
+    when 'dotted'
+      assign line = 'border-dotted'
+    else
+      assign line = 'border-solid'
+  endcase
+  case b.color
+    when 'strong'
+      assign color = 'border-border-strong'
+    when 'accent'
+      assign color = 'border-accent'
+    else
+      assign color = 'border-border-subtle'
+  endcase
+  case b.width
+    when 'short'
+      assign width = 'w-16'
+    when 'half'
+      assign width = 'w-1/2'
+    else
+      assign width = 'w-full'
+  endcase
+  case b.alignment
+    when 'center'
+      assign align = 'mx-auto'
+    when 'right'
+      assign align = 'ml-auto'
+    else
+      assign align = 'mr-auto'
+  endcase
+-%}
+<div
+  class="flex flex-col"
+  style="padding-top:{{ b.space_top }}px;padding-bottom:{{ b.space_bottom }}px"
+  {{ block.shopify_attributes }}
+>
+  {%- if b.style != 'space' -%}
+    <hr
+      class="m-0 border-0 border-t {{ line }} {{ color }} {{ width }} {{ align }}"
+      style="border-top-width:{{ b.thickness }}px"
+      aria-hidden="true"
+    >
+  {%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "t:blocks.divider.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:blocks.divider.settings.style.label",
+      "default": "solid",
+      "options": [
+        {
+          "value": "solid",
+          "label": "t:blocks.divider.settings.style.options__1.label"
+        },
+        {
+          "value": "dashed",
+          "label": "t:blocks.divider.settings.style.options__2.label"
+        },
+        {
+          "value": "dotted",
+          "label": "t:blocks.divider.settings.style.options__3.label"
+        },
+        {
+          "value": "space",
+          "label": "t:blocks.divider.settings.style.options__4.label"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "thickness",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 1,
+      "unit": "px",
+      "label": "t:blocks.divider.settings.thickness.label"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:blocks.divider.settings.width.label",
+      "default": "full",
+      "options": [
+        {
+          "value": "full",
+          "label": "t:blocks.divider.settings.width.options__1.label"
+        },
+        {
+          "value": "half",
+          "label": "t:blocks.divider.settings.width.options__2.label"
+        },
+        {
+          "value": "short",
+          "label": "t:blocks.divider.settings.width.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "color",
+      "label": "t:blocks.divider.settings.color.label",
+      "default": "subtle",
+      "options": [
+        {
+          "value": "subtle",
+          "label": "t:blocks.divider.settings.color.options__1.label"
+        },
+        {
+          "value": "strong",
+          "label": "t:blocks.divider.settings.color.options__2.label"
+        },
+        {
+          "value": "accent",
+          "label": "t:blocks.divider.settings.color.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:blocks.divider.settings.alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:blocks.divider.settings.alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:blocks.divider.settings.alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:blocks.divider.settings.alignment.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:blocks.divider.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "space_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 16,
+      "unit": "px",
+      "label": "t:blocks.divider.settings.space_top.label"
+    },
+    {
+      "type": "range",
+      "id": "space_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 16,
+      "unit": "px",
+      "label": "t:blocks.divider.settings.space_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.divider.presets.name"
+    }
+  ]
+}
+{% endschema %}

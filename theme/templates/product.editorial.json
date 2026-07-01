@@ -1,0 +1,227 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "gallery_layout": "thumbnail_slider",
+        "media_size": "large",
+        "enable_sticky_info": true,
+        "enable_sticky_atc": true,
+        "enable_image_zoom": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "field_spec": {
+      "type": "field-spec",
+      "settings": {
+        "color_scheme": "scheme-2"
+      }
+    },
+    "field_assurance": {
+      "type": "field-assurance",
+      "blocks": {
+        "pay": {
+          "type": "item",
+          "settings": {
+            "heading": "Payments",
+            "text": "Shop Pay, Apple Pay, Google Pay & major cards at checkout."
+          }
+        },
+        "support": {
+          "type": "item",
+          "settings": {
+            "heading": "Support",
+            "text": "Questions about fit or specs? Reach the Kinetik team."
+          }
+        },
+        "pickup": {
+          "type": "pickup"
+        },
+        "policies": {
+          "type": "policies"
+        }
+      },
+      "block_order": [
+        "pay",
+        "support",
+        "pickup",
+        "policies"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "complementary": {
+      "type": "complementary-products",
+      "settings": {
+        "heading": "Complete the kit",
+        "products_to_show": 3,
+        "color_scheme": "scheme-2"
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "heading": "More from the system",
+        "products_to_show": 4,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "motion_spec": {
+      "type": "product-motion-spec",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "value": "390g",
+            "label": "Weight"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "value": "20K",
+            "label": "Waterproof",
+            "note": "mm"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "value": "3L",
+            "label": "Construction"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "value": "100%",
+            "label": "Taped seams"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "subheading": "The numbers",
+        "heading": "Built to spec",
+        "color_scheme": "scheme-3",
+        "image": "shopify://shop_images/material-macro.png",
+        "proof_caption": "Lab tested · 20K hydrostatic head",
+        "media_position": "left"
+      }
+    },
+    "use_modes": {
+      "type": "product-use-modes",
+      "blocks": {
+        "m1": {
+          "type": "mode",
+          "settings": {
+            "label": "Urban",
+            "heading": "Built for the city",
+            "text": "<p>Clean lines, packable shell, pockets where you need them. Transit to street without missing a beat.</p>"
+          }
+        },
+        "m2": {
+          "type": "mode",
+          "settings": {
+            "label": "Trail",
+            "heading": "Ready for the climb",
+            "text": "<p>Articulated for movement, sealed against weather, light enough to forget you are wearing it.</p>"
+          }
+        },
+        "m3": {
+          "type": "mode",
+          "settings": {
+            "label": "Transit",
+            "heading": "Made for the commute",
+            "text": "<p>Layer it, pack it, run for the train. Wrinkle-resistant and quick to dry.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "settings": {
+        "heading": "Where it runs",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "field_note": {
+      "type": "product-field-note",
+      "settings": {
+        "eyebrow": "Field note",
+        "quote": "<p>Three days on the trail, one storm, zero compromises. The shell just disappears and lets you move.</p>",
+        "attribution": "Tester #07",
+        "role": "Alpine field program",
+        "color_scheme": "scheme-2"
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "How does it fit?",
+            "answer": "<p>True to size with room to layer underneath. See the size guide for exact measurements.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "How do I care for it?",
+            "answer": "<p>Machine wash cold and hang dry. Reproof technical shells to restore water repellency.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "What is the return policy?",
+            "answer": "<p>Unworn items can be returned per our refund policy, linked in the footer.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {
+        "heading": "Questions",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "loadout": {
+      "type": "product-loadout"
+    },
+    "reviews": {
+      "type": "product-apps",
+      "settings": {
+        "heading": "Reviews",
+        "anchor_id": "reviews"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "field_spec",
+    "field_assurance",
+    "motion_spec",
+    "use_modes",
+    "field_note",
+    "faq",
+    "loadout",
+    "reviews",
+    "complementary",
+    "related"
+  ]
+}

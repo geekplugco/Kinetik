@@ -5,7 +5,13 @@
   "settings": [
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
-    { "type": "checkbox", "id": "sticky_header", "label": "Sticky header", "default": true }
+    { "type": "checkbox", "id": "sticky_header", "label": "Sticky header", "default": true },
+    { "type": "header", "content": "Mega menu" },
+    { "type": "select", "id": "submenu_style", "label": "Dropdown style", "default": "mega",
+      "options": [{ "value": "mega", "label": "Mega panel" }, { "value": "dropdown", "label": "Simple dropdown" }] },
+    { "type": "checkbox", "id": "show_menu_products", "label": "Show featured products in mega menu", "default": true },
+    { "type": "checkbox", "id": "show_menu_featured", "label": "Show promo image tile in mega menu", "default": true },
+    { "type": "checkbox", "id": "show_account_icon", "label": "Show account icon", "default": true }
   ],
   "presets": [{ "name": "Header" }]
 }

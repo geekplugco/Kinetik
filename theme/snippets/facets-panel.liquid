@@ -1,0 +1,40 @@
+{%- for filter in collection.filters -%}
+  <details class="border-b border-border-hairline py-4"{% if filter.active_values.size > 0 or filter.min_value.value != blank or filter.max_value.value != blank %} open{% endif %}>
+    <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-mono text-xs uppercase tracking-label text-text-strong [&::-webkit-details-marker]:hidden">
+      {{ filter.label }}
+      <span aria-hidden="true">+</span>
+    </summary>
+    <div class="mt-4 flex flex-col gap-3">
+      {%- case filter.type -%}
+        {%- when 'boolean', 'list' -%}
+          {%- for value in filter.values -%}
+            <label class="flex min-h-[44px] items-center justify-between gap-4 text-sm text-text-body{% if value.count == 0 and value.active == false %} opacity-40{% endif %}">
+              <span class="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  name="{{ value.param_name }}"
+                  value="{{ value.value }}"
+                  {% if value.active %}checked{% endif %}
+                  {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                  class="h-4 w-4 border border-border-strong accent-[var(--accent)]"
+                >
+                <span>{{ value.label }}</span>
+              </span>
+              <span class="font-mono text-[11px] text-text-muted">{{ value.count }}</span>
+            </label>
+          {%- endfor -%}
+        {%- when 'price_range' -%}
+          <div class="grid grid-cols-2 gap-3">
+            <label class="flex flex-col gap-1 font-mono text-[11px] uppercase tracking-label text-text-muted">
+              Min
+              <input name="{{ filter.min_value.param_name }}" type="number" inputmode="numeric" min="0" {% if filter.range_max != blank %}max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"{% endif %} value="{% if filter.min_value.value %}{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{% endif %}" class="min-h-[44px] border border-border-hairline bg-surface-page px-3 py-2 font-sans text-sm text-text-strong">
+            </label>
+            <label class="flex flex-col gap-1 font-mono text-[11px] uppercase tracking-label text-text-muted">
+              Max
+              <input name="{{ filter.max_value.param_name }}" type="number" inputmode="numeric" min="0" {% if filter.range_max != blank %}max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"{% endif %} value="{% if filter.max_value.value %}{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{% endif %}" class="min-h-[44px] border border-border-hairline bg-surface-page px-3 py-2 font-sans text-sm text-text-strong">
+            </label>
+          </div>
+      {%- endcase -%}
+    </div>
+  </details>
+{%- endfor -%}

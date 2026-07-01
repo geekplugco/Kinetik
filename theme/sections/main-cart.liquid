@@ -1,0 +1,210 @@
+{%- liquid
+  assign subtotal = cart.total_price
+  assign threshold = section.settings.free_shipping_threshold | default: 150 | times: 100
+  assign show_goal = section.settings.show_free_shipping_goal
+  assign remaining = threshold | minus: subtotal
+  if remaining < 0
+    assign remaining = 0
+  endif
+  assign progress = 0
+  if threshold > 0
+    assign progress = subtotal | times: 100 | divided_by: threshold
+  endif
+  if progress > 100
+    assign progress = 100
+  endif
+-%}
+<cart-items data-section-id="{{ section.id }}" class="block">
+  {%- if cart.item_count == 0 -%}
+    <section
+      data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+      style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+      class="mx-auto max-w-[800px] px-6 text-center"
+    >
+      <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ 'sections.cart.empty' | t | default: 'Your cart is empty' }}</h1>
+      {%- assign continue_label = 'sections.cart.continue' | t | default: 'Continue shopping' -%}
+      <div class="mt-6">{%- render 'button', label: continue_label, href: routes.all_products_collection_url -%}</div>
+    </section>
+  {%- else -%}
+    <section
+      data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+      style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+      class="mx-auto max-w-[900px] px-6"
+    >
+      <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ 'sections.cart.title' | t | default: 'Cart' }}</h1>
+
+      {%- if show_goal and threshold > 0 -%}
+        <div class="mt-6 border border-border-hairline p-4">
+          <p class="font-mono text-xs uppercase tracking-label text-text-muted">
+            {%- if remaining > 0 -%}
+              {{ remaining | money }} away from free shipping
+            {%- else -%}
+              You&rsquo;ve unlocked free shipping
+            {%- endif -%}
+          </p>
+          <div class="mt-2 h-1 w-full bg-surface-sunken">
+            <div class="h-full bg-accent" style="width: {{ progress }}%"></div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- form 'cart', cart -%}
+        <ul class="mt-8 divide-y divide-border-hairline">
+          {%- for item in cart.items -%}
+            <li class="flex gap-4 py-6">
+              {%- assign item_alt = item.image.alt | default: item.product.title | escape -%}
+              <a href="{{ item.url }}" class="relative h-28 w-24 shrink-0 overflow-hidden bg-surface-sunken" aria-label="{{ item.product.title | escape }}">
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 192 | image_tag: loading: 'lazy', widths: '96,192', sizes: '96px', alt: item_alt, class: 'h-full w-full object-cover' }}
+                {%- endif -%}
+              </a>
+              <div class="flex flex-1 flex-col gap-2">
+                <a href="{{ item.url }}" class="font-sans text-body text-text-strong hover:text-accent-press">{{ item.product.title }}</a>
+                {%- unless item.product.has_only_default_variant -%}
+                  <span class="font-mono text-xs text-text-muted">{{ item.variant.title }}</span>
+                {%- endunless -%}
+                <div class="mt-auto flex items-center justify-between">
+                  <div class="flex items-center border border-border-strong">
+                    <button type="button" aria-label="Decrease quantity" data-qty-down data-line="{{ forloop.index }}" data-qty="{{ item.quantity }}" class="px-3 py-1 text-text-strong">&minus;</button>
+                    <span class="w-8 text-center font-mono text-sm">{{ item.quantity }}</span>
+                    <button type="button" aria-label="Increase quantity" data-qty-up data-line="{{ forloop.index }}" data-qty="{{ item.quantity }}" class="px-3 py-1 text-text-strong">+</button>
+                  </div>
+                  <span class="font-mono text-sm text-text-strong">{{ item.final_line_price | money }}</span>
+                </div>
+              </div>
+              <button type="button" data-remove data-line="{{ forloop.index }}" class="self-start font-mono text-xs uppercase tracking-label text-text-muted hover:text-negative">{{ 'sections.cart.remove' | t | default: 'Remove' }}</button>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        <div class="mt-8 grid gap-8 border-t border-border-strong pt-8 md:grid-cols-2">
+          <div class="flex flex-col gap-6">
+            <div class="flex flex-col gap-2">
+              <label for="cart-note" class="font-mono text-xs uppercase tracking-label text-text-muted">Order note</label>
+              <textarea id="cart-note" name="note" rows="3" placeholder="Add a note to your order" class="border border-border-strong bg-surface-page px-4 py-3 font-sans text-sm text-text-strong placeholder:text-text-faint">{{ cart.note }}</textarea>
+            </div>
+            <details class="flex flex-col gap-2"{% if cart.attributes['Gift note'] != blank %} open{% endif %}>
+              <summary class="cursor-pointer select-none font-mono text-xs uppercase tracking-label text-text-muted">This is a gift &mdash; add a note</summary>
+              <textarea name="attributes[Gift note]" rows="2" placeholder="Write a gift message" class="mt-2 w-full border border-border-strong bg-surface-page px-4 py-3 font-sans text-sm text-text-strong placeholder:text-text-faint">{{ cart.attributes['Gift note'] }}</textarea>
+            </details>
+            <div class="flex flex-col gap-2">
+              <span class="font-mono text-xs uppercase tracking-label text-text-muted">Discount code</span>
+              <p class="font-mono text-[11px] text-text-faint">Discount codes are applied at checkout.</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3 md:items-end">
+            <div class="flex w-full max-w-xs items-center justify-between font-mono text-sm">
+              <span class="uppercase tracking-label text-text-muted">{{ 'sections.cart.subtotal' | t | default: 'Subtotal' }}</span>
+              <span class="text-text-strong">{{ cart.total_price | money }}</span>
+            </div>
+            <div class="flex w-full max-w-xs items-center justify-between border-t border-border-hairline pt-3 font-mono">
+              <span class="text-sm uppercase tracking-label text-text-muted">Total</span>
+              <span class="text-h4 text-text-strong">{{ cart.total_price | money }}</span>
+            </div>
+            <p class="w-full max-w-xs text-right font-mono text-[10px] text-text-faint">Taxes and shipping calculated at checkout</p>
+            {%- assign checkout_label = 'sections.cart.checkout' | t | default: 'Checkout' -%}
+            {%- render 'button', label: checkout_label, type: 'submit', name: 'checkout', size: 'md', class: 'w-full max-w-xs' -%}
+          </div>
+        </div>
+      {%- endform -%}
+
+      {%- if section.settings.show_recommendations and cart.items.first -%}
+        {%- assign rec_source = cart.items.first.product.collections.first.products -%}
+        {%- assign rec_shown = 0 -%}
+        {%- capture rec_html -%}
+          {%- for p in rec_source -%}
+            {%- if rec_shown >= 4 -%}{%- break -%}{%- endif -%}
+            {%- assign in_cart = false -%}
+            {%- for item in cart.items -%}
+              {%- if item.product.id == p.id -%}{%- assign in_cart = true -%}{%- break -%}{%- endif -%}
+            {%- endfor -%}
+            {%- if in_cart or p.available == false -%}{%- continue -%}{%- endif -%}
+            {%- assign rec_shown = rec_shown | plus: 1 -%}
+            <div class="flex flex-col gap-2">
+              <a href="{{ p.url }}" class="relative aspect-[4/5] overflow-hidden bg-surface-sunken" aria-label="{{ p.title | escape }}">
+                {%- if p.featured_media -%}{{ p.featured_media | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200,400', sizes: '(min-width:750px) 22vw, 45vw', alt: p.title, class: 'absolute inset-0 h-full w-full object-cover' }}{%- endif -%}
+              </a>
+              <a href="{{ p.url }}" class="font-sans text-sm leading-tight text-text-strong hover:text-accent-press">{{ p.title }}</a>
+              <span class="font-mono text-xs text-text-muted">{{ p.price | money }}</span>
+              <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+                <button type="submit" class="w-full border border-border-strong px-3 py-2 font-mono text-[11px] uppercase tracking-label text-text-strong transition-colors hover:bg-surface-sunken">Add to cart</button>
+              </form>
+            </div>
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- if rec_shown > 0 -%}
+          <div class="mt-12 border-t border-border-hairline pt-8">
+            <h2 class="font-mono text-xs uppercase tracking-label text-text-muted">Complete your order</h2>
+            <div class="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4">{{ rec_html }}</div>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </section>
+  {%- endif -%}
+</cart-items>
+<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+{% schema %}
+{
+  "name": "t:sections.main-cart.name",
+  "tag": "section",
+  "class": "section section--main-cart",
+  "enabled_on": {
+    "templates": [
+      "cart"
+    ]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_free_shipping_goal",
+      "label": "t:sections.main-cart.settings.show_free_shipping_goal.label",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "default": 150,
+      "label": "t:sections.main-cart.settings.free_shipping_threshold.label",
+      "info": "t:sections.main-cart.settings.free_shipping_threshold.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_recommendations",
+      "label": "t:sections.main-cart.settings.show_recommendations.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main-cart.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-cart.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-cart.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.main-cart.settings.padding_bottom.label"
+    }
+  ]
+}
+{% endschema %}

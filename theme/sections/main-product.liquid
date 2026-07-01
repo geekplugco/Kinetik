@@ -1,0 +1,521 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign code = product.metafields.custom.product_code.value | default: current_variant.sku
+  assign spec = product.metafields.custom.spec.value | default: product.type
+  assign sticky_info = section.settings.enable_sticky_info
+  assign sticky_atc = section.settings.enable_sticky_atc
+  assign atc_label = 'products.product.add_to_cart' | t | default: 'Add to cart'
+  assign sold_label = 'products.product.sold_out' | t | default: 'Sold out'
+  assign load_label = 'Adding…'
+  assign picker_type = section.settings.picker_type | default: 'button'
+  assign inv_threshold = section.settings.inventory_threshold | default: 0
+  assign material = product.metafields.custom.material.value
+  assign fit_notes = product.metafields.custom.fit_notes.value
+  assign weight = product.metafields.custom.weight.value
+
+  assign color_name = ''
+  for option in product.options_with_values
+    assign oname = option.name | downcase
+    if oname contains 'color' or oname contains 'colour'
+      assign color_name = option.selected_value
+    endif
+  endfor
+
+  case section.settings.media_size
+    when 'small'
+      assign media_grid = 'md:grid-cols-[2fr_3fr]'
+      assign media_sizes = '(min-width:990px) 36vw, 100vw'
+    when 'large'
+      assign media_grid = 'md:grid-cols-[3fr_2fr]'
+      assign media_sizes = '(min-width:990px) 56vw, 100vw'
+    else
+      assign media_grid = 'md:grid-cols-2'
+      assign media_sizes = '(min-width:990px) 45vw, 100vw'
+  endcase
+-%}
+<section
+  data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
+  data-product-handle="{{ product.handle }}"
+  style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px;"
+  class="mx-auto grid max-w-[var(--page-width)] gap-10 px-6 pt-[var(--pt,36px)] pb-[var(--pb,36px)] {{ media_grid }}"
+>
+  {%- assign gallery_layout = section.settings.gallery_layout | default: 'thumbnail' -%}
+  {%- if gallery_layout == 'stacked' or product.media.size < 2 -%}
+    <div class="flex flex-col gap-3">
+      {%- for media in product.media -%}
+        {%- liquid
+          assign s_loading = 'lazy'
+          assign s_priority = 'auto'
+          if forloop.first
+            assign s_loading = 'eager'
+            assign s_priority = 'high'
+          endif
+          assign s_alt = media.alt | default: product.title | escape
+        -%}
+        <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+          {%- render 'product-media', media: media, loading: s_loading, priority: s_priority, sizes: media_sizes, alt: s_alt -%}
+        </div>
+      {%- else -%}
+        <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+          {{ 'product-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    {%- assign first_media = product.media.first -%}
+    {%- assign first_alt = first_media.alt | default: product.title | escape -%}
+    <product-gallery data-zoom="{{ section.settings.enable_image_zoom }}" class="flex flex-col gap-3 md:flex-row md:gap-4 {% if sticky_info %}md:sticky md:top-24 md:self-start{% endif %}">
+      <div data-gallery-thumbs class="order-2 hidden gap-2 md:order-1 md:flex md:max-h-[640px] md:w-20 md:flex-col md:overflow-y-auto">
+        {%- for media in product.media -%}
+          {%- assign thumb_alt = media.alt | default: product.title | escape -%}
+          <button type="button" data-gallery-thumb data-media-id="{{ media.id }}" data-img="{{ media.preview_image | image_url: width: 1600 }}" data-alt="{{ thumb_alt }}" aria-label="View media {{ forloop.index }} of {{ product.media.size }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}" class="relative aspect-[4/5] w-full shrink-0 overflow-hidden border transition-colors {% if forloop.first %}border-border-strong{% else %}border-border-hairline hover:border-border-strong{% endif %}">
+            {{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80,160', sizes: '80px', alt: thumb_alt, class: 'h-full w-full object-cover' }}
+            {%- unless media.media_type == 'image' -%}
+              <span class="absolute bottom-1 right-1 border border-border-strong bg-surface-page px-1 font-mono text-[9px] uppercase leading-tight tracking-label text-text-strong">{% if media.media_type == 'model' %}3D{% else %}&#9654;{% endif %}</span>
+            {%- endunless -%}
+          </button>
+        {%- endfor -%}
+      </div>
+      <div class="order-1 min-w-0 flex-1 md:order-2">
+        <div data-gallery-main tabindex="0" aria-label="{{ product.title | escape }} media" class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+          {{ first_media.preview_image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1600', sizes: media_sizes, alt: first_alt, class: 'h-full w-full object-cover transition-transform duration-200 ease-out' }}
+        </div>
+        <div data-gallery-dots class="mt-3 flex justify-center gap-1.5 md:hidden">
+          {%- for media in product.media -%}
+            <button type="button" data-gallery-dot data-media-id="{{ media.id }}" data-img="{{ media.preview_image | image_url: width: 1600 }}" data-alt="{{ media.alt | default: product.title | escape }}" aria-label="Go to media {{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}" class="flex h-11 w-6 items-center justify-center"><span class="h-1.5 w-1.5 border border-border-strong {% if forloop.first %}bg-border-strong{% else %}bg-transparent{% endif %}"></span></button>
+          {%- endfor -%}
+        </div>
+        <p data-gallery-caption class="mt-3 font-mono text-xs uppercase tracking-label text-text-muted empty:hidden" aria-live="polite">{{ first_alt }}</p>
+      </div>
+    </product-gallery>
+    <script src="{{ 'product-gallery.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+
+  <variant-picker id="variant-picker-{{ section.id }}" class="{% if sticky_info %}md:sticky md:top-24 md:self-start{% endif %}">
+    <script type="application/json">
+      [
+        {%- for variant in product.variants -%}
+          {"id":{{ variant.id }},"options":{{ variant.options | json }},"available":{{ variant.available }},"price":{{ variant.price | money | json }},"price_cents":{{ variant.price }},"compare_at":{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},"on_sale":{% if variant.compare_at_price > variant.price %}true{% else %}false{% endif %},"inventory_management":{{ variant.inventory_management | json }},"inventory_quantity":{{ variant.inventory_quantity }},"sku":{{ variant.sku | json }},"featured_media_id":{% if variant.featured_media %}{{ variant.featured_media.id }}{% else %}null{% endif %}}{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    </script>
+
+      <div class="flex flex-col gap-5">
+      <div class="flex flex-col gap-2">
+        <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ product.vendor }}{% if code != blank %} &middot; {{ code }}{% endif %}</span>
+        <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ product.title }}</h1>
+        {%- assign product_rating = product.metafields.reviews.rating.value -%}
+        {%- if product_rating != blank and product_rating.rating > 0 -%}
+          <a href="#reviews" class="inline-flex w-fit" aria-label="Read reviews">{%- render 'rating', rating: product_rating.rating, scale_max: product_rating.scale_max, count: product.metafields.reviews.rating_count -%}</a>
+        {%- endif -%}
+        <div data-price data-price-class="text-body-lg">{%- render 'price', variant: current_variant, class: 'text-body-lg' -%}</div>
+      </div>
+
+      <div class="grid grid-cols-2 border border-border-hairline font-mono text-[11px] uppercase tracking-label sm:grid-cols-4">
+        <div class="border-b border-r border-border-hairline p-3 sm:border-b-0">
+          <span class="block text-text-muted">Code</span>
+          <span class="mt-1 block truncate text-text-strong">{{ code | default: current_variant.sku | default: 'Ready' }}</span>
+        </div>
+        <div class="border-b border-border-hairline p-3 sm:border-b-0 sm:border-r">
+          <span class="block text-text-muted">Material</span>
+          <span class="mt-1 block truncate text-text-strong">{{ material | default: spec | default: product.type | default: 'Field grade' }}</span>
+        </div>
+        <div class="border-r border-border-hairline p-3">
+          <span class="block text-text-muted">Fit</span>
+          <span class="mt-1 block truncate text-text-strong">{{ fit_notes | default: 'True to size' }}</span>
+        </div>
+        <div class="p-3">
+          <span class="block text-text-muted">Status</span>
+          <span class="mt-1 block truncate text-text-strong">{% if current_variant.available %}Ready to ship{% else %}Sold out{% endif %}</span>
+        </div>
+      </div>
+
+      <div class="grid gap-2 text-sm text-text-body sm:grid-cols-3">
+        <div class="border border-border-hairline p-3">
+          <span class="block font-mono text-[10px] uppercase tracking-label text-text-muted">Dispatch</span>
+          <span class="mt-1 block text-text-strong">Ships from active stock</span>
+        </div>
+        <div class="border border-border-hairline p-3">
+          <span class="block font-mono text-[10px] uppercase tracking-label text-text-muted">Returns</span>
+          <span class="mt-1 block text-text-strong">Fit-safe return window</span>
+        </div>
+        <div class="border border-border-hairline p-3">
+          <span class="block font-mono text-[10px] uppercase tracking-label text-text-muted">Build</span>
+          <span class="mt-1 block text-text-strong">{{ weight | default: 'Daily field use' }}</span>
+        </div>
+      </div>
+
+      {%- form 'product', product, class: 'flex flex-col gap-6' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+        {%- unless product.has_only_default_variant -%}
+          <div class="flex flex-col gap-4">
+            {%- for option in product.options_with_values -%}
+              {%- assign is_color = false -%}
+              {%- assign oname = option.name | downcase -%}
+              {%- if oname contains 'color' or oname contains 'colour' -%}{%- assign is_color = true -%}{%- endif -%}
+              <fieldset data-option-fieldset data-option-position="{{ option.position }}" class="m-0 flex flex-col gap-2 border-0 p-0">
+                <legend class="mb-3 font-mono text-xs uppercase tracking-label text-text-muted">
+                  {%- if is_color -%}{{ option.name }} &mdash; <span data-option-current>{{ color_name }}</span>{%- else -%}{{ option.name }}{%- endif -%}
+                </legend>
+                {%- if picker_type == 'dropdown' and is_color == false -%}
+                  <div class="relative">
+                    <select name="option-{{ option.position }}" data-option-position="{{ option.position }}" aria-label="{{ option.name | escape }}" class="w-full appearance-none border border-border-strong bg-surface-page px-4 py-3 pr-10 font-mono text-sm uppercase tracking-wide text-text-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-press">
+                      {%- for value in option.values -%}
+                        <option value="{{ value | escape }}" data-value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value }}</option>
+                      {%- endfor -%}
+                    </select>
+                    <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-text-muted">{%- render 'icon', name: 'chevron', size: 16 -%}</span>
+                  </div>
+                {%- else -%}
+                  <div class="flex flex-wrap gap-2.5">
+                    {%- for value in option.values -%}
+                      {%- assign opt_id = section.id | append: '-' | append: option.position | append: '-' | append: forloop.index -%}
+                      <label for="{{ opt_id }}" data-option-value="{{ value | escape }}" class="cursor-pointer">
+                        <input
+                          type="radio"
+                          id="{{ opt_id }}"
+                          class="peer sr-only"
+                          name="option-{{ option.position }}"
+                          value="{{ value | escape }}"
+                          data-option-position="{{ option.position }}"
+                          data-value="{{ value | escape }}"
+                          {% if is_color %}data-option-color{% endif %}
+                          {% if option.selected_value == value %}checked{% endif %}
+                        >
+                        {%- if is_color -%}
+                          {%- liquid
+                            assign sw_bg = ''
+                            assign sw_img = ''
+                            if value.swatch.color
+                              assign sw_bg = value.swatch.color
+                            elsif value.swatch.image
+                              assign sw_img = value.swatch.image | image_url: width: 40
+                            else
+                              assign val_dc = value | downcase | strip
+                              assign rows = settings.swatch_list | newline_to_br | split: '<br />'
+                              for row in rows
+                                assign parts = row | strip | split: ':'
+                                assign sw_name = parts.first | downcase | strip
+                                if sw_name == val_dc
+                                  assign sw_val = parts.last | strip
+                                  if sw_val contains '.'
+                                    assign sw_img = sw_val
+                                  else
+                                    assign sw_bg = sw_val
+                                  endif
+                                  break
+                                endif
+                              endfor
+                              if sw_bg == blank and sw_img == blank
+                                assign sw_bg = value | split: ' ' | last | handle
+                              endif
+                            endif
+                          -%}
+                          <span title="{{ value | escape }}" class="block h-9 w-9 rounded-full border border-border-hairline bg-cover bg-center transition-transform hover:scale-110 peer-checked:ring-2 peer-checked:ring-text-strong peer-checked:ring-offset-2 peer-checked:ring-offset-surface-page peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-surface-page" style="background-color: {{ sw_bg }};{% if sw_img != blank %} background-image: url({{ sw_img }});{% endif %}"></span>
+                        {%- else -%}
+                          <span class="block border border-border-hairline px-4 py-2 font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">{{ value }}</span>
+                        {%- endif -%}
+                      </label>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </fieldset>
+            {%- endfor -%}
+          </div>
+        {%- endunless -%}
+
+        <p data-variant-readout class="font-mono text-xs uppercase tracking-label text-text-muted{% unless current_variant.sku != blank %} hidden{% endunless %}">SKU &middot; <span data-variant-sku class="text-text-strong">{{ current_variant.sku }}</span></p>
+
+        <div class="flex items-center gap-4">
+          <div class="flex items-center border border-border-strong">
+            <button type="button" aria-label="Decrease quantity" data-qty-down class="flex h-11 w-11 items-center justify-center text-text-strong">&minus;</button>
+            <span class="w-8 text-center font-mono text-sm" data-qty-value>1</span>
+            <button type="button" aria-label="Increase quantity" data-qty-up class="flex h-11 w-11 items-center justify-center text-text-strong">+</button>
+          </div>
+          <input type="hidden" name="quantity" value="1">
+          <p data-inventory data-threshold="{{ inv_threshold }}" data-in-stock="In stock" data-low="Only [n] left" data-sold="{{ sold_label | escape }}" aria-live="polite" class="font-mono text-xs uppercase tracking-label empty:hidden"></p>
+        </div>
+
+        <div data-atc-sentinel class="flex flex-col gap-3">
+          <button
+            type="submit"
+            data-add-to-cart
+            data-label-available="{{ atc_label | escape }}"
+            data-label-soldout="{{ sold_label | escape }}"
+            data-label-loading="{{ load_label | escape }}"
+            class="inline-flex w-full items-center justify-center gap-2 bg-accent px-6 py-3 font-mono text-sm uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40{% if settings.button_style == 'rounded' %} rounded-full{% endif %}"
+            {% unless current_variant.available %}disabled{% endunless %}
+            aria-describedby="atc-error-{{ section.id }}"
+          >{% if current_variant.available %}{{ atc_label }}{% else %}{{ sold_label }}{% endif %}</button>
+          <p id="atc-error-{{ section.id }}" data-atc-error role="alert" class="font-mono text-xs text-negative empty:hidden"></p>
+          {{ form | payment_button }}
+        </div>
+      {%- endform -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="flex flex-col gap-4 border-t border-border-hairline pt-5">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when '@app' -%}
+                {%- render block -%}
+              {%- when 'collapsible_tab' -%}
+                {%- if block.settings.heading != blank or block.settings.content != blank -%}
+                  <details class="group border-b border-border-hairline" {{ block.shopify_attributes }}>
+                    <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-3 py-3 font-mono text-xs uppercase tracking-label text-text-strong [&::-webkit-details-marker]:hidden">{{ block.settings.heading | default: 'Details' }}<span aria-hidden="true" class="transition-transform group-open:rotate-180">&#9662;</span></summary>
+                    <div class="pb-4 text-sm text-text-body [&_p]:m-0 [&_p]:mb-2">{{ block.settings.content }}</div>
+                  </details>
+                {%- endif -%}
+              {%- when 'custom_liquid' -%}
+                {%- if block.settings.custom_liquid != blank -%}
+                  <div {{ block.shopify_attributes }}>{{ block.settings.custom_liquid }}</div>
+                {%- endif -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- assign pickup_stores = current_variant.store_availabilities | where: 'available' -%}
+      {%- if pickup_stores.size > 0 -%}
+        {%- assign nearest_store = pickup_stores.first -%}
+        <div class="flex items-start gap-2 border border-border-hairline p-4 text-sm text-text-body">
+          <span class="mt-0.5 text-text-strong">{%- render 'icon', name: 'user', size: 18 -%}</span>
+          <span><strong class="text-text-strong">Pickup available</strong> at {{ nearest_store.location.name }}{% if nearest_store.pick_up_time != blank %} &middot; {{ nearest_store.pick_up_time }}{% endif %}</span>
+        </div>
+      {%- endif -%}
+
+      {%- assign care_mf = product.metafields.custom.care.value -%}
+      <div class="border-t border-border-hairline">
+        {%- if product.description != blank -%}
+          <details class="border-b border-border-hairline" open>
+            <summary class="flex w-full cursor-pointer items-center justify-between py-4 font-mono text-xs uppercase tracking-label text-text-strong">Details</summary>
+            <div class="pb-5 text-body text-text-body [&_a]:underline [&_a]:underline-offset-4 [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ product.description }}</div>
+          </details>
+        {%- endif -%}
+        {%- if code != blank or spec != blank or product.type != blank or product.vendor != blank -%}
+          <details class="border-b border-border-hairline">
+            <summary class="flex w-full cursor-pointer items-center justify-between py-4 font-mono text-xs uppercase tracking-label text-text-strong">Spec sheet</summary>
+            <dl class="grid grid-cols-[auto_1fr] gap-x-8 gap-y-2.5 pb-5 font-mono text-xs">
+              {%- if code != blank -%}<dt class="uppercase tracking-label text-text-muted">Code</dt><dd class="text-text-strong">{{ code }}</dd>{%- endif -%}
+              {%- if product.type != blank -%}<dt class="uppercase tracking-label text-text-muted">Type</dt><dd class="text-text-strong">{{ product.type }}</dd>{%- endif -%}
+              {%- if spec != blank -%}<dt class="uppercase tracking-label text-text-muted">Build</dt><dd class="text-text-strong">{{ spec }}</dd>{%- endif -%}
+              {%- if product.vendor != blank -%}<dt class="uppercase tracking-label text-text-muted">Maker</dt><dd class="text-text-strong">{{ product.vendor }}</dd>{%- endif -%}
+            </dl>
+          </details>
+        {%- endif -%}
+        {%- if care_mf != blank -%}
+          <details class="border-b border-border-hairline">
+            <summary class="flex w-full cursor-pointer items-center justify-between py-4 font-mono text-xs uppercase tracking-label text-text-strong">Care</summary>
+            <div class="pb-5 text-body text-text-body [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ care_mf }}</div>
+          </details>
+        {%- endif -%}
+        {%- if shop.shipping_policy != blank or shop.refund_policy != blank -%}
+          <details class="border-b border-border-hairline">
+            <summary class="flex w-full cursor-pointer items-center justify-between py-4 font-mono text-xs uppercase tracking-label text-text-strong">Shipping &amp; returns</summary>
+            <div class="flex flex-col gap-2 pb-5 text-body text-text-body">
+              {%- if shop.shipping_policy != blank -%}<a href="{{ shop.shipping_policy.url }}" class="underline underline-offset-4 hover:text-text-strong">{{ shop.shipping_policy.title }}</a>{%- endif -%}
+              {%- if shop.refund_policy != blank -%}<a href="{{ shop.refund_policy.url }}" class="underline underline-offset-4 hover:text-text-strong">{{ shop.refund_policy.title }}</a>{%- endif -%}
+            </div>
+          </details>
+        {%- endif -%}
+      </div>
+
+      <div class="flex flex-wrap items-center gap-4 font-mono text-xs uppercase tracking-label text-text-muted">
+        <span>Share</span>
+        <a href="https://www.facebook.com/sharer.php?u={{ shop.url | append: product.url | url_encode }}" class="hover:text-text-strong" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://pinterest.com/pin/create/button/?url={{ shop.url | append: product.url | url_encode }}" class="hover:text-text-strong" target="_blank" rel="noopener">Pinterest</a>
+        <a href="https://twitter.com/intent/tweet?url={{ shop.url | append: product.url | url_encode }}" class="hover:text-text-strong" target="_blank" rel="noopener">X</a>
+      </div>
+    </div>
+
+    {%- if sticky_atc -%}
+      <div data-sticky-bar class="fixed inset-x-0 bottom-0 z-40 translate-y-full border-t border-border-hairline bg-surface-page/95 pb-[env(safe-area-inset-bottom)] backdrop-blur transition-transform duration-300 motion-reduce:transition-none">
+        <div class="mx-auto flex max-w-[var(--page-width)] items-center gap-3 px-4 py-3 md:px-6">
+          <div class="relative hidden h-12 w-10 shrink-0 overflow-hidden bg-surface-sunken sm:block">
+            {%- if product.featured_media -%}
+              {%- assign sticky_alt = product.featured_media.alt | default: product.title | escape -%}
+              {{ product.featured_media | image_url: width: 80 | image_tag: loading: 'lazy', widths: '40,80', sizes: '40px', alt: sticky_alt, class: 'h-full w-full object-cover' }}
+            {%- endif -%}
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="truncate font-sans text-sm text-text-strong">{{ product.title }}</p>
+            <div class="text-xs">{%- render 'price', variant: current_variant, class: 'text-xs' -%}</div>
+          </div>
+          <button type="button" data-sticky-add class="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 bg-accent px-6 py-2.5 font-mono text-xs uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40{% if settings.button_style == 'rounded' %} rounded-full{% endif %}"{% unless current_variant.available %} disabled{% endunless %}>
+            {%- if current_variant.available -%}{{ atc_label }}{%- else -%}{{ sold_label }}{%- endif -%}
+          </button>
+        </div>
+      </div>
+    {%- endif -%}
+  </variant-picker>
+</section>
+<script src="{{ 'variant-picker.js' | asset_url }}" defer="defer"></script>
+{% schema %}
+{
+  "name": "t:sections.main-product.name",
+  "tag": "section",
+  "class": "section section--main-product",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.main-product.settings.header__1.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main-product.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "media_size",
+      "label": "t:sections.main-product.settings.media_size.label",
+      "default": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.main-product.settings.media_size.options__1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.main-product.settings.media_size.options__2.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.main-product.settings.media_size.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "gallery_layout",
+      "label": "t:sections.main-product.settings.gallery_layout.label",
+      "default": "thumbnail",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "t:sections.main-product.settings.gallery_layout.options__1.label"
+        },
+        {
+          "value": "thumbnail",
+          "label": "t:sections.main-product.settings.gallery_layout.options__2.label"
+        },
+        {
+          "value": "thumbnail_slider",
+          "label": "t:sections.main-product.settings.gallery_layout.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_info",
+      "label": "t:sections.main-product.settings.enable_sticky_info.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_atc",
+      "label": "t:sections.main-product.settings.enable_sticky_atc.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_image_zoom",
+      "label": "t:sections.main-product.settings.enable_image_zoom.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-product.settings.header__3.content"
+    },
+    {
+      "type": "select",
+      "id": "picker_type",
+      "label": "t:sections.main-product.settings.picker_type.label",
+      "default": "button",
+      "options": [
+        {
+          "value": "button",
+          "label": "t:sections.main-product.settings.picker_type.options__1.label"
+        },
+        {
+          "value": "dropdown",
+          "label": "t:sections.main-product.settings.picker_type.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "inventory_threshold",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 10,
+      "label": "t:sections.main-product.settings.inventory_threshold.label",
+      "info": "t:sections.main-product.settings.inventory_threshold.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-product.settings.header__2.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 36,
+      "unit": "px",
+      "label": "t:sections.main-product.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 36,
+      "unit": "px",
+      "label": "t:sections.main-product.settings.padding_bottom.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "collapsible_tab",
+      "name": "t:sections.main-product.blocks.collapsible_tab.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.main-product.blocks.collapsible_tab.settings.heading.label",
+          "default": "Collapsible row"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.main-product.blocks.collapsible_tab.settings.content.label"
+        }
+      ]
+    },
+    {
+      "type": "custom_liquid",
+      "name": "t:sections.main-product.blocks.custom_liquid.name",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "t:sections.main-product.blocks.custom_liquid.settings.custom_liquid.label"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

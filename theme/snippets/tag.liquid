@@ -1,0 +1,13 @@
+{% doc %}
+  Spec / badge tag — monospace uppercase pill.
+  @param {string} label - text
+  @param {string} [tone] - default | accent
+{% enddoc %}
+{%- liquid
+  if tone == 'accent'
+    assign tcls = 'bg-accent text-accent-ink'
+  else
+    assign tcls = 'border border-border-strong text-text-strong'
+  endif
+-%}
+<span class="inline-flex items-center px-2 py-1 font-mono text-xs uppercase tracking-label {{ tcls }}">{{ label }}</span>

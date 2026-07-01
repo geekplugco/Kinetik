@@ -1,0 +1,180 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {%- render 'meta-tags' -%}
+
+    <style>
+      {%- unless settings.font_heading.system? and settings.font_body.system? and settings.font_accent.system? -%}
+        {{ settings.font_heading | font_face: font_display: 'swap' }}
+        {{ settings.font_body | font_face: font_display: 'swap' }}
+        {{ settings.font_body | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+        {{ settings.font_accent | font_face: font_display: 'swap' }}
+      {%- endunless -%}
+      :root {
+        --font-heading-family: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+        --font-body-family: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+        --font-accent-family: {{ settings.font_accent.family }}, {{ settings.font_accent.fallback_families }};
+        --font-heading-scale: {{ settings.font_heading_scale | divided_by: 100.0 }};
+        --font-body-scale: {{ settings.font_body_scale | divided_by: 100.0 }};
+        --heading-tracking: {% if settings.heading_letter_spacing == 'wide' %}0.02em{% elsif settings.heading_letter_spacing == 'normal' %}0em{% else %}-0.02em{% endif %};
+        --container-max: {{ settings.page_width }}px;
+        --container-pad: 1.5rem;
+        --section-y: {{ settings.spacing_sections }}px;
+        --radius: {{ settings.corner_radius }}px;
+        --btn-radius: {% if settings.button_style == 'rounded' %}999px{% else %}{{ settings.corner_radius }}px{% endif %};
+        --btn-border: {{ settings.button_border_thickness | default: 1 }}px;
+        --badge-radius: {{ settings.badge_corner_radius | default: 0 }}px;
+        --input-radius: {{ settings.input_corner_radius | default: 0 }}px;
+        --input-border: {{ settings.input_border_thickness | default: 1 }}px;
+        --modal-radius: {{ settings.modal_corner_radius | default: 0 }}px;
+        --drawer-width: {{ settings.drawer_width | default: 440 }}px;
+        --overlay-opacity: {{ settings.overlay_opacity | default: 55 | divided_by: 100.0 }};
+        --icon-stroke: {{ settings.icon_stroke | default: 2 }};
+        --transition-base: {{ settings.transition_speed | default: 300 }}ms;
+        --ease-enter: var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+        --ease-exit: var(--ease-technical, cubic-bezier(0.65, 0, 0.35, 1));
+      }
+      input, select, textarea { border-radius: var(--input-radius, 0); }
+      .theme-heading-uppercase h1, .theme-heading-uppercase h2, .theme-heading-uppercase h3 { text-transform: uppercase; }
+      .kx-media-effect { position: relative; isolation: isolate; }
+      .kx-media-effect > img,
+      .kx-media-effect > svg { transition: transform var(--dur-slow, 640ms) var(--ease-enter), filter var(--dur-base, 380ms) var(--ease-enter); }
+      .kx-media-effect::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        background: linear-gradient(110deg, transparent 0 38%, color-mix(in srgb, var(--accent) 38%, transparent) 48%, transparent 60%);
+        opacity: 0;
+        transform: translateX(-130%);
+        transition: transform var(--dur-slow, 640ms) var(--ease-enter), opacity var(--dur-fast, 220ms) var(--ease-enter);
+      }
+      .kx-media-effect::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+        opacity: 0;
+        transform: scale(0.985);
+        transition: transform var(--dur-base, 380ms) var(--ease-enter), opacity var(--dur-base, 380ms) var(--ease-enter);
+      }
+      .group:hover .kx-media-effect > img,
+      .group:focus-within .kx-media-effect > img,
+      .group:hover .kx-media-effect > svg,
+      .group:focus-within .kx-media-effect > svg { transform: scale(1.035); filter: contrast(1.04) saturate(1.04); }
+      .group:hover .kx-media-effect::before,
+      .group:focus-within .kx-media-effect::before { opacity: 1; transform: translateX(130%); }
+      .group:hover .kx-media-effect::after,
+      .group:focus-within .kx-media-effect::after { opacity: 1; transform: scale(1); }
+      .kx-card-spec {
+        position: absolute;
+        left: 0.75rem;
+        right: 0.75rem;
+        bottom: 0.75rem;
+        z-index: 3;
+        display: flex;
+        justify-content: space-between;
+        gap: 0.75rem;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: transform var(--dur-base, 380ms) var(--ease-enter), opacity var(--dur-base, 380ms) var(--ease-enter);
+      }
+      .group:hover .kx-card-spec,
+      .group:focus-within .kx-card-spec { opacity: 1; transform: translateY(0); }
+      @media (prefers-reduced-motion: reduce) {
+        .kx-media-effect > img,
+        .kx-media-effect > svg,
+        .kx-media-effect::before,
+        .kx-media-effect::after,
+        .kx-card-spec { transition: none !important; transform: none !important; }
+        .kx-media-effect::before { display: none; }
+      }
+      body[data-animate-reveal="false"] .hp-reveal,
+      body[data-animate-reveal="false"] .hp-rule-draw { opacity: 1 !important; clip-path: none !important; transform: none !important; transition: none !important; }
+      body[data-animate-hover="none"] [data-card-media] img,
+      body[data-animate-hover="none"] .kx-media-effect > img,
+      body[data-animate-hover="none"] .kx-media-effect > svg,
+      body[data-animate-hover="none"] .hp-hover-lift:hover { transform: none !important; filter: none !important; }
+      body[data-animate-hover="none"] .kx-media-effect::before,
+      body[data-animate-hover="none"] .kx-media-effect::after { display: none !important; }
+      body[data-section-divider="hairline"] #MainContent > .shopify-section + .shopify-section { border-top: 1px solid var(--border-hairline); }
+    </style>
+
+    <link rel="stylesheet" href="{{ 'tailwind.min.css' | asset_url }}" media="all">
+    {%- render 'color-schemes' -%}
+
+    <style>
+      :root {
+        --font-display: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+        --font-sans: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+        --font-mono: {{ settings.font_accent.family }}, {{ settings.font_accent.fallback_families }};
+      }
+    </style>
+
+    {%- # theme-check-disable ParserBlockingScript -%}
+    <script>document.documentElement.classList.replace('no-js','has-js');</script>
+    {%- # theme-check-enable ParserBlockingScript -%}
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+
+    {{ content_for_header }}
+  </head>
+
+  <body data-color-scheme="scheme-1" data-animate-reveal="{{ settings.animate_reveal }}" data-animate-hover="{{ settings.animate_hover }}" data-section-divider="{{ settings.section_divider }}" class="template-{{ request.page_type | handleize }}{% if settings.heading_uppercase %} theme-heading-uppercase{% endif %}">
+    <a class="sr-only focus:not-sr-only" href="#MainContent">{{ 'accessibility.skip_to_text' | t | default: 'Skip to content' }}</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="content-for-layout" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    <ul hidden>
+      <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t | default: 'Choosing a selection results in a full page refresh.' }}</li>
+    </ul>
+
+    <quick-view-modal hidden class="fixed inset-0 z-[60] flex items-center justify-center p-4 opacity-0 transition-opacity duration-200 [&.is-open]:opacity-100">
+      <div data-qv-close class="absolute inset-0 bg-ink-950/60"></div>
+      <div role="dialog" aria-modal="true" aria-label="Quick view" class="relative z-10 max-h-[90vh] w-[min(920px,94vw)] overflow-auto border border-border-strong bg-surface-page p-5 shadow-[0_24px_60px_-24px_rgba(10,10,10,0.5)] md:p-8">
+        <button type="button" data-qv-close aria-label="Close quick view" class="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center text-text-muted transition-colors hover:text-text-strong">{%- render 'icon', name: 'close', size: 18 -%}</button>
+        <div data-qv-body></div>
+      </div>
+    </quick-view-modal>
+
+    <script src="{{ 'focus-trap.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'media-swap.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'variant-picker.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'quick-view.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'recently-viewed.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'card-swatches.js' | asset_url }}" defer="defer"></script>
+
+    {%- render 'structured-data' -%}
+  </body>
+</html>

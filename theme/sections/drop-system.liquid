@@ -1,0 +1,183 @@
+{%- liquid
+  assign s = section.settings
+  assign show_ticker = true
+  if s.show_ticker == false
+    assign show_ticker = false
+  endif
+
+  assign target_s = s.target_date | date: '%s' | plus: 0
+  assign now_s = 'now' | date: '%s' | plus: 0
+  assign diff = target_s | minus: now_s
+  if diff < 0
+    assign diff = 0
+  endif
+  assign live = false
+  if diff <= 0
+    assign live = true
+  endif
+  assign d_days = diff | divided_by: 86400
+  assign d_hrs = diff | modulo: 86400 | divided_by: 3600
+  assign d_min = diff | modulo: 3600 | divided_by: 60
+  assign d_sec = diff | modulo: 60
+
+  assign ticker_items = 'A. Mercer just bought Shell-01 Hardshell||14 people viewing Cargo Tech Pant||Only 3 left — Field Monitors||S. Haddad just bought Trail Runner XS||Restocked — Utility Vest 6P||9 people viewing Sling 4L'
+-%}
+<section
+  class="theme-dark bg-surface-page text-text-body"
+  data-color-scheme="{{ s.color_scheme | default: 'scheme-3' }}"
+  style="--pt:{{ s.padding_top | default: 0 }}px;--pb:{{ s.padding_bottom | default: 0 }}px"
+>
+  <div class="mx-auto max-w-[var(--page-width)] px-6 pt-[var(--pt,clamp(3.5rem,6vw,5rem))] pb-[var(--pb,clamp(3.5rem,6vw,5rem))]">
+    <drop-countdown class="block" data-target="{{ s.target_date | escape }}">
+      <div class="grid items-center gap-10 lg:grid-cols-[1fr_1fr]">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-label text-accent">{{ s.kicker | default: 'Next drop' }}</span>
+          <h2 class="mt-3 font-display text-display-2 uppercase text-text-strong">{{ s.heading | default: 'Drop 05 · Field System' }}</h2>
+          {%- if s.text != blank -%}
+            <div class="mt-4 max-w-md text-body text-text-muted [&_p]:m-0">{{ s.text }}</div>
+          {%- endif -%}
+        </div>
+
+        <div class="flex flex-col gap-6">
+          <div data-live class="{% unless live %}hidden {% endunless %}flex items-center gap-3 font-display text-h1 uppercase text-text-strong" {% unless live %}aria-hidden="true"{% endunless %}>
+            <span class="h-3 w-3 animate-pulse rounded-full bg-accent" aria-hidden="true"></span> Live now
+          </div>
+          <div data-timer class="{% if live %}hidden {% endif %}flex gap-3" aria-label="Time until drop"{% if live %} aria-hidden="true"{% endif %}>
+            {%- assign units = 'days,Days|hrs,Hrs|min,Min|sec,Sec' | split: '|' -%}
+            {%- for u in units -%}
+              {%- assign parts = u | split: ',' -%}
+              {%- assign key = parts[0] -%}
+              {%- assign lbl = parts[1] -%}
+              {%- case key -%}
+                {%- when 'days' -%}{%- assign val = d_days -%}
+                {%- when 'hrs' -%}{%- assign val = d_hrs -%}
+                {%- when 'min' -%}{%- assign val = d_min -%}
+                {%- else -%}{%- assign val = d_sec -%}
+              {%- endcase -%}
+              {%- assign val_str = val | append: '' -%}
+              {%- if val < 10 -%}{%- assign val_str = val | prepend: '0' -%}{%- endif -%}
+              <div class="flex min-w-[4.5rem] flex-1 flex-col items-center border border-border-hairline py-3">
+                <span data-unit="{{ key }}" class="font-display text-[clamp(2rem,5vw,3rem)] font-bold tabular-nums leading-none text-text-strong">{{ val_str }}</span>
+                <span class="mt-2 font-mono text-[10px] uppercase tracking-label text-text-muted">{{ lbl }}</span>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          {%- form 'customer', id: 'DropNotify', class: 'flex flex-col gap-2' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter, drop-notify">
+            <label for="drop-email" class="sr-only">{{ 'newsletter.label' | t | default: 'Email' }}</label>
+            {%- if form.posted_successfully? -%}
+              <p class="flex items-center gap-2 border border-accent px-4 py-3 font-mono text-xs uppercase tracking-label text-text-strong">
+                {%- render 'icon', name: 'arrow', size: 14, class: 'text-accent' -%} You&rsquo;re on the list — we&rsquo;ll ping you at drop.
+              </p>
+            {%- else -%}
+              <div class="flex gap-2">
+                <input
+                  id="drop-email"
+                  type="email"
+                  name="contact[email]"
+                  required
+                  autocomplete="email"
+                  placeholder="you@domain.com"
+                  class="min-w-0 flex-1 border border-border-strong bg-transparent px-4 py-3 font-mono text-sm text-text-strong outline-none placeholder:text-text-muted focus-visible:border-accent"
+                >
+                {%- render 'button', label: s.button_label | default: 'Notify me', type: 'submit', size: 'md' -%}
+              </div>
+              {%- if form.errors -%}
+                <p class="font-mono text-[11px] text-accent-press" role="alert">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+              {%- endif -%}
+            {%- endif -%}
+            <p class="font-mono text-[11px] text-text-muted">Early access + restock alerts. No noise.</p>
+          {%- endform -%}
+        </div>
+      </div>
+
+      {%- if show_ticker -%}
+        <div class="mt-10 flex items-center gap-3 border-t border-border-hairline pt-5" data-ticker data-items="{{ ticker_items | escape }}">
+          <span class="flex shrink-0 items-center gap-2 font-mono text-[11px] uppercase tracking-label text-text-muted">
+            <span class="h-2 w-2 rounded-full bg-accent" aria-hidden="true"></span> Live
+          </span>
+          <p data-ticker-text class="hp-reveal hp-reveal--fade is-in truncate font-mono text-xs text-text-body" aria-live="polite">A. Mercer just bought Shell-01 Hardshell</p>
+        </div>
+      {%- endif -%}
+    </drop-countdown>
+  </div>
+</section>
+<script src="{{ 'drop-countdown.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "t:sections.drop-system.name",
+  "tag": "section",
+  "class": "section section--drop-system",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "t:sections.drop-system.settings.kicker.label",
+      "default": "Next drop"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.drop-system.settings.heading.label",
+      "default": "Drop 05 · Field System"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.drop-system.settings.text.label"
+    },
+    {
+      "type": "text",
+      "id": "target_date",
+      "label": "t:sections.drop-system.settings.target_date.label",
+      "info": "t:sections.drop-system.settings.target_date.info",
+      "default": "2026-07-15T10:00:00"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.drop-system.settings.button_label.label",
+      "default": "Notify me"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ticker",
+      "label": "t:sections.drop-system.settings.show_ticker.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.drop-system.settings.color_scheme.label",
+      "default": "scheme-3"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.drop-system.settings.padding_top.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.drop-system.settings.padding_bottom.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.drop-system.presets.name"
+    }
+  ]
+}
+{% endschema %}

@@ -33,6 +33,9 @@ import { Video } from "./video";
 import { BlogPosts } from "./blog-posts";
 import { CustomLiquid } from "./custom-liquid";
 import { MapSection } from "./map";
+import { Lookbook } from "./lookbook";
+import { BuildYourKit } from "./build-your-kit";
+import { DropSystem } from "./drop-system";
 
 export function registerSections(): void {
   registerSection("rich-text", RichText);
@@ -75,6 +78,9 @@ export function registerSections(): void {
   registerSection("blog-posts", BlogPosts);
   registerSection("custom-liquid", CustomLiquid);
   registerSection("map", MapSection);
+  registerSection("lookbook", Lookbook);
+  registerSection("build-your-kit", BuildYourKit);
+  registerSection("drop-system", DropSystem);
 }
 
 registerSections();
