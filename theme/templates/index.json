@@ -23,6 +23,7 @@
     },
     "drop": {
       "type": "drop-system",
+      "disabled": true,
       "settings": {
         "kicker": "Launch telemetry",
         "heading": "Drop 05 · Storm commute",
@@ -32,16 +33,17 @@
     },
     "arrivals": {
       "type": "featured-collection",
-      "settings": {
-        "heading": "New arrivals",
+        "settings": {
+        "heading": "Shop the live system",
         "collection": "new-arrivals",
-        "products_to_show": 8,
+        "products_to_show": 4,
         "columns_desktop": 4,
         "columns_mobile": "2"
       }
     },
     "categories": {
       "type": "collection-list",
+      "disabled": true,
       "settings": {
         "heading": "Shop by category",
         "collection_list": [
@@ -53,6 +55,7 @@
     },
     "featured": {
       "type": "featured-product",
+      "disabled": true,
       "settings": {
         "heading": "Hero piece",
         "product": "shell-jacket"
@@ -230,6 +233,7 @@
     },
     "gallery": {
       "type": "image-gallery",
+      "disabled": true,
       "settings": {
         "heading": "In the field"
       },
@@ -320,6 +324,7 @@
     },
     "testimonials": {
       "type": "testimonials",
+      "disabled": true,
       "settings": {
         "kicker": "Field reports",
         "heading": "What people say"
@@ -367,6 +372,7 @@
     },
     "blogposts": {
       "type": "blog-posts",
+      "disabled": true,
       "settings": {
         "heading": "From the journal",
         "posts_to_show": 3
@@ -388,18 +394,12 @@
   "order": [
     "hero",
     "marquee",
-    "drop",
     "arrivals",
-    "categories",
-    "featured",
     "kit",
     "editorial",
     "route",
     "lookbook",
-    "gallery",
     "trust",
-    "testimonials",
-    "blogposts",
     "newsletter"
   ]
 }

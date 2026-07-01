@@ -36,7 +36,15 @@
       {%- endif -%}
       {%- if s.button_label != blank -%}
         <div class="mt-2 {% unless s.alignment == 'left' %}mx-auto{% endunless %}">
-          {%- render 'button', label: s.button_label, href: s.button_link | default: '#', variant: s.button_style | default: 'primary', size: 'md' -%}
+          {%- if on_image -%}
+            {%- if s.button_style == 'secondary' -%}
+              <a href="{{ s.button_link | default: '#' }}" class="inline-flex min-h-[44px] items-center justify-center gap-2 border border-paper/70 px-6 py-3 font-mono text-sm uppercase tracking-wide text-paper transition-colors hover:bg-paper hover:text-ink-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper">{{ s.button_label }}</a>
+            {%- else -%}
+              <a href="{{ s.button_link | default: '#' }}" class="inline-flex min-h-[44px] items-center justify-center gap-2 bg-paper px-6 py-3 font-mono text-sm uppercase tracking-wide text-ink-950 transition-colors hover:bg-accent hover:text-accent-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper">{{ s.button_label }}</a>
+            {%- endif -%}
+          {%- else -%}
+            {%- render 'button', label: s.button_label, href: s.button_link | default: '#', variant: s.button_style | default: 'primary', size: 'md' -%}
+          {%- endif -%}
         </div>
       {%- endif -%}
     </div>
