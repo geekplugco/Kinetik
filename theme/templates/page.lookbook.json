@@ -102,6 +102,51 @@
         "s6"
       ]
     },
+    "collection_story": {
+      "type": "collection-story",
+      "settings": {
+        "kicker": "SS26 · Field System",
+        "heading": "From membrane to drop",
+        "width": "page",
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "c1": {
+          "type": "chapter",
+          "settings": {
+            "label": "01 — Material",
+            "heading": "3-layer membrane, sourced first",
+            "text": "<p>Every piece starts with the shell: a 3-layer waterproof-breathable membrane rated 20k/20k, taped at every seam before a single panel is cut.</p>",
+            "image": "shopify://shop_images/03-vest-torso.png",
+            "button_label": "Shop the system",
+            "button_link": "shopify://collections/frontpage"
+          }
+        },
+        "c2": {
+          "type": "chapter",
+          "settings": {
+            "label": "02 — Field test",
+            "heading": "Broken in on the route",
+            "text": "<p>Prototypes ran the full commute-to-trail loop for a season — abrasion, storm load, pack friction — until the pattern earned its spec sheet.</p>",
+            "image": "shopify://shop_images/08-hero-back-wide.png"
+          }
+        },
+        "c3": {
+          "type": "chapter",
+          "settings": {
+            "label": "03 — Release",
+            "heading": "One system, shipped complete",
+            "text": "<p>The final kit drops as a coordinated system — shell, layers, carry — each piece coded to work with the next.</p>",
+            "image": "shopify://shop_images/09-paired-hero.png",
+            "button_label": "Shop the drop",
+            "button_link": "shopify://collections/frontpage"
+          }
+        }
+      },
+      "block_order": ["c1", "c2", "c3"]
+    },
     "marquee": {
       "type": "marquee",
       "settings": {
@@ -166,6 +211,7 @@
   },
   "order": [
     "lookbook",
+    "collection_story",
     "marquee",
     "newsletter",
     "route_map"

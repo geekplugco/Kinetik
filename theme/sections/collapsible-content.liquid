@@ -49,7 +49,7 @@
           <div data-acc-item{% if item_pad != blank %} class="{{ item_pad }}"{% endif %}>
             <button type="button" data-acc-trigger aria-expanded="false" aria-controls="{{ panel_id }}" class="group flex min-h-[44px] w-full items-center justify-between gap-4 py-5 text-left">
               <span class="font-sans text-h4 text-text-strong">{{ block.settings.heading | default: 'Question' }}</span>
-              <span data-acc-icon-closed class="transition-transform group-hover:translate-x-1">{% render 'icon', name: 'arrow', class: 'rotate-90' %}</span>
+              <span data-acc-icon-closed class="transition-transform">{% render 'icon', name: 'arrow', class: 'rotate-90' %}</span>
               <span data-acc-icon-open class="hidden">{% render 'icon', name: 'close' %}</span>
             </button>
             <div id="{{ panel_id }}" data-acc-panel hidden class="pb-5 text-body text-text-body">{{ block.settings.content }}</div>

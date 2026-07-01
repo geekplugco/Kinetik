@@ -1,0 +1,171 @@
+{%- liquid
+  assign s = section.settings
+  assign chapters = section.blocks | where: 'type', 'chapter'
+  case s.width
+    when 'full'
+      assign width_cls = 'max-w-none'
+    when 'narrow'
+      assign width_cls = 'max-w-4xl'
+    else
+      assign width_cls = 'max-w-[var(--page-width)]'
+  endcase
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px"
+  class="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
+>
+  <div class="mx-auto {{ width_cls }} px-6">
+    {%- if s.kicker != blank or s.heading != blank -%}
+      <div class="mb-12 flex max-w-3xl flex-col gap-3 md:mb-16">
+        {%- if s.kicker != blank -%}<span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.kicker }}</span>{%- endif -%}
+        {%- if s.heading != blank -%}<h2 class="font-display text-[clamp(2rem,4vw,3.25rem)] font-bold uppercase leading-[0.95] tracking-tight text-text-strong">{{ s.heading }}</h2>{%- endif -%}
+      </div>
+    {%- endif -%}
+    <ol class="flex flex-col">
+      {%- for block in chapters -%}
+        {%- assign b = block.settings -%}
+        <li class="hp-reveal hp-reveal--fade grid grid-cols-[2rem_1fr] gap-x-4 md:grid-cols-[3.5rem_1fr] md:gap-x-8" {{ block.shopify_attributes }}>
+          <div class="relative flex justify-center">
+            <span class="absolute inset-y-0 w-px bg-border-hairline" aria-hidden="true"></span>
+            <span class="relative z-10 mt-0.5 flex h-6 w-6 items-center justify-center rounded-full border border-border-strong bg-surface-page font-mono text-[10px] text-text-strong">{{ forloop.index }}</span>
+          </div>
+          <div class="pb-12 last:pb-0 md:pb-20">
+            {%- if b.label != blank -%}<span class="font-mono text-[11px] uppercase tracking-label text-accent-press">{{ b.label }}</span>{%- endif -%}
+            {%- if b.heading != blank -%}<h3 class="mt-1.5 font-display text-h3 tracking-tight text-text-strong">{{ b.heading }}</h3>{%- endif -%}
+            {%- if b.image != blank -%}
+              <div class="group mt-4 max-w-lg">
+                <div class="kx-media-effect relative aspect-[16/10] overflow-hidden">
+                  {%- assign story_alt = b.image.alt | default: b.heading | default: s.heading -%}
+                  {{ b.image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', sizes: '(min-width:750px) 48vw, 100vw', alt: story_alt, class: 'h-full w-full object-cover' }}
+                </div>
+              </div>
+            {%- endif -%}
+            {%- if b.text != blank -%}<div class="mt-3 max-w-lg text-body text-text-muted [&_p]:m-0 [&_p]:mt-2">{{ b.text }}</div>{%- endif -%}
+            {%- if b.button_label != blank -%}
+              <a href="{{ b.button_link | default: '#' }}" class="group/link mt-4 inline-flex min-h-[44px] items-center gap-2 font-mono text-xs uppercase tracking-label text-text-strong hover:text-accent-press">{{ b.button_label }}<span class="transition-transform group-hover/link:translate-x-0.5 motion-reduce:transform-none">{%- render 'icon', name: 'arrow', size: 14 -%}</span></a>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- else -%}
+        <li class="border border-border-hairline py-16 text-center">
+          <p class="font-mono text-xs uppercase tracking-label text-text-muted">Add chapters to build your collection story.</p>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.collection-story.name",
+  "tag": "section",
+  "class": "section section--collection-story",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "t:sections.collection-story.settings.kicker.label",
+      "default": "The story"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.collection-story.settings.heading.label",
+      "default": "How the collection came together"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.collection-story.settings.width.label",
+      "default": "page",
+      "options": [
+        { "value": "narrow", "label": "t:sections.collection-story.settings.width.options__1.label" },
+        { "value": "page", "label": "t:sections.collection-story.settings.width.options__2.label" },
+        { "value": "full", "label": "t:sections.collection-story.settings.width.options__3.label" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.collection-story.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.collection-story.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72,
+      "label": "t:sections.collection-story.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72,
+      "label": "t:sections.collection-story.settings.padding_bottom.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chapter",
+      "name": "t:sections.collection-story.blocks.chapter.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.collection-story.blocks.chapter.settings.label.label",
+          "default": "Chapter"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.collection-story.blocks.chapter.settings.heading.label",
+          "default": "A moment in the process"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.collection-story.blocks.chapter.settings.text.label",
+          "default": "<p>Describe this step of the story — the material, the field test, the release.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.collection-story.blocks.chapter.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:sections.collection-story.blocks.chapter.settings.button_label.label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.collection-story.blocks.chapter.settings.button_link.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "t:sections.collection-story.presets.name",
+      "blocks": [
+        { "type": "chapter" },
+        { "type": "chapter" },
+        { "type": "chapter" }
+      ]
+    }
+  ]
+}
+{% endschema %}
