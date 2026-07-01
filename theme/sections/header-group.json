@@ -11,7 +11,20 @@
         "show_free_shipping_goal": true,
         "free_shipping_threshold": 150,
         "show_cart_note": true
-      }
+      },
+      "blocks": {
+        "mega_panel_new_arrivals": {
+          "type": "mega_panel",
+          "settings": {
+            "menu_item": "New Arrivals",
+            "kicker": "SS26 · Drop 04",
+            "heading": "Fresh off the line",
+            "products_heading": "Just landed",
+            "cta_label": "Shop new arrivals"
+          }
+        }
+      },
+      "block_order": ["mega_panel_new_arrivals"]
     }
   },
   "order": [
