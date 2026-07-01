@@ -1,0 +1,141 @@
+{%- liquid
+  assign s = section.settings
+  case s.height
+    when 'compact'
+      assign h_cls = 'min-h-[40vh] py-16'
+    when 'tall'
+      assign h_cls = 'min-h-[85vh] py-24'
+    else
+      assign h_cls = 'min-h-[60vh] py-20'
+  endcase
+  assign on_image = false
+  if s.image != blank
+    assign on_image = true
+  endif
+  assign overlay = s.overlay_opacity | default: 45 | divided_by: 100.0
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+  class="relative isolate flex overflow-hidden {{ h_cls }} {% if on_image %}bg-ink-950{% else %}bg-surface-page{% endif %}"
+>
+  {%- if on_image -%}
+    {%- assign stmt_alt = s.image.alt | default: s.quote | strip_html | truncate: 120 -%}
+    {{ s.image | image_url: width: 2400 | image_tag: loading: 'lazy', widths: '750,1100,1600,2000,2400', sizes: '100vw', alt: stmt_alt, class: 'absolute inset-0 -z-10 h-full w-full object-cover' }}
+    <div class="absolute inset-0 -z-10 bg-ink-950" style="opacity:{{ overlay }}" aria-hidden="true"></div>
+  {%- endif -%}
+  <div class="mx-auto flex w-full max-w-[var(--page-width)] flex-col justify-center px-6 {% if s.alignment == 'left' %}items-start text-left{% else %}items-center text-center{% endif %}">
+    <div class="flex max-w-4xl flex-col gap-6 {% unless s.alignment == 'left' %}mx-auto{% endunless %}">
+      {%- if s.eyebrow != blank -%}
+        <span class="font-mono text-xs uppercase tracking-label {% if on_image %}text-paper/80{% else %}text-text-muted{% endif %}">{{ s.eyebrow }}</span>
+      {%- endif -%}
+      {%- if s.quote != blank -%}
+        <blockquote class="font-display text-[clamp(1.75rem,5vw,4rem)] font-bold uppercase leading-[0.98] tracking-tight {% if on_image %}text-paper{% else %}text-text-strong{% endif %} [&_p]:m-0">{{ s.quote }}</blockquote>
+      {%- endif -%}
+      {%- if s.attribution != blank -%}
+        <span class="font-mono text-xs uppercase tracking-label {% if on_image %}text-paper/70{% else %}text-text-muted{% endif %}">&mdash; {{ s.attribution }}</span>
+      {%- endif -%}
+      {%- if s.button_label != blank -%}
+        <div class="mt-2 {% unless s.alignment == 'left' %}mx-auto{% endunless %}">
+          {%- render 'button', label: s.button_label, href: s.button_link | default: '#', variant: s.button_style | default: 'primary', size: 'md' -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.statement.name",
+  "tag": "section",
+  "class": "section section--statement",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.statement.settings.eyebrow.label",
+      "default": "Manifesto"
+    },
+    {
+      "type": "richtext",
+      "id": "quote",
+      "label": "t:sections.statement.settings.quote.label",
+      "default": "<p>Built for the field, styled for the street.</p>"
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "t:sections.statement.settings.attribution.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.statement.settings.image.label"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 45,
+      "label": "t:sections.statement.settings.overlay_opacity.label"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:sections.statement.settings.alignment.label",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "t:sections.statement.settings.alignment.options__1.label" },
+        { "value": "center", "label": "t:sections.statement.settings.alignment.options__2.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:sections.statement.settings.height.label",
+      "default": "medium",
+      "options": [
+        { "value": "compact", "label": "t:sections.statement.settings.height.options__1.label" },
+        { "value": "medium", "label": "t:sections.statement.settings.height.options__2.label" },
+        { "value": "tall", "label": "t:sections.statement.settings.height.options__3.label" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.statement.settings.header__1.content"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.statement.settings.button_label.label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.statement.settings.button_link.label"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "t:sections.statement.settings.button_style.label",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "t:sections.statement.settings.button_style.options__1.label" },
+        { "value": "secondary", "label": "t:sections.statement.settings.button_style.options__2.label" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.statement.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.statement.presets.name"
+    }
+  ]
+}
+{% endschema %}
