@@ -20,14 +20,42 @@ if (!customElements.get('collection-facets')) {
           });
         });
 
-        this.querySelectorAll('input[type="checkbox"]').forEach((input) => {
+        this.querySelectorAll('input[type="checkbox"]:not([data-client-filter])').forEach((input) => {
           input.addEventListener('change', () => {
             if (window.matchMedia('(min-width: 750px)').matches && this.form) this.form.submit();
           });
         });
 
+        this.grid = document.querySelector('[data-grid]');
+        this.count = document.querySelector('[data-count]');
+        this.clientFilterInputs = Array.from(this.querySelectorAll('[data-client-filter]'));
+        this.clientFilterInputs.forEach((input) => {
+          input.addEventListener('change', this.applyClientFilters.bind(this));
+        });
+
         this.onKey = this.onKey.bind(this);
         document.addEventListener('keydown', this.onKey);
+      }
+
+      applyClientFilters() {
+        if (!this.grid) return;
+        var active = {};
+        this.clientFilterInputs.forEach((input) => {
+          if (!input.checked) return;
+          var key = input.dataset.clientFilter;
+          (active[key] = active[key] || []).push(input.value);
+        });
+        var items = Array.from(this.grid.querySelectorAll('[data-product-item]'));
+        var visible = 0;
+        items.forEach((item) => {
+          var matches = Object.keys(active).every((key) => {
+            var values = (item.dataset['option' + key.charAt(0).toUpperCase() + key.slice(1)] || '').split('|');
+            return active[key].some((v) => values.indexOf(v) !== -1);
+          });
+          item.classList.toggle('hidden', !matches);
+          if (matches) visible += 1;
+        });
+        if (this.count) this.count.textContent = visible + ' products';
       }
 
       disconnectedCallback() {

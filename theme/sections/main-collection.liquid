@@ -118,7 +118,19 @@
               </div>
             </a>
           {%- endif -%}
-          <div>
+          {%- liquid
+            assign pc_colors = ''
+            assign pc_sizes = ''
+            for option in product.options_with_values
+              assign oname = option.name | downcase
+              if oname contains 'color' or oname contains 'colour'
+                assign pc_colors = option.values | join: '|'
+              elsif oname contains 'size'
+                assign pc_sizes = option.values | join: '|'
+              endif
+            endfor
+          -%}
+          <div data-product-item data-option-color="{{ pc_colors }}" data-option-size="{{ pc_sizes }}">
             {%- render 'product-card', product: product -%}
           </div>
         {%- else -%}

@@ -87,7 +87,7 @@
         {%- for value in color_list -%}
           {%- if value == blank -%}{%- continue -%}{%- endif -%}
           <label class="flex min-h-[44px] items-center gap-3 text-sm text-text-body">
-            <input type="checkbox" name="filter.v.option.color" value="{{ value | escape }}" class="h-4 w-4 border border-border-strong accent-[var(--accent)]">
+            <input type="checkbox" data-client-filter="color" value="{{ value | escape }}" class="h-4 w-4 border border-border-strong accent-[var(--accent)]">
             <span>{{ value }}</span>
           </label>
         {%- endfor -%}
@@ -107,7 +107,7 @@
         {%- for value in size_list -%}
           {%- if value == blank -%}{%- continue -%}{%- endif -%}
           <label class="flex min-h-[44px] items-center gap-3 text-sm text-text-body">
-            <input type="checkbox" name="filter.v.option.size" value="{{ value | escape }}" class="h-4 w-4 border border-border-strong accent-[var(--accent)]">
+            <input type="checkbox" data-client-filter="size" value="{{ value | escape }}" class="h-4 w-4 border border-border-strong accent-[var(--accent)]">
             <span>{{ value }}</span>
           </label>
         {%- endfor -%}
