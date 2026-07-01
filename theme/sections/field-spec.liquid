@@ -71,7 +71,7 @@
                 {{ section.settings.size_guide_label | default: 'Size guide' }}
                 <span aria-hidden="true">&#8599;</span>
               </button>
-              <div data-size-guide-modal hidden class="fixed inset-0 z-50">
+              <div data-size-guide-modal hidden class="fixed inset-0 z-50 opacity-0 transition-opacity duration-300 motion-reduce:transition-none [&.is-open]:opacity-100">
                 <div data-size-guide-close class="absolute inset-0 bg-ink-950/85"></div>
                 <div role="dialog" aria-modal="true" aria-label="{{ section.settings.size_guide_label | default: 'Size guide' | escape }}" class="absolute inset-x-0 bottom-0 mx-auto max-h-[85vh] w-full overflow-y-auto border-t border-border-strong bg-surface-page md:inset-y-0 md:right-0 md:left-auto md:max-h-none md:w-[28rem] md:border-l md:border-t-0">
                   <div class="flex items-center justify-between border-b border-border-hairline px-6 py-4">

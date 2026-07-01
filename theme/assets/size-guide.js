@@ -17,20 +17,32 @@ if (!customElements.get('size-guide')) {
       }
 
       open() {
+        this.token = (this.token || 0) + 1;
         this.modal.hidden = false;
-        document.body.style.overflow = 'hidden';
+        if (window.KinetikOverlay) window.KinetikOverlay.lockScroll();
+        else document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => this.modal.classList.add('is-open'));
         this.opener.setAttribute('aria-expanded', 'true');
         document.addEventListener('keydown', this.onKey);
         if (window.KinetikTrap) window.KinetikTrap.trap(this.panel || this.modal, this.opener);
       }
 
       close() {
-        this.modal.hidden = true;
-        document.body.style.overflow = '';
+        if (this.modal.hidden) return;
+        const token = (this.token = (this.token || 0) + 1);
+        this.modal.classList.remove('is-open');
+        if (window.KinetikOverlay) window.KinetikOverlay.unlockScroll();
+        else document.body.style.overflow = '';
         this.opener.setAttribute('aria-expanded', 'false');
         document.removeEventListener('keydown', this.onKey);
         if (window.KinetikTrap) window.KinetikTrap.release(true);
         else this.opener.focus();
+        const finish = () => {
+          if (token !== this.token) return;
+          this.modal.hidden = true;
+        };
+        if (window.KinetikOverlay) window.KinetikOverlay.afterTransition(this.modal, finish);
+        else setTimeout(finish, 320);
       }
 
       onKey(e) {
