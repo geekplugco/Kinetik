@@ -37,10 +37,7 @@ if (!customElements.get('material-scan')) {
           p.setAttribute('aria-pressed', p.dataset.index === index ? 'true' : 'false');
         });
         this.details.forEach(function (d) {
-          var on = d.dataset.index === index;
-          d.setAttribute('aria-expanded', on ? 'true' : 'false');
-          var body = d.querySelector('[data-scan-detail-body]');
-          if (body) body.classList.toggle('hidden', !on);
+          d.setAttribute('aria-pressed', d.dataset.index === index ? 'true' : 'false');
         });
       }
 
