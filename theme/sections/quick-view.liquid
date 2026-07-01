@@ -18,7 +18,7 @@
     <script type="application/json">
       [
         {%- for variant in product.variants -%}
-          {"id":{{ variant.id }},"options":{{ variant.options | json }},"available":{{ variant.available }},"price":{{ variant.price | money | json }},"compare_at":{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},"on_sale":{% if variant.compare_at_price > variant.price %}true{% else %}false{% endif %},"featured_image":{% if variant.featured_media %}{{ variant.featured_media | image_url: width: 800 | json }}{% else %}null{% endif %}}{%- unless forloop.last -%},{%- endunless -%}
+          {"id":{{ variant.id }},"options":{{ variant.options | json }},"available":{{ variant.available }},"price":{{ variant.price | money | json }},"compare_at":{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},"on_sale":{% if variant.compare_at_price > variant.price %}true{% else %}false{% endif %},"sku":{{ variant.sku | json }},"inventory_management":{{ variant.inventory_management | json }},"inventory_quantity":{{ variant.inventory_quantity }},"featured_image":{% if variant.featured_media %}{{ variant.featured_media | image_url: width: 800 | json }}{% else %}null{% endif %}}{%- unless forloop.last -%},{%- endunless -%}
         {%- endfor -%}
       ]
     </script>
@@ -28,6 +28,10 @@
       <h2 class="font-display text-h2 tracking-tight text-text-strong">{{ product.title }}</h2>
       <div data-price data-price-class="text-body-lg">{%- render 'price', variant: current_variant, class: 'text-body-lg' -%}</div>
       {%- if spec != blank -%}<span class="font-mono text-xs text-text-muted">{{ spec }}</span>{%- endif -%}
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+        <span data-variant-readout class="hidden font-mono text-[11px] uppercase tracking-label text-text-muted">SKU <span data-variant-sku></span></span>
+        <span data-inventory data-threshold="10" data-sold="{{ sold_label | escape }}" data-low="Only [n] left" data-in-stock="In stock" class="font-mono text-[11px] uppercase tracking-label"></span>
+      </div>
     </div>
 
     {%- form 'product', product, class: 'flex flex-col gap-5' -%}
@@ -59,8 +63,15 @@
         </div>
       {%- endunless -%}
 
-      <button type="submit" data-add-to-cart data-label-available="{{ atc_label | escape }}" data-label-soldout="{{ sold_label | escape }}" class="inline-flex w-full items-center justify-center gap-2 bg-accent px-6 py-3 font-mono text-sm uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40"{% unless current_variant.available %} disabled{% endunless %}>{% if current_variant.available %}{{ atc_label }}{% else %}{{ sold_label }}{% endif %}</button>
+      <button type="submit" data-add-to-cart data-label-available="{{ atc_label | escape }}" data-label-soldout="{{ sold_label | escape }}" data-label-loading="Adding&hellip;" class="inline-flex w-full items-center justify-center gap-2 bg-accent px-6 py-3 font-mono text-sm uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40"{% unless current_variant.available %} disabled{% endunless %}>{% if current_variant.available %}{{ atc_label }}{% else %}{{ sold_label }}{% endif %}</button>
+      <p data-atc-error role="alert" class="font-mono text-xs text-negative empty:hidden"></p>
     {%- endform -%}
+
+    <div class="flex flex-wrap gap-x-4 gap-y-1 border-t border-border-hairline pt-4 font-mono text-[10px] uppercase tracking-label text-text-muted">
+      <span>Ships in 1&ndash;2 days</span>
+      <span>30-day returns</span>
+      <span>Field-tested build</span>
+    </div>
 
     <a href="{{ product.url }}" class="font-mono text-xs uppercase tracking-label text-text-muted underline underline-offset-4 hover:text-accent-press">View full details</a>
   </variant-picker>
