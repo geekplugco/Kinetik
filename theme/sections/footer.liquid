@@ -7,7 +7,13 @@
   {%- if footer_style == 'compact' -%}
     <div class="mx-auto flex max-w-[var(--page-width)] flex-col gap-8 px-6 py-8 md:flex-row md:items-center md:justify-between">
       <div class="max-w-md">
-        <a href="{{ routes.root_url }}" class="font-display text-[1.5rem] font-bold uppercase leading-none text-text-strong" aria-label="{{ shop.name | escape }}">{{ shop.name | upcase }}<span class="text-accent">.</span></a>
+        <a href="{{ routes.root_url }}" class="block text-text-strong" aria-label="Kinetik">
+          {%- if settings.logo != blank -%}
+            {{ settings.logo | image_url: width: 420 | image_tag: alt: 'Kinetik', widths: '180,300,420', loading: 'lazy', style: 'max-width:180px', class: 'h-auto w-auto' }}
+          {%- else -%}
+            {%- render 'brand-logo', class: 'h-7 w-auto text-current' -%}
+          {%- endif -%}
+        </a>
         <p class="mt-3 font-mono text-xs uppercase tracking-label text-text-muted">{{ s.tagline | default: 'No noise. Drops, restocks, field notes.' }}</p>
       </div>
       <nav aria-label="Footer" class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-label">
@@ -23,7 +29,7 @@
       {%- endform -%}
     </div>
     <div class="mx-auto flex max-w-[var(--page-width)] flex-col items-center justify-between gap-3 border-t border-border-hairline px-6 py-5 font-mono text-xs text-text-muted md:flex-row">
-      <span>&copy; {{ shop.name }}. Engineered for movement.</span>
+      <span>&copy; {{ 'now' | date: '%Y' }} Kinetik. Engineered for movement.</span>
       {%- if s.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
         <div class="flex flex-wrap items-center gap-2">
           {%- for type in shop.enabled_payment_types -%}
@@ -71,7 +77,13 @@
     </div>
     <div aria-hidden="true" class="overflow-hidden px-6">
       <div class="mx-auto max-w-[var(--page-width)]">
-        <span class="block select-none whitespace-normal font-display text-[clamp(2.5rem,11vw,17rem)] font-bold uppercase leading-[0.85] tracking-[-0.04em] text-text-strong md:whitespace-nowrap md:leading-[0.78] md:tracking-[-0.05em]">{{ shop.name }}<span class="text-accent">.</span></span>
+        <div class="py-6 text-text-strong">
+          {%- if settings.logo != blank -%}
+            {{ settings.logo | image_url: width: 1600 | image_tag: alt: 'Kinetik', widths: '600,1000,1600', loading: 'lazy', class: 'h-auto w-full max-w-none' }}
+          {%- else -%}
+            {%- render 'brand-logo', class: 'h-auto w-full text-current' -%}
+          {%- endif -%}
+        </div>
       </div>
     </div>
   {%- elsif footer_style == 'split' -%}
@@ -110,94 +122,108 @@
       </div>
     </div>
   {%- else -%}
-  <div class="border-b border-border-hairline">
-    <div class="mx-auto grid max-w-[var(--page-width)] gap-8 px-6 py-14 md:grid-cols-[1.25fr_1fr] md:items-end md:py-16">
-      <div>
-        <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.newsletter_heading | default: 'The drop list' }}</span>
-        <h2 class="mt-3 font-display text-display-2 uppercase text-text-strong">{{ s.cta_heading | default: 'Stay in the system' }}</h2>
-      </div>
-      {%- form 'customer', class: 'flex flex-col gap-3' -%}
-        <input type="hidden" name="contact[tags]" value="newsletter">
-        <label for="Footer-email-{{ section.id }}" class="sr-only">{{ 'newsletter.label' | t | default: 'Email' }}</label>
-        {%- if form.posted_successfully? -%}
-          <p class="font-mono text-xs uppercase tracking-label text-text-muted">{{ 'newsletter.success' | t | default: 'Thanks for subscribing.' }}</p>
-        {%- else -%}
-          <div class="flex gap-2">
-            <input id="Footer-email-{{ section.id }}" type="email" name="contact[email]" required placeholder="you@domain.com" class="min-w-0 flex-1 border border-border-strong bg-transparent px-4 py-3 font-mono text-sm text-text-strong outline-none placeholder:text-text-muted focus-visible:border-accent">
-            {%- render 'button', label: 'Subscribe', type: 'submit', size: 'md' -%}
+  <div class="border-y border-border-hairline">
+    <div class="mx-auto grid max-w-[var(--page-width)] gap-px bg-border-hairline px-6">
+      <div class="grid gap-px bg-border-hairline md:grid-cols-[1.1fr_0.9fr]">
+        <div class="bg-surface-page p-6 md:p-8">
+          <a href="{{ routes.root_url }}" class="block text-text-strong" aria-label="Kinetik">
+            {%- if settings.logo != blank -%}
+              {{ settings.logo | image_url: width: 1600 | image_tag: alt: 'Kinetik', widths: '600,1000,1600', loading: 'lazy', class: 'h-auto w-full max-w-[760px]' }}
+            {%- else -%}
+              {%- render 'brand-logo', class: 'h-auto w-full max-w-[760px] text-current' -%}
+            {%- endif -%}
+          </a>
+          <div class="mt-6 grid gap-px bg-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted md:grid-cols-3">
+            <span class="bg-surface-page p-3">System footer</span>
+            <span class="bg-surface-page p-3">SS26 field kit</span>
+            <span class="bg-surface-page p-3 text-text-strong">{{ localization.country.currency.iso_code | default: 'USD' }}</span>
           </div>
-        {%- endif -%}
-        <p class="font-mono text-xs text-text-muted">{{ s.tagline | default: 'No noise. Drops, restocks, field notes.' }}</p>
-      {%- endform -%}
-    </div>
-  </div>
+        </div>
 
-  <div class="border-b border-border-hairline">
-    <div class="mx-auto grid max-w-[var(--page-width)] gap-8 px-6 py-12 md:grid-cols-4">
-      <nav aria-label="Footer" class="flex flex-col gap-3">
-        <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.menu_heading | default: 'Shop' }}</span>
-        {%- for link in menu.links -%}
-          <a href="{{ link.url }}" class="text-sm text-text-body transition-colors hover:text-text-strong">{{ link.title }}</a>
-        {%- endfor -%}
-      </nav>
-
-      <div class="flex flex-col gap-3">
-        <span class="font-mono text-xs uppercase tracking-label text-text-muted">Support</span>
-        <a href="/pages/contact" class="text-sm text-text-body transition-colors hover:text-text-strong">Contact</a>
-        <a href="/pages/shipping" class="text-sm text-text-body transition-colors hover:text-text-strong">Shipping &amp; returns</a>
-        <a href="/pages/faq" class="text-sm text-text-body transition-colors hover:text-text-strong">FAQ</a>
-        <a href="/pages/warranty" class="text-sm text-text-body transition-colors hover:text-text-strong">Warranty</a>
+        <div class="bg-surface-page p-6 md:p-8">
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.newsletter_heading | default: 'The drop list' }}</span>
+          <h2 class="mt-3 font-display text-h3 tracking-tight text-text-strong">{{ s.cta_heading | default: 'Stay in the system' }}</h2>
+          {%- form 'customer', class: 'mt-7 flex flex-col gap-3' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <label for="Footer-email-{{ section.id }}" class="sr-only">{{ 'newsletter.label' | t | default: 'Email' }}</label>
+            {%- if form.posted_successfully? -%}
+              <p class="font-mono text-xs uppercase tracking-label text-text-muted">{{ 'newsletter.success' | t | default: 'Thanks for subscribing.' }}</p>
+            {%- else -%}
+              <div class="flex gap-2">
+                <input id="Footer-email-{{ section.id }}" type="email" name="contact[email]" required placeholder="you@domain.com" class="min-w-0 flex-1 border border-border-strong bg-transparent px-4 py-3 font-mono text-sm text-text-strong outline-none placeholder:text-text-muted focus-visible:border-accent">
+                {%- render 'button', label: 'Join', type: 'submit', size: 'md' -%}
+              </div>
+            {%- endif -%}
+            <p class="font-mono text-xs text-text-muted">{{ s.tagline | default: 'No noise. Drops, restocks, field notes.' }}</p>
+          {%- endform -%}
+        </div>
       </div>
 
-      <div class="flex flex-col gap-3">
-        <span class="font-mono text-xs uppercase tracking-label text-text-muted">Follow</span>
-        {%- if s.show_social -%}
-          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" class="text-sm text-text-body transition-colors hover:text-text-strong" rel="noopener" target="_blank">Instagram</a>{%- endif -%}
-          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" class="text-sm text-text-body transition-colors hover:text-text-strong" rel="noopener" target="_blank">TikTok</a>{%- endif -%}
-          {%- if settings.social_youtube != blank -%}<a href="{{ settings.social_youtube }}" class="text-sm text-text-body transition-colors hover:text-text-strong" rel="noopener" target="_blank">YouTube</a>{%- endif -%}
-          {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" class="text-sm text-text-body transition-colors hover:text-text-strong" rel="noopener" target="_blank">Facebook</a>{%- endif -%}
-          {%- if settings.social_x != blank -%}<a href="{{ settings.social_x }}" class="text-sm text-text-body transition-colors hover:text-text-strong" rel="noopener" target="_blank"><span>X</span></a>{%- endif -%}
-        {%- endif -%}
-        {%- if s.enable_follow_on_shop -%}
-          <follow-on-shop shop-id="{{ shop.id }}"></follow-on-shop>
-        {%- endif -%}
-      </div>
+      <div class="grid gap-px bg-border-hairline md:grid-cols-4">
+        <nav aria-label="Footer" class="flex flex-col gap-3 bg-surface-page p-6">
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.menu_heading | default: 'Shop' }}</span>
+          {%- for link in menu.links -%}
+            <a href="{{ link.url }}" class="text-sm text-text-body transition-colors hover:text-text-strong">{{ link.title }}</a>
+          {%- endfor -%}
+        </nav>
 
-      {%- if s.enable_country_selector or s.enable_language_selector -%}
-        <div class="flex flex-col gap-3 md:items-end">
-          <span class="font-mono text-xs uppercase tracking-label text-text-muted">Region</span>
-          {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
-            {%- form 'localization', id: 'FooterLoc-' | append: section.id, class: 'flex flex-col gap-2 font-mono text-xs uppercase tracking-label md:items-end' -%}
-              {%- if s.enable_country_selector and localization.available_countries.size > 1 -%}
-                <select name="country_code" aria-label="Country/region" class="bg-transparent text-text-body" onchange="this.form.submit()">
-                  {%- for country in localization.available_countries -%}
-                    <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>{{ country.name }} {{ country.currency.iso_code }}</option>
-                  {%- endfor -%}
-                </select>
-              {%- endif -%}
-              {%- if s.enable_language_selector and localization.available_languages.size > 1 -%}
-                <select name="locale_code" aria-label="Language" class="bg-transparent text-text-body" onchange="this.form.submit()">
-                  {%- for language in localization.available_languages -%}
-                    <option value="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>{{ language.endonym_name }}</option>
-                  {%- endfor -%}
-                </select>
-              {%- endif -%}
-              <noscript><button type="submit" class="underline underline-offset-4">Update</button></noscript>
-            {%- endform -%}
+        <div class="flex flex-col gap-3 bg-surface-page p-6">
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">Support</span>
+          <a href="/pages/contact" class="text-sm text-text-body transition-colors hover:text-text-strong">Contact</a>
+          <a href="/pages/shipping" class="text-sm text-text-body transition-colors hover:text-text-strong">Shipping &amp; returns</a>
+          <a href="/pages/faq" class="text-sm text-text-body transition-colors hover:text-text-strong">FAQ</a>
+          <a href="/pages/warranty" class="text-sm text-text-body transition-colors hover:text-text-strong">Warranty</a>
+        </div>
+
+        <div class="flex flex-col gap-3 bg-surface-page p-6">
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">Social</span>
+          {%- if s.show_social -%}
+            {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" class="text-sm text-text-body transition-colors hover:text-text-strong" rel="noopener" target="_blank">Instagram</a>{%- endif -%}
+            {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" class="text-sm text-text-body transition-colors hover:text-text-strong" rel="noopener" target="_blank">TikTok</a>{%- endif -%}
+            {%- if settings.social_youtube != blank -%}<a href="{{ settings.social_youtube }}" class="text-sm text-text-body transition-colors hover:text-text-strong" rel="noopener" target="_blank">YouTube</a>{%- endif -%}
+            {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" class="text-sm text-text-body transition-colors hover:text-text-strong" rel="noopener" target="_blank">Facebook</a>{%- endif -%}
+            {%- if settings.social_x != blank -%}<a href="{{ settings.social_x }}" class="text-sm text-text-body transition-colors hover:text-text-strong" rel="noopener" target="_blank"><span>X</span></a>{%- endif -%}
+          {%- endif -%}
+          {%- if s.enable_follow_on_shop -%}
+            <follow-on-shop shop-id="{{ shop.id }}"></follow-on-shop>
           {%- endif -%}
         </div>
-      {%- endif -%}
-    </div>
-  </div>
 
-  <div aria-hidden="true" class="overflow-hidden border-b border-border-hairline px-6">
-    <div class="mx-auto max-w-[var(--page-width)]">
-      <span class="block select-none whitespace-normal font-display text-[clamp(2.5rem,11vw,17rem)] font-bold uppercase leading-[0.85] tracking-[-0.04em] text-text-strong md:whitespace-nowrap md:leading-[0.78] md:tracking-[-0.05em]">{{ shop.name }}<span class="text-accent">.</span></span>
+        <div class="flex flex-col gap-3 bg-surface-page p-6">
+          <span class="font-mono text-xs uppercase tracking-label text-text-muted">Region</span>
+          {%- if s.enable_country_selector or s.enable_language_selector -%}
+            {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+              {%- form 'localization', id: 'FooterLoc-' | append: section.id, class: 'flex flex-col gap-2 font-mono text-xs uppercase tracking-label' -%}
+                {%- if s.enable_country_selector and localization.available_countries.size > 1 -%}
+                  <select name="country_code" aria-label="Country/region" class="bg-transparent text-text-body" onchange="this.form.submit()">
+                    {%- for country in localization.available_countries -%}
+                      <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>{{ country.name }} {{ country.currency.iso_code }}</option>
+                    {%- endfor -%}
+                  </select>
+                {%- endif -%}
+                {%- if s.enable_language_selector and localization.available_languages.size > 1 -%}
+                  <select name="locale_code" aria-label="Language" class="bg-transparent text-text-body" onchange="this.form.submit()">
+                    {%- for language in localization.available_languages -%}
+                      <option value="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>{{ language.endonym_name }}</option>
+                    {%- endfor -%}
+                  </select>
+                {%- endif -%}
+                <noscript><button type="submit" class="underline underline-offset-4">Update</button></noscript>
+              {%- endform -%}
+            {%- else -%}
+              <span class="text-sm text-text-body">{{ localization.country.name }} · {{ localization.country.currency.iso_code }}</span>
+            {%- endif -%}
+          {%- else -%}
+            <span class="text-sm text-text-body">{{ localization.country.name }} · {{ localization.country.currency.iso_code }}</span>
+            <span class="text-sm text-text-body">{{ localization.language.endonym_name }}</span>
+          {%- endif -%}
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="mx-auto flex max-w-[var(--page-width)] flex-col items-center justify-between gap-3 px-6 py-5 font-mono text-xs text-text-muted md:flex-row">
-    <span>&copy; {{ shop.name }}. Engineered for movement.</span>
+    <span>&copy; {{ 'now' | date: '%Y' }} Kinetik. Engineered for movement.</span>
     {%- if s.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
       <div class="flex flex-wrap items-center gap-2">
         {%- for type in shop.enabled_payment_types -%}

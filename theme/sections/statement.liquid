@@ -4,9 +4,9 @@
     when 'compact'
       assign h_cls = 'min-h-[40vh] py-16'
     when 'tall'
-      assign h_cls = 'min-h-[85vh] py-24'
+      assign h_cls = 'min-h-[70vh] py-24'
     else
-      assign h_cls = 'min-h-[60vh] py-20'
+      assign h_cls = 'min-h-[50vh] py-20'
   endcase
   assign on_image = false
   if s.image != blank
@@ -16,29 +16,29 @@
 -%}
 <section
   data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
-  class="relative isolate flex overflow-hidden {{ h_cls }} {% if on_image %}bg-ink-950{% else %}bg-surface-page{% endif %}"
+  class="relative isolate flex {{ h_cls }} {% if on_image %}bg-ink-950{% else %}bg-surface-page{% endif %}"
 >
   {%- if on_image -%}
     {%- assign stmt_alt = s.image.alt | default: s.quote | strip_html | truncate: 120 -%}
     {{ s.image | image_url: width: 2400 | image_tag: loading: 'lazy', widths: '750,1100,1600,2000,2400', sizes: '100vw', alt: stmt_alt, class: 'absolute inset-0 -z-10 h-full w-full object-cover' }}
     <div class="absolute inset-0 -z-10 bg-ink-950" style="opacity:{{ overlay }}" aria-hidden="true"></div>
   {%- endif -%}
-  <div class="mx-auto flex w-full max-w-[var(--page-width)] flex-col justify-center px-6 {% if s.alignment == 'left' %}items-start text-left{% else %}items-center text-center{% endif %}">
-    <div class="flex max-w-4xl flex-col gap-6 {% unless s.alignment == 'left' %}mx-auto{% endunless %}">
+  <div class="mx-auto flex w-full max-w-[var(--page-width)] flex-col justify-center px-6 py-4 {% if s.alignment == 'left' %}items-start text-left{% else %}items-center text-center{% endif %}">
+    <div class="flex max-w-[900px] flex-col gap-6 {% unless s.alignment == 'left' %}mx-auto{% endunless %}">
       {%- if s.eyebrow != blank -%}
         <span class="font-mono text-xs uppercase tracking-label {% if on_image %}text-paper/80{% else %}text-text-muted{% endif %}">{{ s.eyebrow }}</span>
       {%- endif -%}
       {%- if s.quote != blank -%}
-        <blockquote class="font-display text-[clamp(1.75rem,5vw,4rem)] font-bold uppercase leading-[0.98] tracking-tight {% if on_image %}text-paper{% else %}text-text-strong{% endif %} [&_p]:m-0">{{ s.quote }}</blockquote>
+        <blockquote class="font-display font-bold uppercase {% if on_image %}text-paper{% else %}text-text-strong{% endif %} [&_p]:m-0" style="font-size:clamp(2rem,6vw,5rem);line-height:.98;letter-spacing:-0.035em;text-wrap:balance;">{{ s.quote }}</blockquote>
       {%- endif -%}
       {%- if s.attribution != blank -%}
-        <span class="font-mono text-xs uppercase tracking-label {% if on_image %}text-paper/70{% else %}text-text-muted{% endif %}">&mdash; {{ s.attribution }}</span>
+        <span class="font-mono text-xs uppercase tracking-label {% if on_image %}text-paper/70{% else %}text-text-muted{% endif %}">{{ s.attribution }}</span>
       {%- endif -%}
       {%- if s.button_label != blank -%}
         <div class="mt-2 {% unless s.alignment == 'left' %}mx-auto{% endunless %}">
           {%- if on_image -%}
             {%- if s.button_style == 'secondary' -%}
-              <a href="{{ s.button_link | default: '#' }}" class="inline-flex min-h-[44px] items-center justify-center gap-2 border border-paper/70 px-6 py-3 font-mono text-sm uppercase tracking-wide text-paper transition-colors hover:bg-paper hover:text-ink-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper">{{ s.button_label }}</a>
+              <a href="{{ s.button_link | default: '#' }}" class="kx-hero-secondary inline-flex min-h-[44px] items-center justify-center gap-2 px-6 py-3 font-mono text-sm uppercase tracking-wide transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">{{ s.button_label }}</a>
             {%- else -%}
               <a href="{{ s.button_link | default: '#' }}" class="inline-flex min-h-[44px] items-center justify-center gap-2 bg-paper px-6 py-3 font-mono text-sm uppercase tracking-wide text-ink-950 transition-colors hover:bg-accent hover:text-accent-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper">{{ s.button_label }}</a>
             {%- endif -%}

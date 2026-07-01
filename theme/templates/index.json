@@ -21,44 +21,14 @@
         "text": "Ships in 24h · Gore-Tex 3L · Free returns 60d · Engineered for movement · Carbon-neutral · Field-tested"
       }
     },
-    "drop": {
-      "type": "drop-system",
-      "disabled": true,
-      "settings": {
-        "kicker": "Launch telemetry",
-        "heading": "Drop 05 · Storm commute",
-        "text": "<p>Shells, carry, base layers, and weather-ready audio. The next capsule opens with a controlled first run.</p>",
-        "target_date": "2026-07-15T10:00:00"
-      }
-    },
     "arrivals": {
       "type": "featured-collection",
-        "settings": {
+      "settings": {
         "heading": "Shop the live system",
         "collection": "new-arrivals",
         "products_to_show": 4,
         "columns_desktop": 4,
         "columns_mobile": "2"
-      }
-    },
-    "categories": {
-      "type": "collection-list",
-      "disabled": true,
-      "settings": {
-        "heading": "Shop by category",
-        "collection_list": [
-          "apparel",
-          "tech",
-          "new-arrivals"
-        ]
-      }
-    },
-    "featured": {
-      "type": "featured-product",
-      "disabled": true,
-      "settings": {
-        "heading": "Hero piece",
-        "product": "shell-jacket"
       }
     },
     "kit": {
@@ -231,53 +201,6 @@
         "l3"
       ]
     },
-    "gallery": {
-      "type": "image-gallery",
-      "disabled": true,
-      "settings": {
-        "heading": "In the field"
-      },
-      "blocks": {
-        "g1": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/09-paired-hero.png",
-            "size": "wide"
-          }
-        },
-        "g2": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/05-sling-worn.png"
-          }
-        },
-        "g3": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/07-cap-shadow.png"
-          }
-        },
-        "g4": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/06-detail-trio.png"
-          }
-        },
-        "g5": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/03b-vest-alt.png"
-          }
-        }
-      },
-      "block_order": [
-        "g1",
-        "g2",
-        "g3",
-        "g4",
-        "g5"
-      ]
-    },
     "trust": {
       "type": "multicolumn",
       "settings": {
@@ -321,62 +244,6 @@
         "c3",
         "c4"
       ]
-    },
-    "testimonials": {
-      "type": "testimonials",
-      "disabled": true,
-      "settings": {
-        "kicker": "Field reports",
-        "heading": "What people say"
-      },
-      "blocks": {
-        "t1": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "<p>The shell has been to three continents and back. Still the best technical jacket I've owned &mdash; nothing else holds up like it.</p>",
-            "author": "A. Mercer",
-            "role": "Photographer, Reykjavík"
-          }
-        },
-        "t2": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "<p>Considered, quiet, built to last.</p>",
-            "author": "J. Okafor",
-            "role": "Architect, Lagos"
-          }
-        },
-        "t3": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "<p>Audio that actually holds up on the move.</p>",
-            "author": "R. Vale",
-            "role": "Sound engineer, Berlin"
-          }
-        },
-        "t4": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "<p>Packs flat, wears light, takes a beating.</p>",
-            "author": "S. Haddad",
-            "role": "Bike courier, Montréal"
-          }
-        }
-      },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3",
-        "t4"
-      ]
-    },
-    "blogposts": {
-      "type": "blog-posts",
-      "disabled": true,
-      "settings": {
-        "heading": "From the journal",
-        "posts_to_show": 3
-      }
     },
     "newsletter": {
       "type": "newsletter",

@@ -35,18 +35,18 @@
 -%}
 
 {%- capture logo_html -%}
-  <a href="{{ routes.root_url }}" class="font-display text-[1.375rem] font-bold uppercase leading-none tracking-tight text-text-strong" aria-label="{{ shop.name | escape }}">
+  <a href="{{ routes.root_url }}" class="font-display text-[1.375rem] font-bold uppercase leading-none tracking-tight text-text-strong" aria-label="Kinetik">
     {%- if settings.logo != blank -%}
       {%- assign logo_w = settings.logo_width | default: 120 -%}
       {%- capture logo_style -%}max-width:{{ logo_w }}px{%- endcapture -%}
       {%- if settings.logo_mobile != blank -%}
-        {{ settings.logo | image_url: width: 480 | image_tag: alt: shop.name, widths: '120,240,360,480', loading: 'eager', style: logo_style, class: 'hidden h-auto w-auto md:block' }}
-        {{ settings.logo_mobile | image_url: width: 360 | image_tag: alt: shop.name, widths: '120,240,360', loading: 'eager', style: logo_style, class: 'h-auto w-auto md:hidden' }}
+        {{ settings.logo | image_url: width: 480 | image_tag: alt: 'Kinetik', widths: '120,240,360,480', loading: 'eager', style: logo_style, class: 'hidden h-auto w-auto md:block' }}
+        {{ settings.logo_mobile | image_url: width: 360 | image_tag: alt: 'Kinetik', widths: '120,240,360', loading: 'eager', style: logo_style, class: 'h-auto w-auto md:hidden' }}
       {%- else -%}
-        {{ settings.logo | image_url: width: 480 | image_tag: alt: shop.name, widths: '120,240,360,480', loading: 'eager', style: logo_style, class: 'h-auto w-auto' }}
+        {{ settings.logo | image_url: width: 480 | image_tag: alt: 'Kinetik', widths: '120,240,360,480', loading: 'eager', style: logo_style, class: 'h-auto w-auto' }}
       {%- endif -%}
     {%- else -%}
-      {{ shop.name | upcase }}<span class="text-accent">.</span>
+      {%- render 'brand-logo', class: 'h-6 w-auto text-current' -%}
     {%- endif -%}
   </a>
 {%- endcapture -%}
