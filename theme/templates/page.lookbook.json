@@ -207,6 +207,22 @@
       },
       "block_order": ["p1", "p2", "p3"]
     },
+    "compare_slider": {
+      "type": "compare-slider",
+      "settings": {
+        "subheading": "Field vs street",
+        "heading": "One shell, two contexts",
+        "before_image": "shopify://shop_images/02-fulllook-cropped.png",
+        "before_label": "Field",
+        "after_image": "shopify://shop_images/09-paired-hero.png",
+        "after_label": "Street",
+        "caption": "Drag to compare the full field system against the street loadout.",
+        "aspect": "wide",
+        "color_scheme": "scheme-1",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
@@ -280,6 +296,7 @@
     "marquee",
     "statement",
     "promo_grid",
+    "compare_slider",
     "newsletter",
     "route_map"
   ]

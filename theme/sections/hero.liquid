@@ -39,7 +39,7 @@
 {%- endcapture -%}
 
 {%- capture heading -%}
-  <h1 class="hp-reveal hp-reveal--mask font-display text-[clamp(3rem,8.5vw,6rem)] font-bold uppercase leading-[0.88] tracking-hero" style="--reveal-delay:80ms">{{ s.heading }}</h1>
+  <h1 class="hp-reveal hp-reveal--mask max-w-4xl font-display font-bold uppercase tracking-hero" style="--reveal-delay:80ms;font-size:clamp(2.75rem,7vw,5.25rem);line-height:.95;letter-spacing:-0.035em;">{{ s.heading }}</h1>
 {%- endcapture -%}
 
 {%- capture body -%}
@@ -50,7 +50,7 @@
     <div class="flex flex-wrap gap-3">
       {%- render 'button', label: btn_label, href: btn_link, variant: 'primary', size: 'md', icon: 'arrow', class: 'min-h-[44px] gap-3 px-8 py-4 text-sm' -%}
       {%- if s.button_label_2 != blank -%}
-        <a href="{{ s.button_link_2 | default: '#' }}" class="inline-flex min-h-[44px] items-center justify-center border border-ink-600 px-8 py-4 font-mono text-sm uppercase tracking-wide text-paper transition-colors hover:bg-ink-900">{{ s.button_label_2 }}</a>
+        <a href="{{ s.button_link_2 | default: '#' }}" class="kx-hero-secondary inline-flex min-h-[44px] items-center justify-center px-8 py-4 font-mono text-sm uppercase tracking-wide transition-colors">{{ s.button_label_2 }}</a>
       {%- endif -%}
     </div>
   </div>
@@ -80,10 +80,10 @@
     style="--pt:{{ s.padding_top | default: 0 }}px;--pb:{{ s.padding_bottom | default: 0 }}px"
     class="theme-dark border-b border-border-strong pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
   >
-    <div class="relative mx-auto min-h-[440px] bg-ink-900 text-paper md:min-h-[640px] {{ width_cls }} {{ ratio_cls }}">
+    <div class="relative mx-auto min-h-[440px] overflow-hidden bg-ink-900 text-paper md:min-h-[640px] {{ width_cls }} {{ ratio_cls }}">
       {{ hero_image }}
-      <div class="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/45 to-ink-950/15" aria-hidden="true"></div>
-      <div class="absolute inset-0 mx-auto flex max-w-[var(--page-width)] flex-col justify-end gap-6 px-7 py-12 md:px-14 md:py-16 {{ align_cls }}">
+      <div class="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/55 to-ink-950/25" aria-hidden="true"></div>
+      <div class="absolute inset-0 mx-auto flex max-w-[var(--page-width)] flex-col justify-center gap-6 px-7 py-16 md:px-14 md:py-20 {{ align_cls }}">
         {{ eyebrow }}
         {{ heading }}
         {{ body }}
@@ -103,7 +103,7 @@
         {{ hero_image }}
         {{ image_bits }}
       </div>
-      <div class="flex flex-col gap-7 bg-ink-950 px-7 py-12 text-paper md:px-14 md:py-14">
+      <div class="flex flex-col gap-7 bg-ink-950 px-7 py-12 text-paper md:px-14 md:py-16">
         {{ eyebrow }}
         {{ heading }}
         {{ body }}
@@ -118,12 +118,14 @@
     class="border-b border-border-strong pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
   >
     <div class="mx-auto grid {{ width_cls }} md:grid-cols-[1.05fr_1.25fr]">
-      <div class="flex flex-col justify-between gap-8 bg-ink-950 px-7 py-12 text-paper md:min-h-[640px] md:px-14 md:py-14 {% if image_left %}order-2 md:order-2{% else %}order-2 md:order-1{% endif %}">
-        {{ eyebrow }}
-        {{ heading }}
-        {{ body }}
+      <div class="flex flex-col justify-center gap-7 bg-ink-950 px-7 py-12 text-paper md:min-h-[640px] md:px-14 md:py-16 {% if image_left %}order-2 md:order-2{% else %}order-2 md:order-1{% endif %}">
+        <div class="flex flex-col gap-6">
+          {{ eyebrow }}
+          {{ heading }}
+          {{ body }}
+        </div>
       </div>
-      <div class="relative min-h-[440px] bg-ink-900 md:min-h-[640px] {% if image_left %}order-1 md:order-1{% else %}order-1 md:order-2{% endif %}">
+      <div class="relative min-h-[440px] overflow-hidden bg-ink-900 md:min-h-[640px] {% if image_left %}order-1 md:order-1{% else %}order-1 md:order-2{% endif %}">
         {{ hero_image }}
         {{ image_bits }}
       </div>

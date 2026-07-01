@@ -445,6 +445,32 @@
         "name": "Collection story"
       }
     },
+    "compare-slider": {
+      "name": "Compare slider",
+      "settings": {
+        "subheading": { "label": "Subheading" },
+        "heading": { "label": "Heading" },
+        "before_image": { "label": "Before image" },
+        "before_label": { "label": "Before label" },
+        "after_image": { "label": "After image" },
+        "after_label": { "label": "After label" },
+        "caption": { "label": "Caption" },
+        "aspect": {
+          "label": "Aspect ratio",
+          "options__1": { "label": "Landscape (4:3)" },
+          "options__2": { "label": "Wide (16:9)" },
+          "options__3": { "label": "Square" },
+          "options__4": { "label": "Portrait" }
+        },
+        "color_scheme": { "label": "Color scheme" },
+        "header__1": { "content": "Section padding" },
+        "padding_top": { "label": "Top padding" },
+        "padding_bottom": { "label": "Bottom padding" }
+      },
+      "presets": {
+        "name": "Compare slider"
+      }
+    },
     "contact-form": {
       "name": "Contact form",
       "settings": {

@@ -1,0 +1,146 @@
+{%- liquid
+  assign s = section.settings
+  case s.aspect
+    when 'square'
+      assign aspect_cls = 'aspect-square'
+    when 'portrait'
+      assign aspect_cls = 'aspect-[4/5]'
+    when 'landscape'
+      assign aspect_cls = 'aspect-[4/3]'
+    else
+      assign aspect_cls = 'aspect-[16/9]'
+  endcase
+  assign before_alt = s.before_image.alt | default: s.before_label | default: 'Before'
+  assign after_alt = s.after_image.alt | default: s.after_label | default: 'After'
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px"
+  class="bg-surface-page pt-[var(--pt,clamp(3.5rem,6vw,5rem))] pb-[var(--pb,clamp(3.5rem,6vw,5rem))]"
+>
+  <div class="mx-auto max-w-[var(--page-width)] px-6">
+    {%- if s.subheading != blank or s.heading != blank -%}
+      <div class="mb-8 flex flex-col gap-2">
+        {%- if s.subheading != blank -%}<span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.subheading }}</span>{%- endif -%}
+        {%- if s.heading != blank -%}<h2 class="font-display text-h3 tracking-tight text-text-strong">{{ s.heading }}</h2>{%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if s.before_image != blank and s.after_image != blank -%}
+      <compare-slider class="relative block {{ aspect_cls }} w-full cursor-ew-resize select-none overflow-hidden border border-border-hairline bg-surface-sunken [touch-action:none]">
+        {{ s.after_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '100vw', alt: after_alt, class: 'pointer-events-none absolute inset-0 h-full w-full object-cover' }}
+        <div data-compare-clip class="absolute inset-0" style="clip-path:inset(0 50% 0 0)">
+          {{ s.before_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '100vw', alt: before_alt, class: 'pointer-events-none absolute inset-0 h-full w-full object-cover' }}
+        </div>
+        {%- if s.before_label != blank -%}<span class="pointer-events-none absolute left-3 top-3 z-10 bg-ink-950/72 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper">{{ s.before_label }}</span>{%- endif -%}
+        {%- if s.after_label != blank -%}<span class="pointer-events-none absolute right-3 top-3 z-10 bg-ink-950/72 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper">{{ s.after_label }}</span>{%- endif -%}
+        <button type="button" data-compare-handle role="slider" aria-label="Drag to compare {{ s.before_label | default: 'before' }} and {{ s.after_label | default: 'after' }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" style="left:50%" class="absolute top-0 z-20 flex h-full w-11 -translate-x-1/2 cursor-ew-resize items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent">
+          <span class="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-paper" aria-hidden="true"></span>
+          <span class="relative flex h-9 w-9 items-center justify-center gap-0.5 rounded-full border border-ink-950/10 bg-paper text-ink-950 shadow-[0_2px_10px_rgba(10,10,10,0.35)]" aria-hidden="true">
+            {%- render 'icon', name: 'arrow', size: 12, class: 'rotate-180' -%}{%- render 'icon', name: 'arrow', size: 12 -%}
+          </span>
+        </button>
+      </compare-slider>
+    {%- else -%}
+      <div class="flex {{ aspect_cls }} items-center justify-center border border-border-hairline text-center">
+        <p class="font-mono text-xs uppercase tracking-label text-text-muted">Add a before and after image.</p>
+      </div>
+    {%- endif -%}
+    {%- if s.caption != blank -%}<p class="mt-3 font-mono text-xs uppercase tracking-label text-text-muted">{{ s.caption }}</p>{%- endif -%}
+  </div>
+  <script src="{{ 'compare-slider.js' | asset_url }}" defer="defer"></script>
+</section>
+{% schema %}
+{
+  "name": "t:sections.compare-slider.name",
+  "tag": "section",
+  "class": "section section--compare-slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.compare-slider.settings.subheading.label",
+      "default": "Detail compare"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.compare-slider.settings.heading.label",
+      "default": "Drag to see the difference"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "t:sections.compare-slider.settings.before_image.label"
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "t:sections.compare-slider.settings.before_label.label",
+      "default": "Before"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "t:sections.compare-slider.settings.after_image.label"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "t:sections.compare-slider.settings.after_label.label",
+      "default": "After"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "t:sections.compare-slider.settings.caption.label"
+    },
+    {
+      "type": "select",
+      "id": "aspect",
+      "label": "t:sections.compare-slider.settings.aspect.label",
+      "default": "landscape",
+      "options": [
+        { "value": "landscape", "label": "t:sections.compare-slider.settings.aspect.options__1.label" },
+        { "value": "wide", "label": "t:sections.compare-slider.settings.aspect.options__2.label" },
+        { "value": "square", "label": "t:sections.compare-slider.settings.aspect.options__3.label" },
+        { "value": "portrait", "label": "t:sections.compare-slider.settings.aspect.options__4.label" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.compare-slider.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.compare-slider.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56,
+      "label": "t:sections.compare-slider.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56,
+      "label": "t:sections.compare-slider.settings.padding_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.compare-slider.presets.name"
+    }
+  ]
+}
+{% endschema %}
