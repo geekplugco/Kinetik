@@ -9,11 +9,15 @@
       "title": "Search",
       "placeholder": "Search products"
     },
+    "breadcrumbs": {
+      "label": "Breadcrumb",
+      "home": "Home"
+    },
     "404": { "title": "Page not found", "back": "Back home" },
     "password_page": { "login_form_heading": "Opening soon", "login_form_submit": "Enter", "login_password_button": "Enter store using password" }
   },
   "gift_cards": {
-    "issued": { "title": "Gift card", "subtext": "Here's your gift card", "copy_code": "Copy code" }
+    "issued": { "title": "Gift card", "subtext": "Here's your gift card", "copy_code": "Copy code", "qr_image_alt": "QR code for this gift card", "add_to_apple_wallet": "Add to Apple Wallet" }
   },
   "accessibility": {
     "skip_to_text": "Skip to content",
@@ -22,6 +26,11 @@
   },
   "products": {
     "product": { "add_to_cart": "Add to cart", "sold_out": "Sold out", "in_stock": "In stock", "price": "Price", "regular_price": "Regular price", "sale_price": "Sale price" }
+  },
+  "collections": {
+    "general": {
+      "title": "Collections"
+    }
   },
   "customer": {
     "account": { "title": "Account", "details": "Account details" },

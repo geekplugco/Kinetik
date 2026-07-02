@@ -1,0 +1,61 @@
+{% doc %}
+  Compact product tile for mega menus, drawers, hotspot tooltips, and
+  recommendation rails. Renders image + optional badge + optional code +
+  title + price as a single link, with sale pricing via the price snippet.
+  @param {object} product - the product to render
+  @param {string} [layout] - stack (default) | row
+  @param {number} [image_width] - image width in px (default 300)
+  @param {string} [sizes] - responsive image sizes attr
+  @param {boolean} [show_code] - show the product code / SKU line
+  @param {boolean} [show_badge] - show the custom metafield badge (stack layout)
+  @param {string} [kicker] - small mono label above the title (row layout)
+  @param {boolean} [show_arrow] - trailing arrow glyph (row layout)
+  @param {string} [class] - overrides the root link classes
+  @param {string} [heading_class] - overrides the title classes
+{% enddoc %}
+{%- liquid
+  assign tile_layout = layout | default: 'stack'
+  assign tile_width = image_width | default: 300
+  assign tile_half = tile_width | divided_by: 2
+  assign tile_double = tile_width | times: 2
+  assign tile_widths = tile_half | append: ',' | append: tile_width | append: ',' | append: tile_double
+  assign tile_alt = product.featured_media.alt | default: product.title | escape
+  if show_code
+    assign tile_code = product.metafields.custom.product_code.value | default: product.selected_or_first_available_variant.sku
+  endif
+-%}
+{%- if tile_layout == 'row' -%}
+  {%- assign tile_sizes = sizes | default: '56px' -%}
+  <a href="{{ product.url }}" class="{{ class | default: 'flex gap-3' }}">
+    <span class="relative block h-16 w-14 shrink-0 overflow-hidden bg-surface-sunken">
+      {%- if product.featured_media -%}
+        {{ product.featured_media | image_url: width: tile_double | image_tag: loading: 'lazy', widths: tile_widths, sizes: tile_sizes, alt: tile_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+      {%- endif -%}
+    </span>
+    <span class="flex min-w-0 flex-1 flex-col gap-0.5">
+      {%- if kicker != blank -%}<span class="font-mono text-[11px] uppercase tracking-label text-text-muted">{{ kicker }}</span>{%- endif -%}
+      {%- if tile_code != blank -%}<span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ tile_code }}</span>{%- endif -%}
+      <span class="{{ heading_class | default: 'truncate font-sans text-sm text-text-strong' }}">{{ product.title }}</span>
+      {%- render 'price', product: product -%}
+    </span>
+    {%- if show_arrow -%}<span aria-hidden="true" class="font-mono text-text-muted">&#8599;</span>{%- endif -%}
+  </a>
+{%- else -%}
+  {%- assign tile_sizes = sizes | default: '200px' -%}
+  <a href="{{ product.url }}" class="group/p {{ class | default: 'block' }}">
+    <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+      {%- if product.featured_media -%}
+        {{ product.featured_media | image_url: width: tile_double | image_tag: loading: 'lazy', widths: tile_widths, sizes: tile_sizes, alt: tile_alt, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover/p:scale-105' }}
+      {%- endif -%}
+      {%- if show_badge -%}
+        {%- assign tile_badge = product.metafields.custom.badge.value -%}
+        {%- if tile_badge != blank -%}
+          {%- render 'badge', type: 'custom', label: tile_badge, size: 'small', position: 'left-2 top-2' -%}
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+    {%- if tile_code != blank -%}<span class="mt-2 block font-mono text-[10px] uppercase tracking-label text-text-muted">{{ tile_code }}</span>{%- endif -%}
+    <span class="{% if tile_code == blank %}mt-2 {% endif %}{{ heading_class | default: 'block truncate font-sans text-sm text-text-strong' }}">{{ product.title }}</span>
+    {%- render 'price', product: product -%}
+  </a>
+{%- endif -%}

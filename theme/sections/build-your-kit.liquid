@@ -4,6 +4,18 @@
   assign all_products = collections.all.products
   assign discount_pct = s.bundle_discount | default: 10
   assign min_pieces = s.min_pieces | default: 3
+  case s.image_ratio
+    when 'square'
+      assign kit_ratio_cls = 'aspect-square'
+    when 'landscape'
+      assign kit_ratio_cls = 'aspect-[4/3]'
+    else
+      assign kit_ratio_cls = 'aspect-[4/5]'
+  endcase
+  assign kit_img_cls = 'absolute inset-0 h-full w-full object-cover'
+  if s.image_fit == 'contain'
+    assign kit_img_cls = 'absolute inset-0 h-full w-full object-contain p-1.5'
+  endif
 -%}
 <section
   data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
@@ -52,6 +64,9 @@
               {%- unless is_match -%}{%- continue -%}{%- endunless -%}
               {%- assign opt_count = opt_count | plus: 1 -%}
               {%- assign opt_variant = product.selected_or_first_available_variant -%}
+              {%- assign kit_code = product.metafields.custom.product_code.value | default: opt_variant.sku -%}
+              {%- assign kit_on_sale = false -%}
+              {%- if product.compare_at_price > product.price -%}{%- assign kit_on_sale = true -%}{%- endif -%}
               <li class="shrink-0">
                 <button
                   type="button"
@@ -66,10 +81,15 @@
                   aria-pressed="false"
                   class="group/opt block w-32 border border-border-hairline text-left transition-colors hover:border-border-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 >
-                  <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+                  <div class="relative {{ kit_ratio_cls }} overflow-hidden bg-surface-sunken">
                     {%- if product.featured_media -%}
                       {%- assign kit_alt = product.featured_media.alt | default: product.title | escape -%}
-                      {{ product.featured_media | image_url: width: 256 | image_tag: loading: 'lazy', widths: '128,256', sizes: '128px', alt: kit_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+                      {{ product.featured_media | image_url: width: 256 | image_tag: loading: 'lazy', widths: '128,256', sizes: '128px', alt: kit_alt, class: kit_img_cls }}
+                    {%- endif -%}
+                    {%- if product.available == false and settings.badge_show_sold_out -%}
+                      {%- render 'badge', type: 'sold_out', size: 'small', position: 'left-1.5 top-1.5' -%}
+                    {%- elsif kit_on_sale and settings.badge_show_sale -%}
+                      {%- render 'badge', type: 'sale', label: 'Sale', size: 'small', position: 'left-1.5 top-1.5' -%}
                     {%- endif -%}
                     <span data-badge class="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center bg-surface-page/80 text-text-muted transition-colors">
                       <span data-icon-plus>{%- render 'icon', name: 'plus', size: 12 -%}</span>
@@ -77,8 +97,9 @@
                     </span>
                   </div>
                   <div class="flex flex-col gap-0.5 p-2">
+                    {%- if kit_code != blank -%}<span class="truncate font-mono text-[9px] uppercase tracking-label text-text-faint">{{ kit_code }}</span>{%- endif -%}
                     <span class="truncate font-sans text-xs text-text-strong">{{ product.title }}</span>
-                    <span class="font-mono text-[11px] text-text-muted">{{ product.price | money }}</span>
+                    {%- render 'price', product: product, variant: opt_variant -%}
                   </div>
                 </button>
               </li>
@@ -172,6 +193,28 @@
       "default": 3
     },
     {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.build-your-kit.settings.image_ratio.label",
+      "options": [
+        { "value": "portrait", "label": "t:sections.build-your-kit.settings.image_ratio.options__1.label" },
+        { "value": "square", "label": "t:sections.build-your-kit.settings.image_ratio.options__2.label" },
+        { "value": "landscape", "label": "t:sections.build-your-kit.settings.image_ratio.options__3.label" }
+      ],
+      "default": "portrait"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "t:sections.build-your-kit.settings.image_fit.label",
+      "info": "t:sections.build-your-kit.settings.image_fit.info",
+      "options": [
+        { "value": "cover", "label": "t:sections.build-your-kit.settings.image_fit.options__1.label" },
+        { "value": "contain", "label": "t:sections.build-your-kit.settings.image_fit.options__2.label" }
+      ],
+      "default": "cover"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.build-your-kit.settings.color_scheme.label",
@@ -212,14 +255,14 @@
         {
           "type": "collection",
           "id": "collection",
-          "label": "Collection",
-          "info": "Pull this slot's options from a collection. Takes priority over product types below."
+          "label": "t:sections.build-your-kit.blocks.slot.settings.collection.label",
+          "info": "t:sections.build-your-kit.blocks.slot.settings.collection.info"
         },
         {
           "type": "product_list",
           "id": "products",
-          "label": "Specific products",
-          "info": "Hand-pick exact products for this slot. Takes priority over collection and product types.",
+          "label": "t:sections.build-your-kit.blocks.slot.settings.products.label",
+          "info": "t:sections.build-your-kit.blocks.slot.settings.products.info",
           "limit": 12
         },
         {

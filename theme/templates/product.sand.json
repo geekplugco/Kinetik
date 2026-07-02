@@ -11,7 +11,31 @@
         "color_scheme": "scheme-4",
         "padding_top": 36,
         "padding_bottom": 36
-      }
+      },
+      "blocks": {
+        "vendor": {
+          "type": "vendor"
+        },
+        "title": {
+          "type": "title"
+        },
+        "rating": {
+          "type": "rating"
+        },
+        "price": {
+          "type": "price"
+        },
+        "description": {
+          "type": "description"
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "rating",
+        "price",
+        "description"
+      ]
     },
     "field_spec": {
       "type": "field-spec",
@@ -28,11 +52,36 @@
         "color_scheme": "scheme-4"
       },
       "blocks": {
-        "m1": { "type": "mode", "settings": { "label": "Travel", "heading": "Pack light", "text": "<p>Dry-touch fabric and simple carry paths for long travel days.</p>" } },
-        "m2": { "type": "mode", "settings": { "label": "Field", "heading": "Hold shape outside", "text": "<p>Warm-tone utility for trail edges, markets, and exposed transit.</p>" } },
-        "m3": { "type": "mode", "settings": { "label": "Daily", "heading": "Repeat without noise", "text": "<p>The same grid discipline, softened through palette and texture.</p>" } }
+        "m1": {
+          "type": "mode",
+          "settings": {
+            "label": "Travel",
+            "heading": "Pack light",
+            "text": "<p>Dry-touch fabric and simple carry paths for long travel days.</p>"
+          }
+        },
+        "m2": {
+          "type": "mode",
+          "settings": {
+            "label": "Field",
+            "heading": "Hold shape outside",
+            "text": "<p>Warm-tone utility for trail edges, markets, and exposed transit.</p>"
+          }
+        },
+        "m3": {
+          "type": "mode",
+          "settings": {
+            "label": "Daily",
+            "heading": "Repeat without noise",
+            "text": "<p>The same grid discipline, softened through palette and texture.</p>"
+          }
+        }
       },
-      "block_order": ["m1", "m2", "m3"]
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ]
     },
     "story": {
       "type": "image-with-text",
@@ -72,7 +121,23 @@
         "products_to_show": 4,
         "color_scheme": "scheme-4"
       }
+    },
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "padding_top": 16,
+        "padding_bottom": 12
+      }
     }
   },
-  "order": ["main", "field_spec", "use_modes", "story", "faq", "related", "recently_viewed"]
+  "order": [
+    "breadcrumb",
+    "main",
+    "field_spec",
+    "use_modes",
+    "story",
+    "faq",
+    "related",
+    "recently_viewed"
+  ]
 }

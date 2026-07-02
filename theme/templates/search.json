@@ -1,1 +1,18 @@
-{ "sections": { "main": { "type": "main-search" } }, "order": ["main"] }
+{
+  "sections": {
+    "main": {
+      "type": "main-search"
+    },
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "padding_top": 16,
+        "padding_bottom": 12
+      }
+    }
+  },
+  "order": [
+    "breadcrumb",
+    "main"
+  ]
+}

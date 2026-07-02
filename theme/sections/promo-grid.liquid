@@ -1,13 +1,36 @@
 {%- liquid
   assign s = section.settings
   assign cards = section.blocks | where: 'type', 'promo'
+  assign hover_effect = s.image_hover_effect | default: 'inherit'
+  assign width = s.width | default: 'page'
+  if width == 'full'
+    assign container_class = 'max-w-none px-6'
+  else
+    assign container_class = 'max-w-[var(--page-width)] px-6'
+  endif
 -%}
 <section
   data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+  data-media-hover="{{ hover_effect }}"
   style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px;--cols-desktop:{{ s.columns_desktop | default: 3 }};--cols-mobile:{{ s.columns_mobile | default: 1 }}"
   class="bg-surface-page pt-[var(--pt,clamp(3.5rem,6vw,5rem))] pb-[var(--pb,clamp(3.5rem,6vw,5rem))]"
 >
-  <div class="mx-auto max-w-[var(--page-width)] px-6">
+  {%- if hover_effect == 'none' or hover_effect == 'zoom' -%}
+    <style>
+      #shopify-section-{{ section.id }} .kx-media-effect::before,
+      #shopify-section-{{ section.id }} .kx-media-effect::after {
+        display: none;
+      }
+      {%- if hover_effect == 'none' -%}
+        #shopify-section-{{ section.id }} .group:hover .kx-media-effect > img,
+        #shopify-section-{{ section.id }} .group:focus-within .kx-media-effect > img {
+          transform: none;
+          filter: none;
+        }
+      {%- endif -%}
+    </style>
+  {%- endif -%}
+  <div class="mx-auto {{ container_class }}">
     {%- if s.subheading != blank or s.heading != blank -%}
       <div class="mb-8 flex flex-col gap-2">
         {%- if s.subheading != blank -%}<span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.subheading }}</span>{%- endif -%}
@@ -19,7 +42,7 @@
         {%- assign b = block.settings -%}
         {%- capture promo_inner -%}
           {%- if b.image != blank -%}
-            <div class="kx-media-effect relative {% case s.image_ratio %}{% when 'square' %}aspect-square{% when 'wide' %}aspect-[4/3]{% else %}aspect-[4/5]{% endcase %} overflow-hidden">
+            <div class="kx-media-effect relative {% case s.image_ratio %}{% when 'square' %}aspect-square{% when 'wide' %}aspect-[4/3]{% else %}aspect-[4/5]{% endcase %} overflow-hidden"{% if hover_effect == 'technical' %} data-kx-effect="proof"{% endif %}>
               {%- assign promo_alt = b.image.alt | default: b.heading | default: b.eyebrow -%}
               {{ b.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', sizes: '(min-width:750px) 33vw, 100vw', alt: promo_alt, class: 'h-full w-full object-cover' }}
             </div>
@@ -32,9 +55,9 @@
           </div>
         {%- endcapture -%}
         {%- if b.link != blank -%}
-          <a href="{{ b.link }}" class="group flex flex-col overflow-hidden border border-border-hairline transition-colors hover:border-border-strong" {{ block.shopify_attributes }}>{{ promo_inner }}</a>
+          <a href="{{ b.link }}" class="group flex flex-col overflow-hidden border border-border-hairline bg-surface-page transition-colors hover:border-border-strong" {{ block.shopify_attributes }}>{{ promo_inner }}</a>
         {%- else -%}
-          <div class="group flex flex-col overflow-hidden border border-border-hairline" {{ block.shopify_attributes }}>{{ promo_inner }}</div>
+          <div class="group flex flex-col overflow-hidden border border-border-hairline bg-surface-page" {{ block.shopify_attributes }}>{{ promo_inner }}</div>
         {%- endif -%}
       {%- else -%}
         <div class="border border-border-hairline py-16 text-center">
@@ -91,6 +114,28 @@
         { "value": "portrait", "label": "t:sections.promo-grid.settings.image_ratio.options__1.label" },
         { "value": "square", "label": "t:sections.promo-grid.settings.image_ratio.options__2.label" },
         { "value": "wide", "label": "t:sections.promo-grid.settings.image_ratio.options__3.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_hover_effect",
+      "label": "t:sections.promo-grid.settings.image_hover_effect.label",
+      "default": "inherit",
+      "options": [
+        { "value": "inherit", "label": "t:sections.promo-grid.settings.image_hover_effect.options__1.label" },
+        { "value": "zoom", "label": "t:sections.promo-grid.settings.image_hover_effect.options__2.label" },
+        { "value": "technical", "label": "t:sections.promo-grid.settings.image_hover_effect.options__3.label" },
+        { "value": "none", "label": "t:sections.promo-grid.settings.image_hover_effect.options__4.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.promo-grid.settings.width.label",
+      "default": "page",
+      "options": [
+        { "value": "page", "label": "t:sections.promo-grid.settings.width.options__1.label" },
+        { "value": "full", "label": "t:sections.promo-grid.settings.width.options__2.label" }
       ]
     },
     {

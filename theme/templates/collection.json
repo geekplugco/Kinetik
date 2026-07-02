@@ -2,16 +2,34 @@
   "sections": {
     "main": {
       "type": "main-collection",
+      "settings": {},
+      "blocks": {
+        "promo_ss26": {
+          "type": "promo_tile",
+          "settings": {
+            "position": 3,
+            "image": "shopify://shop_images/07-cap-shadow.png",
+            "eyebrow": "SS26",
+            "heading": "Field system drop",
+            "button_label": "Shop the drop",
+            "link": "shopify://collections/frontpage"
+          }
+        }
+      },
+      "block_order": [
+        "promo_ss26"
+      ]
+    },
+    "breadcrumb": {
+      "type": "breadcrumb",
       "settings": {
-        "promo_enable": true,
-        "promo_position": 3,
-        "promo_image": "shopify://shop_images/07-cap-shadow.png",
-        "promo_eyebrow": "SS26",
-        "promo_heading": "Field system drop",
-        "promo_button_label": "Shop the drop",
-        "promo_link": "shopify://collections/frontpage"
+        "padding_top": 16,
+        "padding_bottom": 12
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "breadcrumb",
+    "main"
+  ]
 }

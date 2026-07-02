@@ -53,9 +53,9 @@
       {%- if product.featured_media -%}
         {%- assign show_second = false -%}
         {%- if settings.card_show_second_image and product.media[1] -%}{%- assign show_second = true -%}{%- endif -%}
-        {{ product.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600,900', sizes: img_sizes, alt: card_alt, class: 'h-full w-full object-cover motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
+        {{ product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300,450,600,900', sizes: img_sizes, alt: card_alt, class: 'h-full w-full object-cover motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
         {%- if show_second -%}
-          {{ product.media[1] | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600,900', sizes: img_sizes, alt: card_alt, class: 'absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100' }}
+          {{ product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300,450,600,900', sizes: img_sizes, alt: card_alt, class: 'absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100' }}
         {%- endif -%}
       {%- else -%}
         {{ 'product-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
@@ -73,14 +73,15 @@
     {%- if card_mode == 'editorial' -%}
       <a href="{{ product.url }}" class="absolute inset-x-3 bottom-3 hidden min-h-[44px] items-center justify-center bg-paper px-4 py-2 font-mono text-[11px] uppercase tracking-label text-ink-950 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 md:flex">View details</a>
     {%- endif -%}
-    {%- assign badge_pos = 'left-3' -%}
-    {%- if settings.badge_position == 'top-right' -%}{%- assign badge_pos = 'right-3' -%}{%- endif -%}
+    {%- assign badge_pos = 'left-3 top-3' -%}
+    {%- if settings.badge_position == 'top-right' -%}{%- assign badge_pos = 'right-3 top-3' -%}{%- endif -%}
     {%- if product.available == false and settings.badge_show_sold_out -%}
-      <span class="absolute {{ badge_pos }} top-3 bg-ink-950 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-paper" style="border-radius:var(--badge-radius)">{{ 'products.product.sold_out' | t | default: 'Sold out' }}</span>
+      {%- render 'badge', type: 'sold_out', position: badge_pos -%}
     {%- elsif on_sale and settings.badge_show_sale -%}
-      <span class="absolute {{ badge_pos }} top-3 bg-accent px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-accent-ink" style="border-radius:var(--badge-radius)">&minus;{{ discount }}%</span>
+      {%- capture sale_label -%}&minus;{{ discount }}%{%- endcapture -%}
+      {%- render 'badge', type: 'sale', label: sale_label, position: badge_pos -%}
     {%- elsif badge != blank -%}
-      <span class="absolute {{ badge_pos }} top-3 bg-ink-950 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-label text-paper" style="border-radius:var(--badge-radius)">{{ badge }}</span>
+      {%- render 'badge', type: 'custom', label: badge, position: badge_pos -%}
     {%- endif -%}
     {%- if show_quick_add -%}
       {%- render 'quick-add', product: product -%}

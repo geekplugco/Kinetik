@@ -1,0 +1,226 @@
+{
+  "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "padding_top": 16,
+        "padding_bottom": 12
+      }
+    },
+    "intro": {
+      "type": "rich-text",
+      "settings": {
+        "subheading": "Content system",
+        "heading": "Merchant content sections",
+        "text": "<p>A reusable page template that demonstrates the content blocks most stores need: FAQs, shipping, returns, sizing, care, warranty, contact, editorial proof, and journal entries.</p>",
+        "style": "accent-rule",
+        "width": "page",
+        "padding_top": 56,
+        "padding_bottom": 40
+      }
+    },
+    "nav": {
+      "type": "multicolumn",
+      "settings": {
+        "subheading": "Common pages",
+        "heading": "What merchants usually need",
+        "text": "<p>Use this page as a section library or duplicate the sections into policy, FAQ, support, and product education pages.</p>",
+        "show_module_count": true,
+        "list_columns": "2",
+        "padding_top": 32,
+        "padding_bottom": 32
+      },
+      "blocks": {
+        "n1": {
+          "type": "column",
+          "settings": {
+            "title": "Pre-purchase clarity",
+            "text": "<p>FAQ, size guide, materials, product care, compatibility, and comparison content reduce support load before checkout.</p>"
+          }
+        },
+        "n2": {
+          "type": "column",
+          "settings": {
+            "title": "Post-purchase support",
+            "text": "<p>Shipping, returns, warranty, repair, account, and contact sections make the store feel reliable after the order.</p>"
+          }
+        },
+        "n3": {
+          "type": "column",
+          "settings": {
+            "title": "Trust and proof",
+            "text": "<p>Reviews, press quotes, field notes, certification claims, and process content help a brand justify premium pricing.</p>"
+          }
+        },
+        "n4": {
+          "type": "column",
+          "settings": {
+            "title": "Retention",
+            "text": "<p>Newsletter, journal, drop access, and community links give shoppers a reason to return without fake urgency.</p>"
+          }
+        }
+      },
+      "block_order": ["n1", "n2", "n3", "n4"]
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "settings": {
+        "subheading": "FAQ",
+        "heading": "Questions before checkout",
+        "layout": "split",
+        "row_style": "divided",
+        "width": "page",
+        "open_first": true,
+        "padding_top": 56,
+        "padding_bottom": 56
+      },
+      "blocks": {
+        "q1": {
+          "type": "item",
+          "settings": {
+            "heading": "How should I choose my size?",
+            "content": "<p>Start with your usual size and check the garment measurements. If you plan to layer, size up only when the chest or shoulder measurement is tight.</p>"
+          }
+        },
+        "q2": {
+          "type": "item",
+          "settings": {
+            "heading": "When will my order ship?",
+            "content": "<p>Most orders ship within 1-2 business days. Delivery timing depends on destination and service selected at checkout.</p>"
+          }
+        },
+        "q3": {
+          "type": "item",
+          "settings": {
+            "heading": "Can I return or exchange an item?",
+            "content": "<p>Unworn items can be returned within the stated return window. Keep original packaging and start the return from the support page.</p>"
+          }
+        },
+        "q4": {
+          "type": "item",
+          "settings": {
+            "heading": "How do I care for technical fabrics?",
+            "content": "<p>Wash cold, avoid fabric softener, and hang dry. For waterproof shells, reproof the face fabric when water stops beading.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"]
+    },
+    "shipping": {
+      "type": "collapsible-content",
+      "settings": {
+        "subheading": "Shipping and returns",
+        "heading": "Delivery, returns, and exchanges",
+        "layout": "split",
+        "row_style": "boxed",
+        "width": "page",
+        "open_first": false,
+        "color_scheme": "scheme-2",
+        "padding_top": 56,
+        "padding_bottom": 56
+      },
+      "blocks": {
+        "s1": {
+          "type": "item",
+          "settings": {
+            "heading": "Domestic shipping",
+            "content": "<p>Explain carrier options, processing time, free-shipping threshold, tracking, and delivery windows.</p>"
+          }
+        },
+        "s2": {
+          "type": "item",
+          "settings": {
+            "heading": "International shipping",
+            "content": "<p>Clarify duties, taxes, customs delays, unsupported regions, and final-sale restrictions by market.</p>"
+          }
+        },
+        "s3": {
+          "type": "item",
+          "settings": {
+            "heading": "Returns",
+            "content": "<p>State the return window, item condition, return shipping responsibility, refund timing, and how customers start a return.</p>"
+          }
+        },
+        "s4": {
+          "type": "item",
+          "settings": {
+            "heading": "Exchanges",
+            "content": "<p>Explain whether exchanges are instant, inventory-dependent, or handled as a return plus a new order.</p>"
+          }
+        }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"]
+    },
+    "care": {
+      "type": "image-with-text",
+      "settings": {
+        "subheading": "Care and materials",
+        "heading": "Teach the product, not just the policy",
+        "text": "<p>Use image-with-text for size guides, material proof, repair programs, fit notes, ingredient lists, certification explanations, or product education.</p>",
+        "button_label": "Open support",
+        "button_link": "shopify://pages/contact",
+        "image": "shopify://shop_images/06-detail-trio.png",
+        "image_ratio": "landscape",
+        "layout": "image_first",
+        "color_scheme": "scheme-1",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "warranty": {
+      "type": "rich-text",
+      "settings": {
+        "subheading": "Warranty",
+        "heading": "Set expectations clearly",
+        "text": "<p>Use this block for warranty coverage, repair terms, final-sale rules, subscription policy, preorder timing, or wholesale terms. Keep language specific and avoid vague trust claims.</p>",
+        "style": "panel",
+        "width": "page",
+        "color_scheme": "scheme-3",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "contact": {
+      "type": "contact-form",
+      "settings": {
+        "subheading": "Support",
+        "heading": "Contact the team",
+        "details": "<p>Use the contact form for sizing help, warranty claims, order questions, wholesale requests, or custom project leads.</p>",
+        "layout": "split",
+        "width": "page",
+        "show_phone": true,
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "journal": {
+      "type": "blog-posts",
+      "settings": {
+        "heading": "Related field notes",
+        "posts_to_show": 3,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "card_style": "minimal",
+        "image_ratio": "3-2",
+        "width": "page",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "subheading": "Retention",
+        "heading": "Keep shoppers in the loop",
+        "text": "<p>Use newsletter blocks on support and education pages when a shopper is engaged but not ready to buy.</p>",
+        "layout": "split",
+        "width": "page",
+        "background_style": "dark",
+        "color_scheme": "scheme-3",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": ["breadcrumb", "intro", "nav", "faq", "shipping", "care", "warranty", "contact", "journal", "newsletter"]
+}

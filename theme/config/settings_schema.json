@@ -257,6 +257,10 @@
           {
             "value": "zoom",
             "label": "t:settings_schema.animations.settings.animate_hover.options__2.label"
+          },
+          {
+            "value": "technical",
+            "label": "t:settings_schema.animations.settings.animate_hover.options__3.label"
           }
         ]
       },

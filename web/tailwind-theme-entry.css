@@ -5,5 +5,6 @@
 @source "../theme/snippets/**/*.liquid";
 @source "../theme/blocks/**/*.liquid";
 @source "../theme/templates/**/*.json";
+@source "../theme/templates/**/*.liquid";
 
 @source inline("opacity-40 opacity-50 line-through cursor-zoom-in text-warning");

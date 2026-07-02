@@ -26,19 +26,28 @@
     },
     "statement": {
       "type": "statement",
-      "settings": {
-        "eyebrow": "Field manifesto",
-        "quote": "<p>One system. Every condition. No compromise.</p>",
-        "attribution": "Kinetik SS26",
-        "image": "shopify://shop_images/02-fulllook-cropped.png",
-        "overlay_opacity": 55,
-        "alignment": "center",
-        "height": "medium",
-        "button_label": "Shop the drop",
-        "button_link": "shopify://collections/frontpage",
-        "button_style": "secondary",
-        "color_scheme": "scheme-1"
-      }
+      "settings": {},
+      "blocks": {
+        "banner-1": {
+          "type": "banner",
+          "settings": {
+            "eyebrow": "Field manifesto",
+            "quote": "<p>One system. Every condition. No compromise.</p>",
+            "attribution": "Kinetik SS26",
+            "image": "shopify://shop_images/02-fulllook-cropped.png",
+            "overlay_opacity": 55,
+            "alignment": "center",
+            "height": "medium",
+            "button_label": "Shop the drop",
+            "button_link": "shopify://collections/frontpage",
+            "button_style": "secondary",
+            "color_scheme": "scheme-1"
+          }
+        }
+      },
+      "block_order": [
+        "banner-1"
+      ]
     },
     "featured": {
       "type": "featured-collection",
@@ -93,7 +102,11 @@
           }
         }
       },
-      "block_order": ["p1", "p2", "p3"]
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ]
     },
     "newsletter": {
       "type": "newsletter",
@@ -105,7 +118,22 @@
         "width": "page",
         "color_scheme": "scheme-3"
       }
+    },
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "padding_top": 16,
+        "padding_bottom": 12
+      }
     }
   },
-  "order": ["hero", "drop", "statement", "featured", "promo", "newsletter"]
+  "order": [
+    "breadcrumb",
+    "hero",
+    "drop",
+    "statement",
+    "featured",
+    "promo",
+    "newsletter"
+  ]
 }

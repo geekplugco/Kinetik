@@ -19,18 +19,33 @@ class QuickViewModal extends HTMLElement {
 
   async open(url) {
     if (!url) return;
-    this.show();
-    this.body.innerHTML = '<div class="p-12 text-center font-mono text-xs uppercase tracking-label text-text-muted">Loading…</div>';
+    const token = this.show();
+    this.classList.add('is-loading');
+    this.classList.remove('is-ready');
+    this.body.innerHTML = '<div class="qv-skeleton" aria-live="polite" aria-busy="true"><div class="qv-skeleton-media"></div><div class="qv-skeleton-copy"><div class="qv-skeleton-line" style="width:38%"></div><div class="qv-skeleton-line" style="width:82%;height:2rem"></div><div class="qv-skeleton-line" style="width:30%"></div><div class="qv-skeleton-line" style="width:100%;margin-top:1rem"></div><div class="qv-skeleton-line" style="width:74%"></div><div class="qv-skeleton-line" style="width:100%;height:2.75rem;margin-top:1rem"></div></div></div>';
     try {
       const base = url.split('?')[0];
       const res = await fetch(base + '?section_id=quick-view');
       if (!res.ok) throw new Error('fetch failed');
-      this.body.innerHTML = await res.text();
+      if (token !== this.token) return;
+      const html = await res.text();
+      if (token !== this.token) return;
+      this.classList.add('is-swapping');
+      await new Promise((resolve) => setTimeout(resolve, 90));
+      if (token !== this.token) return;
+      this.body.innerHTML = html;
+      this.classList.remove('is-loading');
+      requestAnimationFrame(() => {
+        this.classList.remove('is-swapping');
+        this.classList.add('is-ready');
+      });
       const dialog = this.querySelector('[role="dialog"]') || this;
       if (window.KinetikTrap) window.KinetikTrap.trap(dialog, this.opener);
-      const focusable = this.body.querySelector('input, button, a');
-      if (focusable) focusable.focus();
+      if (dialog && dialog.focus) dialog.focus({ preventScroll: true });
     } catch (err) {
+      if (token !== this.token) return;
+      this.classList.remove('is-loading', 'is-swapping');
+      this.classList.add('is-ready');
       this.body.innerHTML = '<div class="p-12 text-center text-sm text-text-muted">Could not load preview. <a href="' + url + '" class="underline">View product</a></div>';
     }
   }
@@ -42,6 +57,7 @@ class QuickViewModal extends HTMLElement {
     if (window.KinetikOverlay) window.KinetikOverlay.lockScroll();
     else document.documentElement.style.overflow = 'hidden';
     requestAnimationFrame(() => this.classList.add('is-open'));
+    return this.token;
   }
 
   close() {
@@ -49,7 +65,7 @@ class QuickViewModal extends HTMLElement {
     this.closing = true;
     const token = (this.token = (this.token || 0) + 1);
     if (window.KinetikTrap) window.KinetikTrap.release(true);
-    this.classList.remove('is-open');
+    this.classList.remove('is-open', 'is-loading', 'is-ready', 'is-swapping');
     if (window.KinetikOverlay) window.KinetikOverlay.unlockScroll();
     else document.documentElement.style.overflow = '';
     const finish = () => {

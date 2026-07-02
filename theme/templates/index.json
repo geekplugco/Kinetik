@@ -40,6 +40,8 @@
         "columns_desktop": 3,
         "columns_mobile": "1",
         "image_ratio": "wide",
+        "image_hover_effect": "technical",
+        "width": "full",
         "padding_top": 56,
         "padding_bottom": 56
       },
@@ -207,16 +209,23 @@
     },
     "manifesto": {
       "type": "statement",
-      "settings": {
-        "eyebrow": "No noise",
-        "quote": "<p>Every feature has to earn its position.</p>",
-        "attribution": "Kinetik field standard",
-        "alignment": "left",
-        "height": "compact",
-        "button_label": "Shop the system",
-        "button_link": "shopify://collections/new-arrivals",
-        "button_style": "secondary"
-      }
+      "settings": {},
+      "blocks": {
+        "banner-1": {
+          "type": "banner",
+          "settings": {
+            "eyebrow": "No noise",
+            "quote": "<p>Every feature has to earn its position.</p>",
+            "attribution": "Kinetik field standard",
+            "alignment": "left",
+            "height": "compact",
+            "button_label": "Shop the system",
+            "button_link": "shopify://collections/new-arrivals",
+            "button_style": "secondary"
+          }
+        }
+      },
+      "block_order": ["banner-1"]
     },
     "route": {
       "type": "route-map",

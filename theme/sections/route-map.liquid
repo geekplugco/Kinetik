@@ -1,5 +1,15 @@
 {%- liquid
   assign stops = section.blocks | where: 'type', 'stop'
+  assign layout = section.settings.layout | default: 'board'
+  assign visual_style = section.settings.visual_style | default: 'signal'
+  assign show_index = section.settings.show_index
+  if show_index == nil
+    assign show_index = true
+  endif
+  assign route_class = 'md:grid-cols-[3rem_0.92fr_1fr]'
+  if layout == 'timeline'
+    assign route_class = 'md:grid-cols-[3rem_0.58fr_1.2fr]'
+  endif
 -%}
 {%- if stops.size > 0 -%}
   <section
@@ -25,69 +35,60 @@
       <ol class="relative border border-border-hairline bg-surface-page">
         {%- for block in stops -%}
           {%- assign p = block.settings.product -%}
-          <li class="grid border-b border-border-hairline last:border-b-0 md:grid-cols-[3rem_1.1fr_1fr]" {{ block.shopify_attributes }}>
-            <span aria-hidden="true" class="flex min-h-[3rem] items-center justify-center border-b border-border-hairline font-mono text-[11px] text-text-muted md:border-b-0 md:border-r">{{ forloop.index }}</span>
-            <div class="relative aspect-[4/3] overflow-hidden bg-surface-sunken md:aspect-auto">
+          <li class="grid border-b border-border-hairline last:border-b-0 {{ route_class }}" {{ block.shopify_attributes }}>
+            <span aria-hidden="true" class="flex min-h-[3rem] items-center justify-center border-b border-border-hairline font-mono text-[11px] text-text-muted md:border-b-0 md:border-r">{% if show_index %}{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% endif %}</span>
+            <div class="relative aspect-[4/3] overflow-hidden bg-ink-950 md:aspect-auto">
               <div class="absolute inset-0">
                 {%- if block.settings.image != blank -%}
                   {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: block.settings.image.alt | default: block.settings.place, class: 'h-full w-full object-cover' }}
                 {%- else -%}
                   <svg viewBox="0 0 900 675" role="img" aria-label="{{ block.settings.place | default: 'Route stop' | escape }}" class="h-full w-full bg-ink-950 text-paper">
-                    <rect width="900" height="675" fill="currentColor" opacity="0.04"/>
-                    <g fill="none" stroke="currentColor" stroke-width="2" opacity="0.28">
+                    <rect width="900" height="675" fill="currentColor" opacity="0.035"/>
+                    <g fill="none" stroke="currentColor" stroke-width="2" opacity="{% if visual_style == 'quiet' %}0.13{% else %}0.2{% endif %}">
                       <path d="M0 112.5H900M0 225H900M0 337.5H900M0 450H900M0 562.5H900M150 0V675M300 0V675M450 0V675M600 0V675M750 0V675"/>
                     </g>
                     {%- case forloop.index -%}
                       {%- when 1 -%}
-                        <g fill="none" stroke="currentColor" stroke-linecap="square">
-                          <path d="M145 475 C260 350 330 370 440 250 S660 185 760 95" stroke-width="10"/>
-                          <path d="M155 485 L250 505 M375 315 L430 395 M590 190 L640 280" stroke-width="4" opacity="0.7"/>
+                        <g fill="none" stroke="currentColor" stroke-linecap="square" opacity="{% if visual_style == 'quiet' %}0.84{% else %}1{% endif %}">
+                          <path d="M145 475 C260 350 330 370 440 250 S660 185 760 95" stroke-width="{% if layout == 'timeline' %}7{% else %}9{% endif %}"/>
+                          <path d="M155 485 L250 505 M375 315 L430 395 M590 190 L640 280" stroke-width="3" opacity="0.55"/>
                           <circle cx="145" cy="475" r="18" fill="currentColor"/><circle cx="760" cy="95" r="18" fill="currentColor"/>
                         </g>
                       {%- when 2 -%}
-                        <g fill="none" stroke="currentColor" stroke-linecap="square">
-                          <path d="M120 365 H300 L355 275 H515 L570 365 H780" stroke-width="10"/>
-                          <path d="M220 235 V500 M450 170 V530 M675 250 V500" stroke-width="4" opacity="0.7"/>
+                        <g fill="none" stroke="currentColor" stroke-linecap="square" opacity="{% if visual_style == 'quiet' %}0.84{% else %}1{% endif %}">
+                          <path d="M120 365 H300 L355 275 H515 L570 365 H780" stroke-width="{% if layout == 'timeline' %}7{% else %}9{% endif %}"/>
+                          <path d="M220 235 V500 M450 170 V530 M675 250 V500" stroke-width="3" opacity="0.55"/>
                           <circle cx="355" cy="275" r="18" fill="currentColor"/><circle cx="570" cy="365" r="18" fill="currentColor"/>
                         </g>
                       {%- else -%}
-                        <g fill="none" stroke="currentColor" stroke-linecap="square">
-                          <path d="M130 150 L270 520 L455 190 L615 525 L775 145" stroke-width="10"/>
-                          <path d="M270 520 H130 M455 190 H620 M615 525 H780" stroke-width="4" opacity="0.7"/>
+                        <g fill="none" stroke="currentColor" stroke-linecap="square" opacity="{% if visual_style == 'quiet' %}0.84{% else %}1{% endif %}">
+                          <path d="M130 150 L270 520 L455 190 L615 525 L775 145" stroke-width="{% if layout == 'timeline' %}7{% else %}9{% endif %}"/>
+                          <path d="M270 520 H130 M455 190 H620 M615 525 H780" stroke-width="3" opacity="0.55"/>
                           <circle cx="130" cy="150" r="18" fill="currentColor"/><circle cx="775" cy="145" r="18" fill="currentColor"/>
                         </g>
                     {%- endcase -%}
-                    <text x="36" y="625" fill="currentColor" font-size="24" font-family="monospace" opacity="0.58">{{ block.settings.place | default: 'Route stop' }}</text>
+                    {%- if visual_style == 'signal' -%}
+                      <path d="M0 0H900V675H0Z" fill="none" stroke="currentColor" stroke-width="8" opacity="0.12"/>
+                      <path d="M64 64H172M64 64V172M728 64H836M836 64V172M64 611H172M64 503V611M728 611H836M836 503V611" fill="none" stroke="var(--accent)" stroke-width="4" opacity="0.75"/>
+                    {%- endif -%}
+                    <text x="36" y="625" fill="currentColor" font-size="22" font-family="monospace" opacity="0.48">{{ block.settings.place | default: 'Route stop' }}</text>
                   </svg>
                 {%- endif -%}
               </div>
+              <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink-950/35 via-transparent to-ink-950/20" aria-hidden="true"></div>
             </div>
-            <div class="flex flex-col justify-center gap-3 border-t border-border-hairline p-5 md:border-l md:border-t-0">
+            <div class="flex flex-col justify-center gap-4 border-t border-border-hairline p-5 md:border-l md:border-t-0 md:p-8">
                 {%- if block.settings.place != blank -%}
                   <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ block.settings.place }}</span>
                 {%- endif -%}
                 {%- if block.settings.heading != blank -%}
-                  <h3 class="font-display text-h3 tracking-tight text-text-strong">{{ block.settings.heading }}</h3>
+                  <h3 class="max-w-xl font-display text-h3 tracking-tight text-text-strong">{{ block.settings.heading }}</h3>
                 {%- endif -%}
                 {%- if block.settings.caption != blank -%}
-                  <div class="text-body text-text-body [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ block.settings.caption }}</div>
+                  <div class="max-w-2xl text-body text-text-body [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ block.settings.caption }}</div>
                 {%- endif -%}
                 {%- if p != blank -%}
-                  {%- assign pv = p.selected_or_first_available_variant -%}
-                  <a href="{{ p.url }}" class="mt-2 flex items-center gap-4 border border-border-hairline p-3 transition-colors hover:border-border-strong">
-                    <div class="relative h-16 w-14 shrink-0 overflow-hidden bg-surface-sunken">
-                      {%- if p.featured_media -%}
-                        {%- assign route_product_alt = p.featured_media.alt | default: p.title | escape -%}
-                        {{ p.featured_media | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,120', sizes: '56px', alt: route_product_alt, class: 'h-full w-full object-cover' }}
-                      {%- endif -%}
-                    </div>
-                    <div class="flex min-w-0 flex-1 flex-col">
-                      <span class="font-mono text-[11px] uppercase tracking-label text-text-muted">{{ 'Featured' }}</span>
-                      <span class="truncate font-sans text-sm text-text-strong">{{ p.title }}</span>
-                      <span class="font-mono text-xs text-text-muted">{{ pv.price | money }}</span>
-                    </div>
-                    <span aria-hidden="true" class="font-mono text-text-muted">&#8599;</span>
-                  </a>
+                  {%- render 'product-tile-compact', product: p, layout: 'row', image_width: 160, sizes: '72px', kicker: 'Featured', show_arrow: true, class: 'mt-1 flex items-center gap-4 border border-border-hairline bg-surface-raised p-3 transition-colors hover:border-border-strong md:max-w-xl' -%}
                 {%- endif -%}
             </div>
           </li>
@@ -105,6 +106,27 @@
     { "type": "inline_richtext", "id": "subheading", "label": "t:sections.route-map.settings.subheading.label", "default": "Field route" },
     { "type": "text", "id": "heading", "label": "t:sections.route-map.settings.heading.label", "default": "The route" },
     { "type": "header", "content": "t:sections.route-map.settings.header__style.content" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.route-map.settings.layout.label",
+      "default": "board",
+      "options": [
+        { "value": "board", "label": "t:sections.route-map.settings.layout.options__1.label" },
+        { "value": "timeline", "label": "t:sections.route-map.settings.layout.options__2.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "visual_style",
+      "label": "t:sections.route-map.settings.visual_style.label",
+      "default": "signal",
+      "options": [
+        { "value": "signal", "label": "t:sections.route-map.settings.visual_style.options__1.label" },
+        { "value": "quiet", "label": "t:sections.route-map.settings.visual_style.options__2.label" }
+      ]
+    },
+    { "type": "checkbox", "id": "show_index", "label": "t:sections.route-map.settings.show_index.label", "default": true },
     { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.route-map.settings.color_scheme.label", "default": "scheme-1" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.route-map.settings.padding_top.label" },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.route-map.settings.padding_bottom.label" }

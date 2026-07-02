@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
 <head>
+  <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="origin">
   <title>{{ shop.name }} {{ 'gift_cards.issued.title' | t | default: 'Gift card' }}</title>
   {{ content_for_header }}
-  <style>{{ 'tailwind.min.css' | inline_asset_content }}</style>
+  <style>{{ 'tailwind.css' | inline_asset_content }}</style>
 </head>
 <body class="bg-surface-page text-text-body">
   <main class="mx-auto flex min-h-screen max-w-[480px] flex-col items-center justify-center gap-6 px-6 py-16 text-center">
@@ -36,7 +37,16 @@
       {%- endif -%}
     </div>
 
-    <p class="text-sm text-text-muted">Scan the QR code at checkout, or enter the code above. Apply it to any order.</p>
+    <div class="flex flex-col items-center gap-2">
+      <div
+        class="flex h-[120px] w-[120px] items-center justify-center border border-border-strong bg-surface-page p-2"
+        data-qr-code
+        data-identifier="{{ gift_card.qr_identifier }}"
+        role="img"
+        aria-label="{{ 'gift_cards.issued.qr_image_alt' | t | default: 'QR code for this gift card' }}"
+      ></div>
+      <p class="text-sm text-text-muted">Scan the QR code at checkout, or enter the code above. Apply it to any order.</p>
+    </div>
 
     <div class="flex flex-wrap items-center justify-center gap-3">
       <button
@@ -51,6 +61,17 @@
         class="border border-border-strong px-6 py-3 font-mono text-xs uppercase tracking-label text-text-strong transition-colors hover:bg-surface-sunken{% if settings.button_style == 'rounded' %} rounded-full{% endif %}"
       >Print</button>
       {%- render 'button', label: 'Shop now', href: shop.url -%}
+      {%- if gift_card.pass_url -%}
+        <a href="{{ gift_card.pass_url }}" class="inline-flex items-center">
+          <img
+            src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}"
+            width="120"
+            height="40"
+            alt="{{ 'gift_cards.issued.add_to_apple_wallet' | t | default: 'Add to Apple Wallet' }}"
+            loading="lazy"
+          >
+        </a>
+      {%- endif -%}
     </div>
   </main>
 
@@ -66,6 +87,15 @@
     });
     document.querySelectorAll('[data-print]').forEach(function (btn) {
       btn.addEventListener('click', function () { window.print(); });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('[data-qr-code]').forEach(function (el) {
+        new QRCode(el, {
+          text: el.getAttribute('data-identifier'),
+          width: 120,
+          height: 120
+        });
+      });
     });
   </script>
 </body>

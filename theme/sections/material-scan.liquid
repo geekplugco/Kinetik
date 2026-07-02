@@ -1,5 +1,10 @@
 {%- liquid
   assign points = section.blocks | where: 'type', 'point'
+  assign layout = section.settings.layout | default: 'split'
+  assign image_position = section.settings.image_position | default: 'left'
+  assign image_ratio = section.settings.image_ratio | default: '4_3'
+  assign visual_effect = section.settings.visual_effect | default: 'scan'
+  assign panel_style = section.settings.panel_style | default: 'attached'
   assign has_image = false
   if section.settings.image != blank
     assign has_image = true
@@ -7,6 +12,32 @@
   assign show_section = false
   if has_image and points.size > 0
     assign show_section = true
+  endif
+  case image_ratio
+    when 'square'
+      assign ratio_cls = 'aspect-square'
+    when 'portrait'
+      assign ratio_cls = 'aspect-[4/5]'
+    when 'wide'
+      assign ratio_cls = 'aspect-[16/9]'
+    else
+      assign ratio_cls = 'aspect-[4/3]'
+  endcase
+  assign scan_grid_cls = 'grid border border-border-hairline md:grid-cols-[1.25fr_0.75fr] md:items-stretch'
+  if layout == 'stacked'
+    assign scan_grid_cls = 'grid border border-border-hairline'
+  endif
+  assign details_cls = 'flex flex-col border-t border-border-hairline md:border-l md:border-t-0'
+  if layout == 'stacked'
+    assign details_cls = 'grid border-t border-border-hairline md:grid-cols-3'
+  endif
+  if image_position == 'right' and layout == 'split'
+    assign media_order = 'md:order-2'
+    assign details_order = 'md:order-1 md:border-l-0 md:border-r'
+  endif
+  assign detail_button_cls = 'flex w-full items-start gap-4 border-b border-border-hairline px-4 py-4 text-left transition-colors aria-pressed:bg-text-strong/5 md:px-6'
+  if panel_style == 'cards'
+    assign detail_button_cls = 'm-3 flex w-[calc(100%-1.5rem)] items-start gap-4 border border-border-hairline bg-surface-raised px-4 py-4 text-left transition-colors aria-pressed:border-border-strong aria-pressed:bg-text-strong/5'
   endif
 -%}
 {%- if show_section -%}
@@ -30,20 +61,22 @@
           <span class="p-3">scan</span>
         </div>
       </div>
-      <material-scan class="grid border border-border-hairline md:grid-cols-[1.25fr_0.75fr] md:items-stretch">
-        <div data-scan-stage class="relative overflow-hidden bg-surface-sunken">
-          <div class="relative aspect-[4/3]">
+      <material-scan class="{{ scan_grid_cls }}">
+        <div data-scan-stage class="relative overflow-hidden bg-surface-sunken {{ media_order }}">
+          <div class="kx-media-effect relative {{ ratio_cls }}"{% if visual_effect == 'scan' %} data-kx-effect="proof"{% endif %}>
             {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700,1050,1400', sizes: '(min-width:990px) 45vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading, class: 'h-full w-full object-cover' }}
-            <span data-scan-line aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent opacity-0"></span>
+            {%- if visual_effect != 'none' -%}
+              <span data-scan-line aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent opacity-0"></span>
+            {%- endif -%}
             {%- for point in points -%}
               <button type="button" data-scan-point data-index="{{ forloop.index }}" aria-label="{{ point.settings.label | default: 'Detail' | escape }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" style="left:{{ point.settings.x | default: 50 }}%;top:{{ point.settings.y | default: 50 }}%" class="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center border border-accent bg-ink-950/70 font-mono text-[11px] text-paper backdrop-blur transition-transform hover:scale-110 aria-pressed:scale-110 aria-pressed:bg-accent aria-pressed:text-accent-ink" {{ point.shopify_attributes }}>{{ forloop.index }}</button>
             {%- endfor -%}
           </div>
         </div>
-        <ul class="flex flex-col border-t border-border-hairline md:border-l md:border-t-0">
+        <ul class="{{ details_cls }} {{ details_order }}">
           {%- for point in points -%}
             <li>
-              <button type="button" data-scan-detail data-index="{{ forloop.index }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" class="flex w-full items-start gap-4 border-b border-border-hairline px-4 py-4 text-left transition-colors aria-pressed:bg-text-strong/5 md:px-6">
+              <button type="button" data-scan-detail data-index="{{ forloop.index }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" class="{{ detail_button_cls }}">
                 <span class="flex h-7 w-7 shrink-0 items-center justify-center border border-border-strong font-mono text-[11px] text-text-strong">{{ forloop.index }}</span>
                 <span class="flex flex-col gap-1">
                   <span class="font-mono text-xs uppercase tracking-label text-text-strong">{{ point.settings.label | default: 'Detail' }}</span>
@@ -75,6 +108,59 @@
     { "type": "text", "id": "cta_label", "label": "t:sections.material-scan.settings.cta_label.label" },
     { "type": "url", "id": "cta_url", "label": "t:sections.material-scan.settings.cta_url.label" },
     { "type": "header", "content": "t:sections.material-scan.settings.header__style.content" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.material-scan.settings.layout.label",
+      "default": "split",
+      "options": [
+        { "value": "split", "label": "t:sections.material-scan.settings.layout.options__1.label" },
+        { "value": "stacked", "label": "t:sections.material-scan.settings.layout.options__2.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "t:sections.material-scan.settings.image_position.label",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "t:sections.material-scan.settings.image_position.options__1.label" },
+        { "value": "right", "label": "t:sections.material-scan.settings.image_position.options__2.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.material-scan.settings.image_ratio.label",
+      "default": "4_3",
+      "options": [
+        { "value": "4_3", "label": "t:sections.material-scan.settings.image_ratio.options__1.label" },
+        { "value": "wide", "label": "t:sections.material-scan.settings.image_ratio.options__2.label" },
+        { "value": "square", "label": "t:sections.material-scan.settings.image_ratio.options__3.label" },
+        { "value": "portrait", "label": "t:sections.material-scan.settings.image_ratio.options__4.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "visual_effect",
+      "label": "t:sections.material-scan.settings.visual_effect.label",
+      "default": "scan",
+      "options": [
+        { "value": "scan", "label": "t:sections.material-scan.settings.visual_effect.options__1.label" },
+        { "value": "zoom", "label": "t:sections.material-scan.settings.visual_effect.options__2.label" },
+        { "value": "none", "label": "t:sections.material-scan.settings.visual_effect.options__3.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "panel_style",
+      "label": "t:sections.material-scan.settings.panel_style.label",
+      "default": "attached",
+      "options": [
+        { "value": "attached", "label": "t:sections.material-scan.settings.panel_style.options__1.label" },
+        { "value": "cards", "label": "t:sections.material-scan.settings.panel_style.options__2.label" }
+      ]
+    },
     { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.material-scan.settings.color_scheme.label", "default": "scheme-3" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.material-scan.settings.padding_top.label" },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.material-scan.settings.padding_bottom.label" }

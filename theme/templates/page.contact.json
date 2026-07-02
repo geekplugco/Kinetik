@@ -1,7 +1,10 @@
 {
   "sections": {
     "main": {
-      "type": "main-list-collections"
+      "type": "main-page"
+    },
+    "contact_form": {
+      "type": "contact-form"
     },
     "breadcrumb": {
       "type": "breadcrumb",
@@ -13,6 +16,7 @@
   },
   "order": [
     "breadcrumb",
-    "main"
+    "main",
+    "contact_form"
   ]
 }

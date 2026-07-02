@@ -1,0 +1,94 @@
+{%- liquid
+  assign s = section.settings
+  case s.width
+    when 'full'
+      assign width_cls = 'max-w-none'
+    else
+      assign width_cls = 'max-w-[var(--page-width)]'
+  endcase
+-%}
+<section
+  data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+  style="--pt:{{ s.padding_top }}px;--pb:{{ s.padding_bottom }}px"
+  class="bg-surface-page pt-[var(--pt,16px)] pb-[var(--pb,16px)]"
+>
+  <div class="mx-auto {{ width_cls }} px-6">
+    {%- render 'breadcrumb',
+      show_current: s.show_current,
+      show_home: s.show_home,
+      show_collection_parent: s.show_collection_parent
+    -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.breadcrumb.name",
+  "tag": "section",
+  "class": "section section--breadcrumb",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_home",
+      "label": "t:sections.breadcrumb.settings.show_home.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_current",
+      "label": "t:sections.breadcrumb.settings.show_current.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_parent",
+      "label": "t:sections.breadcrumb.settings.show_collection_parent.label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:sections.breadcrumb.settings.width.label",
+      "default": "page",
+      "options": [
+        { "value": "page", "label": "t:sections.breadcrumb.settings.width.options__1.label" },
+        { "value": "full", "label": "t:sections.breadcrumb.settings.width.options__2.label" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.breadcrumb.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.breadcrumb.settings.header__1.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 16,
+      "label": "t:sections.breadcrumb.settings.padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 12,
+      "label": "t:sections.breadcrumb.settings.padding_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.breadcrumb.presets.name"
+    }
+  ]
+}
+{% endschema %}

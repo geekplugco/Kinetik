@@ -1,0 +1,24 @@
+{% doc %}
+  Product status badge. Settings gating (badge_show_sold_out / badge_show_sale)
+  stays at the call site.
+  @param {string} type - sold_out | sale | custom
+  @param {string} [label] - text for sale and custom types
+  @param {string} [size] - default | small
+  @param {string} [position] - placement classes (default 'left-3 top-3')
+{% enddoc %}
+{%- liquid
+  assign badge_pos = position | default: 'left-3 top-3'
+  assign badge_size = 'px-2 py-1 text-[10px]'
+  if size == 'small'
+    assign badge_size = 'px-1.5 py-0.5 text-[9px]'
+  endif
+  assign badge_color = 'bg-ink-950 text-paper'
+  if type == 'sale'
+    assign badge_color = 'bg-accent text-accent-ink'
+  endif
+  assign badge_label = label
+  if type == 'sold_out'
+    assign badge_label = 'products.product.sold_out' | t | default: 'Sold out'
+  endif
+-%}
+<span class="absolute {{ badge_pos }} {{ badge_color }} {{ badge_size }} font-mono font-bold uppercase tracking-label" style="border-radius:var(--badge-radius)">{{ badge_label }}</span>

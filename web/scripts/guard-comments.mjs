@@ -1,7 +1,11 @@
-import { readFileSync, readdirSync, statSync } from 'fs';
-import { join, extname, relative } from 'path';
+import { readFileSync, readdirSync, statSync, existsSync } from 'fs';
+import { join, extname, relative, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const root = process.argv[2] || 'theme';
+const args = process.argv.slice(2);
+const asJson = args.includes('--json');
+const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const root = args.find((a) => !a.startsWith('--')) || join(repoRoot, 'theme');
 const scanExts = ['.liquid', '.js'];
 const skipDirs = new Set(['scripts', 'node_modules', '.git']);
 const violations = [];
@@ -25,10 +29,10 @@ function scanLiquid(file, text) {
 }
 
 function scanJs(file, text) {
-  text.split('\n').forEach((line, i) => {
-    const code = line.replace(/(['"`])(?:\\.|(?!\1).)*\1/g, '');
-    if (/(^|[^:])\/\//.test(code)) record(file, i, 'js-line-comment', line);
-    if (/\/\*/.test(code)) record(file, i, 'js-block-comment', line);
+  const masked = blankRanges(text, /(['"`])(?:\\[\s\S]|(?!\1)[^\\])*\1/g);
+  masked.split('\n').forEach((line, i) => {
+    if (/(^|[^:])\/\//.test(line)) record(file, i, 'js-line-comment', text.split('\n')[i]);
+    if (/\/\*/.test(line)) record(file, i, 'js-block-comment', text.split('\n')[i]);
   });
 }
 
@@ -45,7 +49,18 @@ function walk(dir) {
   }
 }
 
+if (!existsSync(root)) {
+  console.error('[FAIL] comment guard — root not found: ' + root);
+  process.exit(1);
+}
+
 walk(root);
+
+if (asJson) {
+  const errors = violations.map((v) => relative(root, v.file) + ':' + v.line + ' [' + v.kind + '] ' + v.text);
+  console.log(JSON.stringify({ errors, warnings: [] }, null, 2));
+  process.exit(violations.length ? 1 : 0);
+}
 
 if (violations.length === 0) {
   console.log('[PASS] comment guard — no disallowed comments under ' + root);

@@ -12,9 +12,7 @@
   </header>
 
   {%- if has_content != blank -%}
-    <div class="mt-10 flex flex-col gap-4 text-body-lg leading-relaxed text-text-body [&_a]:text-accent-press [&_a]:underline [&_a]:underline-offset-4 [&_h2]:mt-6 [&_h2]:font-display [&_h2]:text-h3 [&_h2]:text-text-strong [&_h3]:font-display [&_h3]:text-h4 [&_h3]:text-text-strong [&_img]:my-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5">
-      {{ page.content }}
-    </div>
+    {%- render 'rte', content: page.content, class: 'mt-10 text-body-lg leading-relaxed text-text-body' -%}
   {%- endif -%}
 </section>
 {% schema %}

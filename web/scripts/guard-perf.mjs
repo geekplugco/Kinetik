@@ -1,9 +1,12 @@
 #!/usr/bin/env node
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { join } from 'node:path';
+import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const themeDir = process.argv[2] || 'theme';
-const asJson = process.argv.includes('--json');
+const args = process.argv.slice(2);
+const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const themeDir = args.find((a) => !a.startsWith('--')) || join(repoRoot, 'theme');
+const asJson = args.includes('--json');
 
 const RESET = '\x1b[0m';
 const RED = '\x1b[31m';
@@ -13,6 +16,10 @@ const DIM = '\x1b[2m';
 
 const errors = [];
 const warnings = [];
+const stylesheetLinks = [];
+const JS_WARN = 30 * 1024;
+const JS_ERROR = 60 * 1024;
+const CSS_WARN = 150 * 1024;
 
 function stripSchema(src) {
   return src.replace(/\{%-?\s*schema\s*-?%\}[\s\S]*?\{%-?\s*endschema\s*-?%\}/g, '');
@@ -50,6 +57,15 @@ function scanLiquid(rel, raw) {
     if (!/\bdefer\b/.test(tag) && !/\basync\b/.test(tag)) {
       errors.push(`${rel}:${lineOf(body, index)}: render-blocking <script src> without defer/async — add defer="defer"`);
     }
+    if (/\bsrc\s*=\s*["'](https?:)?\/\//.test(tag)) {
+      errors.push(`${rel}:${lineOf(body, index)}: external <script src> — third-party JS adds a blocking origin and fails Theme Store review; bundle it as an asset`);
+    }
+  }
+
+  for (const { tag, index } of tags(body, 'link')) {
+    if (!/\brel\s*=\s*["']stylesheet["']/i.test(tag)) continue;
+    if (/\bonload\s*=/.test(tag) || /\bmedia\s*=\s*["']print["']/.test(tag)) continue;
+    stylesheetLinks.push(`${rel}:${lineOf(body, index)}`);
   }
 
   for (const { index } of tags(body, 'iframe')) {
@@ -80,6 +96,21 @@ function scanLiquid(rel, raw) {
   const noWidthImg = /\|\s*image_url\s*(?:\|\|)?\s*}}/g;
   while ((m = noWidthImg.exec(body))) {
     warnings.push(`${rel}:${lineOf(body, m.index)}: image_url without a width: serves the master image — pass width: to cap payload`);
+  }
+  const fontFace = /\|\s*font_face(?::[^}%]*)?/g;
+  while ((m = fontFace.exec(body))) {
+    if (!/font_display/.test(m[0])) {
+      warnings.push(`${rel}:${lineOf(body, m.index)}: font_face without font_display — pass font_display: 'swap' to avoid invisible text while fonts load`);
+    }
+  }
+  const imageTag = /\|\s*image_tag(?::[^}%]*)?/g;
+  while ((m = imageTag.exec(body))) {
+    if (!/\bloading\s*:/.test(m[0])) {
+      errors.push(`${rel}:${lineOf(body, m.index)}: image_tag without loading: — decide lazy (below fold) or eager (LCP) explicitly`);
+    }
+    if (!/\bwidths\s*:/.test(m[0])) {
+      warnings.push(`${rel}:${lineOf(body, m.index)}: image_tag without widths: — no srcset means one fixed payload for every viewport and DPR`);
+    }
   }
 }
 
@@ -116,10 +147,27 @@ for (const dir of ['layout', 'sections', 'snippets', 'blocks']) {
 }
 walk('assets', ['.css'], scanCss);
 
+if (stylesheetLinks.length > 1) {
+  warnings.push(`${stylesheetLinks.length} render-blocking <link rel="stylesheet"> tags (${stylesheetLinks.join(', ')}) — bundle into a single theme stylesheet`);
+}
+
+const assetsDir = join(themeDir, 'assets');
+if (existsSync(assetsDir)) {
+  for (const f of readdirSync(assetsDir)) {
+    const size = statSync(join(assetsDir, f)).size;
+    if (f.endsWith('.js')) {
+      if (size > JS_ERROR) errors.push(`assets/${f}: ${(size / 1024).toFixed(1)}KB JS — exceeds ${JS_ERROR / 1024}KB budget; split or trim before it taxes every page`);
+      else if (size > JS_WARN) warnings.push(`assets/${f}: ${(size / 1024).toFixed(1)}KB JS — over the ${JS_WARN / 1024}KB soft budget`);
+    } else if (f.endsWith('.css') && size > CSS_WARN) {
+      warnings.push(`assets/${f}: ${(size / 1024).toFixed(1)}KB CSS — over the ${CSS_WARN / 1024}KB soft budget`);
+    }
+  }
+}
+
 if (asJson) {
   console.log(JSON.stringify({ errors, warnings }, null, 2));
 } else {
-  console.log(`${DIM}guard-perf — scanned ${themeDir} (img/script/iframe/video/fonts/css)${RESET}`);
+  console.log(`${DIM}guard-perf — scanned ${themeDir} (img/image_tag/script/iframe/video/fonts/css/budgets)${RESET}`);
   for (const w of warnings) console.log(`${YELLOW}[warn]${RESET} ${w}`);
   for (const e of errors) console.log(`${RED}[error]${RESET} ${e}`);
   if (errors.length === 0) {

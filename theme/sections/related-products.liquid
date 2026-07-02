@@ -1,13 +1,15 @@
 {%- liquid
   assign limit = section.settings.products_to_show | default: 4
-  assign source = null
+  assign show_related = false
   if recommendations.performed and recommendations.products_count > 0
-    assign source = recommendations.products
-  elsif product != blank
-    assign source = product.collections.first.products
+    assign show_related = true
   endif
 -%}
-{%- if source != blank -%}
+<related-products-section
+  data-product-id="{{ product.id }}"
+  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ limit }}&intent=related"
+  {% unless show_related %}data-pending{% endunless %}
+>
   <section
     data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
     style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
@@ -23,18 +25,22 @@
         </div>
         <span class="hidden font-mono text-xs uppercase tracking-label text-text-muted md:block">{{ limit }} slots</span>
       </div>
-      <div class="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
-        {%- assign shown = 0 -%}
-        {%- for rp in source -%}
-          {%- if rp.id != product.id and shown < limit -%}
-            {%- render 'product-card', product: rp -%}
-            {%- assign shown = shown | plus: 1 -%}
-          {%- endif -%}
-        {%- endfor -%}
+      <div data-related-grid class="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
+        {%- if show_related -%}
+          {%- assign shown = 0 -%}
+          {%- for rp in recommendations.products -%}
+            {%- if rp.id != product.id and shown < limit -%}
+              {%- render 'product-card', product: rp -%}
+              {%- assign shown = shown | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <p data-related-loading class="col-span-full font-mono text-xs uppercase tracking-label text-text-muted">Loading recommendations…</p>
+        {%- endif -%}
       </div>
     </div>
   </section>
-{%- endif -%}
+</related-products-section>
 {% schema %}
 {
   "name": "t:sections.related-products.name",

@@ -68,7 +68,7 @@
 
 {%- capture hero_image -%}
   {%- if s.image != blank -%}
-    {{ s.image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1600,2000', sizes: '100vw', alt: alt, class: 'absolute inset-0 h-full w-full object-cover kx-hero-media' }}
+    {{ s.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1600,2000', sizes: '100vw', alt: alt, class: 'absolute inset-0 h-full w-full object-cover kx-hero-media' }}
   {%- else -%}
     {{ 'lifestyle-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
   {%- endif -%}
@@ -284,20 +284,20 @@
     {
       "type": "select",
       "id": "visual_effect",
-      "label": "Hero visual effect",
+      "label": "t:sections.hero.settings.visual_effect.label",
       "default": "technical_scan",
       "options": [
         {
           "value": "technical_scan",
-          "label": "Technical scan"
+          "label": "t:sections.hero.settings.visual_effect.options__1.label"
         },
         {
           "value": "signal_frame",
-          "label": "Signal frame"
+          "label": "t:sections.hero.settings.visual_effect.options__2.label"
         },
         {
           "value": "none",
-          "label": "None"
+          "label": "t:sections.hero.settings.visual_effect.options__3.label"
         }
       ]
     },

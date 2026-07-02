@@ -11,7 +11,31 @@
         "color_scheme": "scheme-5",
         "padding_top": 24,
         "padding_bottom": 48
-      }
+      },
+      "blocks": {
+        "vendor": {
+          "type": "vendor"
+        },
+        "title": {
+          "type": "title"
+        },
+        "rating": {
+          "type": "rating"
+        },
+        "price": {
+          "type": "price"
+        },
+        "description": {
+          "type": "description"
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "rating",
+        "price",
+        "description"
+      ]
     },
     "motion_spec": {
       "type": "product-motion-spec",
@@ -27,12 +51,42 @@
         "padding_bottom": 72
       },
       "blocks": {
-        "s1": { "type": "stat", "settings": { "value": "20K", "label": "Weather" } },
-        "s2": { "type": "stat", "settings": { "value": "3L", "label": "Shell" } },
-        "s3": { "type": "stat", "settings": { "value": "0", "label": "Noise", "note": "visual" } },
-        "s4": { "type": "stat", "settings": { "value": "24H", "label": "Transit" } }
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "value": "20K",
+            "label": "Weather"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "value": "3L",
+            "label": "Shell"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "value": "0",
+            "label": "Noise",
+            "note": "visual"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "value": "24H",
+            "label": "Transit"
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3", "s4"]
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
     },
     "material_scan": {
       "type": "material-scan",
@@ -45,11 +99,39 @@
         "padding_bottom": 72
       },
       "blocks": {
-        "p1": { "type": "point", "settings": { "x": 30, "y": 40, "label": "Matte face", "detail": "<p>Low shine fabric keeps the silhouette quiet.</p>" } },
-        "p2": { "type": "point", "settings": { "x": 58, "y": 58, "label": "Sealed detail", "detail": "<p>Construction points are visible only where they explain performance.</p>" } },
-        "p3": { "type": "point", "settings": { "x": 78, "y": 72, "label": "Hardware", "detail": "<p>Dark hardware supports the system without adding decoration.</p>" } }
+        "p1": {
+          "type": "point",
+          "settings": {
+            "x": 30,
+            "y": 40,
+            "label": "Matte face",
+            "detail": "<p>Low shine fabric keeps the silhouette quiet.</p>"
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "x": 58,
+            "y": 58,
+            "label": "Sealed detail",
+            "detail": "<p>Construction points are visible only where they explain performance.</p>"
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "x": 78,
+            "y": 72,
+            "label": "Hardware",
+            "detail": "<p>Dark hardware supports the system without adding decoration.</p>"
+          }
+        }
       },
-      "block_order": ["p1", "p2", "p3"]
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ]
     },
     "faq": {
       "type": "product-faq",
@@ -58,7 +140,9 @@
         "color_scheme": "scheme-5"
       }
     },
-    "loadout": { "type": "product-loadout" },
+    "loadout": {
+      "type": "product-loadout"
+    },
     "related": {
       "type": "related-products",
       "settings": {
@@ -66,7 +150,22 @@
         "products_to_show": 4,
         "color_scheme": "scheme-5"
       }
+    },
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "padding_top": 16,
+        "padding_bottom": 12
+      }
     }
   },
-  "order": ["main", "motion_spec", "material_scan", "faq", "loadout", "related"]
+  "order": [
+    "breadcrumb",
+    "main",
+    "motion_spec",
+    "material_scan",
+    "faq",
+    "loadout",
+    "related"
+  ]
 }

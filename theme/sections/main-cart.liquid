@@ -63,6 +63,25 @@
                 {%- unless item.product.has_only_default_variant -%}
                   <span class="font-mono text-xs text-text-muted">{{ item.variant.title }}</span>
                 {%- endunless -%}
+                {%- if item.selling_plan_allocation -%}
+                  <div class="flex flex-col gap-0.5">
+                    <span class="font-mono text-[11px] uppercase tracking-label text-accent-press">{{ item.selling_plan_allocation.selling_plan.name }}</span>
+                    {%- for selling_plan_option in item.selling_plan_allocation.selling_plan.options -%}
+                      <span class="font-mono text-[11px] text-text-muted">{{ selling_plan_option.name }}: {{ selling_plan_option.value }}</span>
+                    {%- endfor -%}
+                    <span class="font-mono text-[11px] text-text-muted">{{ item.selling_plan_allocation.per_delivery_price | money }} per delivery</span>
+                  </div>
+                {%- endif -%}
+                {%- if item.unit_price_measurement -%}
+                  <span class="font-mono text-[11px] text-text-muted">{{ item.unit_price | money }}/{% if item.unit_price_measurement.reference_value != 1 %}{{ item.unit_price_measurement.reference_value }}{% endif %}{{ item.unit_price_measurement.reference_unit }}</span>
+                {%- endif -%}
+                {%- if item.line_level_discount_allocations.size > 0 -%}
+                  <div class="flex flex-col gap-0.5">
+                    {%- for discount_allocation in item.line_level_discount_allocations -%}
+                      <span class="font-mono text-[11px] uppercase tracking-label text-accent-press">{{ discount_allocation.discount_application.title }} &minus;{{ discount_allocation.amount | money }}</span>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
                 <div class="mt-auto flex items-center justify-between">
                   <div class="flex items-center border border-border-strong">
                     <button type="button" aria-label="Decrease quantity" data-qty-down data-line="{{ forloop.index }}" data-qty="{{ item.quantity }}" class="px-3 py-1 text-text-strong">&minus;</button>
@@ -98,6 +117,12 @@
               <span class="uppercase tracking-label text-text-muted">{{ 'sections.cart.subtotal' | t | default: 'Subtotal' }}</span>
               <span class="text-text-strong">{{ cart.total_price | money }}</span>
             </div>
+            {%- for discount_application in cart.cart_level_discount_applications -%}
+              <div class="flex w-full max-w-xs items-center justify-between font-mono text-sm">
+                <span class="uppercase tracking-label text-text-muted">{{ discount_application.title }}</span>
+                <span class="text-accent-press">&minus;{{ discount_application.total_allocated_amount | money }}</span>
+              </div>
+            {%- endfor -%}
             <div class="flex w-full max-w-xs items-center justify-between border-t border-border-hairline pt-3 font-mono">
               <span class="text-sm uppercase tracking-label text-text-muted">Total</span>
               <span class="text-h4 text-text-strong">{{ cart.total_price | money }}</span>
@@ -105,6 +130,7 @@
             <p class="w-full max-w-xs text-right font-mono text-[10px] text-text-faint">Taxes and shipping calculated at checkout</p>
             {%- assign checkout_label = 'sections.cart.checkout' | t | default: 'Checkout' -%}
             {%- render 'button', label: checkout_label, type: 'submit', name: 'checkout', size: 'md', class: 'w-full max-w-xs' -%}
+            <div class="w-full max-w-xs">{{ form | payment_button }}</div>
           </div>
         </div>
       {%- endform -%}
@@ -122,11 +148,7 @@
             {%- if in_cart or p.available == false -%}{%- continue -%}{%- endif -%}
             {%- assign rec_shown = rec_shown | plus: 1 -%}
             <div class="flex flex-col gap-2">
-              <a href="{{ p.url }}" class="relative aspect-[4/5] overflow-hidden bg-surface-sunken" aria-label="{{ p.title | escape }}">
-                {%- if p.featured_media -%}{{ p.featured_media | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200,400', sizes: '(min-width:750px) 22vw, 45vw', alt: p.title, class: 'absolute inset-0 h-full w-full object-cover' }}{%- endif -%}
-              </a>
-              <a href="{{ p.url }}" class="font-sans text-sm leading-tight text-text-strong hover:text-accent-press">{{ p.title }}</a>
-              <span class="font-mono text-xs text-text-muted">{{ p.price | money }}</span>
+              {%- render 'product-tile-compact', product: p, image_width: 400, sizes: '(min-width:750px) 22vw, 45vw' -%}
               <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
                 <button type="submit" class="w-full border border-border-strong px-3 py-2 font-mono text-[11px] uppercase tracking-label text-text-strong transition-colors hover:bg-surface-sunken">Add to cart</button>

@@ -110,9 +110,9 @@
         </nav>
         <div class="flex flex-col gap-3">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">Support</span>
-          <a href="/pages/contact" class="text-sm text-text-body transition-colors hover:text-text-strong">Contact</a>
-          <a href="/pages/shipping" class="text-sm text-text-body transition-colors hover:text-text-strong">Shipping &amp; returns</a>
-          <a href="/pages/faq" class="text-sm text-text-body transition-colors hover:text-text-strong">FAQ</a>
+          <a href="{{ s.contact_page.url | default: '/pages/contact' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">Contact</a>
+          <a href="{{ s.shipping_page.url | default: '/pages/shipping' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">Shipping &amp; returns</a>
+          <a href="{{ s.faq_page.url | default: '/pages/faq' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">FAQ</a>
         </div>
         <div class="flex flex-col gap-3">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">Region</span>
@@ -170,10 +170,10 @@
 
         <div class="flex flex-col gap-3 border-b border-border-hairline p-5 md:border-b-0 md:border-r">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">Support</span>
-          <a href="/pages/contact" class="text-sm text-text-body transition-colors hover:text-text-strong">Contact</a>
-          <a href="/pages/shipping" class="text-sm text-text-body transition-colors hover:text-text-strong">Shipping &amp; returns</a>
-          <a href="/pages/faq" class="text-sm text-text-body transition-colors hover:text-text-strong">FAQ</a>
-          <a href="/pages/warranty" class="text-sm text-text-body transition-colors hover:text-text-strong">Warranty</a>
+          <a href="{{ s.contact_page.url | default: '/pages/contact' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">Contact</a>
+          <a href="{{ s.shipping_page.url | default: '/pages/shipping' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">Shipping &amp; returns</a>
+          <a href="{{ s.faq_page.url | default: '/pages/faq' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">FAQ</a>
+          <a href="{{ s.warranty_page.url | default: '/pages/warranty' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">Warranty</a>
         </div>
 
         <div class="flex flex-col gap-3 border-b border-border-hairline p-5 md:border-b-0 md:border-r">
@@ -250,7 +250,7 @@
     {
       "type": "select",
       "id": "footer_style",
-      "label": "Footer style",
+      "label": "Style",
       "default": "system",
       "options": [
         {
@@ -282,6 +282,30 @@
       "id": "menu",
       "label": "t:sections.footer.settings.menu.label",
       "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header__support.content"
+    },
+    {
+      "type": "page",
+      "id": "contact_page",
+      "label": "t:sections.footer.settings.contact_page.label"
+    },
+    {
+      "type": "page",
+      "id": "shipping_page",
+      "label": "t:sections.footer.settings.shipping_page.label"
+    },
+    {
+      "type": "page",
+      "id": "faq_page",
+      "label": "t:sections.footer.settings.faq_page.label"
+    },
+    {
+      "type": "page",
+      "id": "warranty_page",
+      "label": "t:sections.footer.settings.warranty_page.label"
     },
     {
       "type": "text",

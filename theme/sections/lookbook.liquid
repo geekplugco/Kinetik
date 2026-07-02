@@ -191,26 +191,13 @@
               {%- assign has_hotspot = true -%}
               {%- assign hx = b[xkey] | default: 50 -%}
               {%- assign hy = b[ykey] | default: 50 -%}
-              {%- assign code = p.metafields.custom.product_code.value | default: p.selected_or_first_available_variant.sku -%}
               <div class="group/hs absolute z-10 -translate-x-1/2 -translate-y-1/2" style="left:{{ hx }}%;top:{{ hy }}%" data-hotspot-item>
                 <button type="button" aria-label="Shop {{ p.title | escape }}" aria-expanded="false" data-hotspot class="relative flex h-7 w-7 items-center justify-center rounded-full bg-paper text-ink-950 shadow-[0_2px_10px_rgba(10,10,10,0.35)] outline-none ring-accent transition-transform hover:scale-110 focus-visible:ring-2">
                   <span class="absolute inset-0 animate-ping rounded-full bg-accent/60" aria-hidden="true"></span>
                   {%- render 'icon', name: 'plus', size: 14 -%}
                 </button>
                 <div data-tip class="pointer-events-none absolute bottom-[calc(100%+10px)] left-1/2 z-20 w-56 -translate-x-1/2 translate-y-1 border border-border-hairline bg-surface-page p-3 opacity-0 shadow-xl transition-[transform,opacity] duration-200 motion-reduce:transition-none group-hover/hs:pointer-events-auto group-hover/hs:translate-y-0 group-hover/hs:opacity-100 group-focus-within/hs:pointer-events-auto group-focus-within/hs:translate-y-0 group-focus-within/hs:opacity-100">
-                  <a href="{{ p.url }}" class="flex gap-3">
-                    <span class="relative block h-16 w-14 shrink-0 overflow-hidden bg-surface-sunken">
-                      {%- if p.featured_media -%}
-                        {%- assign hotspot_alt = p.featured_media.alt | default: p.title | escape -%}
-                        {{ p.featured_media | image_url: width: 112 | image_tag: loading: 'lazy', widths: '56,112', sizes: '56px', alt: hotspot_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
-                      {%- endif -%}
-                    </span>
-                    <span class="flex min-w-0 flex-col gap-0.5">
-                      {%- if code != blank -%}<span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ code }}</span>{%- endif -%}
-                      <span class="truncate font-sans text-sm text-text-strong">{{ p.title }}</span>
-                      <span class="font-mono text-sm text-text-strong">{{ p.price | money }}</span>
-                    </span>
-                  </a>
+                  {%- render 'product-tile-compact', product: p, layout: 'row', image_width: 112, sizes: '56px', show_code: true -%}
                   {%- if p.available -%}
                     <quick-add>
                       <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
@@ -233,18 +220,7 @@
                 {%- assign p = b[pkey] -%}
                 {%- if p == blank -%}{%- continue -%}{%- endif -%}
                 <li class="shrink-0">
-                  <a href="{{ p.url }}" class="flex w-44 items-center gap-3 border border-border-hairline p-2">
-                    <span class="relative block h-14 w-12 shrink-0 overflow-hidden bg-surface-sunken">
-                      {%- if p.featured_media -%}
-                        {%- assign mobile_hotspot_alt = p.featured_media.alt | default: p.title | escape -%}
-                        {{ p.featured_media | image_url: width: 96 | image_tag: loading: 'lazy', sizes: '48px', alt: mobile_hotspot_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
-                      {%- endif -%}
-                    </span>
-                    <span class="flex min-w-0 flex-col">
-                      <span class="truncate font-sans text-sm text-text-strong">{{ p.title }}</span>
-                      <span class="font-mono text-xs text-text-muted">{{ p.price | money }}</span>
-                    </span>
-                  </a>
+                  {%- render 'product-tile-compact', product: p, layout: 'row', image_width: 112, sizes: '56px', class: 'flex w-44 items-center gap-3 border border-border-hairline p-2' -%}
                 </li>
               {%- endfor -%}
             </ul>
@@ -287,16 +263,16 @@
     {
       "type": "select",
       "id": "heading_layout",
-      "label": "Heading layout",
+      "label": "t:sections.lookbook.settings.heading_layout.label",
       "default": "bar",
       "options": [
         {
           "value": "bar",
-          "label": "Editorial bar"
+          "label": "t:sections.lookbook.settings.heading_layout.options__1.label"
         },
         {
           "value": "framed",
-          "label": "Framed panel"
+          "label": "t:sections.lookbook.settings.heading_layout.options__2.label"
         }
       ]
     },
@@ -323,20 +299,20 @@
     {
       "type": "select",
       "id": "editorial_density",
-      "label": "Editorial spacing",
+      "label": "t:sections.lookbook.settings.editorial_density.label",
       "default": "compact",
       "options": [
         {
           "value": "compact",
-          "label": "Compact"
+          "label": "t:sections.lookbook.settings.editorial_density.options__1.label"
         },
         {
           "value": "balanced",
-          "label": "Balanced"
+          "label": "t:sections.lookbook.settings.editorial_density.options__2.label"
         },
         {
           "value": "spacious",
-          "label": "Spacious"
+          "label": "t:sections.lookbook.settings.editorial_density.options__3.label"
         }
       ]
     },

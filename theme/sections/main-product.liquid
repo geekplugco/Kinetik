@@ -90,23 +90,25 @@
   {%- endif -%}
 
   <variant-picker id="variant-picker-{{ section.id }}" class="{% if sticky_info %}md:sticky md:top-24 md:self-start{% endif %}">
-    <script type="application/json">
-      [
-        {%- for variant in product.variants -%}
-          {"id":{{ variant.id }},"options":{{ variant.options | json }},"available":{{ variant.available }},"price":{{ variant.price | money | json }},"price_cents":{{ variant.price }},"compare_at":{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},"on_sale":{% if variant.compare_at_price > variant.price %}true{% else %}false{% endif %},"inventory_management":{{ variant.inventory_management | json }},"inventory_quantity":{{ variant.inventory_quantity }},"sku":{{ variant.sku | json }},"featured_media_id":{% if variant.featured_media %}{{ variant.featured_media.id }}{% else %}null{% endif %}}{%- unless forloop.last -%},{%- endunless -%}
-        {%- endfor -%}
-      ]
-    </script>
+    {%- render 'variant-json', product: product -%}
 
       <div class="flex flex-col gap-5">
       <div class="flex flex-col gap-2">
-        <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ product.vendor }}{% if code != blank %} &middot; {{ code }}{% endif %}</span>
-        <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ product.title }}</h1>
         {%- assign product_rating = product.metafields.reviews.rating.value -%}
-        {%- if product_rating != blank and product_rating.rating > 0 -%}
-          <a href="#reviews" class="inline-flex w-fit" aria-label="Read reviews">{%- render 'rating', rating: product_rating.rating, scale_max: product_rating.scale_max, count: product.metafields.reviews.rating_count -%}</a>
-        {%- endif -%}
-        <div data-price data-price-class="text-body-lg">{%- render 'price', variant: current_variant, class: 'text-body-lg' -%}</div>
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'vendor' -%}
+              <span class="font-mono text-xs uppercase tracking-label text-text-muted" {{ block.shopify_attributes }}>{{ product.vendor }}{% if code != blank %} &middot; {{ code }}{% endif %}</span>
+            {%- when 'title' -%}
+              <h1 class="font-display text-h1 tracking-tight text-text-strong" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+            {%- when 'rating' -%}
+              {%- if product_rating != blank and product_rating.rating > 0 -%}
+                <a href="#reviews" class="inline-flex w-fit" aria-label="Read reviews" {{ block.shopify_attributes }}>{%- render 'rating', rating: product_rating.rating, scale_max: product_rating.scale_max, count: product.metafields.reviews.rating_count -%}</a>
+              {%- endif -%}
+            {%- when 'price' -%}
+              <div data-price data-price-class="text-body-lg" {{ block.shopify_attributes }}>{%- render 'price', variant: current_variant, class: 'text-body-lg' -%}</div>
+          {%- endcase -%}
+        {%- endfor -%}
       </div>
 
       <div class="grid grid-cols-2 border border-border-hairline font-mono text-[11px] uppercase tracking-label">
@@ -137,6 +139,7 @@
 
       {%- form 'product', product, class: 'flex flex-col gap-6' -%}
         <input type="hidden" name="id" value="{{ current_variant.id }}">
+        <p class="text-xs text-text-muted">{{ form | payment_terms }}</p>
 
         {%- unless product.has_only_default_variant -%}
           <div class="flex flex-col gap-4">
@@ -186,6 +189,56 @@
             {%- endfor -%}
           </div>
         {%- endunless -%}
+
+        {%- if product.selling_plan_groups.size > 0 -%}
+          {%- assign selling_plan_taken = false -%}
+          {%- assign default_selling_plan_id = '' -%}
+          <fieldset data-selling-plan-fieldset class="m-0 flex flex-col gap-2 border-0 p-0">
+            <legend class="mb-3 font-mono text-xs uppercase tracking-label text-text-muted">Purchase options</legend>
+            <div class="flex flex-col gap-2.5">
+              {%- unless product.requires_selling_plan -%}
+                {%- assign selling_plan_taken = true -%}
+                {%- assign sp_id = section.id | append: '-purchase-onetime' -%}
+                <label for="{{ sp_id }}" class="cursor-pointer">
+                  <input
+                    type="radio"
+                    id="{{ sp_id }}"
+                    class="peer sr-only"
+                    name="selling-plan-picker-{{ section.id }}"
+                    value=""
+                    data-selling-plan-radio
+                    checked
+                  >
+                  <span class="block min-h-[44px] border border-border-hairline px-4 py-3 font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">One-time purchase</span>
+                </label>
+              {%- endunless -%}
+              {%- for selling_plan_group in product.selling_plan_groups -%}
+                {%- for selling_plan in selling_plan_group.selling_plans -%}
+                  {%- assign sp_checked = false -%}
+                  {%- unless selling_plan_taken -%}
+                    {%- assign sp_checked = true -%}
+                    {%- assign selling_plan_taken = true -%}
+                    {%- assign default_selling_plan_id = selling_plan.id -%}
+                  {%- endunless -%}
+                  {%- assign sp_id = section.id | append: '-plan-' | append: selling_plan.id -%}
+                  <label for="{{ sp_id }}" class="cursor-pointer">
+                    <input
+                      type="radio"
+                      id="{{ sp_id }}"
+                      class="peer sr-only"
+                      name="selling-plan-picker-{{ section.id }}"
+                      value="{{ selling_plan.id }}"
+                      data-selling-plan-radio
+                      {% if sp_checked %}checked{% endif %}
+                    >
+                    <span class="block min-h-[44px] border border-border-hairline px-4 py-3 font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">{{ selling_plan.name }}</span>
+                  </label>
+                {%- endfor -%}
+              {%- endfor -%}
+            </div>
+          </fieldset>
+          <input type="hidden" name="selling_plan" data-selling-plan-input value="{{ default_selling_plan_id }}">
+        {%- endif -%}
 
         <p data-variant-readout class="font-mono text-xs uppercase tracking-label text-text-muted{% unless current_variant.sku != blank %} hidden{% endunless %}">SKU &middot; <span data-variant-sku class="text-text-strong">{{ current_variant.sku }}</span></p>
 
@@ -262,12 +315,15 @@
 
       {%- assign care_mf = product.metafields.custom.care.value -%}
       <div class="border-t border-border-hairline">
-        {%- if product.description != blank -%}
-          <details class="border-b border-border-hairline" open>
-            <summary class="flex w-full cursor-pointer items-center justify-between py-4 font-mono text-xs uppercase tracking-label text-text-strong">Details</summary>
-            <div class="pb-5 text-body text-text-body [&_a]:underline [&_a]:underline-offset-4 [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ product.description }}</div>
-          </details>
-        {%- endif -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type != 'description' -%}{%- continue -%}{%- endif -%}
+          {%- if product.description != blank -%}
+            <details class="border-b border-border-hairline" open {{ block.shopify_attributes }}>
+              <summary class="flex w-full cursor-pointer items-center justify-between py-4 font-mono text-xs uppercase tracking-label text-text-strong">Details</summary>
+              {%- render 'rte', content: product.description, class: 'pb-5 text-body text-text-body' -%}
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
         {%- if code != blank or spec != blank or product.type != blank or product.vendor != blank -%}
           <details class="border-b border-border-hairline">
             <summary class="flex w-full cursor-pointer items-center justify-between py-4 font-mono text-xs uppercase tracking-label text-text-strong">Spec sheet</summary>
@@ -315,9 +371,14 @@
           </div>
           <div class="min-w-0 flex-1">
             <p class="truncate font-sans text-sm text-text-strong">{{ product.title }}</p>
-            <div class="text-xs">{%- render 'price', variant: current_variant, class: 'text-xs' -%}</div>
+            <div class="flex items-baseline gap-2">
+              {%- unless product.has_only_default_variant -%}
+                <p data-sticky-variant class="truncate font-mono text-[10px] uppercase tracking-label text-text-muted">{{ current_variant.options | join: ' / ' }}</p>
+              {%- endunless -%}
+              <div data-sticky-price class="text-xs">{%- render 'price', variant: current_variant, class: 'text-xs' -%}</div>
+            </div>
           </div>
-          <button type="button" data-sticky-add class="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 bg-accent px-6 py-2.5 font-mono text-xs uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40{% if settings.button_style == 'rounded' %} rounded-full{% endif %}"{% unless current_variant.available %} disabled{% endunless %}>
+          <button type="button" data-sticky-add data-label-available="{{ atc_label | escape }}" data-label-soldout="{{ sold_label | escape }}" class="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 bg-accent px-6 py-2.5 font-mono text-xs uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40{% if settings.button_style == 'rounded' %} rounded-full{% endif %}"{% unless current_variant.available %} disabled{% endunless %}>
             {%- if current_variant.available -%}{{ atc_label }}{%- else -%}{{ sold_label }}{%- endif -%}
           </button>
         </div>
@@ -473,6 +534,26 @@
     }
   ],
   "blocks": [
+    {
+      "type": "vendor",
+      "name": "t:sections.main-product.blocks.vendor.name"
+    },
+    {
+      "type": "title",
+      "name": "t:sections.main-product.blocks.title.name"
+    },
+    {
+      "type": "rating",
+      "name": "t:sections.main-product.blocks.rating.name"
+    },
+    {
+      "type": "price",
+      "name": "t:sections.main-product.blocks.price.name"
+    },
+    {
+      "type": "description",
+      "name": "t:sections.main-product.blocks.description.name"
+    },
     {
       "type": "@app"
     },

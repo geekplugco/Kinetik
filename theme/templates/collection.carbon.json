@@ -2,33 +2,51 @@
   "sections": {
     "statement": {
       "type": "statement",
-      "settings": {
-        "eyebrow": "Carbon preset",
-        "quote": "<p>Low light gear. High signal utility.</p>",
-        "attribution": "Night movement system",
-        "alignment": "left",
-        "height": "compact",
-        "color_scheme": "scheme-5",
-        "button_label": "Shop the system",
-        "button_link": "shopify://collections/all",
-        "button_style": "secondary"
-      }
+      "settings": {},
+      "blocks": {
+        "banner-1": {
+          "type": "banner",
+          "settings": {
+            "eyebrow": "Carbon preset",
+            "quote": "<p>Low light gear. High signal utility.</p>",
+            "attribution": "Night movement system",
+            "alignment": "left",
+            "height": "compact",
+            "color_scheme": "scheme-5",
+            "button_label": "Shop the system",
+            "button_link": "shopify://collections/all",
+            "button_style": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "banner-1"
+      ]
     },
     "main": {
       "type": "main-collection",
       "settings": {
         "columns_desktop": 4,
         "color_scheme": "scheme-5",
-        "promo_enable": true,
-        "promo_position": 5,
-        "promo_image": "shopify://shop_images/08-dark-set-banner.png",
-        "promo_eyebrow": "Carbon",
-        "promo_heading": "Blackout field kit",
-        "promo_button_label": "Open drop",
-        "promo_link": "shopify://collections/all",
         "padding_top": 36,
         "padding_bottom": 72
-      }
+      },
+      "blocks": {
+        "promo_carbon": {
+          "type": "promo_tile",
+          "settings": {
+            "position": 5,
+            "image": "shopify://shop_images/08-dark-set-banner.png",
+            "eyebrow": "Carbon",
+            "heading": "Blackout field kit",
+            "button_label": "Open drop",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "promo_carbon"
+      ]
     },
     "route": {
       "type": "route-map",
@@ -65,8 +83,24 @@
           }
         }
       },
-      "block_order": ["r1", "r2", "r3"]
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ]
+    },
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "padding_top": 16,
+        "padding_bottom": 12
+      }
     }
   },
-  "order": ["statement", "main", "route"]
+  "order": [
+    "statement",
+    "breadcrumb",
+    "main",
+    "route"
+  ]
 }

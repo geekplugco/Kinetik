@@ -19,12 +19,58 @@
             "menu_item": "New Arrivals",
             "kicker": "SS26 · Drop 04",
             "heading": "Fresh off the line",
+            "collection": "new-arrivals",
             "products_heading": "Just landed",
-            "cta_label": "Shop new arrivals"
+            "image_badge": "The drop",
+            "image_label": "Shop new arrivals",
+            "cta_label": "Shop new arrivals",
+            "cta_link": "/collections/new-arrivals"
+          }
+        },
+        "mega_panel_apparel": {
+          "type": "mega_panel",
+          "settings": {
+            "menu_item": "Apparel",
+            "kicker": "Layering system",
+            "heading": "Shells, mids, base",
+            "collection": "apparel",
+            "products_heading": "Best sellers",
+            "image_badge": "Apparel",
+            "image_label": "Shop apparel",
+            "cta_label": "Shop all apparel",
+            "cta_link": "/collections/apparel"
+          }
+        },
+        "mega_panel_audio": {
+          "type": "mega_panel",
+          "settings": {
+            "menu_item": "Audio",
+            "kicker": "Sound system",
+            "heading": "Dial in the noise",
+            "collection": "tech",
+            "products_heading": "New audio",
+            "image_badge": "Tech",
+            "image_label": "Shop audio",
+            "cta_label": "Shop all audio",
+            "cta_link": "/collections/tech"
+          }
+        },
+        "mega_panel_gear": {
+          "type": "mega_panel",
+          "settings": {
+            "menu_item": "Gear",
+            "kicker": "Field ready",
+            "heading": "Built to carry",
+            "collection": "apparel",
+            "products_heading": "Shop gear",
+            "image_badge": "Gear",
+            "image_label": "Shop gear",
+            "cta_label": "Shop all gear",
+            "cta_link": "/collections/apparel"
           }
         }
       },
-      "block_order": ["mega_panel_new_arrivals"]
+      "block_order": ["mega_panel_new_arrivals", "mega_panel_apparel", "mega_panel_audio", "mega_panel_gear"]
     }
   },
   "order": [

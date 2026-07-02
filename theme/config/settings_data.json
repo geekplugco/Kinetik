@@ -7,6 +7,7 @@
     "page_width": 1440,
     "spacing_sections": 0,
     "corner_radius": 0,
+    "animate_hover": "technical",
     "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D",
     "color_schemes": {
       "scheme-1": {
@@ -75,6 +76,7 @@
       "page_width": 1440,
       "spacing_sections": 0,
       "corner_radius": 0,
+      "animate_hover": "technical",
       "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D",
       "color_schemes": {
         "scheme-1": {
@@ -142,6 +144,7 @@
       "page_width": 1440,
       "spacing_sections": 0,
       "corner_radius": 0,
+      "animate_hover": "technical",
       "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D",
       "color_schemes": {
         "scheme-1": {
@@ -209,6 +212,7 @@
       "page_width": 1440,
       "spacing_sections": 0,
       "corner_radius": 0,
+      "animate_hover": "technical",
       "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D",
       "color_schemes": {
         "scheme-1": {

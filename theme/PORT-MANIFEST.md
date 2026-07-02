@@ -8,7 +8,7 @@ shared snippets, JS architecture, JSON-LD, and branding settings exist and pass 
 
 1. **One agent owns one section file.** Never edit another lane's section. No two agents write the same file.
 2. **Reuse foundation snippets — never re-implement.** Button/icon/price/card/tag already exist (below). If you need a new shared primitive, add a snippet and note it here; don't inline a divergent copy.
-3. **Do NOT edit `assets/tailwind.css` / `tailwind.min.css`.** Tokens + utilities are frozen. Need a new utility? Use existing tokens, or queue a request in this file under "CSS additions".
+3. **Do NOT edit `assets/tailwind.css`.** Tokens + utilities are frozen. Need a new utility? Use existing tokens, or queue a request in this file under "CSS additions".
 4. **Do NOT edit the global `assets/theme.js`.** Section-specific JS = its own `assets/<section>.js` custom element (see JS architecture). Self-guarding, loaded per-section.
 5. **Schema is the source of truth.** Embed the matching `web/theme/schema/<name>.json` into the section's `{% schema %}`. These already pass `/tjson` (70/70). Don't invent settings.
 6. **Do NOT edit `locales/*` or `layout/theme.liquid`.** These are shared — concurrent edits collide.
@@ -46,7 +46,13 @@ Rich product fields map to metafields with fallback: `custom.product_code`→sku
 
 ## Production CSS (no-build) — rebuild after adding classes
 
-Tailwind only emits classes it finds while scanning. The committed `assets/tailwind.min.css` is compiled **from the Liquid** by `node web/scripts/build-theme-min.mjs` (scans `theme/**/*.liquid`, strips Google Fonts). **Any new utility class you add to a section is invisible in Production mode until you re-run that script** — so after a batch of sections, rebuild before pushing. During dev, set `settings.mode = development` (theme editor → Theme CSS) to skip the rebuild loop: the browser compiles live against the DOM. Ship on `production`/`production-css-inline` only.
+Tailwind only emits classes it finds while scanning. The committed `assets/tailwind.css` is compiled **from the Liquid** by `node web/scripts/build-theme-min.mjs` (scans `theme/**/*.liquid`, strips Google Fonts). **Any new utility class you add to a section is invisible in Production mode until you re-run that script** — so after a batch of sections, rebuild before pushing. During dev, set `settings.mode = development` (theme editor → Theme CSS) to skip the rebuild loop: the browser compiles live against the DOM. Ship on `production`/`production-css-inline` only.
+
+## Theme Store submission zip (demo vs. shipped defaults)
+
+`theme/templates/*.json` and `theme/sections/header-group.json` intentionally reference the connected demo store (`shopify://shop_images/...`, `shopify://collections/...`, `shopify://pages/...`, `shopify://blogs/...`, plus hardcoded `new-arrivals`/`apparel`/`tech` collection handles in the header mega_panel blocks). **Do not strip these from the live files** — they're what make happy-kinetik.myshopify.com's install state show realistic, complete content, which the Theme Store demo-store requirement expects. They are also unreachable on a fresh merchant install, which Shopify's own submission tips flag directly.
+
+`node web/scripts/build-submission-zip.mjs` builds the actual upload artifact: it copies `theme/` into `dist/kinetik-submission/` (git-ignored, untracked — never edits the live `theme/` tree), blanks every `shopify://`-prefixed string in the copy's `templates/*.json` + `sections/*.json` to `""`, blanks the `collection` setting in `sections/header-group.json`'s mega_panel blocks, logs every file+field it stripped, then zips the copy (theme folders at the zip root, no wrapper dir) to `dist/kinetik-theme-<version>-submission.zip`. `config/settings_data.json` / `config/settings_schema.json` are untouched. **Run this only right before an actual Theme Store zip upload — not needed for day-to-day dev or demo-store `shopify theme push`.**
 
 ## Section map — 38 sections across 4 lanes
 
@@ -102,7 +108,7 @@ Runs DoD on every section PR: theme check + `/tjson` + contrast + Lighthouse (ne
 main-page, main-blog, main-article, main-account, main-password, main-gift-card (`templates/gift_card.liquid`).
 
 ## CSS additions (queue — Lane D approves before touching tailwind.css)
-- Lane B (commerce): sections use React-parity arbitrary utilities not yet in `tailwind.min.css` (e.g. `aspect-[3/4]`, `aspect-[4/3]`, `max-w-[72rem]`, `max-w-[64rem]`, `grid-cols-[repeat(var(--cols-desktop,4),minmax(0,1fr))]`, `min-h-[640px]`, `text-[clamp(...)]`, `md:[direction:rtl]`, `translate-y-full`, `backdrop-blur`, `bg-surface-page/95`, `from-ink-950/85`, `text-paper/70`, `border-paper/40`, `ring-offset-surface-page`, `peer-focus-visible:ring-accent-press`, `shadow-[var(--shadow-pop)]`). These compile in dev (browser Tailwind) like the foundation card; **regenerate `tailwind.min.css` (`@tailwindcss/cli` scanning `theme/`) before shipping `production-css-inline`**. No `tailwind.css`/`.min.css` edits made.
+- Lane B (commerce): sections use React-parity arbitrary utilities not yet in `tailwind.css` (e.g. `aspect-[3/4]`, `aspect-[4/3]`, `max-w-[72rem]`, `max-w-[64rem]`, `grid-cols-[repeat(var(--cols-desktop,4),minmax(0,1fr))]`, `min-h-[640px]`, `text-[clamp(...)]`, `md:[direction:rtl]`, `translate-y-full`, `backdrop-blur`, `bg-surface-page/95`, `from-ink-950/85`, `text-paper/70`, `border-paper/40`, `ring-offset-surface-page`, `peer-focus-visible:ring-accent-press`, `shadow-[var(--shadow-pop)]`). These compile in dev (browser Tailwind) like the foundation card; **regenerate `tailwind.css` (`@tailwindcss/cli` scanning `theme/`) before shipping `production-css-inline`**. No `tailwind.css` edits made.
 
 ## Locale additions (queue — Lane D adds to locales/en.default.json in final pass)
 - Lane A used `newsletter.label` + `newsletter.success` (already present). The following user-facing strings are currently hardcoded English literals (theme-check `TranslationKeyExists` forbids `| t` for non-existent keys); Lane D may add keys and swap them in: `localization.country_label` = "Country/region", `localization.language_label` = "Language", `localization.update` = "Update" (footer + announcement-bar), `video.play` = "Play video" (video), `announcement.default` = "Free shipping on orders over $50" (announcement-bar), `contact.success` = "Thanks — we will be in touch." (contact-form).

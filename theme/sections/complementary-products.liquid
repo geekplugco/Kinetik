@@ -1,13 +1,6 @@
 {%- liquid
   assign limit = section.settings.products_to_show | default: 3
   assign source = product.metafields.shopify--discovery--product_recommendation.complementary_products.value
-  if source == blank
-    if recommendations.performed and recommendations.products_count > 0
-      assign source = recommendations.products
-    elsif product != blank
-      assign source = product.collections.first.products
-    endif
-  endif
 -%}
 {%- if source != blank -%}
   <section

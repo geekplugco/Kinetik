@@ -17,10 +17,15 @@ if (!customElements.get('variant-picker')) {
         this.label = this.querySelector('[data-option-current]');
         this.invEl = this.querySelector('[data-inventory]');
         this.errEl = this.querySelector('[data-atc-error]');
+        this.sellingPlanInput = this.querySelector('[data-selling-plan-input]');
+        this.stickyVariant = this.querySelector('[data-sticky-variant]');
+        this.stickyPrice = this.querySelector('[data-sticky-price]');
+        this.stickyAdd = this.querySelector('[data-sticky-add]');
         this.unavailableLabel = 'Unavailable';
 
         this.addEventListener('change', (e) => {
           if (e.target.matches('[data-option-position]')) this.onSelect();
+          if (e.target.matches('[data-selling-plan-radio]')) this.onSellingPlanChange();
         });
         this.addEventListener('click', (e) => {
           const down = e.target.closest('[data-qty-down]');
@@ -113,6 +118,7 @@ if (!customElements.get('variant-picker')) {
         if (v) {
           if (this.idInput) this.idInput.value = v.id;
           this.renderPrice(v);
+          if (this.stickyVariant && v.options) this.stickyVariant.textContent = v.options.join(' / ');
         }
         this.renderAtc(v);
         this.renderInventory(v);
@@ -122,10 +128,8 @@ if (!customElements.get('variant-picker')) {
         if (v) this.dispatchEvent(new CustomEvent('variant:change', { detail: { variant: v }, bubbles: true }));
       }
 
-      renderPrice(v) {
-        if (!this.priceEl) return;
-        const extra = this.priceEl.getAttribute('data-price-class') || '';
-        this.priceEl.innerHTML =
+      priceHtml(v, extra) {
+        return (
           '<span class="flex items-baseline gap-2 font-mono text-sm ' +
           extra +
           '"><span class="text-text-strong' +
@@ -134,17 +138,29 @@ if (!customElements.get('variant-picker')) {
           v.price +
           '</span>' +
           (v.on_sale ? '<s class="text-text-muted">' + v.compare_at + '</s>' : '') +
-          '</span>';
+          '</span>'
+        );
+      }
+
+      renderPrice(v) {
+        if (this.priceEl) {
+          this.priceEl.innerHTML = this.priceHtml(v, this.priceEl.getAttribute('data-price-class') || '');
+        }
+        if (this.stickyPrice) this.stickyPrice.innerHTML = this.priceHtml(v, 'text-xs');
       }
 
       renderAtc(v) {
         if (!this.atc) return;
-        if (v && v.available) {
-          this.atc.removeAttribute('disabled');
-          this.atc.textContent = this.atc.dataset.labelAvailable || 'Add to cart';
-        } else {
-          this.atc.setAttribute('disabled', '');
-          this.atc.textContent = this.atc.dataset.labelSoldout || 'Sold out';
+        const ok = !!(v && v.available);
+        for (const btn of [this.atc, this.stickyAdd]) {
+          if (!btn) continue;
+          if (ok) {
+            btn.removeAttribute('disabled');
+            btn.textContent = btn.dataset.labelAvailable || 'Add to cart';
+          } else {
+            btn.setAttribute('disabled', '');
+            btn.textContent = btn.dataset.labelSoldout || 'Sold out';
+          }
         }
         const bis = this.querySelector('[data-back-in-stock]');
         if (bis) {
@@ -190,7 +206,9 @@ if (!customElements.get('variant-picker')) {
 
       preloadVariantImages() {
         if (!this.variantImageHolder() || !window.KinetikMedia) return;
-        window.KinetikMedia.preload(this.variants.map((v) => v.featured_image));
+        const run = () => window.KinetikMedia.preload(this.variants.map((v) => v.featured_image));
+        if ('requestIdleCallback' in window) requestIdleCallback(run, { timeout: 3000 });
+        else setTimeout(run, 1500);
       }
 
       renderVariantImage(v) {
@@ -200,6 +218,12 @@ if (!customElements.get('variant-picker')) {
         if (!img) return;
         const src = (v && v.featured_image) || holder.getAttribute('data-variant-image-default');
         if (src && window.KinetikMedia) window.KinetikMedia.swap(img, src);
+      }
+
+      onSellingPlanChange() {
+        if (!this.sellingPlanInput) return;
+        const checked = this.querySelector('[data-selling-plan-radio]:checked');
+        this.sellingPlanInput.value = checked ? checked.value : '';
       }
 
       renderVariantReadout(v) {
@@ -241,11 +265,13 @@ if (!customElements.get('variant-picker')) {
         if (this.errEl) this.errEl.textContent = '';
         this.setLoading(true);
         const root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+        const body = { id: id, quantity: qty };
+        if (this.sellingPlanInput && this.sellingPlanInput.value) body.selling_plan = this.sellingPlanInput.value;
         try {
           const res = await fetch(root + 'cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify({ id: id, quantity: qty }),
+            body: JSON.stringify(body),
           });
           const data = await res.json();
           if (!res.ok) {

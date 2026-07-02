@@ -152,13 +152,119 @@
         background: var(--paper);
         color: var(--ink-950);
       }
+      quick-view-modal .qv-panel {
+        opacity: 0;
+        transform: translateY(18px) scale(0.965);
+        filter: blur(4px);
+        transition: opacity 320ms var(--ease-enter), transform 520ms var(--ease-enter), filter 520ms var(--ease-enter);
+      }
+      quick-view-modal.is-open .qv-panel {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+      quick-view-modal .qv-body {
+        min-height: min(460px, 70vh);
+        opacity: 0;
+        transform: translateY(14px) scale(0.992);
+        filter: blur(3px);
+        transition: opacity 440ms var(--ease-enter), transform 560ms var(--ease-enter), filter 560ms var(--ease-enter);
+      }
+      quick-view-modal.is-loading .qv-body,
+      quick-view-modal.is-ready .qv-body {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+      quick-view-modal.is-swapping .qv-body {
+        opacity: 0.18;
+        transform: translateY(8px) scale(0.995);
+        filter: blur(6px);
+      }
+      quick-view-modal.is-ready .qv-body > * {
+        animation: qvBloom 520ms var(--ease-enter) both;
+      }
+      quick-view-modal.is-ready .qv-body [data-variant-image] {
+        animation-delay: 40ms;
+      }
+      quick-view-modal.is-ready .qv-body variant-picker > * {
+        animation: qvBloom 520ms var(--ease-enter) both;
+      }
+      quick-view-modal.is-ready .qv-body variant-picker > *:nth-child(1) {
+        animation-delay: 90ms;
+      }
+      quick-view-modal.is-ready .qv-body variant-picker > *:nth-child(2) {
+        animation-delay: 140ms;
+      }
+      quick-view-modal.is-ready .qv-body variant-picker > *:nth-child(3) {
+        animation-delay: 190ms;
+      }
+      .qv-skeleton {
+        display: grid;
+        gap: 1.5rem;
+      }
+      @media (min-width: 750px) {
+        .qv-skeleton {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        }
+      }
+      .qv-skeleton-media,
+      .qv-skeleton-line {
+        position: relative;
+        overflow: hidden;
+        background: var(--surface-sunken);
+      }
+      .qv-skeleton-media::after,
+      .qv-skeleton-line::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 20%, transparent), transparent);
+        transform: translateX(-100%);
+        animation: qvSkeleton var(--dur-slower, 900ms) linear infinite;
+      }
+      .qv-skeleton-media {
+        aspect-ratio: 4 / 5;
+      }
+      .qv-skeleton-copy {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding-top: 0.35rem;
+      }
+      .qv-skeleton-line {
+        height: 0.875rem;
+      }
+      @keyframes qvSkeleton {
+        to {
+          transform: translateX(100%);
+        }
+      }
+      @keyframes qvBloom {
+        from {
+          opacity: 0;
+          transform: translateY(18px) scale(0.985);
+          filter: blur(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          filter: blur(0);
+        }
+      }
       @media (prefers-reduced-motion: reduce) {
         .kx-media-effect > img,
         .kx-media-effect > svg,
         .kx-media-effect::before,
         .kx-media-effect::after,
-        .kx-card-spec { transition: none !important; transform: none !important; }
+        .kx-card-spec,
+        quick-view-modal .qv-panel,
+        quick-view-modal .qv-body { transition: none !important; transform: none !important; }
         .kx-media-effect::before { display: none; }
+        .qv-skeleton-media::after,
+        .qv-skeleton-line::after,
+        quick-view-modal.is-ready .qv-body > *,
+        quick-view-modal.is-ready .qv-body variant-picker > * { animation: none; }
       }
       body[data-animate-reveal="false"] .hp-reveal,
       body[data-animate-reveal="false"] .hp-rule-draw { opacity: 1 !important; clip-path: none !important; transform: none !important; transition: none !important; }
@@ -169,11 +275,14 @@
       body[data-animate-hover="none"] .kx-media-effect::before,
       body[data-animate-hover="none"] .kx-media-effect::after,
       body[data-animate-hover="none"] .kx-card-spec { display: none !important; }
+      body[data-animate-hover="zoom"] .kx-media-effect::before,
+      body[data-animate-hover="zoom"] .kx-media-effect::after,
+      body[data-animate-hover="zoom"] .kx-card-spec { display: none !important; }
       body[data-section-divider="hairline"] #MainContent > .shopify-section + .shopify-section { border-top: 1px solid var(--border-hairline); }
     </style>
 
     {%- render 'z-layers' -%}
-    <link rel="stylesheet" href="{{ 'tailwind.min.css' | asset_url }}" media="all">
+    <link rel="stylesheet" href="{{ 'tailwind.css' | asset_url }}" media="all">
     {%- render 'color-schemes' -%}
 
     <style>
@@ -217,9 +326,9 @@
 
     <quick-view-modal hidden class="fixed inset-0 kx-z-modal flex items-center justify-center p-4 opacity-0 transition-opacity duration-200 [&.is-open]:opacity-100">
       <div data-qv-close class="absolute inset-0 bg-ink-950/60"></div>
-      <div role="dialog" aria-modal="true" aria-label="Quick view" class="relative z-10 max-h-[90vh] w-[min(920px,94vw)] overflow-auto border border-border-strong bg-surface-page p-5 shadow-[0_24px_60px_-24px_rgba(10,10,10,0.5)] md:p-8">
+      <div data-qv-dialog role="dialog" aria-modal="true" aria-label="Quick view" tabindex="-1" class="qv-panel relative z-10 max-h-[86vh] w-[min(760px,92vw)] overflow-auto border border-border-strong bg-surface-page p-4 shadow-[0_24px_60px_-24px_rgba(10,10,10,0.5)] md:p-5">
         <button type="button" data-qv-close aria-label="Close quick view" class="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center text-text-muted transition-colors hover:text-text-strong">{%- render 'icon', name: 'close', size: 18 -%}</button>
-        <div data-qv-body></div>
+        <div data-qv-body class="qv-body"></div>
       </div>
     </quick-view-modal>
 
@@ -229,6 +338,7 @@
     <script src="{{ 'variant-picker.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'quick-view.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'recently-viewed.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'related-products.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'card-swatches.js' | asset_url }}" defer="defer"></script>
 
     {%- render 'structured-data' -%}

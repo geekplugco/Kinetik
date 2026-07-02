@@ -1,0 +1,63 @@
+{%- liquid
+  assign show_current = show_current | default: true
+  assign show_home = show_home | default: true
+  assign show_collection_parent = show_collection_parent | default: true
+  assign current_label = nil
+  assign parent_label = nil
+  assign parent_url = nil
+
+  case request.page_type
+    when 'product'
+      assign current_label = product.title
+      if collection != blank
+        assign parent_label = collection.title
+        assign parent_url = collection.url
+      elsif show_collection_parent and product.collections.first != blank
+        assign parent_label = product.collections.first.title
+        assign parent_url = product.collections.first.url
+      endif
+    when 'collection'
+      assign current_label = collection.title
+      if show_collection_parent
+        assign parent_label = 'collections.general.title' | t | default: 'Collections'
+        assign parent_url = routes.collections_url
+      endif
+    when 'page'
+      assign current_label = page.title
+    when 'blog'
+      assign current_label = blog.title
+    when 'article'
+      assign current_label = article.title
+      assign parent_label = blog.title
+      assign parent_url = blog.url
+    when 'cart'
+      assign current_label = 'sections.cart.title' | t | default: 'Cart'
+    when 'search'
+      assign current_label = 'general.search.search' | t | default: 'Search'
+    when 'list-collections'
+      assign current_label = 'collections.general.title' | t | default: 'Collections'
+    else
+      assign current_label = page_title
+  endcase
+-%}
+{%- if current_label != blank -%}
+  <nav class="font-mono text-[10px] uppercase tracking-label text-text-muted" aria-label="{{ 'general.breadcrumbs.label' | t | default: 'Breadcrumb' }}">
+    <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+      {%- if show_home -%}
+        <li>
+          <a href="{{ routes.root_url }}" class="transition-colors hover:text-text-strong">{{ 'general.breadcrumbs.home' | t | default: 'Home' }}</a>
+        </li>
+      {%- endif -%}
+      {%- if parent_label != blank and parent_url != blank -%}
+        <li class="text-text-faint" aria-hidden="true">/</li>
+        <li>
+          <a href="{{ parent_url }}" class="transition-colors hover:text-text-strong">{{ parent_label }}</a>
+        </li>
+      {%- endif -%}
+      {%- if show_current -%}
+        <li class="text-text-faint" aria-hidden="true">/</li>
+        <li class="max-w-[28rem] truncate text-text-strong" aria-current="page">{{ current_label }}</li>
+      {%- endif -%}
+    </ol>
+  </nav>
+{%- endif -%}

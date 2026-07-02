@@ -109,8 +109,8 @@
         "heading": "From membrane to drop",
         "width": "page",
         "color_scheme": "scheme-1",
-        "padding_top": 72,
-        "padding_bottom": 72
+        "padding_top": 56,
+        "padding_bottom": 56
       },
       "blocks": {
         "c1": {
@@ -288,29 +288,46 @@
     },
     "statement": {
       "type": "statement",
+      "settings": {},
+      "blocks": {
+        "banner-1": {
+          "type": "banner",
+          "settings": {
+            "eyebrow": "Field manifesto",
+            "quote": "<p>One system. Every condition. No compromise.</p>",
+            "attribution": "Kinetik SS26",
+            "image": "shopify://shop_images/08-hero-back-wide.png",
+            "overlay_opacity": 55,
+            "alignment": "center",
+            "height": "tall",
+            "button_label": "Shop the system",
+            "button_link": "shopify://collections/frontpage",
+            "button_style": "secondary",
+            "color_scheme": "scheme-1"
+          }
+        }
+      },
+      "block_order": [
+        "banner-1"
+      ]
+    },
+    "breadcrumb": {
+      "type": "breadcrumb",
       "settings": {
-        "eyebrow": "Field manifesto",
-        "quote": "<p>One system. Every condition. No compromise.</p>",
-        "attribution": "Kinetik SS26",
-        "image": "shopify://shop_images/08-hero-back-wide.png",
-        "overlay_opacity": 55,
-        "alignment": "center",
-        "height": "tall",
-        "button_label": "Shop the system",
-        "button_link": "shopify://collections/frontpage",
-        "button_style": "secondary",
-        "color_scheme": "scheme-1"
+        "padding_top": 16,
+        "padding_bottom": 12
       }
     }
   },
   "order": [
+    "breadcrumb",
     "lookbook",
     "collection_story",
     "marquee",
-    "statement",
     "promo_grid",
     "compare_slider",
-    "newsletter",
-    "route_map"
+    "route_map",
+    "statement",
+    "newsletter"
   ]
 }

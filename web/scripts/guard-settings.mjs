@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { join, basename } from 'node:path';
+import { join, basename, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const themeDir = process.argv[2] || 'theme';
-const asJson = process.argv.includes('--json');
+const args = process.argv.slice(2);
+const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const themeDir = args.find((a) => !a.startsWith('--')) || join(repoRoot, 'theme');
+const asJson = args.includes('--json');
 
 const RESET = '\x1b[0m';
 const RED = '\x1b[31m';
@@ -93,6 +96,14 @@ function blockRefs(body) {
   return found;
 }
 
+function dynamicKeyPrefixes(body) {
+  const prefixes = new Set();
+  let m;
+  const re = /['"]([a-z0-9_]+)['"]\s*\|\s*append\s*:/gi;
+  while ((m = re.exec(body))) prefixes.add(m[1]);
+  return prefixes;
+}
+
 function settingsAliasVars(body) {
   const vars = new Set(aliasVars(body, 'section.settings'));
   for (const h of blockHandles(body)) {
@@ -122,11 +133,13 @@ function scanSection(file) {
     [...settingsAliasVars(body)].some((v) => new RegExp('(?<![.a-zA-Z0-9_])' + v + '\\s*\\[').test(body));
   const sink = dynamicSettings ? warnings : errors;
   const dynNote = dynamicSettings ? ' (dynamic settings[] access — verify manually)' : '';
+  const dynPrefixes = dynamicSettings ? [...dynamicKeyPrefixes(body)] : [];
+  const dynResolved = (id) => dynPrefixes.some((p) => id.startsWith(p) && id !== p);
 
   const sectionIds = collectSettingIds(schema.settings);
   const sectionRefs = refs(body, 'section.settings');
   for (const id of sectionIds) {
-    if (!sectionRefs.has(id)) {
+    if (!sectionRefs.has(id) && !dynResolved(id)) {
       sink.push(`${rel}: dead setting — section.settings.${id} declared in schema but never used in Liquid${dynNote}`);
     }
   }
@@ -148,7 +161,7 @@ function scanSection(file) {
   const usedBlock = blockRefs(body);
   if (hasLocalBlocks) {
     for (const id of blockIds) {
-      if (!usedBlock.has(id)) {
+      if (!usedBlock.has(id) && !dynResolved(id)) {
         sink.push(`${rel}: dead block setting — block.settings.${id} declared but never used in Liquid${dynNote}`);
       }
     }

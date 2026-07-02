@@ -5,8 +5,8 @@
   assign atc_label = 'products.product.add_to_cart' | t | default: 'Add to cart'
   assign sold_label = 'products.product.sold_out' | t | default: 'Sold out'
 -%}
-<div class="grid gap-6 md:grid-cols-2">
-  <div data-variant-image data-variant-image-default="{{ product.featured_media | image_url: width: 800 }}" class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+<div class="grid gap-5 md:grid-cols-[0.86fr_1fr]">
+  <div data-variant-image data-variant-image-default="{{ product.featured_media | image_url: width: 800 }}" class="relative aspect-[4/5] overflow-hidden bg-surface-sunken md:max-h-[540px]">
     {%- if product.featured_media -%}
       {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'eager', widths: '400,600,800', sizes: '(min-width:750px) 40vw, 90vw', alt: product.title, class: 'h-full w-full object-cover' }}
     {%- else -%}
@@ -14,18 +14,12 @@
     {%- endif -%}
   </div>
 
-  <variant-picker class="flex flex-col gap-5">
-    <script type="application/json">
-      [
-        {%- for variant in product.variants -%}
-          {"id":{{ variant.id }},"options":{{ variant.options | json }},"available":{{ variant.available }},"price":{{ variant.price | money | json }},"compare_at":{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},"on_sale":{% if variant.compare_at_price > variant.price %}true{% else %}false{% endif %},"sku":{{ variant.sku | json }},"inventory_management":{{ variant.inventory_management | json }},"inventory_quantity":{{ variant.inventory_quantity }},"featured_image":{% if variant.featured_media %}{{ variant.featured_media | image_url: width: 800 | json }}{% else %}null{% endif %}}{%- unless forloop.last -%},{%- endunless -%}
-        {%- endfor -%}
-      ]
-    </script>
+  <variant-picker class="flex flex-col gap-4 pr-8 md:pr-6">
+    {%- render 'variant-json', product: product -%}
 
     <div class="flex flex-col gap-2">
       <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ product.vendor }}{% if code != blank %} &middot; {{ code }}{% endif %}</span>
-      <h2 class="font-display text-h2 tracking-tight text-text-strong">{{ product.title }}</h2>
+      <h2 class="font-display text-h3 tracking-tight text-text-strong">{{ product.title }}</h2>
       <div data-price data-price-class="text-body-lg">{%- render 'price', variant: current_variant, class: 'text-body-lg' -%}</div>
       {%- if spec != blank -%}<span class="font-mono text-xs text-text-muted">{{ spec }}</span>{%- endif -%}
       <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
@@ -34,11 +28,11 @@
       </div>
     </div>
 
-    {%- form 'product', product, class: 'flex flex-col gap-5' -%}
+    {%- form 'product', product, class: 'flex flex-col gap-4' -%}
       <input type="hidden" name="id" value="{{ current_variant.id }}">
 
       {%- unless product.has_only_default_variant -%}
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-3">
           {%- for option in product.options_with_values -%}
             {%- assign oname = option.name | downcase -%}
             {%- assign is_color = false -%}
@@ -63,11 +57,11 @@
         </div>
       {%- endunless -%}
 
-      <button type="submit" data-add-to-cart data-label-available="{{ atc_label | escape }}" data-label-soldout="{{ sold_label | escape }}" data-label-loading="Adding&hellip;" class="inline-flex w-full items-center justify-center gap-2 bg-accent px-6 py-3 font-mono text-sm uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40"{% unless current_variant.available %} disabled{% endunless %}>{% if current_variant.available %}{{ atc_label }}{% else %}{{ sold_label }}{% endif %}</button>
+      <button type="submit" data-add-to-cart data-label-available="{{ atc_label | escape }}" data-label-soldout="{{ sold_label | escape }}" data-label-loading="Adding&hellip;" class="inline-flex w-full min-h-[44px] items-center justify-center gap-2 bg-accent px-5 py-2.5 font-mono text-xs uppercase tracking-label text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40"{% unless current_variant.available %} disabled{% endunless %}>{% if current_variant.available %}{{ atc_label }}{% else %}{{ sold_label }}{% endif %}</button>
       <p data-atc-error role="alert" class="font-mono text-xs text-negative empty:hidden"></p>
     {%- endform -%}
 
-    <div class="flex flex-wrap gap-x-4 gap-y-1 border-t border-border-hairline pt-4 font-mono text-[10px] uppercase tracking-label text-text-muted">
+    <div class="flex flex-wrap gap-x-3 gap-y-1 border-t border-border-hairline pt-3 font-mono text-[10px] uppercase tracking-label text-text-muted">
       <span>Ships in 1&ndash;2 days</span>
       <span>30-day returns</span>
       <span>Field-tested build</span>

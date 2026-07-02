@@ -54,6 +54,18 @@
                     {%- if line.sku != blank -%}
                       <span class="font-mono text-xs text-text-faint">{{ line.sku }}</span>
                     {%- endif -%}
+                    {%- if line.selling_plan_allocation -%}
+                      <div class="flex flex-col gap-0.5">
+                        <span class="font-mono text-[11px] uppercase tracking-label text-accent-press">{{ line.selling_plan_allocation.selling_plan.name }}</span>
+                        {%- for selling_plan_option in line.selling_plan_allocation.selling_plan.options -%}
+                          <span class="font-mono text-[11px] text-text-muted">{{ selling_plan_option.name }}: {{ selling_plan_option.value }}</span>
+                        {%- endfor -%}
+                        <span class="font-mono text-[11px] text-text-muted">{{ line.selling_plan_allocation.per_delivery_price | money }} per delivery</span>
+                      </div>
+                    {%- endif -%}
+                    {%- if line.unit_price_measurement -%}
+                      <span class="font-mono text-[11px] text-text-muted">{{ line.unit_price | money }}/{% if line.unit_price_measurement.reference_value != 1 %}{{ line.unit_price_measurement.reference_value }}{% endif %}{{ line.unit_price_measurement.reference_unit }}</span>
+                    {%- endif -%}
                   </div>
                 </div>
               </td>
