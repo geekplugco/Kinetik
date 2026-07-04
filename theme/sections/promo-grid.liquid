@@ -56,6 +56,12 @@
               {%- assign promo_alt = b.image.alt | default: b.heading | default: b.eyebrow -%}
               {{ b.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', sizes: '(min-width:750px) 33vw, 100vw', alt: promo_alt, class: 'h-full w-full object-cover' }}
             </div>
+          {%- else -%}
+            <div class="kx-media-effect relative {% case s.image_ratio %}{% when 'square' %}aspect-square{% when 'wide' %}aspect-[4/3]{% else %}aspect-[4/5]{% endcase %} overflow-hidden" {{ effect_attr }}>
+              {%- assign promo_ph_idx = forloop.index0 | modulo: 6 | plus: 1 -%}
+              {%- assign promo_ph = 'collection-' | append: promo_ph_idx -%}
+              {{ promo_ph | placeholder_svg_tag: 'h-full w-full object-cover bg-surface-sunken text-border-hairline' }}
+            </div>
           {%- endif -%}
           <div class="flex flex-1 flex-col gap-2 p-5">
             {%- if b.eyebrow != blank -%}<span class="font-mono text-[11px] uppercase tracking-label text-accent-press">{{ b.eyebrow }}</span>{%- endif -%}

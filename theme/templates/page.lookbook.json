@@ -3,9 +3,9 @@
     "hero_collage": {
       "type": "hero-collage",
       "settings": {
-        "kicker": "SS26 \u00b7 Field System",
+        "kicker": "SS26 · Field System",
         "heading": "Shot in the field, worn in transit",
-        "text": "<p>Three frames from the season. Every piece in shot ships now \u2014 scroll for the full story.</p>",
+        "text": "<p>Three frames from the season. Every piece in shot ships now — scroll for the full story.</p>",
         "button_label": "Shop the system",
         "button_link": "shopify://collections/frontpage",
         "color_scheme": "scheme-1",
@@ -17,7 +17,7 @@
           "type": "media",
           "settings": {
             "image": "shopify://shop_images/lookbook-frame1-flatlay.png",
-            "caption": "Frame 01 \u00b7 Flat lay",
+            "caption": "Frame 01 · Flat lay",
             "link": "shopify://collections/frontpage"
           }
         },
@@ -25,7 +25,7 @@
           "type": "media",
           "settings": {
             "image": "shopify://shop_images/05-sling-worn.png",
-            "caption": "Frame 02 \u00b7 Sling 4L, worn",
+            "caption": "Frame 02 · Sling 4L, worn",
             "link": "shopify://products/sling-bag"
           }
         },
@@ -33,7 +33,7 @@
           "type": "media",
           "settings": {
             "image": "shopify://shop_images/06-detail-trio.png",
-            "caption": "Frame 03 \u00b7 Detail trio"
+            "caption": "Frame 03 · Detail trio"
           }
         }
       },
@@ -46,7 +46,7 @@
     "lookbook": {
       "type": "lookbook",
       "settings": {
-        "kicker": "SS26 \u00b7 Field System",
+        "kicker": "SS26 · Field System",
         "heading": "Shot in the field",
         "text": "<p>One kit, every condition. Tap a piece to shop the look.</p>",
         "layout": "editorial",
@@ -62,7 +62,7 @@
           "settings": {
             "image": "shopify://shop_images/02-fulllook-cropped.png",
             "image_alt": "Full Field System look, front",
-            "caption": "01 \u2014 The full system",
+            "caption": "01 — The full system",
             "product_1": "shell-jacket",
             "x_1": 50,
             "y_1": 32,
@@ -76,7 +76,7 @@
           "settings": {
             "image": "shopify://shop_images/07-cap-shadow.png",
             "image_alt": "Field cap detail in hard shadow",
-            "caption": "02 \u2014 6-Panel Field Cap",
+            "caption": "02 — 6-Panel Field Cap",
             "product_1": "cap",
             "x_1": 52,
             "y_1": 44
@@ -87,7 +87,7 @@
           "settings": {
             "image": "shopify://shop_images/08-hero-back-wide.png",
             "image_alt": "Back panel, wide",
-            "caption": "03 \u2014 Roll-Top + Shell, back",
+            "caption": "03 — Roll-Top + Shell, back",
             "product_1": "shell-jacket",
             "x_1": 44,
             "y_1": 40,
@@ -101,7 +101,7 @@
           "settings": {
             "image": "shopify://shop_images/03-vest-torso.png",
             "image_alt": "Utility vest torso detail",
-            "caption": "04 \u2014 Utility Vest 6P",
+            "caption": "04 — Utility Vest 6P",
             "product_1": "utility-vest",
             "x_1": 50,
             "y_1": 48,
@@ -115,7 +115,7 @@
           "settings": {
             "image": "shopify://shop_images/05-sling-worn.png",
             "image_alt": "Sling bag worn across the body",
-            "caption": "05 \u2014 Sling 4L",
+            "caption": "05 — Sling 4L",
             "product_1": "sling-bag",
             "x_1": 54,
             "y_1": 52
@@ -126,7 +126,7 @@
           "settings": {
             "image": "shopify://shop_images/lookbook-frame6-hoodie-shoes.png",
             "image_alt": "Black hoodie and trail running sneakers arranged as a flat lay",
-            "caption": "06 \u2014 Storm Hoodie + Trail Runner",
+            "caption": "06 — Storm Hoodie + Trail Runner",
             "product_1": "tech-hoodie",
             "x_1": 38,
             "y_1": 38,
@@ -148,7 +148,7 @@
     "collection_story": {
       "type": "collection-story",
       "settings": {
-        "kicker": "SS26 \u00b7 Field System",
+        "kicker": "SS26 · Field System",
         "heading": "From membrane to drop",
         "width": "page",
         "color_scheme": "scheme-1",
@@ -159,7 +159,7 @@
         "c1": {
           "type": "chapter",
           "settings": {
-            "label": "01 \u2014 Material",
+            "label": "01 — Material",
             "heading": "3-layer membrane, sourced first",
             "text": "<p>Every piece starts with the shell: a 3-layer waterproof-breathable membrane rated 20k/20k, taped at every seam before a single panel is cut.</p>",
             "image": "shopify://shop_images/03-vest-torso.png",
@@ -170,18 +170,18 @@
         "c2": {
           "type": "chapter",
           "settings": {
-            "label": "02 \u2014 Field test",
+            "label": "02 — Field test",
             "heading": "Broken in on the route",
-            "text": "<p>Prototypes ran the full commute-to-trail loop for a season \u2014 abrasion, storm load, pack friction \u2014 until the pattern earned its spec sheet.</p>",
+            "text": "<p>Prototypes ran the full commute-to-trail loop for a season — abrasion, storm load, pack friction — until the pattern earned its spec sheet.</p>",
             "image": "shopify://shop_images/08-hero-back-wide.png"
           }
         },
         "c3": {
           "type": "chapter",
           "settings": {
-            "label": "03 \u2014 Release",
+            "label": "03 — Release",
             "heading": "One system, shipped complete",
-            "text": "<p>The final kit drops as a coordinated system \u2014 shell, layers, carry \u2014 each piece coded to work with the next.</p>",
+            "text": "<p>The final kit drops as a coordinated system — shell, layers, carry — each piece coded to work with the next.</p>",
             "image": "shopify://shop_images/09-paired-hero.png",
             "button_label": "Shop the drop",
             "button_link": "shopify://collections/frontpage"
@@ -197,8 +197,8 @@
     "marquee": {
       "type": "marquee",
       "settings": {
-        "text": "SS26 \u00b7 Field System \u00b7 Shop the look",
-        "separator": "\u2014",
+        "text": "SS26 · Field System · Shop the look",
+        "separator": "—",
         "style": "outline",
         "speed": "normal",
         "width": "full",
@@ -296,7 +296,7 @@
         "s1": {
           "type": "stop",
           "settings": {
-            "place": "06:10 \u00b7 Transit",
+            "place": "06:10 · Transit",
             "heading": "Out the door",
             "caption": "<p>Shell on, pack loaded, audio in. The commute is the first field test of the day.</p>",
             "image": "shopify://shop_images/route-transit-platform.png",
@@ -306,7 +306,7 @@
         "s2": {
           "type": "stop",
           "settings": {
-            "place": "12:45 \u00b7 Trail",
+            "place": "12:45 · Trail",
             "heading": "Off the grid",
             "caption": "<p>Weather turns fast above the treeline. The membrane holds while the base layer moves moisture out.</p>",
             "image": "shopify://shop_images/route-field-midday.png",
@@ -316,7 +316,7 @@
         "s3": {
           "type": "stop",
           "settings": {
-            "place": "21:30 \u00b7 Camp",
+            "place": "21:30 · Camp",
             "heading": "Hold position",
             "caption": "<p>Layer down, power up, reset for the next leg. Reflective trim keeps you readable in headlamp range.</p>",
             "image": "shopify://shop_images/route-return-night.png",
@@ -366,6 +366,19 @@
         "padding_top": 16,
         "padding_bottom": 12
       }
+    },
+    "film_break": {
+      "type": "hero-video",
+      "settings": {
+        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "poster": "shopify://shop_images/route-return-night.png",
+        "kicker": "Field footage",
+        "heading": "In motion",
+        "text": "<p>Sixty frames of the system under load. Shot on route, not in studio.</p>",
+        "height": "medium",
+        "overlay_opacity": 55,
+        "color_scheme": "scheme-2"
+      }
     }
   },
   "order": [
@@ -373,6 +386,7 @@
     "hero_collage",
     "lookbook",
     "collection_story",
+    "film_break",
     "marquee",
     "promo_grid",
     "compare_slider",

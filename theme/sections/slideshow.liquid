@@ -92,6 +92,9 @@
             {{ b.image | image_url: width: 1100 | image_tag: loading: 'lazy', widths: '550,750,1100', sizes: '100vw', alt: slide_alt, class: 'absolute inset-0 h-full w-full object-cover md:hidden' }}
           {%- endif -%}
           {{ b.image | image_url: width: 2000 | image_tag: loading: 'lazy', widths: '990,1200,1600,2000', sizes: '100vw', alt: slide_alt, class: 'absolute inset-0 hidden h-full w-full object-cover md:block' }}
+        {%- elsif b.image_mobile != blank -%}
+          {{ b.image_mobile | image_url: width: 1100 | image_tag: loading: 'lazy', widths: '550,750,1100', sizes: '100vw', alt: slide_mobile_alt, class: 'absolute inset-0 h-full w-full object-cover md:hidden' }}
+          {{ 'hero-apparel-1' | placeholder_svg_tag: 'absolute inset-0 hidden h-full w-full object-cover md:block bg-surface-sunken text-border-hairline' }}
         {%- else -%}
           {{ 'lifestyle-2' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
         {%- endif -%}

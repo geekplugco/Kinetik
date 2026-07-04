@@ -85,7 +85,7 @@
         "collection": "best-sellers",
         "products_to_show": 8,
         "columns_desktop": 4,
-        "grid_density": "dense",
+        "grid_density": "compact",
         "color_scheme": "scheme-5",
         "padding_top": 72,
         "padding_bottom": 72
@@ -239,7 +239,7 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "kicker": "Access list",
+        "subheading": "Access list",
         "heading": "Next capsule opens by list",
         "text": "<p>Restock windows and repair slots go to the list first. No noise.</p>",
         "color_scheme": "scheme-5",

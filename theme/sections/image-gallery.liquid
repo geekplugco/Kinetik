@@ -83,6 +83,10 @@
             <a {{ block.shopify_attributes }} href="{{ block.settings.link | default: '#' }}" aria-label="{{ aria }}" class="group kx-media-effect relative overflow-hidden bg-ink-900 {{ rounded }} {{ wide }}" {% render 'media-effect' %}>
               {%- if block.settings.image != blank -%}
                 {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '50vw', widths: '300,500,700,900,1200', alt: block.settings.alt, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
+              {%- else -%}
+                {%- assign gallery_ph_idx = forloop.index0 | modulo: 6 | plus: 1 -%}
+                {%- assign gallery_ph = 'collection-' | append: gallery_ph_idx -%}
+                {{ gallery_ph | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover bg-surface-sunken text-border-hairline' }}
               {%- endif -%}
               <span class="absolute left-3 top-3 bg-ink-950/60 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper backdrop-blur-sm">F{{ forloop.index }}</span>
               <span class="absolute bottom-0 left-0 right-0 flex items-center justify-between bg-ink-950/80 px-3 py-2 font-mono text-[10px] uppercase tracking-label text-paper backdrop-blur-sm">

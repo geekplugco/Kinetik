@@ -64,6 +64,8 @@
         {%- if s.cover_image != blank -%}
           {%- assign cover_alt = s.cover_image.alt | default: s.heading | default: 'Video cover' | escape -%}
           {{ s.cover_image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '100vw', widths: '600,900,1200,1600', alt: cover_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover bg-surface-sunken text-border-hairline' }}
         {%- endif -%}
         <span class="absolute inset-0 z-10 flex items-center justify-center {{ overlay_class }}">
           <span class="flex h-[max(44px,4rem)] w-[max(44px,4rem)] items-center justify-center border border-accent bg-accent text-accent-ink transition-transform group-hover:scale-105">{% render 'icon', name: 'arrow', size: 28 %}</span>

@@ -19,12 +19,8 @@
     assign show_scan_line = false
   endif
   assign panel_style = section.settings.panel_style | default: 'attached'
-  assign has_image = false
-  if section.settings.image != blank
-    assign has_image = true
-  endif
   assign show_section = false
-  if has_image and points.size > 0
+  if points.size > 0
     assign show_section = true
   endif
   case image_ratio
@@ -78,7 +74,11 @@
       <material-scan class="{{ scan_grid_cls }}">
         <div data-scan-stage class="relative overflow-hidden bg-surface-sunken {{ media_order }}">
           <div class="kx-media-effect relative {{ ratio_cls }}" {% render 'media-effect', override: effect_override, surface: 'proof' %}>
-            {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700,1050,1400', sizes: '(min-width:990px) 45vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading, class: 'h-full w-full object-cover' }}
+            {%- if section.settings.image != blank -%}
+              {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700,1050,1400', sizes: '(min-width:990px) 45vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading, class: 'h-full w-full object-cover' }}
+            {%- else -%}
+              {{ 'lifestyle-2' | placeholder_svg_tag: 'h-full w-full object-cover bg-surface-sunken text-border-hairline' }}
+            {%- endif -%}
             {%- if settings.media_ambient -%}
               <span class="kx-ambient" aria-hidden="true"></span>
             {%- endif -%}

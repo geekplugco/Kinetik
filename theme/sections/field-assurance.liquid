@@ -52,20 +52,20 @@
                 </div>
               {%- endif -%}
             {%- when 'trust_badges' -%}
-              {%- if block.settings.image_1 != blank or block.settings.image_2 != blank or block.settings.image_3 != blank or block.settings.image_4 != blank -%}
-                <div class="flex flex-col gap-2 border-r border-b border-border-hairline p-4 md:p-5" {{ block.shopify_attributes }}>
-                  {%- if block.settings.heading != blank -%}<span class="font-mono text-xs uppercase tracking-label text-text-strong">{{ block.settings.heading }}</span>{%- endif -%}
-                  <div class="flex flex-wrap items-center gap-3">
-                    {%- for i in (1..4) -%}
-                      {%- assign key = 'image_' | append: i -%}
-                      {%- assign img = block.settings[key] -%}
-                      {%- if img != blank -%}
-                        {{ img | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,120', sizes: '60px', alt: img.alt, class: 'h-7 w-auto object-contain' }}
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </div>
+              <div class="flex flex-col gap-2 border-r border-b border-border-hairline p-4 md:p-5" {{ block.shopify_attributes }}>
+                {%- if block.settings.heading != blank -%}<span class="font-mono text-xs uppercase tracking-label text-text-strong">{{ block.settings.heading }}</span>{%- endif -%}
+                <div class="flex flex-wrap items-center gap-3">
+                  {%- for i in (1..4) -%}
+                    {%- assign key = 'image_' | append: i -%}
+                    {%- assign img = block.settings[key] -%}
+                    {%- if img != blank -%}
+                      {{ img | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,120', sizes: '60px', alt: img.alt, class: 'h-7 w-auto object-contain' }}
+                    {%- else -%}
+                      {{ 'image' | placeholder_svg_tag: 'h-7 w-auto object-contain bg-surface-sunken text-border-hairline' }}
+                    {%- endif -%}
+                  {%- endfor -%}
                 </div>
-              {%- endif -%}
+              </div>
           {%- endcase -%}
         {%- endfor -%}
       </div>

@@ -180,8 +180,7 @@
         "heading": "No feature without a field reason",
         "text": "<p>Every pocket, membrane, strap, and seam has to earn its position. The product page reads like a spec sheet because the product is built like one.</p>",
         "button_label": "Our story",
-        "button_link": "shopify://pages/about",
-        "image_alt": "Blank matte zipper pull and taped seams on dark ripstop beside a precision screwdriver"
+        "button_link": "shopify://pages/about"
       }
     },
     "manifesto": {

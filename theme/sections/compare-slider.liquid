@@ -25,26 +25,28 @@
         {%- if s.heading != blank -%}<h2 class="font-display text-h3 tracking-tight text-text-strong">{{ s.heading }}</h2>{%- endif -%}
       </div>
     {%- endif -%}
-    {%- if s.before_image != blank and s.after_image != blank -%}
-      <compare-slider class="relative block {{ aspect_cls }} w-full cursor-ew-resize select-none overflow-hidden border border-border-hairline bg-surface-sunken [touch-action:none]">
+    <compare-slider class="relative block {{ aspect_cls }} w-full cursor-ew-resize select-none overflow-hidden border border-border-hairline bg-surface-sunken [touch-action:none]">
+      {%- if s.after_image != blank -%}
         {{ s.after_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '100vw', alt: after_alt, class: 'pointer-events-none absolute inset-0 h-full w-full object-cover' }}
-        <div data-compare-clip class="absolute inset-0" style="clip-path:inset(0 50% 0 0)">
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'pointer-events-none absolute inset-0 h-full w-full object-cover bg-surface-sunken text-border-hairline' }}
+      {%- endif -%}
+      <div data-compare-clip class="absolute inset-0" style="clip-path:inset(0 50% 0 0)">
+        {%- if s.before_image != blank -%}
           {{ s.before_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '100vw', alt: before_alt, class: 'pointer-events-none absolute inset-0 h-full w-full object-cover' }}
-        </div>
-        {%- if s.before_label != blank -%}<span class="pointer-events-none absolute left-3 top-3 z-10 bg-ink-950/72 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper">{{ s.before_label }}</span>{%- endif -%}
-        {%- if s.after_label != blank -%}<span class="pointer-events-none absolute right-3 top-3 z-10 bg-ink-950/72 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper">{{ s.after_label }}</span>{%- endif -%}
-        <button type="button" data-compare-handle role="slider" aria-label="Drag to compare {{ s.before_label | default: 'before' }} and {{ s.after_label | default: 'after' }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" style="left:50%" class="absolute top-0 z-20 flex h-full w-11 -translate-x-1/2 cursor-ew-resize items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent">
-          <span class="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-paper" aria-hidden="true"></span>
-          <span class="relative flex h-9 w-9 items-center justify-center gap-0.5 rounded-full border border-ink-950/10 bg-paper text-ink-950 shadow-[0_2px_10px_rgba(10,10,10,0.35)]" aria-hidden="true">
-            {%- render 'icon', name: 'arrow', size: 12, class: 'rotate-180' -%}{%- render 'icon', name: 'arrow', size: 12 -%}
-          </span>
-        </button>
-      </compare-slider>
-    {%- else -%}
-      <div class="flex {{ aspect_cls }} items-center justify-center border border-border-hairline text-center">
-        <p class="font-mono text-xs uppercase tracking-label text-text-muted">Add a before and after image.</p>
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'pointer-events-none absolute inset-0 h-full w-full object-cover bg-surface-sunken text-border-hairline' }}
+        {%- endif -%}
       </div>
-    {%- endif -%}
+      {%- if s.before_label != blank -%}<span class="pointer-events-none absolute left-3 top-3 z-10 bg-ink-950/72 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper">{{ s.before_label }}</span>{%- endif -%}
+      {%- if s.after_label != blank -%}<span class="pointer-events-none absolute right-3 top-3 z-10 bg-ink-950/72 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper">{{ s.after_label }}</span>{%- endif -%}
+      <button type="button" data-compare-handle role="slider" aria-label="Drag to compare {{ s.before_label | default: 'before' }} and {{ s.after_label | default: 'after' }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" style="left:50%" class="absolute top-0 z-20 flex h-full w-11 -translate-x-1/2 cursor-ew-resize items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent">
+        <span class="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-paper" aria-hidden="true"></span>
+        <span class="relative flex h-9 w-9 items-center justify-center gap-0.5 rounded-full border border-ink-950/10 bg-paper text-ink-950 shadow-[0_2px_10px_rgba(10,10,10,0.35)]" aria-hidden="true">
+          {%- render 'icon', name: 'arrow', size: 12, class: 'rotate-180' -%}{%- render 'icon', name: 'arrow', size: 12 -%}
+        </span>
+      </button>
+    </compare-slider>
     {%- if s.caption != blank -%}<p class="mt-3 font-mono text-xs uppercase tracking-label text-text-muted">{{ s.caption }}</p>{%- endif -%}
   </div>
   <script src="{{ 'compare-slider.js' | asset_url }}" defer="defer"></script>

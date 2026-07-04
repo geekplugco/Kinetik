@@ -85,7 +85,7 @@
     "material": {
       "type": "image-with-text",
       "settings": {
-        "kicker": "Material story",
+        "subheading": "Material story",
         "heading": "Warm climate, hard wear",
         "text": "<p>Ripstop that breathes, hardware that opens with dust in it, thread that outlives the trip. Care is one rinse and a hang dry.</p>",
         "image": "shopify://shop_images/route-field-midday.png",
@@ -161,7 +161,7 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "kicker": "Trail list",
+        "subheading": "Trail list",
         "heading": "Notes from the field, monthly",
         "text": "<p>Route logs, repair guides and restock windows. One email, no noise.</p>",
         "color_scheme": "scheme-3",

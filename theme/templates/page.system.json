@@ -87,37 +87,44 @@
       ]
     },
     "assurance": {
-      "type": "field-assurance",
+      "type": "multicolumn",
       "blocks": {
         "pay": {
-          "type": "item",
+          "type": "column",
           "settings": {
-            "heading": "Payments",
-            "text": "Shop Pay, Apple Pay, Google Pay and major cards at checkout."
+            "title": "Payments",
+            "text": "<p>Shop Pay, Apple Pay, Google Pay and major cards at checkout.</p>"
           }
         },
         "support": {
-          "type": "item",
+          "type": "column",
           "settings": {
-            "heading": "Support",
-            "text": "Questions about fit or specs? Reach the Kinetik team."
+            "title": "Support",
+            "text": "<p>Questions about fit or specs? Reach the Kinetik team.</p>"
           }
         },
-        "pickup": {
-          "type": "pickup"
-        },
-        "policies": {
-          "type": "policies"
+        "returns": {
+          "type": "column",
+          "settings": {
+            "title": "Returns",
+            "text": "<p>30-day returns and clear field-care guidance for every system piece.</p>"
+          }
         }
       },
       "block_order": [
         "pay",
         "support",
-        "pickup",
-        "policies"
+        "returns"
       ],
       "settings": {
-        "color_scheme": "scheme-1"
+        "subheading": "Service frame",
+        "heading": "What happens after add to cart",
+        "text": "<p>The system page should answer purchase-risk questions without breaking the technical rhythm.</p>",
+        "color_scheme": "scheme-1",
+        "show_module_count": false,
+        "list_columns": "2",
+        "padding_top": 48,
+        "padding_bottom": 56
       }
     },
     "newsletter": {

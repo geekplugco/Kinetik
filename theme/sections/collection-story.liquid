@@ -33,14 +33,18 @@
           <div class="pb-12 last:pb-0 md:pb-20">
             {%- if b.label != blank -%}<span class="font-mono text-[11px] uppercase tracking-label text-accent-press">{{ b.label }}</span>{%- endif -%}
             {%- if b.heading != blank -%}<h3 class="mt-1.5 font-display text-h3 tracking-tight text-text-strong">{{ b.heading }}</h3>{%- endif -%}
-            {%- if b.image != blank -%}
-              <div class="group mt-4 max-w-lg">
-                <div class="kx-media-effect relative aspect-[16/10] overflow-hidden" {% render 'media-effect' %}>
+            <div class="group mt-4 max-w-lg">
+              <div class="kx-media-effect relative aspect-[16/10] overflow-hidden" {% render 'media-effect' %}>
+                {%- if b.image != blank -%}
                   {%- assign story_alt = b.image.alt | default: b.heading | default: s.heading -%}
                   {{ b.image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', sizes: '(min-width:750px) 48vw, 100vw', alt: story_alt, class: 'h-full w-full object-cover' }}
-                </div>
+                {%- else -%}
+                  {%- assign story_ph_idx = forloop.index0 | modulo: 6 | plus: 1 -%}
+                  {%- assign story_ph = 'collection-' | append: story_ph_idx -%}
+                  {{ story_ph | placeholder_svg_tag: 'h-full w-full object-cover bg-surface-sunken text-border-hairline' }}
+                {%- endif -%}
               </div>
-            {%- endif -%}
+            </div>
             {%- if b.text != blank -%}<div class="mt-3 max-w-lg text-body text-text-muted [&_p]:m-0 [&_p]:mt-2">{{ b.text }}</div>{%- endif -%}
             {%- if b.button_label != blank -%}
               <a href="{{ b.button_link | default: '#' }}" class="group/link mt-4 inline-flex min-h-[44px] items-center gap-2 font-mono text-xs uppercase tracking-label text-text-strong hover:text-accent-press">{{ b.button_label }}<span class="transition-transform group-hover/link:translate-x-0.5 motion-reduce:transform-none">{%- render 'icon', name: 'arrow', size: 14 -%}</span></a>

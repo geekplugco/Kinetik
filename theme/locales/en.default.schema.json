@@ -1140,6 +1140,68 @@
         "name__3": "Hero — stacked"
       }
     },
+    "hero-video": {
+      "name": "Hero video",
+      "settings": {
+        "header__media": {
+          "content": "Media"
+        },
+        "video": {
+          "label": "Video",
+          "info": "Shopify-hosted video. Plays muted, loops, and is preferred over the external URL when both are set."
+        },
+        "video_url": {
+          "label": "External video URL",
+          "info": "YouTube or Vimeo. Loads lazily as a muted background; the poster image shows first."
+        },
+        "poster": {
+          "label": "Poster image",
+          "info": "Shown before the external video loads and whenever reduced motion is on."
+        },
+        "header__content": {
+          "content": "Content"
+        },
+        "kicker": {
+          "label": "Kicker"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "button_link": {
+          "label": "Button link"
+        },
+        "header__style": {
+          "content": "Style"
+        },
+        "height": {
+          "label": "Section height",
+          "options__1": {
+            "label": "Small (60vh)"
+          },
+          "options__2": {
+            "label": "Medium (75vh)"
+          },
+          "options__3": {
+            "label": "Full screen"
+          }
+        },
+        "overlay_opacity": {
+          "label": "Overlay strength"
+        },
+        "color_scheme": {
+          "label": "Color scheme"
+        }
+      },
+      "presets": {
+        "name__1": "Hero video"
+      }
+    },
     "hero-collage": {
       "name": "Hero collage",
       "settings": {

@@ -1,6 +1,6 @@
 {% doc %}
   Inline SVG icon from the Kinetik set. Stroke-based, inherits currentColor.
-  @param {string} name - cart | search | menu | user | arrow | close | star | chevron | arrow-up-right | plus | minus
+  @param {string} name - cart | search | menu | user | arrow | close | star | chevron | arrow-up-right | plus | minus | play | pause
   @param {number} [size] - px width/height, default 20
   @param {string} [class] - extra classes on the svg
 {% enddoc %}
@@ -29,6 +29,10 @@
       assign d = 'M12 5v14 M5 12h14'
     when 'minus'
       assign d = 'M5 12h14'
+    when 'play'
+      assign d = 'M8 5l11 7-11 7z'
+    when 'pause'
+      assign d = 'M9 5v14 M15 5v14'
     else
       assign d = ''
   endcase

@@ -130,7 +130,9 @@
             <p class="w-full max-w-xs text-right font-mono text-[10px] text-text-faint">Taxes and shipping calculated at checkout</p>
             {%- assign checkout_label = 'sections.cart.checkout' | t | default: 'Checkout' -%}
             {%- render 'button', label: checkout_label, type: 'submit', name: 'checkout', size: 'md', class: 'w-full max-w-xs' -%}
-            <div class="w-full max-w-xs">{{ form | payment_button }}</div>
+            {%- if additional_checkout_buttons -%}
+              <div class="w-full max-w-xs">{{ content_for_additional_checkout_buttons }}</div>
+            {%- endif -%}
           </div>
         </div>
       {%- endform -%}
