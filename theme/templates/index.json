@@ -229,8 +229,8 @@
           "settings": {
             "place": "13:20 \u00b7 Field",
             "heading": "Layer down, tools out",
-            "caption": "<p>Base layer breathes under load while the carry system keeps weight close.</p>",
-            "product": "merino-base-ls",
+            "caption": "<p>Merino base moves moisture out while the carry system keeps weight close to the spine.</p>",
+            "product": "base-layer",
             "image": "shopify://shop_images/route-field-midday.png"
           }
         },
@@ -239,8 +239,8 @@
           "settings": {
             "place": "21:10 \u00b7 Return",
             "heading": "Reflective readout",
-            "caption": "<p>Low-light details and quick-access pockets keep the last leg clean.</p>",
-            "product": "field-sling",
+            "caption": "<p>Low-light details and quick-access pockets keep the last leg clean. Reflective trim reads in headlamp range.</p>",
+            "product": "sling-bag",
             "image": "shopify://shop_images/route-return-night.png"
           }
         }
