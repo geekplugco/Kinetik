@@ -18,13 +18,14 @@ if (!customElements.get('variant-picker')) {
         this.invEl = this.querySelector('[data-inventory]');
         this.errEl = this.querySelector('[data-atc-error]');
         this.sellingPlanInput = this.querySelector('[data-selling-plan-input]');
-        this.stickyVariant = this.querySelector('[data-sticky-variant]');
         this.stickyPrice = this.querySelector('[data-sticky-price]');
         this.stickyAdd = this.querySelector('[data-sticky-add]');
+        this.stickySelects = Array.from(this.querySelectorAll('[data-sticky-option]'));
         this.unavailableLabel = 'Unavailable';
 
         this.addEventListener('change', (e) => {
           if (e.target.matches('[data-option-position]')) this.onSelect();
+          if (e.target.matches('[data-sticky-option]')) this.onStickySelect(e.target);
           if (e.target.matches('[data-selling-plan-radio]')) this.onSellingPlanChange();
         });
         this.addEventListener('click', (e) => {
@@ -107,6 +108,38 @@ if (!customElements.get('variant-picker')) {
             });
           }
         });
+        this.stickySelects.forEach((s) => {
+          const pos = parseInt(s.dataset.position, 10);
+          Array.from(s.options).forEach((opt) => {
+            const base = opt.dataset.value || opt.textContent;
+            const ok = this.comboAvailable(sel, pos, opt.value);
+            opt.textContent = ok ? base : base + ' – ' + this.unavailableLabel;
+          });
+        });
+      }
+
+      onStickySelect(select) {
+        const pos = select.dataset.position;
+        let synced = false;
+        this.querySelectorAll('input[type="radio"][data-option-position="' + pos + '"]').forEach((r) => {
+          if (r.value === select.value) {
+            r.checked = true;
+            synced = true;
+          }
+        });
+        if (!synced) {
+          const main = this.querySelector('select[data-option-position="' + pos + '"]');
+          if (main) main.value = select.value;
+        }
+        this.onSelect();
+      }
+
+      syncStickyOptions() {
+        const sel = this.selections();
+        this.stickySelects.forEach((s) => {
+          const val = sel[Number(s.dataset.position) - 1];
+          if (typeof val === 'string' && s.value !== val) s.value = val;
+        });
       }
 
       onSelect() {
@@ -118,8 +151,8 @@ if (!customElements.get('variant-picker')) {
         if (v) {
           if (this.idInput) this.idInput.value = v.id;
           this.renderPrice(v);
-          if (this.stickyVariant && v.options) this.stickyVariant.textContent = v.options.join(' / ');
         }
+        this.syncStickyOptions();
         this.renderAtc(v);
         this.renderInventory(v);
         this.renderVariantReadout(v);
