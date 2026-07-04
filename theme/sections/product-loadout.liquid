@@ -2,6 +2,7 @@
   assign base = product.selected_or_first_available_variant
   assign companions = product.metafields.custom.loadout.value
   assign block_products = section.blocks | where: 'type', 'product'
+  assign picker_type = section.settings.picker_type | default: 'button'
 
   assign source_count = 0
   if companions != blank
@@ -62,15 +63,9 @@
                 </label>
                 <div class="min-w-0 flex-1">
                   <a href="{{ cp.url }}" class="truncate font-sans text-sm text-text-strong hover:text-accent-press">{{ cp.title }}</a>
-                  {%- if cp.variants.size > 1 -%}
-                    <select data-loadout-variant aria-label="{{ cp.title | escape }} option" class="mt-1.5 block w-full max-w-60 border border-border-hairline bg-surface-page px-3 py-2 font-mono text-xs text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
-                      {%- for v in cp.variants -%}
-                        <option value="{{ v.id }}" data-price="{{ v.price }}"{% unless v.available %} disabled{% endunless %}>{{ v.title }}</option>
-                      {%- endfor -%}
-                    </select>
-                  {%- endif -%}
+                  {%- render 'loadout-options', product: cp, section_id: section.id, picker_type: picker_type -%}
                 </div>
-                <span class="font-mono text-sm text-text-muted">{{ cv.price | money }}</span>
+                <span data-row-price class="font-mono text-sm text-text-muted">{{ cv.price | money }}</span>
               </li>
             {%- endif -%}
           {%- endfor -%}
@@ -90,15 +85,9 @@
                 </label>
                 <div class="min-w-0 flex-1">
                   <a href="{{ cp.url }}" class="truncate font-sans text-sm text-text-strong hover:text-accent-press">{{ cp.title }}</a>
-                  {%- if cp.variants.size > 1 -%}
-                    <select data-loadout-variant aria-label="{{ cp.title | escape }} option" class="mt-1.5 block w-full max-w-60 border border-border-hairline bg-surface-page px-3 py-2 font-mono text-xs text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
-                      {%- for v in cp.variants -%}
-                        <option value="{{ v.id }}" data-price="{{ v.price }}"{% unless v.available %} disabled{% endunless %}>{{ v.title }}</option>
-                      {%- endfor -%}
-                    </select>
-                  {%- endif -%}
+                  {%- render 'loadout-options', product: cp, section_id: section.id, picker_type: picker_type -%}
                 </div>
-                <span class="font-mono text-sm text-text-muted">{{ cv.price | money }}</span>
+                <span data-row-price class="font-mono text-sm text-text-muted">{{ cv.price | money }}</span>
               </li>
             {%- endif -%}
           {%- endfor -%}
@@ -138,6 +127,16 @@
     { "type": "header", "content": "t:sections.product-loadout.settings.header__source.content" },
     { "type": "paragraph", "content": "t:sections.product-loadout.settings.paragraph__source.content" },
     { "type": "header", "content": "t:sections.product-loadout.settings.header__style.content" },
+    {
+      "type": "select",
+      "id": "picker_type",
+      "label": "t:sections.product-loadout.settings.picker_type.label",
+      "options": [
+        { "value": "button", "label": "t:sections.product-loadout.settings.picker_type.options__1.label" },
+        { "value": "dropdown", "label": "t:sections.product-loadout.settings.picker_type.options__2.label" }
+      ],
+      "default": "button"
+    },
     { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.product-loadout.settings.color_scheme.label", "default": "scheme-2" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 64, "unit": "px", "label": "t:sections.product-loadout.settings.padding_top.label" },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "default": 64, "unit": "px", "label": "t:sections.product-loadout.settings.padding_bottom.label" }

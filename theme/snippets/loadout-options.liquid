@@ -1,0 +1,56 @@
+{% doc %}
+  Option picker for one companion row inside product-loadout. Button mode renders
+  compact swatch/text pills plus a variant-json payload that product-loadout.js
+  resolves to a variant id; dropdown mode renders a single select of variants.
+  Single-variant products render a static variant label (or nothing when default).
+  @param {object} product - companion product for this row
+  @param {string} section_id - parent section id, namespaces input ids and names
+  @param {string} [picker_type] - 'button' (default) or 'dropdown'
+{% enddoc %}
+{%- liquid
+  assign lo_picker = picker_type | default: 'button'
+  assign lo_variant = product.selected_or_first_available_variant
+-%}
+{%- if product.variants.size == 1 -%}
+  {%- unless product.has_only_default_variant -%}
+    <p class="mt-1.5 font-mono text-[11px] uppercase tracking-label text-text-muted">{{ lo_variant.title }}</p>
+  {%- endunless -%}
+{%- elsif lo_picker == 'dropdown' -%}
+  <select data-loadout-variant aria-label="{{ product.title | escape }} option" class="mt-1.5 block w-full max-w-60 border border-border-hairline bg-surface-page px-3 py-2 font-mono text-xs text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
+    {%- for v in product.variants -%}
+      <option value="{{ v.id }}" data-price="{{ v.price }}"{% unless v.available %} disabled{% endunless %}>{{ v.title }}</option>
+    {%- endfor -%}
+  </select>
+{%- else -%}
+  <div data-loadout-options class="mt-2.5 flex flex-col gap-2">
+    {%- render 'variant-json', product: product, image_width: 120 -%}
+    {%- for option in product.options_with_values -%}
+      {%- assign lo_is_color = false -%}
+      {%- assign lo_oname = option.name | downcase -%}
+      {%- if lo_oname contains 'color' or lo_oname contains 'colour' -%}{%- assign lo_is_color = true -%}{%- endif -%}
+      <fieldset class="m-0 flex flex-wrap items-center gap-2 border-0 p-0">
+        <legend class="sr-only">{{ product.title | escape }} — {{ option.name | escape }}</legend>
+        {%- for value in option.values -%}
+          {%- assign lo_id = section_id | append: '-lo-' | append: product.id | append: '-' | append: option.position | append: '-' | append: forloop.index -%}
+          <label for="{{ lo_id }}" class="cursor-pointer">
+            <input
+              type="radio"
+              id="{{ lo_id }}"
+              class="peer sr-only"
+              name="{{ section_id }}-lo-{{ product.id }}-option-{{ option.position }}"
+              value="{{ value | escape }}"
+              data-loadout-opt
+              data-position="{{ option.position }}"
+              {% if option.selected_value == value %}checked{% endif %}
+            >
+            {%- if lo_is_color -%}
+              {%- render 'swatch', value: value, title: value, size_class: 'h-7 w-7' -%}
+            {%- else -%}
+              <span class="inline-flex min-h-8 items-center border border-border-hairline px-2.5 py-1 font-mono text-[11px] uppercase tracking-wide text-text-muted transition-colors peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">{{ value }}</span>
+            {%- endif -%}
+          </label>
+        {%- endfor -%}
+      </fieldset>
+    {%- endfor -%}
+  </div>
+{%- endif -%}

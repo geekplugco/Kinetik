@@ -15,6 +15,7 @@ if (!customElements.get('build-loadout')) {
 
         this.addEventListener('change', (e) => {
           if (e.target.matches('[data-loadout-variant]')) this.syncVariant(e.target);
+          if (e.target.matches('[data-loadout-opt]')) this.syncOptions(e.target);
           this.update();
         });
         if (this.addBtn) this.addBtn.addEventListener('click', () => this.add());
@@ -76,12 +77,53 @@ if (!customElements.get('build-loadout')) {
 
       syncVariant(select) {
         const opt = select.options[select.selectedIndex];
-        const item = select.closest('li').querySelector('[data-loadout-item]');
+        const row = select.closest('li');
+        const item = row.querySelector('[data-loadout-item]');
         if (!item || !opt) return;
         item.dataset.variant = opt.value;
         item.dataset.price = opt.dataset.price || item.dataset.price;
-        const priceEl = select.closest('li').querySelector('.font-mono.text-text-muted');
+        const priceEl = row.querySelector('[data-row-price]');
         if (priceEl) priceEl.textContent = this.fmt(parseInt(item.dataset.price, 10) || 0);
+      }
+
+      rowVariants(row) {
+        if (!row.__loVariants) {
+          const script = row.querySelector('[data-loadout-options] script[type="application/json"]');
+          if (!script) return null;
+          try {
+            row.__loVariants = JSON.parse(script.textContent);
+          } catch (e) {
+            return null;
+          }
+        }
+        return row.__loVariants;
+      }
+
+      syncOptions(radio) {
+        const row = radio.closest('li');
+        const variants = this.rowVariants(row);
+        const item = row.querySelector('[data-loadout-item]');
+        if (!variants || !item) return;
+        const picked = Array.from(row.querySelectorAll('[data-loadout-opt]:checked'))
+          .sort((a, b) => Number(a.dataset.position) - Number(b.dataset.position))
+          .map((r) => r.value);
+        const match = variants.find(
+          (v) => v.options.length === picked.length && v.options.every((o, i) => o === picked[i])
+        );
+        const priceEl = row.querySelector('[data-row-price]');
+        if (match && match.available) {
+          item.dataset.variant = match.id;
+          item.dataset.price = match.price_cents;
+          if (item.disabled) {
+            item.disabled = false;
+            item.checked = true;
+          }
+          if (priceEl) priceEl.textContent = this.fmt(match.price_cents);
+        } else {
+          item.checked = false;
+          item.disabled = true;
+          if (priceEl) priceEl.textContent = 'Unavailable';
+        }
       }
 
       selected() {

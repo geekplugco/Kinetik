@@ -67,7 +67,7 @@
       },
       "presets": {
         "name__1": "Announcement bar",
-        "name__2": "Announcement bar \u2014 rotating"
+        "name__2": "Announcement bar — rotating"
       }
     },
     "blog-posts": {
@@ -163,8 +163,8 @@
       },
       "presets": {
         "name__1": "Blog posts",
-        "name__2": "Blog posts \u2014 overlay grid",
-        "name__3": "Blog posts \u2014 bordered square"
+        "name__2": "Blog posts — overlay grid",
+        "name__3": "Blog posts — bordered square"
       }
     },
     "breadcrumb": {
@@ -361,8 +361,8 @@
       },
       "presets": {
         "name__1": "Collapsible content",
-        "name__2": "FAQ \u2014 split aside",
-        "name__3": "FAQ \u2014 boxed"
+        "name__2": "FAQ — split aside",
+        "name__3": "FAQ — boxed"
       }
     },
     "collection-list": {
@@ -450,8 +450,8 @@
       },
       "presets": {
         "name__1": "Collection list",
-        "name__2": "Collection list \u2014 captions below",
-        "name__3": "Collection list \u2014 editorial pair"
+        "name__2": "Collection list — captions below",
+        "name__3": "Collection list — editorial pair"
       }
     },
     "complementary-products": {
@@ -675,8 +675,8 @@
       },
       "presets": {
         "name__1": "Contact form",
-        "name__2": "Contact \u2014 split with details",
-        "name__3": "Contact \u2014 wide"
+        "name__2": "Contact — split with details",
+        "name__3": "Contact — wide"
       }
     },
     "custom-liquid": {
@@ -735,7 +735,7 @@
         },
         "ticker_items": {
           "label": "Ticker lines",
-          "info": "One line per item. Keep claims factual \u2014 invented urgency is not allowed on the Theme Store."
+          "info": "One line per item. Keep claims factual — invented urgency is not allowed on the Theme Store."
         }
       },
       "presets": {
@@ -826,8 +826,8 @@
       },
       "presets": {
         "name__1": "Featured collection",
-        "name__2": "Featured collection \u2014 editorial",
-        "name__3": "Featured collection \u2014 dense grid"
+        "name__2": "Featured collection — editorial",
+        "name__3": "Featured collection — dense grid"
       }
     },
     "featured-product": {
@@ -893,8 +893,8 @@
       },
       "presets": {
         "name__1": "Featured product",
-        "name__2": "Featured product \u2014 image right",
-        "name__3": "Featured product \u2014 full bleed"
+        "name__2": "Featured product — image right",
+        "name__3": "Featured product — full bleed"
       }
     },
     "footer": {
@@ -1132,8 +1132,8 @@
       },
       "presets": {
         "name__1": "Hero",
-        "name__2": "Hero \u2014 overlay",
-        "name__3": "Hero \u2014 stacked"
+        "name__2": "Hero — overlay",
+        "name__3": "Hero — stacked"
       }
     },
     "hero-collage": {
@@ -1422,7 +1422,7 @@
         },
         "spec_line": {
           "label": "Spec line",
-          "info": "Mono technical line under the text, for example 3L shell \u00b7 28,000mm HH \u00b7 340g."
+          "info": "Mono technical line under the text, for example 3L shell · 28,000mm HH · 340g."
         },
         "header__3": {
           "content": "Product"
@@ -1547,8 +1547,8 @@
       },
       "presets": {
         "name__1": "Image gallery",
-        "name__2": "Image gallery \u2014 uniform grid",
-        "name__3": "Image gallery \u2014 full-bleed"
+        "name__2": "Image gallery — uniform grid",
+        "name__3": "Image gallery — full-bleed"
       }
     },
     "image-with-text": {
@@ -1650,8 +1650,8 @@
       },
       "presets": {
         "name__1": "Image with text",
-        "name__2": "Image with text \u2014 overlap",
-        "name__3": "Image with text \u2014 dark panel"
+        "name__2": "Image with text — overlap",
+        "name__3": "Image with text — dark panel"
       }
     },
     "logo-list": {
@@ -1750,7 +1750,7 @@
       "presets": {
         "name__1": "Logo list",
         "name__2": "Logo grid",
-        "name__3": "Logo wall \u2014 dark"
+        "name__3": "Logo wall — dark"
       }
     },
     "lookbook": {
@@ -2476,8 +2476,8 @@
       },
       "presets": {
         "name__1": "Map",
-        "name__2": "Map \u2014 color, map left",
-        "name__3": "Map \u2014 full width"
+        "name__2": "Map — color, map left",
+        "name__3": "Map — full width"
       }
     },
     "marquee": {
@@ -2485,7 +2485,7 @@
       "settings": {
         "text": {
           "label": "Text",
-          "info": "Separate items with \u00b7"
+          "info": "Separate items with ·"
         },
         "separator": {
           "label": "Separator"
@@ -2547,8 +2547,8 @@
       },
       "presets": {
         "name__1": "Marquee",
-        "name__2": "Marquee \u2014 ink",
-        "name__3": "Marquee \u2014 paper outline"
+        "name__2": "Marquee — ink",
+        "name__3": "Marquee — paper outline"
       }
     },
     "multicolumn": {
@@ -2662,8 +2662,8 @@
       },
       "presets": {
         "name__1": "Newsletter",
-        "name__2": "Newsletter \u2014 split light",
-        "name__3": "Newsletter \u2014 wide dark"
+        "name__2": "Newsletter — split light",
+        "name__3": "Newsletter — wide dark"
       }
     },
     "related-products": {
@@ -2857,8 +2857,8 @@
       },
       "presets": {
         "name__1": "Rich text",
-        "name__2": "Rich text \u2014 centered narrow",
-        "name__3": "Rich text \u2014 dark panel"
+        "name__2": "Rich text — centered narrow",
+        "name__3": "Rich text — dark panel"
       }
     },
     "section": {
@@ -3059,8 +3059,8 @@
       },
       "presets": {
         "name__1": "Slideshow",
-        "name__2": "Slideshow \u2014 fullscreen fade",
-        "name__3": "Slideshow \u2014 slide carousel"
+        "name__2": "Slideshow — fullscreen fade",
+        "name__3": "Slideshow — slide carousel"
       }
     },
     "statement": {
@@ -3257,8 +3257,8 @@
       },
       "presets": {
         "name__1": "Video",
-        "name__2": "Video \u2014 cinematic",
-        "name__3": "Video \u2014 square spotlight"
+        "name__2": "Video — cinematic",
+        "name__3": "Video — square spotlight"
       }
     },
     "welcome": {
@@ -3667,7 +3667,7 @@
         },
         "note": {
           "label": "Note",
-          "info": "Optional line. Use for a real, configured bundle offer only \u2014 no fake discounts."
+          "info": "Optional line. Use for a real, configured bundle offer only — no fake discounts."
         },
         "base_label": {
           "label": "Base item label"
@@ -3686,6 +3686,15 @@
         },
         "header__style": {
           "content": "Style"
+        },
+        "picker_type": {
+          "label": "Variant picker style",
+          "options__1": {
+            "label": "Buttons"
+          },
+          "options__2": {
+            "label": "Dropdown"
+          }
         },
         "color_scheme": {
           "label": "Color scheme"
@@ -4347,7 +4356,7 @@
         },
         "logo_mobile": {
           "label": "Mobile logo",
-          "info": "Optional \u2014 falls back to the main logo"
+          "info": "Optional — falls back to the main logo"
         },
         "logo_width": {
           "label": "Logo width"
@@ -4642,7 +4651,7 @@
         },
         "swatch_list": {
           "label": "Custom swatch list",
-          "info": "One per line \u2014 Name:#hexcolor or Name:image.png. Used when a product has no native swatch."
+          "info": "One per line — Name:#hexcolor or Name:image.png. Used when a product has no native swatch."
         }
       }
     },
