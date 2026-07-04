@@ -5,12 +5,16 @@
   @param {string} [class] - extra classes on the wrapper
 {% enddoc %}
 {%- liquid
+  assign show_from = false
   if variant
     assign price = variant.price
     assign compare = variant.compare_at_price
   else
-    assign price = product.price
-    assign compare = product.compare_at_price
+    assign price = product.price_min
+    assign compare = product.compare_at_price_max
+    if product.price_varies
+      assign show_from = true
+    endif
   endif
   assign on_sale = false
   if compare > price
@@ -18,6 +22,7 @@
   endif
 -%}
 <span class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 font-mono text-sm{% if class %} {{ class }}{% endif %}">
+  {%- if show_from -%}<span class="text-[11px] uppercase tracking-label text-text-muted">From</span>{%- endif -%}
   <span class="text-text-strong{% if on_sale and settings.price_highlight_sale %} text-accent-press{% endif %}">{{ price | money }}{% if settings.price_show_currency_code %} {{ cart.currency.iso_code }}{% endif %}</span>
   {%- if on_sale -%}<s class="text-text-muted">{{ compare | money }}</s>{%- endif -%}
   {%- assign up_var = variant | default: product.selected_or_first_available_variant -%}

@@ -28,9 +28,9 @@
   assign badge = product.metafields.custom.badge.value
 
   assign on_sale = false
-  if product.compare_at_price > product.price
+  if product.compare_at_price_max > product.price_min
     assign on_sale = true
-    assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+    assign discount = product.compare_at_price_max | minus: product.price_min | times: 100.0 | divided_by: product.compare_at_price_max | round
   endif
 
   assign quick_add = settings.card_quick_add

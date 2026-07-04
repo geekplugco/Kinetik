@@ -77,6 +77,7 @@
       <div class="order-1 min-w-0 flex-1 md:order-2">
         <div data-gallery-main tabindex="0" aria-label="{{ product.title | escape }} media" class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
           {{ first_media.preview_image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1600', sizes: media_sizes, alt: first_alt, class: 'h-full w-full object-cover transition-transform duration-200 ease-out' }}
+          <button type="button" data-gallery-expand aria-label="View full image" class="absolute bottom-3 right-3 z-10 flex h-9 w-9 items-center justify-center border border-border-strong bg-surface-page/90 text-text-strong transition-colors hover:bg-surface-page">{%- render 'icon', name: 'arrow-up-right', size: 16 -%}</button>
         </div>
         <div data-gallery-dots class="mt-3 flex justify-center gap-1.5 md:hidden">
           {%- for media in product.media -%}
@@ -86,6 +87,18 @@
         <p data-gallery-caption class="mt-3 font-mono text-xs uppercase tracking-label text-text-muted empty:hidden" aria-live="polite">{{ first_alt }}</p>
       </div>
     </product-gallery>
+
+    <div data-lightbox hidden class="kx-z-modal fixed inset-0 flex flex-col bg-ink-950/95">
+      <div class="flex items-center justify-between px-5 py-4">
+        <p data-lightbox-caption class="font-mono text-xs uppercase tracking-label text-paper/70"></p>
+        <button type="button" data-lightbox-close aria-label="Close full image view" class="flex h-11 w-11 items-center justify-center text-paper">{%- render 'icon', name: 'close', size: 20 -%}</button>
+      </div>
+      <div class="relative flex flex-1 items-center justify-center px-4 pb-6">
+        <img data-lightbox-img src="{{ first_media.preview_image | image_url: width: 1600 }}" alt="{{ first_alt }}" width="1600" height="1600" loading="lazy" class="max-h-full max-w-full object-contain">
+        <button type="button" data-lightbox-prev aria-label="Previous image" class="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-paper md:left-6">{%- render 'icon', name: 'arrow', size: 20, class: 'rotate-180' -%}</button>
+        <button type="button" data-lightbox-next aria-label="Next image" class="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-paper md:right-6">{%- render 'icon', name: 'arrow', size: 20 -%}</button>
+      </div>
+    </div>
     <script src="{{ 'product-gallery.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 
@@ -107,6 +120,9 @@
               {%- endif -%}
             {%- when 'price' -%}
               <div data-price data-price-class="text-body-lg" {{ block.shopify_attributes }}>{%- render 'price', variant: current_variant, class: 'text-body-lg' -%}</div>
+              {%- if cart.taxes_included -%}
+                <p class="mt-1 font-mono text-[11px] text-text-muted">Tax included</p>
+              {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
       </div>

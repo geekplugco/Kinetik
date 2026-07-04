@@ -61,7 +61,11 @@
               <div class="flex flex-1 flex-col gap-2">
                 <a href="{{ item.url }}" class="font-sans text-body text-text-strong hover:text-accent-press">{{ item.product.title }}</a>
                 {%- unless item.product.has_only_default_variant -%}
-                  <span class="font-mono text-xs text-text-muted">{{ item.variant.title }}</span>
+                  <span class="font-mono text-xs text-text-muted">
+                    {%- for option in item.options_with_values -%}
+                      {{ option.name }}: {{ option.value }}{% unless forloop.last %} &middot; {% endunless %}
+                    {%- endfor -%}
+                  </span>
                 {%- endunless -%}
                 {%- if item.selling_plan_allocation -%}
                   <div class="flex flex-col gap-0.5">
@@ -127,7 +131,7 @@
               <span class="text-sm uppercase tracking-label text-text-muted">Total</span>
               <span class="text-h4 text-text-strong">{{ cart.total_price | money }}</span>
             </div>
-            <p class="w-full max-w-xs text-right font-mono text-[10px] text-text-faint">Taxes and shipping calculated at checkout</p>
+            <p class="w-full max-w-xs text-right font-mono text-[10px] text-text-faint">{% if cart.taxes_included %}Tax included.{% endif %} Shipping calculated at checkout</p>
             {%- assign checkout_label = 'sections.cart.checkout' | t | default: 'Checkout' -%}
             {%- render 'button', label: checkout_label, type: 'submit', name: 'checkout', size: 'md', class: 'w-full max-w-xs' -%}
             {%- if additional_checkout_buttons -%}

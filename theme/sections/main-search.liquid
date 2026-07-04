@@ -17,7 +17,6 @@
         aria-label="{{ 'general.search.placeholder' | t | default: 'Search products' }}"
         class="w-full bg-transparent font-sans text-h4 text-text-strong outline-none placeholder:text-text-faint"
       >
-      <input type="hidden" name="type" value="product">
       <button type="submit" class="font-mono text-xs uppercase tracking-label text-text-strong hover:text-accent-press">{{ 'general.search.search' | t | default: 'Search' }}</button>
     </form>
     <div data-status class="sr-only" aria-live="polite"></div>
@@ -65,13 +64,42 @@
       </div>
     {%- endif -%}
     {%- if search.results_count > 0 -%}
-      <div class="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
-        {%- for item in search.results -%}
-          {%- if item.object_type == 'product' -%}
-            {%- render 'product-card', product: item -%}
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
+      {%- paginate search.results by 24 -%}
+        <div class="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
+          {%- for item in search.results -%}
+            {%- case item.object_type -%}
+              {%- when 'product' -%}
+                {%- render 'product-card', product: item -%}
+              {%- when 'article' -%}
+                <a href="{{ item.url }}" class="group col-span-2 flex flex-col gap-3 border-t border-border-hairline pt-4 sm:col-span-1">
+                  <div class="relative aspect-[3/2] overflow-hidden bg-surface-sunken">
+                    {%- if item.image -%}
+                      {{ item.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '300,500,700', sizes: '(min-width:990px) 25vw, 50vw', alt: item.title, class: 'h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
+                    {%- else -%}
+                      {{ 'image' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
+                    {%- endif -%}
+                  </div>
+                  <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">Journal</span>
+                  <span class="font-display text-h5 tracking-tight text-text-strong transition-colors group-hover:text-accent-press">{{ item.title }}</span>
+                  {%- if item.excerpt_or_content != blank -%}
+                    <p class="text-sm text-text-muted">{{ item.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+                  {%- endif -%}
+                </a>
+              {%- when 'page' -%}
+                <a href="{{ item.url }}" class="group col-span-2 flex flex-col gap-2 border-t border-border-hairline pt-4 sm:col-span-1">
+                  <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">Page</span>
+                  <span class="font-display text-h5 tracking-tight text-text-strong transition-colors group-hover:text-accent-press">{{ item.title }}</span>
+                  {%- if item.content != blank -%}
+                    <p class="text-sm text-text-muted">{{ item.content | strip_html | truncatewords: 20 }}</p>
+                  {%- endif -%}
+                </a>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          <nav class="mt-12 flex justify-center font-mono text-xs uppercase tracking-label text-text-muted" aria-label="Pagination">{{ paginate | default_pagination }}</nav>
+        {%- endif -%}
+      {%- endpaginate -%}
     {%- else -%}
       <div class="mt-12 flex flex-col items-center gap-4 border-t border-border-hairline py-16 text-center">
         <span class="font-mono text-xs uppercase tracking-label text-text-muted">No results found</span>

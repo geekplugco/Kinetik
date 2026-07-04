@@ -22,6 +22,11 @@
     class="mx-auto max-w-[var(--page-width)] px-6"
   >
     <collection-facets>
+      {%- if collection.image != blank and section.settings.show_collection_image -%}
+        <div class="relative mb-6 aspect-[21/9] overflow-hidden bg-surface-sunken sm:aspect-[3/1]">
+          {{ collection.image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750,1100,1600', sizes: '100vw', alt: collection.title, class: 'absolute inset-0 h-full w-full object-cover' }}
+        </div>
+      {%- endif -%}
       <header class="flex flex-col gap-2 border-b border-border-hairline pb-8">
         <span class="font-mono text-xs uppercase tracking-label text-text-muted">Collection</span>
         <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ collection.title }}</h1>
@@ -192,6 +197,13 @@
     ]
   },
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "label": "t:sections.main-collection.settings.show_collection_image.label",
+      "info": "t:sections.main-collection.settings.show_collection_image.info",
+      "default": true
+    },
     {
       "type": "checkbox",
       "id": "enable_filtering",
