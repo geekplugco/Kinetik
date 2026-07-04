@@ -68,7 +68,7 @@
     "social_x": "https://x.com/kinetik"
   },
   "presets": {
-    "Field System": {
+    "Kinetik": {
       "mode": "production-css-inline",
       "font_heading": "space_grotesk_n7",
       "font_body": "inter_n4",

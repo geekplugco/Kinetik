@@ -103,7 +103,7 @@ for (const absPath of listJsonFiles(resolve(STAGE_DIR, 'sections'))) {
 }
 
 const PRESET_LISTINGS = [
-  { preset: 'Field System', template: 'index.json' },
+  { preset: 'Kinetik', template: 'index.json' },
   { preset: 'Carbon', template: 'index.carbon.json' },
   { preset: 'Sand', template: 'index.sand.json' },
 ];

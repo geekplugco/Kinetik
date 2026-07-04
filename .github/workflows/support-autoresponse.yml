@@ -1,0 +1,27 @@
+name: Support auto-response
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  acknowledge:
+    if: contains(github.event.issue.labels.*.name, 'support')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: [
+                "Thanks — this support request has been received.",
+                "",
+                "We reply to theme support requests within two business days. In the meantime, the [documentation](https://github.com/" + context.repo.owner + "/" + context.repo.repo + "/tree/feat/kinetik-y5d-theme-engine/docs/merchant) and [FAQ](https://github.com/" + context.repo.owner + "/" + context.repo.repo + "/blob/feat/kinetik-y5d-theme-engine/docs/merchant/faq.md) answer most setup questions.",
+              ].join("\n"),
+            });

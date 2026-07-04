@@ -13,7 +13,7 @@ Version: 1.0.0
 
 ## Quick start
 
-1. **Pick a style.** Open Theme settings, then Colors. Kinetik ships three presets: **Field System** (ink and paper with a volt accent), **Carbon** (blackout), and **Sand** (warm neutrals). Each preset is a complete color-scheme set; your content and media stay the same when you switch.
+1. **Pick a style.** Open Theme settings, then Colors. Kinetik ships three presets: **Kinetik** (ink and paper with a volt accent), **Carbon** (blackout), and **Sand** (warm neutrals). Each preset is a complete color-scheme set; your content and media stay the same when you switch.
 2. **Set your logo and favicon.** Theme settings, Logo and favicon. Upload a standard logo, an optional mobile logo, and a favicon (scaled down to 32 x 32px).
 3. **Create menus.** In Navigation, create a `main-menu` for the header and a footer menu. The header turns top-level items into a mega menu when you add Mega menu panel blocks (see [Setup guide](setup.md#mega-menu)).
 4. **Choose header and footer styles.** The Header section has a Style select (utility, editorial, commerce). The Footer has its own (system, compact, editorial, split).

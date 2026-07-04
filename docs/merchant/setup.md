@@ -10,7 +10,7 @@ Theme settings, Colors, holds the color scheme group. Three presets ship with th
 
 | Preset | Character |
 |---|---|
-| Field System | White paper, near-black ink, volt lime accent |
+| Kinetik | White paper, near-black ink, volt lime accent |
 | Carbon | Blackout surfaces, volt accent on dark |
 | Sand | Warm paper, umber text, burnt-orange accent |
 
