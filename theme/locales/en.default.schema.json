@@ -2112,6 +2112,10 @@
           "label": "Show collection image",
           "info": "Displays the image set on this collection in Shopify admin as a banner above the heading, when one is uploaded."
         },
+        "show_collection_description": {
+          "label": "Show collection description",
+          "info": "Displays the collection description (set in Shopify admin) as an \"About this collection\" block below the product grid. Good for on-page SEO copy."
+        },
         "enable_filtering": {
           "label": "Enable filtering"
         },

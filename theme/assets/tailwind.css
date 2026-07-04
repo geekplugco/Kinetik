@@ -466,6 +466,9 @@
   .mt-14 {
     margin-top: calc(var(--spacing) * 14);
   }
+  .mt-16 {
+    margin-top: calc(var(--spacing) * 16);
+  }
   .mt-auto {
     margin-top: auto;
   }
@@ -621,6 +624,9 @@
   }
   .h-28 {
     height: calc(var(--spacing) * 28);
+  }
+  .h-\[100dvh\] {
+    height: 100dvh;
   }
   .h-\[120px\] {
     height: 120px;
@@ -1607,6 +1613,14 @@
     --tw-gradient-via: var(--ink-950);
     @supports (color: color-mix(in lab, red, red)) {
       --tw-gradient-via: color-mix(in oklab, var(--ink-950) 5%, transparent);
+    }
+    --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-via-stops);
+  }
+  .via-ink-950\/10 {
+    --tw-gradient-via: var(--ink-950);
+    @supports (color: color-mix(in lab, red, red)) {
+      --tw-gradient-via: color-mix(in oklab, var(--ink-950) 10%, transparent);
     }
     --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);
     --tw-gradient-stops: var(--tw-gradient-via-stops);
@@ -3722,6 +3736,11 @@
   .md\:p-8 {
     @media (width >= 750px) {
       padding: calc(var(--spacing) * 8);
+    }
+  }
+  .md\:p-10 {
+    @media (width >= 750px) {
+      padding: calc(var(--spacing) * 10);
     }
   }
   .md\:p-14 {

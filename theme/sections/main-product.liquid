@@ -88,12 +88,12 @@
       </div>
     </product-gallery>
 
-    <div data-lightbox hidden class="kx-z-modal fixed inset-0 flex flex-col bg-ink-950/95">
-      <div class="flex items-center justify-between px-5 py-4">
+    <div data-lightbox hidden class="kx-z-modal fixed inset-0 flex h-[100dvh] flex-col overflow-hidden bg-ink-950/95">
+      <div class="flex shrink-0 items-center justify-between px-5 py-4">
         <p data-lightbox-caption class="font-mono text-xs uppercase tracking-label text-paper/70"></p>
         <button type="button" data-lightbox-close aria-label="Close full image view" class="flex h-11 w-11 items-center justify-center text-paper">{%- render 'icon', name: 'close', size: 20 -%}</button>
       </div>
-      <div class="relative flex flex-1 items-center justify-center px-4 pb-6">
+      <div class="relative flex min-h-0 flex-1 items-center justify-center px-4 pb-6">
         <img data-lightbox-img src="{{ first_media.preview_image | image_url: width: 1600 }}" alt="{{ first_alt }}" width="1600" height="1600" loading="lazy" class="max-h-full max-w-full object-contain">
         <button type="button" data-lightbox-prev aria-label="Previous image" class="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-paper md:left-6">{%- render 'icon', name: 'arrow', size: 20, class: 'rotate-180' -%}</button>
         <button type="button" data-lightbox-next aria-label="Next image" class="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-paper md:right-6">{%- render 'icon', name: 'arrow', size: 20 -%}</button>

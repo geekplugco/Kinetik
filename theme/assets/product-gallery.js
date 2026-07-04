@@ -94,14 +94,16 @@ class ProductGallery extends HTMLElement {
   openLightbox(i) {
     if (!this.lightbox) return;
     this.lightbox.hidden = false;
-    document.body.style.overflow = 'hidden';
+    if (window.KinetikOverlay) window.KinetikOverlay.lockScroll();
+    else document.documentElement.style.overflow = 'hidden';
     this.renderLightbox(i);
   }
 
   closeLightbox() {
     if (!this.lightbox) return;
     this.lightbox.hidden = true;
-    document.body.style.overflow = '';
+    if (window.KinetikOverlay) window.KinetikOverlay.unlockScroll();
+    else document.documentElement.style.overflow = '';
   }
 
   lightboxStep(dir) {
