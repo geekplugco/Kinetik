@@ -102,6 +102,23 @@ for (const absPath of listJsonFiles(resolve(STAGE_DIR, 'sections'))) {
   processJsonFile(absPath, relPath, tally, extra);
 }
 
+const PRESET_LISTINGS = [
+  { preset: 'Field System', template: 'index.json' },
+  { preset: 'Carbon', template: 'index.carbon.json' },
+  { preset: 'Sand', template: 'index.sand.json' },
+];
+for (const { preset, template } of PRESET_LISTINGS) {
+  const src = resolve(STAGE_DIR, 'templates', template);
+  if (!existsSync(src)) {
+    console.log(`listings: skipped ${preset} (templates/${template} missing)`);
+    continue;
+  }
+  const dest = resolve(STAGE_DIR, 'listings', preset, 'templates', 'index.json');
+  mkdirSync(dirname(dest), { recursive: true });
+  writeFileSync(dest, readFileSync(src));
+  console.log(`listings: ${preset} <- templates/${template}`);
+}
+
 rmSync(ZIP_PATH, { force: true });
 execSync(`zip -r -X -q "${ZIP_PATH}" .`, { cwd: STAGE_DIR, stdio: 'inherit' });
 

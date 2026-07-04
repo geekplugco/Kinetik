@@ -1,0 +1,260 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-motion",
+      "settings": {
+        "kicker": "Carbon capsule \u00b7 FW26",
+        "heading": "Night moves, clean signal",
+        "text": "<p>A blackout capsule for after-dark movement. Sealed carry, low-noise layers, reflective readouts where they count.</p>",
+        "button_label": "Shop the capsule",
+        "button_link": "shopify://collections/best-sellers",
+        "secondary_button_label": "Night lookbook",
+        "secondary_button_link": "shopify://pages/lookbook",
+        "height": "large",
+        "content_position": "left",
+        "enable_parallax": true,
+        "frame_style": "both",
+        "auto_rotate": 6,
+        "overlay_opacity": 40,
+        "color_scheme": "scheme-5"
+      },
+      "blocks": {
+        "m1": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/route-return-night.png",
+            "label": "Signal 01"
+          }
+        },
+        "m2": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/08-dark-set-banner.png",
+            "label": "Signal 02"
+          }
+        },
+        "m3": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/08-hero-back-wide.png",
+            "label": "Signal 03"
+          }
+        },
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "label": "Reflectivity",
+            "value": "360 readout"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "label": "Carry",
+            "value": "Sealed 1.5L"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "label": "Audio",
+            "value": "Low-noise"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "Low light \u2014 Sealed carry \u2014 Audio tucked \u2014 Reflective readout \u2014 Repairable \u2014 Low light \u2014 Sealed carry \u2014 Audio tucked \u2014 Reflective readout \u2014 Repairable",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "capsule": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "The capsule",
+        "collection": "best-sellers",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "grid_density": "dense",
+        "color_scheme": "scheme-5",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "lookbook": {
+      "type": "lookbook",
+      "settings": {
+        "kicker": "Night frames",
+        "heading": "Worn after dark",
+        "layout": "editorial",
+        "editorial_density": "compact",
+        "color_scheme": "scheme-5",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "l1": {
+          "type": "shot",
+          "settings": {
+            "frame_size": "feature",
+            "image": "shopify://shop_images/route-return-night.png",
+            "image_alt": "Sling bag with reflective strips under a street lamp at night",
+            "frame_label": "Frame 01",
+            "overlay_label": "Reflective readout",
+            "product_1": "sling-bag",
+            "x_1": 50,
+            "y_1": 55
+          }
+        },
+        "n1": {
+          "type": "note",
+          "settings": {
+            "width": "medium",
+            "kicker": "Field note",
+            "heading": "Visible when it matters",
+            "text": "<p>Reflective trim sits on movement lines. Headlamp range, not billboard.</p>",
+            "link_label": "Open lookbook",
+            "link_url": "shopify://pages/lookbook"
+          }
+        },
+        "l2": {
+          "type": "shot",
+          "settings": {
+            "frame_size": "tall",
+            "image": "shopify://shop_images/05-sling-worn.png",
+            "image_alt": "Sling worn across a dark layer",
+            "frame_label": "Frame 02",
+            "overlay_label": "Carry",
+            "product_1": "belt-bag",
+            "x_1": 48,
+            "y_1": 52
+          }
+        },
+        "l3": {
+          "type": "shot",
+          "settings": {
+            "frame_size": "wide",
+            "image": "shopify://shop_images/06-detail-trio.png",
+            "image_alt": "Watch, earbuds and hardware details",
+            "frame_label": "Frame 03",
+            "overlay_label": "Detail",
+            "product_1": "smartwatch",
+            "x_1": 40,
+            "y_1": 50
+          }
+        }
+      },
+      "block_order": [
+        "l1",
+        "n1",
+        "l2",
+        "l3"
+      ]
+    },
+    "material_scan": {
+      "type": "material-scan",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "image": "shopify://shop_images/editorial-bench-macro2.png"
+      },
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "x": 42,
+            "y": 34,
+            "label": "Sealed zip",
+            "detail": "<p>Coated tape, glove pull</p>"
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "x": 62,
+            "y": 58,
+            "label": "Bar tack",
+            "detail": "<p>Stress points reinforced</p>"
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "x": 30,
+            "y": 70,
+            "label": "Seam tape",
+            "detail": "<p>Laser cut, heat set</p>"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ]
+    },
+    "reports": {
+      "type": "testimonials",
+      "settings": {
+        "kicker": "Field reports",
+        "heading": "Logged after dark",
+        "color_scheme": "scheme-5",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Courier shifts end at 02:00. Drivers see me three blocks out now.</p>",
+            "author": "R. Deme",
+            "role": "Night courier"
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>The sling sits flat under a shell and opens one-handed at the door.</p>",
+            "author": "K. Ostrow",
+            "role": "Venue tech"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2"
+      ]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "kicker": "Access list",
+        "heading": "Next capsule opens by list",
+        "text": "<p>Restock windows and repair slots go to the list first. No noise.</p>",
+        "color_scheme": "scheme-5",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "capsule",
+    "lookbook",
+    "material_scan",
+    "reports",
+    "newsletter"
+  ]
+}

@@ -242,6 +242,31 @@
 
         <p data-variant-readout class="font-mono text-xs uppercase tracking-label text-text-muted{% unless current_variant.sku != blank %} hidden{% endunless %}">SKU &middot; <span data-variant-sku class="text-text-strong">{{ current_variant.sku }}</span></p>
 
+        {%- if product.gift_card -%}
+          <gift-card-recipient class="block border border-border-hairline p-4">
+            <label for="recipient-toggle-{{ section.id }}" class="flex cursor-pointer items-center gap-3">
+              <input
+                type="checkbox"
+                id="recipient-toggle-{{ section.id }}"
+                name="properties[__shopify_send_gift_card_to_recipient]"
+                data-recipient-toggle
+                class="h-4 w-4 border border-border-strong accent-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+              >
+              <span class="font-mono text-xs uppercase tracking-label text-text-strong">Send as a gift</span>
+            </label>
+            <div data-recipient-fields hidden class="mt-3 flex flex-col gap-2.5">
+              <label class="sr-only" for="recipient-email-{{ section.id }}">Recipient email</label>
+              <input type="email" id="recipient-email-{{ section.id }}" name="properties[Recipient email]" autocomplete="email" placeholder="recipient@email.com" required disabled class="min-h-[44px] border border-border-strong bg-surface-page px-4 py-3 font-sans text-sm text-text-strong placeholder:text-text-faint focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
+              <label class="sr-only" for="recipient-name-{{ section.id }}">Recipient name</label>
+              <input type="text" id="recipient-name-{{ section.id }}" name="properties[Recipient name]" autocomplete="name" placeholder="Recipient name (optional)" disabled class="min-h-[44px] border border-border-strong bg-surface-page px-4 py-3 font-sans text-sm text-text-strong placeholder:text-text-faint focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
+              <label class="sr-only" for="recipient-message-{{ section.id }}">Gift message</label>
+              <textarea id="recipient-message-{{ section.id }}" name="properties[Message]" rows="3" maxlength="200" placeholder="Gift message (optional, 200 characters)" disabled class="border border-border-strong bg-surface-page px-4 py-3 font-sans text-sm text-text-strong placeholder:text-text-faint focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"></textarea>
+              <input type="hidden" name="properties[__shopify_offset]" data-recipient-offset disabled>
+              <p class="font-mono text-[10px] uppercase tracking-label text-text-faint">Delivered by email with the card code at purchase.</p>
+            </div>
+          </gift-card-recipient>
+        {%- endif -%}
+
         <div class="flex items-center gap-4">
           <div class="flex items-center border border-border-strong">
             <button type="button" aria-label="Decrease quantity" data-qty-down class="flex h-11 w-11 items-center justify-center text-text-strong">&minus;</button>
@@ -387,6 +412,9 @@
   </variant-picker>
 </section>
 <script src="{{ 'variant-picker.js' | asset_url }}" defer="defer"></script>
+{%- if product.gift_card -%}
+  <script src="{{ 'gift-card-recipient.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 {% schema %}
 {
   "name": "t:sections.main-product.name",

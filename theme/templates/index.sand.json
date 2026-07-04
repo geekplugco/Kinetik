@@ -1,0 +1,183 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-split",
+      "settings": {
+        "kicker": "Sand expedition \u00b7 SS26",
+        "heading": "Long days, light kit",
+        "text": "<p>Breathable layers and durable carry for travel that starts before sunrise. Built to be repaired, not replaced.</p>",
+        "spec_line": "2.5L shell \u00b7 340g \u00b7 60-day field trial",
+        "product": "desert-shell",
+        "button_label": "View the shell",
+        "image_position": "right",
+        "height": "large",
+        "color_scheme": "scheme-4",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "roles": {
+      "type": "collection-list",
+      "settings": {
+        "eyebrow": "By role",
+        "heading": "Pick your position",
+        "collection_list": [
+          "apparel",
+          "carry",
+          "audio-tech",
+          "best-sellers"
+        ],
+        "columns_desktop": 4,
+        "color_scheme": "scheme-4",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "route": {
+      "type": "route-map",
+      "settings": {
+        "subheading": "Day plan",
+        "heading": "One kit, first light to last",
+        "layout": "timeline",
+        "visual_style": "quiet",
+        "color_scheme": "scheme-4",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "r1": {
+          "type": "stop",
+          "settings": {
+            "place": "05:50 \u00b7 Trailhead",
+            "heading": "Layer for the climb",
+            "caption": "<p>Base layer moves moisture while the morning stays cold. Shell packs to a pocket.</p>",
+            "image": "shopify://shop_images/route-field-midday.png",
+            "product": "tech-hoodie"
+          }
+        },
+        "r2": {
+          "type": "stop",
+          "settings": {
+            "place": "13:10 \u00b7 Ridge",
+            "heading": "Sun over the pass",
+            "caption": "<p>Vents open, cap on. Carry keeps water and hardware in reach without stopping.</p>",
+            "image": "shopify://shop_images/lookbook-frame1-flatlay.png",
+            "product": "belt-bag"
+          }
+        },
+        "r3": {
+          "type": "stop",
+          "settings": {
+            "place": "19:40 \u00b7 Camp",
+            "heading": "Repair and reset",
+            "caption": "<p>Field kit out, seams checked. Everything that worked today works tomorrow.</p>",
+            "image": "shopify://shop_images/editorial-bench-macro2.png",
+            "product": "utility-vest"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ]
+    },
+    "material": {
+      "type": "image-with-text",
+      "settings": {
+        "kicker": "Material story",
+        "heading": "Warm climate, hard wear",
+        "text": "<p>Ripstop that breathes, hardware that opens with dust in it, thread that outlives the trip. Care is one rinse and a hang dry.</p>",
+        "image": "shopify://shop_images/route-field-midday.png",
+        "button_label": "Read the build notes",
+        "button_link": "shopify://blogs/news",
+        "color_scheme": "scheme-4",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "kit": {
+      "type": "build-your-kit",
+      "settings": {
+        "kicker": "The system",
+        "heading": "Build your field kit",
+        "bundle_discount": 12,
+        "min_pieces": 3,
+        "color_scheme": "scheme-4",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "s1": {
+          "type": "slot",
+          "settings": {
+            "label": "Shell",
+            "types": "Outerwear"
+          }
+        },
+        "s2": {
+          "type": "slot",
+          "settings": {
+            "label": "Carry",
+            "types": "Bags"
+          }
+        },
+        "s3": {
+          "type": "slot",
+          "settings": {
+            "label": "Gear",
+            "types": "Accessories, Audio, Tech, Wearables"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "assurance": {
+      "type": "field-assurance",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "journal": {
+      "type": "blog-posts",
+      "settings": {
+        "heading": "Field notes",
+        "blog": "news",
+        "posts_to_show": 3,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "card_style": "bordered",
+        "color_scheme": "scheme-4",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "kicker": "Trail list",
+        "heading": "Notes from the field, monthly",
+        "text": "<p>Route logs, repair guides and restock windows. One email, no noise.</p>",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "roles",
+    "route",
+    "material",
+    "kit",
+    "assurance",
+    "journal",
+    "newsletter"
+  ]
+}
