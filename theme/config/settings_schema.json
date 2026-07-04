@@ -4,8 +4,8 @@
     "theme_name": "Kinetik",
     "theme_version": "1.0.0",
     "theme_author": "Kinetik",
-    "theme_documentation_url": "https://github.com/teifidebugger/kinetik",
-    "theme_support_url": "https://github.com/teifidebugger/kinetik/issues"
+    "theme_documentation_url": "https://github.com/geekplugco/Kinetik/tree/feat/kinetik-y5d-theme-engine/docs/merchant",
+    "theme_support_url": "https://github.com/geekplugco/Kinetik/issues/new?template=support.yml"
   },
   {
     "name": "t:settings_schema.logo_and_favicon.name",
