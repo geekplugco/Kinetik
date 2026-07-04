@@ -20,7 +20,8 @@
   assign d_min = diff | modulo: 3600 | divided_by: 60
   assign d_sec = diff | modulo: 60
 
-  assign ticker_items = 'A. Mercer just bought Shell-01 Hardshell||14 people viewing Cargo Tech Pant||Only 3 left — Field Monitors||S. Haddad just bought Trail Runner XS||Restocked — Utility Vest 6P||9 people viewing Sling 4L'
+  assign ticker_items = s.ticker_items | default: 'One production run, no second drop||3L membrane, taped seams||Free repairs on every seam||Ships in 24h, 60-day returns||Carbon-neutral dispatch||Sized S to XL, fit guide live'
+  assign ticker_items = ticker_items | newline_to_br | replace: '<br />', '||'
 -%}
 <section
   class="theme-dark bg-surface-page text-text-body"
@@ -97,7 +98,7 @@
           <span class="flex shrink-0 items-center gap-2 font-mono text-[11px] uppercase tracking-label text-text-muted">
             <span class="h-2 w-2 rounded-full bg-accent" aria-hidden="true"></span> Live
           </span>
-          <p data-ticker-text class="hp-reveal hp-reveal--fade is-in truncate font-mono text-xs text-text-body" aria-live="polite">A. Mercer just bought Shell-01 Hardshell</p>
+          <p data-ticker-text class="hp-reveal hp-reveal--fade is-in truncate font-mono text-xs text-text-body" aria-live="polite">{{ ticker_items | split: '||' | first }}</p>
         </div>
       {%- endif -%}
     </drop-countdown>
@@ -146,6 +147,12 @@
       "id": "show_ticker",
       "label": "t:sections.drop-system.settings.show_ticker.label",
       "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "ticker_items",
+      "label": "t:sections.drop-system.settings.ticker_items.label",
+      "info": "t:sections.drop-system.settings.ticker_items.info"
     },
     {
       "type": "color_scheme",

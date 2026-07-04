@@ -82,6 +82,10 @@
 {%- endcapture -%}
 
 <style>
+  #shopify-section-{{ section.id }} section[data-color-scheme] h1 {
+    color: var(--paper);
+  }
+
   #shopify-section-{{ section.id }} .kx-hero-media {
     transform: scale(1.012);
     animation: kxHeroDrift-{{ section.id }} 12s var(--ease-enter, ease) infinite alternate;

@@ -174,13 +174,14 @@
     "editorial": {
       "type": "image-with-text",
       "settings": {
-        "image": "shopify://shop_images/08-dark-set-banner.png",
+        "image": "shopify://shop_images/editorial-bench-macro2.png",
         "layout": "image_first",
         "subheading": "Material proof",
         "heading": "No feature without a field reason",
         "text": "<p>Every pocket, membrane, strap, and seam has to earn its position. The product page reads like a spec sheet because the product is built like one.</p>",
         "button_label": "Our story",
-        "button_link": "shopify://pages/about"
+        "button_link": "shopify://pages/about",
+        "image_alt": "Blank matte zipper pull and taped seams on dark ripstop beside a precision screwdriver"
       }
     },
     "manifesto": {
@@ -383,20 +384,108 @@
         "background_style": "dark",
         "color_scheme": "scheme-3"
       }
+    },
+    "drop": {
+      "type": "drop-system",
+      "settings": {
+        "kicker": "Drop 05 \u00b7 Locked",
+        "heading": "Next system window",
+        "text": "<p>Full Field System restock. Limited quantity, no second run. Reminders open now.</p>",
+        "target_date": "2026-09-15",
+        "button_label": "Set a reminder",
+        "show_ticker": true,
+        "color_scheme": "scheme-3",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "featured_product": {
+      "type": "featured-product",
+      "settings": {
+        "product": "shell-jacket",
+        "heading": "Field unit 01",
+        "image_position": "right",
+        "image_ratio": "portrait",
+        "width": "page",
+        "color_scheme": "scheme-2",
+        "padding_top": 0,
+        "padding_bottom": 0
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "kicker": "Field reports",
+        "heading": "Worn hard, reported back",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Eleven months of daily bike commutes in Rotterdam rain. The seams gave up nothing.</p>",
+            "author": "M. Okafor",
+            "role": "Courier, 4,100 km logged"
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>I stopped packing a second layer. The base plus shell covers everything from platform to summit.</p>",
+            "author": "S. Lindqvist",
+            "role": "Field engineer, north grid"
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Zips still run clean after two festival seasons and one crash. Repaired once, free.</p>",
+            "author": "D. Aoyama",
+            "role": "Stage rigger"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ]
+    },
+    "journal": {
+      "type": "blog-posts",
+      "settings": {
+        "heading": "Field notes",
+        "blog": "news",
+        "posts_to_show": 3,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "card_style": "bordered",
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [
     "hero",
     "marquee",
+    "drop",
     "arrivals",
     "systems",
-    "material_scan",
+    "featured_product",
     "kit",
-    "editorial",
-    "manifesto",
+    "material_scan",
     "route",
     "lookbook",
+    "editorial",
+    "manifesto",
+    "testimonials",
     "trust",
+    "journal",
     "newsletter"
   ]
 }

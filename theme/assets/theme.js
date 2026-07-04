@@ -18,6 +18,14 @@
   }
 
   observeReveals(document);
+  window.addEventListener('load', function () { observeReveals(document); });
+  window.setTimeout(function () {
+    document.querySelectorAll(revealSelector).forEach(function (el) {
+      if (el.classList.contains('is-in')) return;
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0 && r.width > 0) el.classList.add('is-in');
+    });
+  }, 1200);
 
   var revealMutationObserver = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
