@@ -1,0 +1,88 @@
+{% doc %}
+  Country/currency and language disclosure switcher backed by one localization
+  form. Options are native submit buttons (name=country_code / locale_code), so
+  switching works without JavaScript; localization-switcher.js only adds
+  outside-click and Escape closing plus single-open behaviour.
+  Renders nothing when the store has one country and one language.
+  @param {string} id_prefix - unique id for the localization form
+  @param {boolean} [show_country] - render the country/currency disclosure
+  @param {boolean} [show_language] - render the language disclosure
+  @param {string} [direction] - 'up' opens panels above the trigger (footers); default 'down'
+  @param {string} [tone] - 'dark' for ink surfaces (announcement bar); default 'light'
+{% enddoc %}
+{%- liquid
+  assign has_country = false
+  if show_country and localization.available_countries.size > 1
+    assign has_country = true
+  endif
+  assign has_language = false
+  if show_language and localization.available_languages.size > 1
+    assign has_language = true
+  endif
+-%}
+{%- if has_country or has_language -%}
+  {%- liquid
+    assign panel_pos = 'top-full mt-1.5'
+    if direction == 'up'
+      assign panel_pos = 'bottom-full mb-1.5'
+    endif
+    assign trigger_cls = 'border-border-hairline text-text-body hover:border-border-strong hover:text-text-strong'
+    assign panel_cls = 'border-border-strong bg-surface-page'
+    assign item_cls = 'text-text-body hover:bg-surface-sunken hover:text-text-strong'
+    assign item_active_cls = 'text-text-strong'
+    if tone == 'dark'
+      assign trigger_cls = 'border-paper/25 text-paper hover:border-paper/60'
+      assign panel_cls = 'border-paper/25 bg-ink-950'
+      assign item_cls = 'text-paper/80 hover:bg-paper/10 hover:text-paper'
+      assign item_active_cls = 'text-paper'
+    endif
+  -%}
+  <localization-switcher class="block">
+    {%- form 'localization', id: id_prefix, class: 'flex flex-wrap items-center gap-2' -%}
+      {%- if has_country -%}
+        <details class="group relative">
+          <summary class="flex min-h-[44px] cursor-pointer list-none items-center gap-2 border {{ trigger_cls }} px-3 py-2 font-mono text-[11px] uppercase tracking-label transition-colors [&::-webkit-details-marker]:hidden">
+            <span>{{ localization.country.iso_code }} &middot; {{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</span>
+            <span class="transition-transform group-open:rotate-180" aria-hidden="true">{%- render 'icon', name: 'chevron', size: 12 -%}</span>
+          </summary>
+          <div class="absolute left-0 {{ panel_pos }} kx-z-popover max-h-72 w-max min-w-52 overflow-y-auto border {{ panel_cls }} py-1">
+            {%- for country in localization.available_countries -%}
+              <button
+                type="submit"
+                name="country_code"
+                value="{{ country.iso_code }}"
+                class="flex w-full items-center justify-between gap-5 px-3 py-2.5 text-left font-mono text-[11px] uppercase tracking-label transition-colors {{ item_cls }} {% if country.iso_code == localization.country.iso_code %}{{ item_active_cls }}{% endif %}"
+                {% if country.iso_code == localization.country.iso_code %}aria-current="true"{% endif %}
+              >
+                <span>{{ country.name }}</span>
+                <span class="opacity-60">{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
+        </details>
+      {%- endif -%}
+      {%- if has_language -%}
+        <details class="group relative">
+          <summary class="flex min-h-[44px] cursor-pointer list-none items-center gap-2 border {{ trigger_cls }} px-3 py-2 font-mono text-[11px] uppercase tracking-label transition-colors [&::-webkit-details-marker]:hidden">
+            <span>{{ localization.language.iso_code | upcase }}</span>
+            <span class="transition-transform group-open:rotate-180" aria-hidden="true">{%- render 'icon', name: 'chevron', size: 12 -%}</span>
+          </summary>
+          <div class="absolute left-0 {{ panel_pos }} kx-z-popover max-h-72 w-max min-w-36 overflow-y-auto border {{ panel_cls }} py-1">
+            {%- for language in localization.available_languages -%}
+              <button
+                type="submit"
+                name="locale_code"
+                value="{{ language.iso_code }}"
+                class="block w-full px-3 py-2.5 text-left font-mono text-[11px] uppercase tracking-label transition-colors {{ item_cls }} {% if language.iso_code == localization.language.iso_code %}{{ item_active_cls }}{% endif %}"
+                {% if language.iso_code == localization.language.iso_code %}aria-current="true"{% endif %}
+              >
+                {{ language.endonym_name }}
+              </button>
+            {%- endfor -%}
+          </div>
+        </details>
+      {%- endif -%}
+    {%- endform -%}
+  </localization-switcher>
+  <script src="{{ 'localization-switcher.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

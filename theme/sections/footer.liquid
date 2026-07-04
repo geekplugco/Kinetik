@@ -116,8 +116,22 @@
         </div>
         <div class="flex flex-col gap-3">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">Region</span>
-          <span class="text-sm text-text-body">{{ localization.country.name }} · {{ localization.country.currency.iso_code }}</span>
-          <span class="text-sm text-text-body">{{ localization.language.endonym_name }}</span>
+          {%- liquid
+            assign loc_active_min = false
+            if s.enable_country_selector and localization.available_countries.size > 1
+              assign loc_active_min = true
+            endif
+            if s.enable_language_selector and localization.available_languages.size > 1
+              assign loc_active_min = true
+            endif
+          -%}
+          {%- if loc_active_min -%}
+            {%- assign footer_min_loc_id = 'FooterLocMin-' | append: section.id -%}
+            {%- render 'localization-switcher', id_prefix: footer_min_loc_id, show_country: s.enable_country_selector, show_language: s.enable_language_selector, direction: 'up' -%}
+          {%- else -%}
+            <span class="text-sm text-text-body">{{ localization.country.name }} · {{ localization.country.currency.iso_code }}</span>
+            <span class="text-sm text-text-body">{{ localization.language.endonym_name }}</span>
+          {%- endif -%}
         </div>
       </div>
     </div>
@@ -192,28 +206,18 @@
 
         <div class="flex flex-col gap-3 p-5">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">Region</span>
-          {%- if s.enable_country_selector or s.enable_language_selector -%}
-            {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
-              {%- form 'localization', id: 'FooterLoc-' | append: section.id, class: 'flex flex-col gap-2 font-mono text-xs uppercase tracking-label' -%}
-                {%- if s.enable_country_selector and localization.available_countries.size > 1 -%}
-                  <select name="country_code" aria-label="Country/region" class="bg-transparent text-text-body" onchange="this.form.submit()">
-                    {%- for country in localization.available_countries -%}
-                      <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>{{ country.name }} {{ country.currency.iso_code }}</option>
-                    {%- endfor -%}
-                  </select>
-                {%- endif -%}
-                {%- if s.enable_language_selector and localization.available_languages.size > 1 -%}
-                  <select name="locale_code" aria-label="Language" class="bg-transparent text-text-body" onchange="this.form.submit()">
-                    {%- for language in localization.available_languages -%}
-                      <option value="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>{{ language.endonym_name }}</option>
-                    {%- endfor -%}
-                  </select>
-                {%- endif -%}
-                <noscript><button type="submit" class="underline underline-offset-4">Update</button></noscript>
-              {%- endform -%}
-            {%- else -%}
-              <span class="text-sm text-text-body">{{ localization.country.name }} · {{ localization.country.currency.iso_code }}</span>
-            {%- endif -%}
+          {%- liquid
+            assign loc_active = false
+            if s.enable_country_selector and localization.available_countries.size > 1
+              assign loc_active = true
+            endif
+            if s.enable_language_selector and localization.available_languages.size > 1
+              assign loc_active = true
+            endif
+          -%}
+          {%- if loc_active -%}
+            {%- assign footer_loc_id = 'FooterLoc-' | append: section.id -%}
+            {%- render 'localization-switcher', id_prefix: footer_loc_id, show_country: s.enable_country_selector, show_language: s.enable_language_selector, direction: 'up' -%}
           {%- else -%}
             <span class="text-sm text-text-body">{{ localization.country.name }} · {{ localization.country.currency.iso_code }}</span>
             <span class="text-sm text-text-body">{{ localization.language.endonym_name }}</span>

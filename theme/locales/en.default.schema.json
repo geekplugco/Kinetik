@@ -997,6 +997,10 @@
         },
         "show_account_icon": {
           "label": "Show account icon"
+        },
+        "show_localization": {
+          "label": "Show country and language selectors in the mobile menu",
+          "info": "Selectors appear only when the store has more than one market country or published language."
         }
       },
       "presets": {

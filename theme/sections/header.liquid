@@ -283,6 +283,14 @@
       {%- endif -%}
     </ul>
   </nav>
+  {%- if s.show_localization != false -%}
+    {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+      <div class="border-t border-border-hairline px-5 py-3">
+        {%- assign drawer_loc_id = 'DrawerLoc-' | append: section.id -%}
+        {%- render 'localization-switcher', id_prefix: drawer_loc_id, show_country: true, show_language: true, direction: 'up' -%}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
   <div class="flex items-center gap-3 border-t border-border-hairline px-5 py-2 font-mono text-xs uppercase tracking-label text-text-body">
     {%- if s.show_account_icon != false -%}
       <a href="{{ routes.account_url }}" class="flex h-11 items-center gap-2 px-1">{%- render 'icon', name: 'user', size: 16 -%} Account</a>
@@ -493,6 +501,13 @@
       "type": "checkbox",
       "id": "show_account_icon",
       "label": "t:sections.header.settings.show_account_icon.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_localization",
+      "label": "t:sections.header.settings.show_localization.label",
+      "info": "t:sections.header.settings.show_localization.info",
       "default": true
     },
     {
