@@ -63,7 +63,7 @@
                 <div class="min-w-0 flex-1">
                   <a href="{{ cp.url }}" class="truncate font-sans text-sm text-text-strong hover:text-accent-press">{{ cp.title }}</a>
                   {%- if cp.variants.size > 1 -%}
-                    <select data-loadout-variant aria-label="{{ cp.title | escape }} option" class="mt-1 block w-full border border-border-hairline bg-surface-page px-2 py-1 font-mono text-xs text-text-strong">
+                    <select data-loadout-variant aria-label="{{ cp.title | escape }} option" class="mt-1.5 block w-full max-w-60 border border-border-hairline bg-surface-page px-3 py-2 font-mono text-xs text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
                       {%- for v in cp.variants -%}
                         <option value="{{ v.id }}" data-price="{{ v.price }}"{% unless v.available %} disabled{% endunless %}>{{ v.title }}</option>
                       {%- endfor -%}
@@ -91,7 +91,7 @@
                 <div class="min-w-0 flex-1">
                   <a href="{{ cp.url }}" class="truncate font-sans text-sm text-text-strong hover:text-accent-press">{{ cp.title }}</a>
                   {%- if cp.variants.size > 1 -%}
-                    <select data-loadout-variant aria-label="{{ cp.title | escape }} option" class="mt-1 block w-full border border-border-hairline bg-surface-page px-2 py-1 font-mono text-xs text-text-strong">
+                    <select data-loadout-variant aria-label="{{ cp.title | escape }} option" class="mt-1.5 block w-full max-w-60 border border-border-hairline bg-surface-page px-3 py-2 font-mono text-xs text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
                       {%- for v in cp.variants -%}
                         <option value="{{ v.id }}" data-price="{{ v.price }}"{% unless v.available %} disabled{% endunless %}>{{ v.title }}</option>
                       {%- endfor -%}

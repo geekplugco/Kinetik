@@ -10,11 +10,11 @@
 
   @example
   {%- assign r = product.metafields.reviews.rating.value -%}
-  {%- render 'rating', rating: r.rating, scale_max: r.scale_max, count: product.metafields.reviews.rating_count -%}
+  {%- render 'rating', rating: r.value, scale_max: r.scale_max, count: product.metafields.reviews.rating_count -%}
 {%- enddoc -%}
 {%- liquid
-  assign max = scale_max | default: 5.0
-  assign value = rating | default: 0
+  assign max = scale_max | default: 5.0 | times: 1.0
+  assign value = rating | default: 0 | times: 1.0
   assign pct = 0
   if max > 0
     assign pct = value | times: 100.0 | divided_by: max

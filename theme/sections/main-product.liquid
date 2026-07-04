@@ -102,7 +102,7 @@
             {%- when 'title' -%}
               <h1 class="font-display text-h1 tracking-tight text-text-strong" {{ block.shopify_attributes }}>{{ product.title }}</h1>
             {%- when 'rating' -%}
-              {%- if product_rating != blank and product_rating.rating > 0 -%}
+              {%- if product_rating != blank -%}
                 <a href="#reviews" class="inline-flex w-fit" aria-label="Read reviews" {{ block.shopify_attributes }}>{%- render 'rating', rating: product_rating.rating, scale_max: product_rating.scale_max, count: product.metafields.reviews.rating_count -%}</a>
               {%- endif -%}
             {%- when 'price' -%}
@@ -242,7 +242,7 @@
 
         <p data-variant-readout class="font-mono text-xs uppercase tracking-label text-text-muted{% unless current_variant.sku != blank %} hidden{% endunless %}">SKU &middot; <span data-variant-sku class="text-text-strong">{{ current_variant.sku }}</span></p>
 
-        {%- if product.gift_card -%}
+        {%- if product.gift_card? -%}
           <gift-card-recipient class="block border border-border-hairline p-4">
             <label for="recipient-toggle-{{ section.id }}" class="flex cursor-pointer items-center gap-3">
               <input
@@ -412,7 +412,7 @@
   </variant-picker>
 </section>
 <script src="{{ 'variant-picker.js' | asset_url }}" defer="defer"></script>
-{%- if product.gift_card -%}
+{%- if product.gift_card? -%}
   <script src="{{ 'gift-card-recipient.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 {% schema %}
