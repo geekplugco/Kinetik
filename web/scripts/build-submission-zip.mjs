@@ -103,20 +103,20 @@ for (const absPath of listJsonFiles(resolve(STAGE_DIR, 'sections'))) {
 }
 
 const PRESET_LISTINGS = [
-  { preset: 'Kinetik', template: 'index.json' },
-  { preset: 'Carbon', template: 'index.carbon.json' },
-  { preset: 'Sand', template: 'index.sand.json' },
+  { preset: 'Kinetik', folder: 'kinetik', template: 'index.json' },
+  { preset: 'Carbon', folder: 'carbon', template: 'index.carbon.json' },
+  { preset: 'Sand', folder: 'sand', template: 'index.sand.json' },
 ];
-for (const { preset, template } of PRESET_LISTINGS) {
+for (const { preset, folder, template } of PRESET_LISTINGS) {
   const src = resolve(STAGE_DIR, 'templates', template);
   if (!existsSync(src)) {
     console.log(`listings: skipped ${preset} (templates/${template} missing)`);
     continue;
   }
-  const dest = resolve(STAGE_DIR, 'listings', preset, 'templates', 'index.json');
+  const dest = resolve(STAGE_DIR, 'listings', folder, 'templates', 'index.json');
   mkdirSync(dirname(dest), { recursive: true });
   writeFileSync(dest, readFileSync(src));
-  console.log(`listings: ${preset} <- templates/${template}`);
+  console.log(`listings: ${preset} (folder: ${folder}) <- templates/${template}`);
 }
 
 rmSync(ZIP_PATH, { force: true });

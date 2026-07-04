@@ -108,7 +108,8 @@
           {%- if b.heading != blank -%}<h2 class="max-w-3xl font-display font-bold leading-[0.92] tracking-hero text-paper {{ heading_cls }}">{{ b.heading }}</h2>{%- endif -%}
           {%- if b.description != blank -%}<div class="max-w-xl text-body-lg leading-snug text-paper/85 [&_p]:m-0">{{ b.description }}</div>{%- endif -%}
           {%- if b.button_label != blank -%}
-            {%- render 'button', label: b.button_label, href: b.button_link | default: '#', variant: b.button_style | default: 'primary', size: 'md', class: 'mt-2 min-h-[44px] px-8 py-4 text-sm' -%}
+            {%- assign slide_btn_link = b.button_link | default: '#' -%}
+            {%- render 'button', label: b.button_label, href: slide_btn_link, variant: b.button_style, size: 'md', class: 'mt-2 min-h-[44px] px-8 py-4 text-sm' -%}
           {%- endif -%}
         </div>
       </div>

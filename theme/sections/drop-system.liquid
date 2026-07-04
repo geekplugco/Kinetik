@@ -82,7 +82,7 @@
                   placeholder="you@domain.com"
                   class="min-w-0 flex-1 border border-border-strong bg-transparent px-4 py-3 font-mono text-sm text-text-strong outline-none placeholder:text-text-muted focus-visible:border-accent"
                 >
-                {%- render 'button', label: s.button_label | default: 'Notify me', type: 'submit', size: 'md' -%}
+                {%- render 'button', label: s.button_label, type: 'submit', size: 'md' -%}
               </div>
               {%- if form.errors -%}
                 <p class="font-mono text-[11px] text-accent-press" role="alert">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>

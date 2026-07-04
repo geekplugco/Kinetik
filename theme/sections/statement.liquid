@@ -46,7 +46,8 @@
                   <a href="{{ bs.button_link | default: '#' }}" class="inline-flex min-h-[44px] items-center justify-center gap-2 bg-paper px-6 py-3 font-mono text-sm uppercase tracking-wide text-ink-950 transition-colors hover:bg-accent hover:text-accent-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper">{{ bs.button_label }}</a>
                 {%- endif -%}
               {%- else -%}
-                {%- render 'button', label: bs.button_label, href: bs.button_link | default: '#', variant: bs.button_style | default: 'primary', size: 'md' -%}
+                {%- assign stmt_btn_link = bs.button_link | default: '#' -%}
+                {%- render 'button', label: bs.button_label, href: stmt_btn_link, variant: bs.button_style, size: 'md' -%}
               {%- endif -%}
             </div>
           {%- endif -%}
