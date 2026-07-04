@@ -59,7 +59,7 @@
       <div class="grid grid-cols-[repeat(var(--cols-mobile,1),minmax(0,1fr))] gap-px bg-border-hairline lg:grid-cols-[repeat(var(--cols-desktop,3),minmax(0,1fr))]">
       {%- for article in source.articles limit: limit -%}
         {%- if overlay -%}
-          <a href="{{ article.url }}" class="group kx-media-effect relative flex flex-col justify-end overflow-hidden {{ ratio }} bg-ink-950" data-kx-effect="proof">
+          <a href="{{ article.url }}" class="group kx-media-effect relative flex flex-col justify-end overflow-hidden {{ ratio }} bg-ink-950" {% render 'media-effect' %}>
             {%- if article.image -%}
               {{ article.image | image_url: width: 1000 | image_tag: loading: 'lazy', sizes: '(min-width:990px) 33vw, 100vw', widths: '300,500,700,1000', alt: article.title, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105' }}
             {%- endif -%}
@@ -71,7 +71,7 @@
           </a>
         {%- else -%}
           <article class="group flex min-w-0 flex-col bg-surface-page">
-            <a href="{{ article.url }}" class="kx-media-effect relative block {{ ratio }} overflow-hidden bg-surface-sunken" data-kx-effect="proof">
+            <a href="{{ article.url }}" class="kx-media-effect relative block {{ ratio }} overflow-hidden bg-surface-sunken" {% render 'media-effect' %}>
               {%- if article.image -%}
                 {{ article.image | image_url: width: 1000 | image_tag: loading: 'lazy', sizes: '(min-width:990px) 33vw, 100vw', widths: '300,500,700,1000', alt: article.title, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
               {%- endif -%}

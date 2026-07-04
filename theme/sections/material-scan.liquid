@@ -3,7 +3,21 @@
   assign layout = section.settings.layout | default: 'split'
   assign image_position = section.settings.image_position | default: 'left'
   assign image_ratio = section.settings.image_ratio | default: '4_3'
-  assign visual_effect = section.settings.visual_effect | default: 'scan'
+  assign visual_effect = section.settings.visual_effect
+  if visual_effect == blank
+    assign visual_effect = 'default'
+  endif
+  assign effect_override = visual_effect
+  if visual_effect == 'zoom'
+    assign effect_override = 'none'
+  endif
+  assign show_scan_line = true
+  if visual_effect == 'none'
+    assign show_scan_line = false
+  endif
+  if visual_effect == 'default' and settings.media_effect == 'none'
+    assign show_scan_line = false
+  endif
   assign panel_style = section.settings.panel_style | default: 'attached'
   assign has_image = false
   if section.settings.image != blank
@@ -63,13 +77,16 @@
       </div>
       <material-scan class="{{ scan_grid_cls }}">
         <div data-scan-stage class="relative overflow-hidden bg-surface-sunken {{ media_order }}">
-          <div class="kx-media-effect relative {{ ratio_cls }}"{% if visual_effect == 'scan' %} data-kx-effect="proof"{% endif %}>
+          <div class="kx-media-effect relative {{ ratio_cls }}" {% render 'media-effect', override: effect_override, surface: 'proof' %}>
             {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700,1050,1400', sizes: '(min-width:990px) 45vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading, class: 'h-full w-full object-cover' }}
-            {%- if visual_effect != 'none' -%}
-              <span data-scan-line aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent opacity-0"></span>
+            {%- if settings.media_ambient -%}
+              <span class="kx-ambient" aria-hidden="true"></span>
+            {%- endif -%}
+            {%- if show_scan_line -%}
+              <span data-scan-line aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 z-10 h-px bg-accent opacity-0"></span>
             {%- endif -%}
             {%- for point in points -%}
-              <button type="button" data-scan-point data-index="{{ forloop.index }}" aria-label="{{ point.settings.label | default: 'Detail' | escape }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" style="left:{{ point.settings.x | default: 50 }}%;top:{{ point.settings.y | default: 50 }}%" class="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center border border-accent bg-ink-950/70 font-mono text-[11px] text-paper backdrop-blur transition-transform hover:scale-110 aria-pressed:scale-110 aria-pressed:bg-accent aria-pressed:text-accent-ink" {{ point.shopify_attributes }}>{{ forloop.index }}</button>
+              <button type="button" data-scan-point data-index="{{ forloop.index }}" aria-label="{{ point.settings.label | default: 'Detail' | escape }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" style="left:{{ point.settings.x | default: 50 }}%;top:{{ point.settings.y | default: 50 }}%" class="absolute z-10 flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center border border-accent bg-ink-950/70 font-mono text-[11px] text-paper backdrop-blur transition-transform hover:scale-110 aria-pressed:scale-110 aria-pressed:bg-accent aria-pressed:text-accent-ink" {{ point.shopify_attributes }}>{{ forloop.index }}</button>
             {%- endfor -%}
           </div>
         </div>
@@ -144,11 +161,12 @@
       "type": "select",
       "id": "visual_effect",
       "label": "t:sections.material-scan.settings.visual_effect.label",
-      "default": "scan",
+      "default": "default",
       "options": [
-        { "value": "scan", "label": "t:sections.material-scan.settings.visual_effect.options__1.label" },
-        { "value": "zoom", "label": "t:sections.material-scan.settings.visual_effect.options__2.label" },
-        { "value": "none", "label": "t:sections.material-scan.settings.visual_effect.options__3.label" }
+        { "value": "default", "label": "t:sections.material-scan.settings.visual_effect.options__1.label" },
+        { "value": "scan", "label": "t:sections.material-scan.settings.visual_effect.options__2.label" },
+        { "value": "zoom", "label": "t:sections.material-scan.settings.visual_effect.options__3.label" },
+        { "value": "none", "label": "t:sections.material-scan.settings.visual_effect.options__4.label" }
       ]
     },
     {

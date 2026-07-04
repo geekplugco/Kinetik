@@ -105,7 +105,7 @@
               {%- else -%}{%- assign note_cls = 'w-full max-w-2xl' -%}
             {%- endcase -%}
           {%- endif -%}
-          <article class="flex min-h-44 flex-col justify-between border border-border-hairline bg-surface-page p-5 md:h-full md:p-6 {{ note_cls }}" {{ block.shopify_attributes }}>
+          <article class="flex min-h-44 flex-col border border-border-hairline bg-surface-page p-5 md:p-6 {% if is_editorial %}md:self-center{% else %}justify-between md:h-full{% endif %} {{ note_cls }}" {{ block.shopify_attributes }}>
             <div>
               {%- if n.kicker != blank -%}<span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ n.kicker }}</span>{%- endif -%}
               {%- if n.heading != blank -%}<h3 class="mt-3 font-display text-h3 tracking-tight text-text-strong">{{ n.heading }}</h3>{%- endif -%}
@@ -147,7 +147,9 @@
             {%- endif -%}
           {%- when 'wide' -%}
             {%- assign cell_ratio = 'aspect-[16/9]' -%}
-            {%- if is_editorial -%}{%- assign cell_cls = 'col-span-12 md:col-span-8' -%}
+            {%- if is_editorial -%}
+              {%- assign cell_ratio = 'aspect-[16/9] md:aspect-[16/10]' -%}
+              {%- assign cell_cls = 'col-span-12 md:col-span-8' -%}
             {%- elsif is_grid -%}{%- assign cell_cls = 'col-span-2' -%}
             {%- endif -%}
           {%- when 'square' -%}
@@ -174,7 +176,7 @@
               <span>{{ b.overlay_label | default: 'Loadout map' }}</span>
             </div>
             {%- if b.image != blank -%}
-              <div class="kx-media-effect absolute inset-0" data-kx-effect="hotspot">
+              <div class="kx-media-effect absolute inset-0" {% render 'media-effect' %}>
                 {{ b.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600,900,1200,1400', sizes: shot_sizes, alt: b.image_alt, class: 'absolute inset-0 h-full w-full object-cover ' | append: focal_cls }}
               </div>
             {%- else -%}

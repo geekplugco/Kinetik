@@ -30,7 +30,14 @@
   assign alt = s.image_alt | default: '' | escape
   assign caption = s.image_caption
   assign tag = s.tag
-  assign visual_effect = s.visual_effect | default: 'technical_scan'
+  assign visual_effect = s.visual_effect
+  if visual_effect == blank or visual_effect == 'default'
+    if settings.media_effect == 'none'
+      assign visual_effect = 'none'
+    else
+      assign visual_effect = 'technical_scan'
+    endif
+  endif
   assign btn_link = s.button_link | default: routes.all_products_collection_url
   assign btn_label = s.button_label | default: 'Shop the drop'
 -%}
@@ -158,7 +165,7 @@
     style="--pt:{{ s.padding_top | default: 0 }}px;--pb:{{ s.padding_bottom | default: 0 }}px"
     class="theme-dark border-b border-border-strong pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
   >
-    <div class="group kx-media-effect relative mx-auto min-h-[440px] overflow-hidden bg-ink-900 text-paper md:min-h-[640px] {{ width_cls }} {{ ratio_cls }}" data-kx-effect="hero">
+    <div class="group kx-media-effect relative mx-auto min-h-[440px] overflow-hidden bg-ink-900 text-paper md:min-h-[640px] {{ width_cls }} {{ ratio_cls }}" data-kx-effect="{% if visual_effect == 'none' %}none{% else %}hero{% endif %}">
       {{ hero_image }}
       <div class="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/55 to-ink-950/25" aria-hidden="true"></div>
       <div class="absolute inset-0 z-10 mx-auto flex max-w-[var(--page-width)] flex-col justify-center gap-6 px-7 py-16 md:px-14 md:py-20 {{ align_cls }}">
@@ -177,7 +184,7 @@
     class="border-b border-border-strong pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
   >
     <div class="mx-auto {{ width_cls }}">
-      <div class="group kx-media-effect relative w-full overflow-hidden bg-ink-900 {{ ratio_cls }}" data-kx-effect="hero">
+      <div class="group kx-media-effect relative w-full overflow-hidden bg-ink-900 {{ ratio_cls }}" data-kx-effect="{% if visual_effect == 'none' %}none{% else %}hero{% endif %}">
         {{ hero_image }}
         {{ image_bits }}
       </div>
@@ -203,7 +210,7 @@
           {{ body }}
         </div>
       </div>
-      <div class="group kx-media-effect relative min-h-[440px] overflow-hidden bg-ink-900 md:min-h-[640px] {% if image_left %}order-1 md:order-1{% else %}order-1 md:order-2{% endif %}" data-kx-effect="hero">
+      <div class="group kx-media-effect relative min-h-[440px] overflow-hidden bg-ink-900 md:min-h-[640px] {% if image_left %}order-1 md:order-1{% else %}order-1 md:order-2{% endif %}" data-kx-effect="{% if visual_effect == 'none' %}none{% else %}hero{% endif %}">
         {{ hero_image }}
         {{ image_bits }}
       </div>
@@ -285,19 +292,23 @@
       "type": "select",
       "id": "visual_effect",
       "label": "t:sections.hero.settings.visual_effect.label",
-      "default": "technical_scan",
+      "default": "default",
       "options": [
         {
-          "value": "technical_scan",
+          "value": "default",
           "label": "t:sections.hero.settings.visual_effect.options__1.label"
         },
         {
-          "value": "signal_frame",
+          "value": "technical_scan",
           "label": "t:sections.hero.settings.visual_effect.options__2.label"
         },
         {
-          "value": "none",
+          "value": "signal_frame",
           "label": "t:sections.hero.settings.visual_effect.options__3.label"
+        },
+        {
+          "value": "none",
+          "label": "t:sections.hero.settings.visual_effect.options__4.label"
         }
       ]
     },

@@ -12,14 +12,14 @@
         "button_label_2": "Lookbook",
         "button_link_2": "shopify://pages/lookbook",
         "image": "shopify://shop_images/08-hero-back-wide.png",
-        "image_caption": "SS26 · Lookbook 01",
+        "image_caption": "SS26 \u00b7 Lookbook 01",
         "visual_effect": "signal_frame"
       }
     },
     "marquee": {
       "type": "marquee",
       "settings": {
-        "text": "Ships in 24h · Gore-Tex 3L · Free returns 60d · Engineered for movement · Carbon-neutral · Field-tested"
+        "text": "Ships in 24h \u00b7 Gore-Tex 3L \u00b7 Free returns 60d \u00b7 Engineered for movement \u00b7 Carbon-neutral \u00b7 Field-tested"
       }
     },
     "arrivals": {
@@ -138,7 +138,7 @@
       "settings": {
         "kicker": "The system",
         "heading": "Build your kit",
-        "text": "<p>Layer the system. Pick a shell, a mid, a bottom and gear — three pieces or more unlocks the kit price.</p>",
+        "text": "<p>Layer the system. Pick a shell, a mid, a bottom and gear \u2014 three pieces or more unlocks the kit price.</p>",
         "bundle_discount": 12,
         "min_pieces": 3
       },
@@ -148,27 +148,6 @@
           "settings": {
             "label": "Shell",
             "types": "Outerwear"
-          }
-        },
-        "s2": {
-          "type": "slot",
-          "settings": {
-            "label": "Layer",
-            "types": "Tops"
-          }
-        },
-        "s3": {
-          "type": "slot",
-          "settings": {
-            "label": "Bottom",
-            "types": "Bottoms"
-          }
-        },
-        "s4": {
-          "type": "slot",
-          "settings": {
-            "label": "Footwear",
-            "types": "Footwear"
           }
         },
         "s5": {
@@ -188,9 +167,6 @@
       },
       "block_order": [
         "s1",
-        "s2",
-        "s3",
-        "s4",
         "s5",
         "s6"
       ]
@@ -225,7 +201,9 @@
           }
         }
       },
-      "block_order": ["banner-1"]
+      "block_order": [
+        "banner-1"
+      ]
     },
     "route": {
       "type": "route-map",
@@ -238,28 +216,31 @@
         "r1": {
           "type": "stop",
           "settings": {
-            "place": "06:40 · Transit",
+            "place": "06:40 \u00b7 Transit",
             "heading": "Rain at platform level",
             "caption": "<p>Shell up, pack sealed, audio tucked under the hood. The first mile stays dry.</p>",
-            "product": "shell-jacket"
+            "product": "shell-jacket",
+            "image": "shopify://shop_images/route-transit-platform.png"
           }
         },
         "r2": {
           "type": "stop",
           "settings": {
-            "place": "13:20 · Field",
+            "place": "13:20 \u00b7 Field",
             "heading": "Layer down, tools out",
             "caption": "<p>Base layer breathes under load while the carry system keeps weight close.</p>",
-            "product": "merino-base-ls"
+            "product": "merino-base-ls",
+            "image": "shopify://shop_images/route-field-midday.png"
           }
         },
         "r3": {
           "type": "stop",
           "settings": {
-            "place": "21:10 · Return",
+            "place": "21:10 \u00b7 Return",
             "heading": "Reflective readout",
             "caption": "<p>Low-light details and quick-access pockets keep the last leg clean.</p>",
-            "product": "field-sling"
+            "product": "field-sling",
+            "image": "shopify://shop_images/route-return-night.png"
           }
         }
       },
@@ -287,7 +268,7 @@
           "settings": {
             "image": "shopify://shop_images/lookbook-frame1-flatlay.png",
             "image_alt": "Shell jacket, headphones, watch, and sling bag arranged as a flat lay",
-            "caption": "Shell, base, carry · city-to-field",
+            "caption": "Shell, base, carry \u00b7 city-to-field",
             "product_1": "shell-jacket",
             "x_1": 42,
             "y_1": 37,
@@ -316,7 +297,7 @@
           "settings": {
             "image": "shopify://shop_images/05-sling-worn.png",
             "image_alt": "Kinetik sling worn across technical outerwear",
-            "caption": "Carry system · hands free",
+            "caption": "Carry system \u00b7 hands free",
             "product_1": "field-sling",
             "x_1": 52,
             "y_1": 48,
@@ -330,7 +311,7 @@
           "settings": {
             "image": "shopify://shop_images/06-detail-trio.png",
             "image_alt": "Close details of Kinetik technical materials",
-            "caption": "Material readout · hardware, fabric, closure",
+            "caption": "Material readout \u00b7 hardware, fabric, closure",
             "product_1": "merino-base-ls",
             "x_1": 45,
             "y_1": 54,
@@ -359,7 +340,7 @@
           "type": "column",
           "settings": {
             "title": "Field-tested, not focus-grouped",
-            "text": "<p>Every piece is worn hard before it ships — trail, transit, weather. If it doesn't earn its place in the kit, it doesn't make the line.</p>"
+            "text": "<p>Every piece is worn hard before it ships \u2014 trail, transit, weather. If it doesn't earn its place in the kit, it doesn't make the line.</p>"
           }
         },
         "c2": {

@@ -21,7 +21,7 @@
     {%- for block in section.blocks -%}
       {%- if block.type == 'testimonial' -%}
         <figure {{ block.shopify_attributes }} class="mt-8 grid gap-6 md:grid-cols-[4rem_1fr] md:gap-10">
-          <span aria-hidden="true" class="font-display text-[5rem] leading-[0.6] text-accent md:text-[7rem]">&ldquo;</span>
+          <span aria-hidden="true" data-accent-ok class="font-display text-[5rem] leading-[0.6] text-accent md:text-[7rem]">&ldquo;</span>
           <div>
             <blockquote class="font-display text-[clamp(1.75rem,4.2vw,3.25rem)] font-bold leading-[1.04] tracking-tight text-text-strong [&_p]:m-0">{{ block.settings.quote }}</blockquote>
             <figcaption class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-label text-text-muted">

@@ -1,14 +1,21 @@
 {%- liquid
   assign stops = section.blocks | where: 'type', 'stop'
   assign layout = section.settings.layout | default: 'board'
-  assign visual_style = section.settings.visual_style | default: 'signal'
+  assign visual_style = section.settings.visual_style
+  if visual_style == blank or visual_style == 'default'
+    if settings.media_effect == 'none'
+      assign visual_style = 'quiet'
+    else
+      assign visual_style = 'signal'
+    endif
+  endif
   assign show_index = section.settings.show_index
   if show_index == nil
     assign show_index = true
   endif
-  assign route_class = 'md:grid-cols-[3rem_0.92fr_1fr]'
+  assign route_class = 'md:grid-cols-[3rem_minmax(0,0.92fr)_minmax(0,1fr)]'
   if layout == 'timeline'
-    assign route_class = 'md:grid-cols-[3rem_0.58fr_1.2fr]'
+    assign route_class = 'md:grid-cols-[3rem_minmax(0,0.58fr)_minmax(0,1.2fr)]'
   endif
 -%}
 {%- if stops.size > 0 -%}
@@ -17,9 +24,9 @@
     style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
     class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)]"
   >
-    <div class="mx-auto max-w-[var(--page-width)] px-6">
-      <div class="mb-8 grid border border-border-strong md:grid-cols-[1fr_auto]">
-        <div class="p-4 md:p-5">
+    <div class="mx-auto max-w-[var(--page-width)] overflow-hidden px-6">
+      <div class="mb-8 grid min-w-0 border border-border-strong md:grid-cols-[minmax(0,1fr)_auto]">
+        <div class="min-w-0 p-4 md:p-5">
           {%- if section.settings.subheading != blank -%}
             <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
           {%- endif -%}
@@ -32,17 +39,17 @@
           <span class="p-3">route</span>
         </div>
       </div>
-      <ol class="relative border border-border-hairline bg-surface-page">
+      <ol class="relative min-w-0 overflow-hidden border border-border-hairline bg-surface-page">
         {%- for block in stops -%}
           {%- assign p = block.settings.product -%}
-          <li class="grid border-b border-border-hairline last:border-b-0 {{ route_class }}" {{ block.shopify_attributes }}>
+          <li class="grid min-w-0 border-b border-border-hairline last:border-b-0 {{ route_class }}" {{ block.shopify_attributes }}>
             <span aria-hidden="true" class="flex min-h-[3rem] items-center justify-center border-b border-border-hairline font-mono text-[11px] text-text-muted md:border-b-0 md:border-r">{% if show_index %}{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% endif %}</span>
-            <div class="relative aspect-[4/3] overflow-hidden bg-ink-950 md:aspect-auto">
+            <div class="kx-media-effect relative min-w-0 aspect-[4/3] overflow-hidden bg-ink-950 md:aspect-auto md:min-h-[340px]" {% render 'media-effect', surface: 'proof' %}>
               <div class="absolute inset-0">
                 {%- if block.settings.image != blank -%}
                   {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: block.settings.image.alt | default: block.settings.place, class: 'h-full w-full object-cover' }}
                 {%- else -%}
-                  <svg viewBox="0 0 900 675" role="img" aria-label="{{ block.settings.place | default: 'Route stop' | escape }}" class="h-full w-full bg-ink-950 text-paper">
+                  <svg viewBox="0 0 900 675" role="img" aria-label="{{ block.settings.place | default: 'Route stop' | escape }}" class="h-full w-full bg-ink-950 text-paper" preserveAspectRatio="xMidYMid meet">
                     <rect width="900" height="675" fill="currentColor" opacity="0.035"/>
                     <g fill="none" stroke="currentColor" stroke-width="2" opacity="{% if visual_style == 'quiet' %}0.13{% else %}0.2{% endif %}">
                       <path d="M0 112.5H900M0 225H900M0 337.5H900M0 450H900M0 562.5H900M150 0V675M300 0V675M450 0V675M600 0V675M750 0V675"/>
@@ -76,19 +83,22 @@
                 {%- endif -%}
               </div>
               <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink-950/35 via-transparent to-ink-950/20" aria-hidden="true"></div>
+              {%- if settings.media_ambient -%}
+                <span class="kx-ambient" aria-hidden="true"></span>
+              {%- endif -%}
             </div>
-            <div class="flex flex-col justify-center gap-4 border-t border-border-hairline p-5 md:border-l md:border-t-0 md:p-8">
+            <div class="min-w-0 overflow-hidden flex flex-col justify-center gap-4 border-t border-border-hairline p-5 md:border-l md:border-t-0 md:p-8">
                 {%- if block.settings.place != blank -%}
-                  <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ block.settings.place }}</span>
+                  <span class="max-w-full break-words font-mono text-[10px] uppercase tracking-label text-text-muted">{{ block.settings.place }}</span>
                 {%- endif -%}
                 {%- if block.settings.heading != blank -%}
-                  <h3 class="max-w-xl font-display text-h3 tracking-tight text-text-strong">{{ block.settings.heading }}</h3>
+                  <h3 class="max-w-xl break-words font-display text-h3 tracking-tight text-text-strong">{{ block.settings.heading }}</h3>
                 {%- endif -%}
                 {%- if block.settings.caption != blank -%}
-                  <div class="max-w-2xl text-body text-text-body [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ block.settings.caption }}</div>
+                  <div class="max-w-2xl break-words text-body text-text-body [&_p]:m-0 [&_p:not(:last-child)]:mb-3">{{ block.settings.caption }}</div>
                 {%- endif -%}
                 {%- if p != blank -%}
-                  {%- render 'product-tile-compact', product: p, layout: 'row', image_width: 160, sizes: '72px', kicker: 'Featured', show_arrow: true, class: 'mt-1 flex items-center gap-4 border border-border-hairline bg-surface-raised p-3 transition-colors hover:border-border-strong md:max-w-xl' -%}
+                  {%- render 'product-tile-compact', product: p, layout: 'row', image_width: 160, sizes: '72px', kicker: 'Featured', show_arrow: true, class: 'mt-1 flex min-w-0 items-center gap-4 overflow-hidden border border-border-hairline bg-surface-raised p-3 transition-colors hover:border-border-strong md:max-w-xl' -%}
                 {%- endif -%}
             </div>
           </li>
@@ -120,10 +130,11 @@
       "type": "select",
       "id": "visual_style",
       "label": "t:sections.route-map.settings.visual_style.label",
-      "default": "signal",
+      "default": "default",
       "options": [
-        { "value": "signal", "label": "t:sections.route-map.settings.visual_style.options__1.label" },
-        { "value": "quiet", "label": "t:sections.route-map.settings.visual_style.options__2.label" }
+        { "value": "default", "label": "t:sections.route-map.settings.visual_style.options__1.label" },
+        { "value": "signal", "label": "t:sections.route-map.settings.visual_style.options__2.label" },
+        { "value": "quiet", "label": "t:sections.route-map.settings.visual_style.options__3.label" }
       ]
     },
     { "type": "checkbox", "id": "show_index", "label": "t:sections.route-map.settings.show_index.label", "default": true },

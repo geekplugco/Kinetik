@@ -46,7 +46,7 @@
         {{ settings.logo | image_url: width: 480 | image_tag: alt: shop.name, widths: '120,240,360,480', loading: 'eager', style: logo_style, class: 'h-auto w-auto' }}
       {%- endif -%}
     {%- else -%}
-      {{ shop.name | upcase }}<span class="text-accent">.</span>
+      {{ shop.name | upcase }}<span class="text-accent" data-accent-ok>.</span>
     {%- endif -%}
   </a>
 {%- endcapture -%}

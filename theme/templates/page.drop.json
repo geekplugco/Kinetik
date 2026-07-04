@@ -1,16 +1,75 @@
 {
   "sections": {
     "hero": {
-      "type": "hero",
+      "type": "hero-motion",
       "settings": {
-        "subheading": "SS26 · Field System",
+        "kicker": "SS26 \u00b7 Field System",
         "heading": "The system drops soon",
+        "text": "<p>The full Field System lands in one window. Limited quantity, no restock. Set your reminder before it opens.</p>",
         "button_label": "Set a reminder",
         "button_link": "#drop-signup",
-        "image": "shopify://shop_images/08-hero-back-wide.png",
-        "image_alt": "SS26 Field System teaser",
+        "secondary_button_label": "View the system",
+        "secondary_button_link": "shopify://collections/frontpage",
+        "height": "full",
+        "content_position": "left",
+        "enable_parallax": true,
+        "frame_style": "both",
+        "auto_rotate": 6,
+        "overlay_opacity": 35,
         "color_scheme": "scheme-1"
-      }
+      },
+      "blocks": {
+        "media-1": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/08-hero-back-wide.png",
+            "label": "Drop 01"
+          }
+        },
+        "media-2": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/route-transit-platform.png",
+            "label": "Drop 02"
+          }
+        },
+        "media-3": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/08-dark-set-banner.png",
+            "label": "Drop 03"
+          }
+        },
+        "stat-1": {
+          "type": "stat",
+          "settings": {
+            "label": "Membrane",
+            "value": "3L Gore-Tex"
+          }
+        },
+        "stat-2": {
+          "type": "stat",
+          "settings": {
+            "label": "Drop window",
+            "value": "72 hours"
+          }
+        },
+        "stat-3": {
+          "type": "stat",
+          "settings": {
+            "label": "Restock",
+            "value": "None planned"
+          }
+        }
+      },
+      "block_order": [
+        "media-1",
+        "media-2",
+        "media-3",
+        "stat-1",
+        "stat-2",
+        "stat-3"
+      ]
     },
     "drop": {
       "type": "drop-system",

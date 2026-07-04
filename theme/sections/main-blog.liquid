@@ -18,7 +18,7 @@
     {%- if blog.articles.size > 0 -%}
       {%- assign featured = blog.articles.first -%}
       <article class="mt-10 grid border border-border-hairline md:grid-cols-[1.15fr_0.85fr]">
-        <a href="{{ featured.url }}" class="kx-media-effect relative aspect-[16/10] overflow-hidden bg-surface-sunken md:aspect-auto" data-kx-effect="proof" aria-label="{{ featured.title | escape }}">
+        <a href="{{ featured.url }}" class="kx-media-effect relative aspect-[16/10] overflow-hidden bg-surface-sunken md:aspect-auto" {% render 'media-effect' %} aria-label="{{ featured.title | escape }}">
           {%- if featured.image -%}
             {{ featured.image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '600,900,1200,1400', sizes: '(min-width:990px) 55vw, 100vw', alt: featured.title, class: 'absolute inset-0 h-full w-full object-cover' }}
           {%- else -%}
@@ -41,7 +41,7 @@
           {%- assign article_alt = article.title | escape -%}
           <li>
             <article class="group flex h-full flex-col gap-3 border-t border-border-hairline pt-4">
-              <a href="{{ article.url }}" class="kx-media-effect relative block aspect-[3/2] overflow-hidden bg-surface-sunken" data-kx-effect="proof" aria-label="{{ article_alt }}">
+              <a href="{{ article.url }}" class="kx-media-effect relative block aspect-[3/2] overflow-hidden bg-surface-sunken" {% render 'media-effect' %} aria-label="{{ article_alt }}">
                 {%- if article.image -%}
                   {{ article.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '300,500,700', sizes: '(min-width:990px) 33vw, (min-width:750px) 50vw, 100vw', alt: article_alt, class: 'h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
                 {%- else -%}

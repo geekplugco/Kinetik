@@ -1,0 +1,147 @@
+{
+  "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "padding_top": 16,
+        "padding_bottom": 12
+      }
+    },
+    "hero_split": {
+      "type": "hero-split",
+      "settings": {
+        "image_position": "right",
+        "height": "large",
+        "kicker": "System entry",
+        "heading": "Start with the shell",
+        "text": "<p>One piece anchors the whole system. Waterproof, breathable, cut to layer over everything that follows.</p>",
+        "spec_line": "3L shell · 28,000mm HH · 340g",
+        "product": "shell-jacket",
+        "button_label": "View product",
+        "show_quick_add": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "kit": {
+      "type": "build-your-kit",
+      "settings": {
+        "kicker": "The system",
+        "heading": "Build your kit",
+        "text": "<p>Layer the system. Pick a shell, a mid, a bottom and gear — three pieces or more unlocks the kit price.</p>",
+        "bundle_discount": 12,
+        "min_pieces": 3
+      },
+      "blocks": {
+        "s1": {
+          "type": "slot",
+          "settings": {
+            "label": "Shell",
+            "types": "Outerwear"
+          }
+        },
+        "s2": {
+          "type": "slot",
+          "settings": {
+            "label": "Layer",
+            "types": "Tops"
+          }
+        },
+        "s3": {
+          "type": "slot",
+          "settings": {
+            "label": "Bottom",
+            "types": "Bottoms"
+          }
+        },
+        "s4": {
+          "type": "slot",
+          "settings": {
+            "label": "Footwear",
+            "types": "Footwear"
+          }
+        },
+        "s5": {
+          "type": "slot",
+          "settings": {
+            "label": "Carry",
+            "types": "Bags"
+          }
+        },
+        "s6": {
+          "type": "slot",
+          "settings": {
+            "label": "Gear",
+            "types": "Accessories, Audio, Tech, Wearables"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ]
+    },
+    "assurance": {
+      "type": "field-assurance",
+      "blocks": {
+        "pay": {
+          "type": "item",
+          "settings": {
+            "heading": "Payments",
+            "text": "Shop Pay, Apple Pay, Google Pay and major cards at checkout."
+          }
+        },
+        "support": {
+          "type": "item",
+          "settings": {
+            "heading": "Support",
+            "text": "Questions about fit or specs? Reach the Kinetik team."
+          }
+        },
+        "pickup": {
+          "type": "pickup"
+        },
+        "policies": {
+          "type": "policies"
+        }
+      },
+      "block_order": [
+        "pay",
+        "support",
+        "pickup",
+        "policies"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "subheading": "Field signal",
+        "heading": "Join the system",
+        "text": "<p>Drop alerts, restocks, and field notes.</p>",
+        "input_placeholder": "Email address",
+        "button_label": "Subscribe",
+        "layout": "split",
+        "width": "page",
+        "background_style": "dark",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "breadcrumb",
+    "hero_split",
+    "kit",
+    "assurance",
+    "newsletter"
+  ]
+}

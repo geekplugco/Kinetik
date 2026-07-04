@@ -1,0 +1,264 @@
+{%- liquid
+  assign s = section.settings
+  assign heading_text = s.heading | default: 'Start with the shell' | escape
+  assign words = heading_text | split: ' '
+  assign product = s.product
+  assign btn_label = s.button_label | default: 'View product'
+  assign btn_link = product.url | default: routes.all_products_collection_url
+
+  if s.height == 'medium'
+    assign height_cls = 'md:min-h-[560px]'
+  else
+    assign height_cls = 'md:min-h-[72vh]'
+  endif
+
+  if s.image_position == 'left'
+    assign type_order = 'order-1 md:order-2'
+    assign media_order = 'order-2 md:order-1'
+  else
+    assign type_order = 'order-1 md:order-1'
+    assign media_order = 'order-2 md:order-2'
+  endif
+
+  assign media_alt = product.featured_media.alt | default: product.title | default: heading_text | escape
+-%}
+
+<section
+  data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
+  style="--pt:{{ s.padding_top | default: 0 }}px;--pb:{{ s.padding_bottom | default: 0 }}px"
+  class="border-b border-border-strong pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
+>
+  <div class="mx-auto grid grid-cols-1 md:grid-cols-2 {{ height_cls }}">
+    <div class="hs-panel theme-dark relative flex flex-col justify-center gap-6 overflow-hidden bg-ink-950 px-7 py-14 text-paper md:px-12 md:py-16 {{ type_order }}">
+      {%- if s.kicker != blank -%}
+        <span class="hs-fade font-mono text-xs uppercase tracking-label text-accent" style="--hs-d:420ms">{{ s.kicker }}</span>
+      {%- endif -%}
+      <h1 class="max-w-xl font-display font-bold uppercase tracking-hero" style="font-size:clamp(2.5rem,5.5vw,4.25rem);line-height:.95;letter-spacing:-0.035em" aria-label="{{ heading_text }}">
+        <span aria-hidden="true">
+          {%- for word in words %}
+            <span class="hs-line"><span class="hs-word" style="--hs-i:{{ forloop.index0 }}">{{ word }}</span></span>
+          {%- endfor %}
+        </span>
+      </h1>
+      {%- if s.text != blank -%}
+        <div class="hs-fade max-w-sm text-body-lg leading-snug text-ink-300 [&_p]:m-0" style="--hs-d:560ms">{{ s.text }}</div>
+      {%- endif -%}
+      {%- if s.spec_line != blank -%}
+        <p class="hs-fade flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-label text-paper/70" style="--hs-d:680ms">
+          <span class="h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden="true"></span>
+          {{ s.spec_line }}
+        </p>
+      {%- endif -%}
+    </div>
+
+    <div class="group flex flex-col border-border-hairline bg-surface-page md:border-l {{ media_order }}">
+      <div class="relative flex-1">
+        <a href="{{ btn_link }}" class="kx-media-effect relative block aspect-[4/5] md:absolute md:inset-0 md:aspect-auto" {% render 'media-effect' %} aria-label="{{ media_alt }}" tabindex="-1">
+          {%- if product.featured_media -%}
+            {{ product.featured_media | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '400,600,800,1200,1600', sizes: '(min-width: 768px) 50vw, 100vw', alt: media_alt, class: 'absolute inset-0 h-full w-full object-cover' }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
+          {%- endif -%}
+        </a>
+        {%- if product != blank -%}
+          <span class="hs-fade absolute left-4 top-4 z-10 border border-border-hairline bg-paper px-3 py-1.5" style="--hs-d:760ms">
+            {%- render 'price', product: product -%}
+          </span>
+        {%- endif -%}
+      </div>
+      <div class="hs-fade flex flex-wrap items-center justify-between gap-x-5 gap-y-3 border-t border-border-hairline px-5 py-4 md:px-7" style="--hs-d:840ms">
+        <span class="flex min-w-0 flex-col gap-0.5">
+          <span class="truncate font-sans text-body-lg leading-tight text-text-strong">{{ product.title | default: 'Featured product' }}</span>
+          {%- if product.type != blank -%}
+            <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ product.type }}</span>
+          {%- endif -%}
+        </span>
+        <span class="flex flex-wrap items-center gap-3">
+          {%- if s.show_quick_add and product != blank and product.available -%}
+            <button type="button" data-quick-view data-product-url="{{ product.url }}" aria-label="Quick view {{ product.title | escape }}" class="inline-flex min-h-[44px] items-center justify-center border border-border-strong px-5 py-3 font-mono text-xs uppercase tracking-wide text-text-strong transition-colors hover:bg-surface-sunken">Quick view</button>
+          {%- endif -%}
+          {%- render 'button', label: btn_label, href: btn_link, variant: 'primary', size: 'md', icon: 'arrow', class: 'min-h-[44px] gap-3 px-6 py-3 text-sm' -%}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }} .hs-panel h1 {
+    color: var(--paper);
+  }
+
+  #shopify-section-{{ section.id }} .hs-line {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.1em;
+    margin-bottom: -0.1em;
+  }
+
+  #shopify-section-{{ section.id }} .hs-word {
+    display: inline-block;
+    transform: translateY(110%);
+    will-change: transform;
+    animation: hsWord-{{ section.id }} 620ms var(--ease-enter, cubic-bezier(0.22, 0.61, 0.36, 1)) calc(var(--hs-i, 0) * 70ms) forwards;
+  }
+
+  #shopify-section-{{ section.id }} .hs-fade {
+    opacity: 0;
+    animation: hsFade-{{ section.id }} 700ms var(--ease-enter, ease) var(--hs-d, 500ms) forwards;
+  }
+
+  @keyframes hsWord-{{ section.id }} {
+    to { transform: translateY(0); }
+  }
+
+  @keyframes hsFade-{{ section.id }} {
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .hs-word {
+      transform: none;
+      animation: none;
+    }
+
+    #shopify-section-{{ section.id }} .hs-fade {
+      opacity: 1;
+      animation: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "t:sections.hero-split.name",
+  "tag": "section",
+  "class": "section section--hero-split",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.hero-split.settings.header__1.content"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "t:sections.hero-split.settings.image_position.label",
+      "default": "right",
+      "options": [
+        {
+          "value": "right",
+          "label": "t:sections.hero-split.settings.image_position.options__1.label"
+        },
+        {
+          "value": "left",
+          "label": "t:sections.hero-split.settings.image_position.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:sections.hero-split.settings.height.label",
+      "default": "large",
+      "options": [
+        {
+          "value": "large",
+          "label": "t:sections.hero-split.settings.height.options__1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.hero-split.settings.height.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.hero-split.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.hero-split.settings.padding_top.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.hero-split.settings.padding_bottom.label",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:sections.hero-split.settings.header__2.content"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "t:sections.hero-split.settings.kicker.label",
+      "default": "System entry"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.hero-split.settings.heading.label",
+      "default": "Start with the shell"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.hero-split.settings.text.label",
+      "default": "<p>One piece anchors the whole system. Waterproof, breathable, built to outlast the season.</p>"
+    },
+    {
+      "type": "text",
+      "id": "spec_line",
+      "label": "t:sections.hero-split.settings.spec_line.label",
+      "info": "t:sections.hero-split.settings.spec_line.info",
+      "default": "3L shell · 28,000mm HH · 340g"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.hero-split.settings.header__3.content"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:sections.hero-split.settings.product.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.hero-split.settings.button_label.label",
+      "default": "View product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "t:sections.hero-split.settings.show_quick_add.label",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.hero-split.presets.name"
+    }
+  ]
+}
+{% endschema %}

@@ -80,7 +80,7 @@
               {%- endif -%}
             {%- endif -%}
             {%- capture aria -%}{% if block.settings.alt != blank %}{{ block.settings.alt }}{% else %}Gallery image {{ forloop.index }}{% endif %}{%- endcapture -%}
-            <a {{ block.shopify_attributes }} href="{{ block.settings.link | default: '#' }}" aria-label="{{ aria }}" class="group kx-media-effect relative overflow-hidden bg-ink-900 {{ rounded }} {{ wide }}">
+            <a {{ block.shopify_attributes }} href="{{ block.settings.link | default: '#' }}" aria-label="{{ aria }}" class="group kx-media-effect relative overflow-hidden bg-ink-900 {{ rounded }} {{ wide }}" {% render 'media-effect' %}>
               {%- if block.settings.image != blank -%}
                 {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '50vw', widths: '300,500,700,900,1200', alt: block.settings.alt, class: 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
               {%- endif -%}

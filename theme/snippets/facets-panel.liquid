@@ -42,24 +42,62 @@
       <span aria-hidden="true">+</span>
     </summary>
     <div class="mt-4 flex flex-col gap-3">
+      {%- liquid
+        assign is_color_filter = false
+        assign is_size_filter = false
+        assign f_label_dc = filter.label | downcase
+        if f_label_dc contains 'color' or f_label_dc contains 'colour'
+          assign is_color_filter = true
+        elsif f_label_dc contains 'size'
+          assign is_size_filter = true
+        endif
+      -%}
       {%- case filter.type -%}
         {%- when 'boolean', 'list' -%}
-          {%- for value in filter.values -%}
-            <label class="flex min-h-[44px] items-center justify-between gap-4 text-sm text-text-body{% if value.count == 0 and value.active == false %} opacity-40{% endif %}">
-              <span class="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  name="{{ value.param_name }}"
-                  value="{{ value.value }}"
-                  {% if value.active %}checked{% endif %}
-                  {% if value.count == 0 and value.active == false %}disabled{% endif %}
-                  class="h-4 w-4 border border-border-strong accent-[var(--accent)]"
-                >
-                <span>{{ value.label }}</span>
-              </span>
-              <span class="font-mono text-[11px] text-text-muted">{{ value.count }}</span>
-            </label>
-          {%- endfor -%}
+          {%- if is_color_filter -%}
+            <div class="flex flex-wrap gap-2.5 pt-1">
+              {%- for value in filter.values -%}
+                {%- assign sw_title = value.label | append: ' (' | append: value.count | append: ')' -%}
+                <label class="cursor-pointer{% if value.count == 0 and value.active == false %} pointer-events-none opacity-35{% endif %}">
+                  <input type="checkbox" class="peer sr-only" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                  <span class="sr-only">{{ value.label }} ({{ value.count }})</span>
+                  {%- if value.swatch.color or value.swatch.image -%}
+                    {%- render 'swatch', value: value, title: sw_title, size_class: 'h-8 w-8' -%}
+                  {%- else -%}
+                    {%- render 'swatch', value: value.label, title: sw_title, size_class: 'h-8 w-8' -%}
+                  {%- endif -%}
+                </label>
+              {%- endfor -%}
+            </div>
+          {%- elsif is_size_filter -%}
+            <div class="flex flex-wrap gap-2 pt-1">
+              {%- for value in filter.values -%}
+                <label class="cursor-pointer{% if value.count == 0 and value.active == false %} pointer-events-none opacity-35{% endif %}" title="{{ value.label | escape }} ({{ value.count }})">
+                  <input type="checkbox" class="peer sr-only" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                  <span class="block min-w-[2.75rem] border border-border-hairline px-3 py-2 text-center font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">{{ value.label }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <div class="flex max-h-72 flex-col gap-3 overflow-y-auto pr-1">
+              {%- for value in filter.values -%}
+                <label class="flex min-h-[44px] items-center justify-between gap-4 text-sm text-text-body{% if value.count == 0 and value.active == false %} opacity-40{% endif %}">
+                  <span class="flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      name="{{ value.param_name }}"
+                      value="{{ value.value }}"
+                      {% if value.active %}checked{% endif %}
+                      {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                      class="h-4 w-4 border border-border-strong accent-[var(--accent)]"
+                    >
+                    <span>{{ value.label }}</span>
+                  </span>
+                  <span class="font-mono text-[11px] text-text-muted">{{ value.count }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
         {%- when 'price_range' -%}
           <div class="grid grid-cols-2 gap-3">
             <label class="flex flex-col gap-1 font-mono text-[11px] uppercase tracking-label text-text-muted">
@@ -83,12 +121,13 @@
   {%- if rendered_color -%}
     <details class="border-b border-border-hairline py-4">
       <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-mono text-xs uppercase tracking-label text-text-strong [&::-webkit-details-marker]:hidden">Color<span aria-hidden="true">+</span></summary>
-      <div class="mt-4 flex flex-col gap-3">
+      <div class="mt-4 flex flex-wrap gap-2.5">
         {%- for value in color_list -%}
           {%- if value == blank -%}{%- continue -%}{%- endif -%}
-          <label class="flex min-h-[44px] items-center gap-3 text-sm text-text-body">
-            <input type="checkbox" data-client-filter="color" value="{{ value | escape }}" class="h-4 w-4 border border-border-strong accent-[var(--accent)]">
-            <span>{{ value }}</span>
+          <label class="cursor-pointer">
+            <input type="checkbox" data-client-filter="color" value="{{ value | escape }}" class="peer sr-only">
+            <span class="sr-only">{{ value }}</span>
+            {%- render 'swatch', value: value, title: value, size_class: 'h-8 w-8' -%}
           </label>
         {%- endfor -%}
       </div>
@@ -103,12 +142,12 @@
   {%- if rendered_size -%}
     <details class="border-b border-border-hairline py-4">
       <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-mono text-xs uppercase tracking-label text-text-strong [&::-webkit-details-marker]:hidden">Size<span aria-hidden="true">+</span></summary>
-      <div class="mt-4 flex flex-col gap-3">
+      <div class="mt-4 flex flex-wrap gap-2">
         {%- for value in size_list -%}
           {%- if value == blank -%}{%- continue -%}{%- endif -%}
-          <label class="flex min-h-[44px] items-center gap-3 text-sm text-text-body">
-            <input type="checkbox" data-client-filter="size" value="{{ value | escape }}" class="h-4 w-4 border border-border-strong accent-[var(--accent)]">
-            <span>{{ value }}</span>
+          <label class="cursor-pointer">
+            <input type="checkbox" data-client-filter="size" value="{{ value | escape }}" class="peer sr-only">
+            <span class="block min-w-[2.75rem] border border-border-hairline px-3 py-2 text-center font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">{{ value }}</span>
           </label>
         {%- endfor -%}
       </div>

@@ -61,25 +61,28 @@
         "r1": {
           "type": "stop",
           "settings": {
-            "place": "19:40 · Transit",
+            "place": "19:40 \u00b7 Transit",
             "heading": "Commute without reflection noise",
-            "caption": "<p>Matte shell, sealed carry, low-profile pockets.</p>"
+            "caption": "<p>Matte shell, sealed carry, low-profile pockets.</p>",
+            "image": "shopify://shop_images/route-transit-platform.png"
           }
         },
         "r2": {
           "type": "stop",
           "settings": {
-            "place": "22:10 · Weather",
+            "place": "22:10 \u00b7 Weather",
             "heading": "Waterproof when the street turns",
-            "caption": "<p>Technical layers hold shape without reading as outdoor costume.</p>"
+            "caption": "<p>Technical layers hold shape without reading as outdoor costume.</p>",
+            "image": "shopify://shop_images/route-field-midday.png"
           }
         },
         "r3": {
           "type": "stop",
           "settings": {
-            "place": "00:30 · Reset",
+            "place": "00:30 \u00b7 Reset",
             "heading": "Pack down clean",
-            "caption": "<p>Everything returns to the kit without loose straps or bulk.</p>"
+            "caption": "<p>Everything returns to the kit without loose straps or bulk.</p>",
+            "image": "shopify://shop_images/route-return-night.png"
           }
         }
       },

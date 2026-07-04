@@ -59,7 +59,7 @@
         <h2 class="mt-2 font-display text-h3 tracking-tight text-text-strong {{ heading_align }}">{{ s.heading }}</h2>
       {%- endif -%}
     </div>
-    <video-embed data-embed="{{ embed }}" data-title="{{ s.heading | escape }}" class="kx-media-effect relative {{ ratio }} block overflow-hidden border border-border-hairline bg-ink-950">
+    <video-embed data-embed="{{ embed }}" data-title="{{ s.heading | escape }}" class="kx-media-effect relative {{ ratio }} block overflow-hidden border border-border-hairline bg-ink-950" {% render 'media-effect' %}>
       <button type="button" data-play class="group absolute inset-0" aria-label="Play video">
         {%- if s.cover_image != blank -%}
           {%- assign cover_alt = s.cover_image.alt | default: s.heading | default: 'Video cover' | escape -%}

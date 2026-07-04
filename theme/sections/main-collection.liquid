@@ -132,7 +132,7 @@
               {%- if pm.link != blank and product_index == pm.position -%}
                 <a href="{{ pm.link }}" class="group relative flex aspect-[4/5] flex-col justify-end overflow-hidden border border-border-strong bg-ink-950 p-5 text-paper" {{ block.shopify_attributes }}>
                   {%- if pm.image != blank -%}
-                    <div class="kx-media-effect absolute inset-0">
+                    <div class="kx-media-effect absolute inset-0" {% render 'media-effect' %}>
                       {%- assign pm_alt = pm.image.alt | default: pm.heading | default: 'Featured' -%}
                       {{ pm.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(min-width:990px) 25vw, 50vw', alt: pm_alt, class: 'h-full w-full object-cover' }}
                     </div>

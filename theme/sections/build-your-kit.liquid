@@ -79,7 +79,7 @@
                   data-image="{{ product.featured_media | image_url: width: 80 }}"
                   data-image-alt="{{ product.featured_media.alt | default: product.title | escape }}"
                   aria-pressed="false"
-                  class="group/opt block w-32 border border-border-hairline text-left transition-colors hover:border-border-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  class="group/opt block h-full w-32 border border-border-hairline text-left transition-colors hover:border-border-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 >
                   <div class="relative {{ kit_ratio_cls }} overflow-hidden bg-surface-sunken">
                     {%- if product.featured_media -%}

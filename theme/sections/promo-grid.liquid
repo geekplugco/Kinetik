@@ -2,6 +2,16 @@
   assign s = section.settings
   assign cards = section.blocks | where: 'type', 'promo'
   assign hover_effect = s.image_hover_effect | default: 'inherit'
+  assign effect_attr = ''
+  if hover_effect == 'inherit'
+    capture effect_attr
+      render 'media-effect'
+    endcapture
+  elsif hover_effect == 'technical'
+    capture effect_attr
+      render 'media-effect', override: 'scan'
+    endcapture
+  endif
   assign width = s.width | default: 'page'
   if width == 'full'
     assign container_class = 'max-w-none px-6'
@@ -42,7 +52,7 @@
         {%- assign b = block.settings -%}
         {%- capture promo_inner -%}
           {%- if b.image != blank -%}
-            <div class="kx-media-effect relative {% case s.image_ratio %}{% when 'square' %}aspect-square{% when 'wide' %}aspect-[4/3]{% else %}aspect-[4/5]{% endcase %} overflow-hidden"{% if hover_effect == 'technical' %} data-kx-effect="proof"{% endif %}>
+            <div class="kx-media-effect relative {% case s.image_ratio %}{% when 'square' %}aspect-square{% when 'wide' %}aspect-[4/3]{% else %}aspect-[4/5]{% endcase %} overflow-hidden" {{ effect_attr }}>
               {%- assign promo_alt = b.image.alt | default: b.heading | default: b.eyebrow -%}
               {{ b.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', sizes: '(min-width:750px) 33vw, 100vw', alt: promo_alt, class: 'h-full w-full object-cover' }}
             </div>

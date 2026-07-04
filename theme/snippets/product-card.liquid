@@ -48,7 +48,7 @@
   endfor
 -%}
 <article class="group hp-reveal hp-reveal--fade hp-hover-lift flex flex-col {% if card_mode == 'commerce' %}gap-2{% elsif card_mode == 'editorial' %}gap-4{% else %}gap-3{% endif %}" data-card-mode="{{ card_mode }}">
-  <div data-card-media data-kx-effect="scan" class="kx-media-effect relative {{ ratio_cls }} overflow-hidden border border-border-hairline bg-surface-sunken">
+  <div data-card-media {% render 'media-effect' %} class="kx-media-effect relative {{ ratio_cls }} overflow-hidden border border-border-hairline bg-surface-sunken">
     <a href="{{ product.url }}" aria-label="{{ product.title | escape }}">
       {%- if product.featured_media -%}
         {%- assign show_second = false -%}

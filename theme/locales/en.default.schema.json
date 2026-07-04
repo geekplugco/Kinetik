@@ -1044,12 +1044,15 @@
         "visual_effect": {
           "label": "Visual effect",
           "options__1": {
-            "label": "Technical scan"
+            "label": "Default"
           },
           "options__2": {
-            "label": "Signal frame"
+            "label": "Technical scan"
           },
           "options__3": {
+            "label": "Signal frame"
+          },
+          "options__4": {
             "label": "None"
           }
         },
@@ -1127,6 +1130,311 @@
         "name__1": "Hero",
         "name__2": "Hero — overlay",
         "name__3": "Hero — stacked"
+      }
+    },
+    "hero-collage": {
+      "name": "Hero collage",
+      "settings": {
+        "header__1": {
+          "content": "Layout"
+        },
+        "color_scheme": {
+          "label": "Color scheme"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        },
+        "header__2": {
+          "content": "Text"
+        },
+        "kicker": {
+          "label": "Kicker"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "button_link": {
+          "label": "Button link"
+        }
+      },
+      "blocks": {
+        "media": {
+          "name": "Media",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "caption": {
+              "label": "Caption"
+            },
+            "link": {
+              "label": "Link"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Hero collage"
+      }
+    },
+    "hero-manifesto": {
+      "name": "Hero manifesto",
+      "settings": {
+        "header__1": {
+          "content": "Layout"
+        },
+        "color_scheme": {
+          "label": "Color scheme"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        },
+        "header__2": {
+          "content": "Text"
+        },
+        "kicker": {
+          "label": "Kicker"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "accent_word": {
+          "label": "Accent word",
+          "info": "A word in the heading to render in the accent color. Matched case-insensitively."
+        },
+        "text": {
+          "label": "Text"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "button_link": {
+          "label": "Button link"
+        },
+        "secondary_button_label": {
+          "label": "Secondary button label"
+        },
+        "secondary_button_link": {
+          "label": "Secondary button link"
+        }
+      },
+      "blocks": {
+        "term": {
+          "name": "Term",
+          "settings": {
+            "label": {
+              "label": "Label"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Hero manifesto"
+      }
+    },
+    "hero-motion": {
+      "name": "Hero motion",
+      "settings": {
+        "header__1": {
+          "content": "Layout"
+        },
+        "height": {
+          "label": "Height",
+          "options__1": {
+            "label": "Full screen"
+          },
+          "options__2": {
+            "label": "Large"
+          },
+          "options__3": {
+            "label": "Medium"
+          }
+        },
+        "content_position": {
+          "label": "Content position",
+          "options__1": {
+            "label": "Left"
+          },
+          "options__2": {
+            "label": "Center"
+          }
+        },
+        "color_scheme": {
+          "label": "Color scheme"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        },
+        "header__2": {
+          "content": "Motion"
+        },
+        "enable_parallax": {
+          "label": "Pointer parallax"
+        },
+        "frame_style": {
+          "label": "Instrument frame",
+          "options__1": {
+            "label": "Default"
+          },
+          "options__2": {
+            "label": "Viewfinder corners"
+          },
+          "options__3": {
+            "label": "Scanline sweep"
+          },
+          "options__4": {
+            "label": "Viewfinder and scanline"
+          },
+          "options__5": {
+            "label": "None"
+          }
+        },
+        "auto_rotate": {
+          "label": "Rotate media every",
+          "info": "Set to 0 to turn off rotation."
+        },
+        "header__3": {
+          "content": "Text"
+        },
+        "kicker": {
+          "label": "Kicker"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "button_link": {
+          "label": "Button link"
+        },
+        "secondary_button_label": {
+          "label": "Secondary button label"
+        },
+        "secondary_button_link": {
+          "label": "Secondary button link"
+        },
+        "header__4": {
+          "content": "Media"
+        },
+        "overlay_opacity": {
+          "label": "Overlay opacity"
+        },
+        "image_mobile": {
+          "label": "Mobile image",
+          "info": "Replaces the first media image on small screens."
+        }
+      },
+      "blocks": {
+        "media": {
+          "name": "Media",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "label": {
+              "label": "Label"
+            }
+          }
+        },
+        "stat": {
+          "name": "Stat",
+          "settings": {
+            "label": {
+              "label": "Label"
+            },
+            "value": {
+              "label": "Value"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Hero motion"
+      }
+    },
+    "hero-split": {
+      "name": "Hero split",
+      "settings": {
+        "header__1": {
+          "content": "Layout"
+        },
+        "image_position": {
+          "label": "Image position",
+          "options__1": {
+            "label": "Right"
+          },
+          "options__2": {
+            "label": "Left"
+          }
+        },
+        "height": {
+          "label": "Height",
+          "options__1": {
+            "label": "Large"
+          },
+          "options__2": {
+            "label": "Medium"
+          }
+        },
+        "color_scheme": {
+          "label": "Color scheme"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        },
+        "header__2": {
+          "content": "Text"
+        },
+        "kicker": {
+          "label": "Kicker"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "spec_line": {
+          "label": "Spec line",
+          "info": "Mono technical line under the text, for example 3L shell · 28,000mm HH · 340g."
+        },
+        "header__3": {
+          "content": "Product"
+        },
+        "product": {
+          "label": "Product"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "show_quick_add": {
+          "label": "Show quick view"
+        }
+      },
+      "presets": {
+        "name": "Hero split"
       }
     },
     "image-gallery": {
@@ -3489,12 +3797,15 @@
         "visual_effect": {
           "label": "Visual effect",
           "options__1": {
-            "label": "Technical scan"
+            "label": "Default"
           },
           "options__2": {
-            "label": "Image zoom"
+            "label": "Technical scan"
           },
           "options__3": {
+            "label": "Image zoom"
+          },
+          "options__4": {
             "label": "None"
           }
         },
@@ -3564,9 +3875,12 @@
         "visual_style": {
           "label": "Visual style",
           "options__1": {
-            "label": "Signal frame"
+            "label": "Default"
           },
           "options__2": {
+            "label": "Signal frame"
+          },
+          "options__3": {
             "label": "Quiet grid"
           }
         },
@@ -4128,6 +4442,33 @@
         },
         "transition_speed": {
           "label": "Transition speed"
+        }
+      }
+    },
+    "media_effects": {
+      "name": "Media effects",
+      "settings": {
+        "media_effect": {
+          "label": "Effect style",
+          "info": "Applies to product cards and media hovers across the theme.",
+          "options__1": {
+            "label": "Technical scan"
+          },
+          "options__2": {
+            "label": "Exposure meter"
+          },
+          "options__3": {
+            "label": "Blueprint trace"
+          },
+          "options__4": {
+            "label": "Caliper crosshair"
+          },
+          "options__5": {
+            "label": "None"
+          }
+        },
+        "media_ambient": {
+          "label": "Show ambient scan on proof sections"
         }
       }
     },

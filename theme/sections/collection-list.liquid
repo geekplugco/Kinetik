@@ -61,7 +61,7 @@
         <a href="{{ c.url }}" class="group block">
           <div class="relative overflow-hidden bg-ink-950 {{ ratio_cls }}">
             {%- if c.featured_image -%}
-              <div class="kx-media-effect absolute inset-0">
+              <div class="kx-media-effect absolute inset-0" {% render 'media-effect' %}>
                 {{ c.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400,600,800,1200', sizes: '(min-width:768px) 33vw, 100vw', alt: coll_alt, class: 'h-full w-full object-cover' }}
               </div>
             {%- endif -%}

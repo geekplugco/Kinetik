@@ -11,7 +11,7 @@
     {%- for collection in collections -%}
       <li class="bg-surface-page"><a href="{{ collection.url }}" class="group relative block aspect-[4/3] overflow-hidden">
         {%- if collection.featured_image != blank -%}
-          <div class="kx-media-effect absolute inset-0">
+          <div class="kx-media-effect absolute inset-0" {% render 'media-effect' %}>
             {{ collection.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', sizes: '(min-width:750px) 33vw, 100vw', alt: collection.title, class: 'h-full w-full object-cover' }}
           </div>
         {%- else -%}

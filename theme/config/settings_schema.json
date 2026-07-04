@@ -277,6 +277,46 @@
     ]
   },
   {
+    "name": "t:settings_schema.media_effects.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "media_effect",
+        "label": "t:settings_schema.media_effects.settings.media_effect.label",
+        "info": "t:settings_schema.media_effects.settings.media_effect.info",
+        "default": "scan",
+        "options": [
+          {
+            "value": "scan",
+            "label": "t:settings_schema.media_effects.settings.media_effect.options__1.label"
+          },
+          {
+            "value": "exposure",
+            "label": "t:settings_schema.media_effects.settings.media_effect.options__2.label"
+          },
+          {
+            "value": "trace",
+            "label": "t:settings_schema.media_effects.settings.media_effect.options__3.label"
+          },
+          {
+            "value": "caliper",
+            "label": "t:settings_schema.media_effects.settings.media_effect.options__4.label"
+          },
+          {
+            "value": "none",
+            "label": "t:settings_schema.media_effects.settings.media_effect.options__5.label"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "media_ambient",
+        "label": "t:settings_schema.media_effects.settings.media_ambient.label",
+        "default": true
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.badges.name",
     "settings": [
       {

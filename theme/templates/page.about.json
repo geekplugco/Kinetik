@@ -1,0 +1,121 @@
+{
+  "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "padding_top": 16,
+        "padding_bottom": 12
+      }
+    },
+    "hero_manifesto": {
+      "type": "hero-manifesto",
+      "settings": {
+        "kicker": "Field manifesto",
+        "heading": "Every gram earns its place",
+        "accent_word": "earns",
+        "text": "<p>No filler panels, no decorative hardware. If a feature cannot justify its weight in the field, it never leaves the lab.</p>",
+        "button_label": "Shop the system",
+        "button_link": "shopify://collections/frontpage",
+        "secondary_button_label": "See the lookbook",
+        "secondary_button_link": "shopify://pages/lookbook",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      },
+      "blocks": {
+        "t1": {
+          "type": "term",
+          "settings": {
+            "label": "Field-tested"
+          }
+        },
+        "t2": {
+          "type": "term",
+          "settings": {
+            "label": "3L membrane"
+          }
+        },
+        "t3": {
+          "type": "term",
+          "settings": {
+            "label": "No filler"
+          }
+        },
+        "t4": {
+          "type": "term",
+          "settings": {
+            "label": "Repairable"
+          }
+        },
+        "t5": {
+          "type": "term",
+          "settings": {
+            "label": "Carbon-neutral"
+          }
+        },
+        "t6": {
+          "type": "term",
+          "settings": {
+            "label": "Ships in 24h"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ]
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "assurance": {
+      "type": "field-assurance",
+      "blocks": {
+        "pay": {
+          "type": "item",
+          "settings": {
+            "heading": "Payments",
+            "text": "Shop Pay, Apple Pay, Google Pay and major cards at checkout."
+          }
+        },
+        "support": {
+          "type": "item",
+          "settings": {
+            "heading": "Support",
+            "text": "Questions about fit or specs? Reach the Kinetik team."
+          }
+        },
+        "pickup": {
+          "type": "pickup"
+        },
+        "policies": {
+          "type": "policies"
+        }
+      },
+      "block_order": [
+        "pay",
+        "support",
+        "pickup",
+        "policies"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "breadcrumb",
+    "hero_manifesto",
+    "main",
+    "assurance"
+  ]
+}

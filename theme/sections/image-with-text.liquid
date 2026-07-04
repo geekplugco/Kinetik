@@ -46,7 +46,7 @@
   class="bg-surface-page pt-[var(--pt,0px)] pb-[var(--pb,0px)]"
 >
   <div class="mx-auto grid gap-0 border-y border-border-hairline md:grid-cols-2 {{ width }} {{ reverse }}">
-    <div class="kx-media-effect relative {{ ratio }} overflow-hidden border-border-hairline bg-surface-sunken md:aspect-auto md:min-h-[560px] md:border-r [direction:ltr] {{ overlap_media }}">
+    <div class="kx-media-effect relative {{ ratio }} overflow-hidden border-border-hairline bg-surface-sunken md:aspect-auto md:min-h-[560px] md:border-r [direction:ltr] {{ overlap_media }}" {% render 'media-effect' %}>
       {%- if s.image != blank -%}
         {{ s.image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '50vw', widths: '400,600,800,1000,1400,1600', alt: s.image.alt, class: 'absolute inset-0 h-full w-full object-cover' }}
       {%- else -%}

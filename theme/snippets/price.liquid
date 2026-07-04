@@ -17,7 +17,7 @@
     assign on_sale = true
   endif
 -%}
-<span class="flex items-baseline gap-2 font-mono text-sm{% if class %} {{ class }}{% endif %}">
+<span class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 font-mono text-sm{% if class %} {{ class }}{% endif %}">
   <span class="text-text-strong{% if on_sale and settings.price_highlight_sale %} text-accent-press{% endif %}">{{ price | money }}{% if settings.price_show_currency_code %} {{ cart.currency.iso_code }}{% endif %}</span>
   {%- if on_sale -%}<s class="text-text-muted">{{ compare | money }}</s>{%- endif -%}
   {%- assign up_var = variant | default: product.selected_or_first_available_variant -%}

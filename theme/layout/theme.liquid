@@ -81,6 +81,11 @@
         inset: 0;
         z-index: 2;
         pointer-events: none;
+        opacity: 0;
+        transform: scale(0.975);
+        transition: transform var(--dur-base, 380ms) var(--ease-enter), opacity var(--dur-base, 380ms) var(--ease-enter);
+      }
+      .kx-media-effect[data-kx-effect="hero"]::after {
         background:
           linear-gradient(var(--accent), var(--accent)) left top / 34px 1px no-repeat,
           linear-gradient(var(--accent), var(--accent)) left top / 1px 34px no-repeat,
@@ -90,9 +95,6 @@
           linear-gradient(var(--accent), var(--accent)) left bottom / 1px 34px no-repeat,
           linear-gradient(var(--accent), var(--accent)) right bottom / 34px 1px no-repeat,
           linear-gradient(var(--accent), var(--accent)) right bottom / 1px 34px no-repeat;
-        opacity: 0;
-        transform: scale(0.975);
-        transition: transform var(--dur-base, 380ms) var(--ease-enter), opacity var(--dur-base, 380ms) var(--ease-enter);
       }
       .kx-media-effect[data-kx-effect="hero"]::before {
         background:
@@ -100,17 +102,6 @@
           linear-gradient(180deg, transparent 0 0, color-mix(in srgb, var(--paper) 12%, transparent) 0 1px, transparent 1px 100%);
         background-size: 100% 100%, 100% 18px;
         transform: translateX(-8%);
-      }
-      .kx-media-effect[data-kx-effect="proof"]::before {
-        background:
-          linear-gradient(90deg, color-mix(in srgb, var(--accent) 45%, transparent) 0 1px, transparent 1px 100%),
-          linear-gradient(180deg, color-mix(in srgb, var(--text-strong) 18%, transparent) 0 1px, transparent 1px 100%);
-        background-size: 22px 100%, 100% 22px;
-      }
-      .kx-media-effect[data-kx-effect="hotspot"]::before {
-        background:
-          linear-gradient(90deg, color-mix(in srgb, var(--accent) 40%, transparent) 0 1px, transparent 1px 100%);
-        background-size: 64px 100%;
       }
       .group:hover .kx-media-effect > img,
       .group:focus-within .kx-media-effect > img,
@@ -124,10 +115,112 @@
       .group:focus-within .kx-media-effect::before { opacity: 0.46; transform: translateY(8%); }
       .group:hover .kx-media-effect[data-kx-effect="hero"]::before,
       .group:focus-within .kx-media-effect[data-kx-effect="hero"]::before { opacity: 0.32; transform: translateX(4%); }
-      .group:hover .kx-media-effect[data-kx-effect="hotspot"]::before,
-      .group:focus-within .kx-media-effect[data-kx-effect="hotspot"]::before { opacity: 0.38; transform: translateY(4%); }
       .group:hover .kx-media-effect::after,
       .group:focus-within .kx-media-effect::after { opacity: 1; transform: scale(1); }
+      .kx-media-effect[data-kx-effect="none"]::before,
+      .kx-media-effect[data-kx-effect="none"]::after,
+      .kx-media-effect[data-kx-effect="exposure"]::before,
+      .kx-media-effect[data-kx-effect="trace"]::before,
+      .kx-media-effect[data-kx-effect="caliper"]::before,
+      .kx-media-effect[data-kx-effect="caliper"]::after { display: none; }
+      .kx-media-effect[data-kx-effect="exposure"]:not(.is-in) img,
+      .kx-media-effect[data-kx-effect="exposure"]:not(.is-in) svg { filter: brightness(0.92) saturate(0.9); }
+      .kx-media-effect[data-kx-effect="exposure"].is-in img,
+      .kx-media-effect[data-kx-effect="exposure"].is-in svg { animation: kxExposureUp 560ms steps(2, end); }
+      html:not(.has-js) .kx-media-effect[data-kx-effect="exposure"] img,
+      html:not(.has-js) .kx-media-effect[data-kx-effect="exposure"] svg { filter: none; }
+      .kx-media-effect[data-kx-effect="exposure"]::after {
+        inset: 10px 10px auto auto;
+        width: 6px;
+        height: 6px;
+        background: var(--accent);
+        opacity: 0;
+        transform: none;
+        transition: none;
+      }
+      .kx-media-effect[data-kx-effect="exposure"].is-in::after { animation: kxExposureBlink 560ms steps(1, end); }
+      .group:hover .kx-media-effect[data-kx-effect="exposure"]::after,
+      .group:focus-within .kx-media-effect[data-kx-effect="exposure"]::after { opacity: 0; transform: none; }
+      .kx-media-effect[data-kx-effect="trace"]::after {
+        padding: 1px;
+        background: conic-gradient(var(--accent) var(--kx-trace, 0%), transparent 0%);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        mask-composite: exclude;
+        opacity: 0;
+        transform: none;
+        transition: none;
+      }
+      .kx-media-effect[data-kx-effect="trace"].is-in::after { animation: kxTraceDraw 1300ms var(--ease-enter) 1 forwards; }
+      .kx-caliper-x,
+      .kx-caliper-y,
+      .kx-caliper-chip {
+        position: absolute;
+        z-index: 3;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity var(--dur-fast, 220ms) var(--ease-enter);
+      }
+      .kx-caliper-x { top: 0; bottom: 0; left: 0; width: 1px; background: color-mix(in srgb, var(--accent) 72%, transparent); }
+      .kx-caliper-y { left: 0; right: 0; top: 0; height: 1px; background: color-mix(in srgb, var(--accent) 72%, transparent); }
+      .kx-caliper-chip {
+        right: 0.5rem;
+        bottom: 0.5rem;
+        padding: 2px 7px;
+        background: color-mix(in srgb, var(--ink-950) 78%, transparent);
+        color: var(--paper);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+      }
+      .kx-caliper-live .kx-caliper-x,
+      .kx-caliper-live .kx-caliper-y,
+      .kx-caliper-live .kx-caliper-chip { opacity: 1; }
+      @media (hover: none) {
+        .kx-caliper-x,
+        .kx-caliper-y,
+        .kx-caliper-chip { display: none; }
+      }
+      .kx-ambient {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .kx-ambient::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -12%;
+        height: 12%;
+        background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent) 60%, transparent) 55%, transparent);
+        opacity: 0.15;
+        animation: kxAmbientSweep 7s linear infinite;
+      }
+      @property --kx-trace {
+        syntax: "<percentage>";
+        inherits: false;
+        initial-value: 0%;
+      }
+      @keyframes kxExposureUp {
+        from { filter: brightness(0.92) saturate(0.9); }
+        to { filter: brightness(1) saturate(1); }
+      }
+      @keyframes kxExposureBlink {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+      }
+      @keyframes kxTraceDraw {
+        0% { --kx-trace: 0%; opacity: 1; }
+        54% { --kx-trace: 100%; opacity: 1; }
+        100% { --kx-trace: 100%; opacity: 0; }
+      }
+      @keyframes kxAmbientSweep {
+        to { transform: translateY(950%); }
+      }
       .kx-card-spec {
         position: absolute;
         left: 0.75rem;
@@ -164,7 +257,6 @@
         filter: blur(0);
       }
       quick-view-modal .qv-body {
-        min-height: min(460px, 70vh);
         opacity: 0;
         transform: translateY(14px) scale(0.992);
         filter: blur(3px);
@@ -201,11 +293,16 @@
       }
       .qv-skeleton {
         display: grid;
-        gap: 1.5rem;
+        gap: 1.25rem;
       }
       @media (min-width: 750px) {
         .qv-skeleton {
-          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          grid-template-columns: minmax(0, 0.86fr) minmax(0, 1fr);
+        }
+        .qv-skeleton-media {
+          aspect-ratio: auto;
+          height: 100%;
+          min-height: 420px;
         }
       }
       .qv-skeleton-media,
@@ -261,6 +358,20 @@
         quick-view-modal .qv-panel,
         quick-view-modal .qv-body { transition: none !important; transform: none !important; }
         .kx-media-effect::before { display: none; }
+        .kx-media-effect[data-kx-effect="exposure"] img,
+        .kx-media-effect[data-kx-effect="exposure"] svg { filter: none !important; animation: none !important; }
+        .kx-media-effect[data-kx-effect="exposure"]::after,
+        .kx-media-effect[data-kx-effect="trace"]::after { animation: none !important; }
+        .kx-caliper-x,
+        .kx-caliper-y,
+        .kx-caliper-chip { display: none; }
+        .kx-ambient::before {
+          animation: none;
+          top: 0;
+          height: 1px;
+          background: var(--accent);
+          opacity: 0.25;
+        }
         .qv-skeleton-media::after,
         .qv-skeleton-line::after,
         quick-view-modal.is-ready .qv-body > *,
@@ -271,12 +382,19 @@
       body[data-animate-hover="none"] [data-card-media] img,
       body[data-animate-hover="none"] .kx-media-effect > img,
       body[data-animate-hover="none"] .kx-media-effect > svg,
-      body[data-animate-hover="none"] .hp-hover-lift:hover { transform: none !important; filter: none !important; }
-      body[data-animate-hover="none"] .kx-media-effect::before,
-      body[data-animate-hover="none"] .kx-media-effect::after,
+      body[data-animate-hover="none"] .hp-hover-lift:hover { transform: none !important; }
+      body[data-animate-hover="none"] [data-card-media]:not([data-kx-effect="exposure"]) img,
+      body[data-animate-hover="none"] .kx-media-effect:not([data-kx-effect="exposure"]) > img,
+      body[data-animate-hover="none"] .kx-media-effect:not([data-kx-effect="exposure"]) > svg,
+      body[data-animate-hover="none"] .hp-hover-lift:hover { filter: none !important; }
+      body[data-animate-hover="none"] .kx-media-effect:not([data-kx-effect="exposure"]):not([data-kx-effect="trace"])::before,
+      body[data-animate-hover="none"] .kx-media-effect:not([data-kx-effect="exposure"]):not([data-kx-effect="trace"])::after,
+      body[data-animate-hover="none"] .kx-caliper-x,
+      body[data-animate-hover="none"] .kx-caliper-y,
+      body[data-animate-hover="none"] .kx-caliper-chip,
       body[data-animate-hover="none"] .kx-card-spec { display: none !important; }
-      body[data-animate-hover="zoom"] .kx-media-effect::before,
-      body[data-animate-hover="zoom"] .kx-media-effect::after,
+      body[data-animate-hover="zoom"] .kx-media-effect:not([data-kx-effect="exposure"]):not([data-kx-effect="trace"])::before,
+      body[data-animate-hover="zoom"] .kx-media-effect:not([data-kx-effect="exposure"]):not([data-kx-effect="trace"])::after,
       body[data-animate-hover="zoom"] .kx-card-spec { display: none !important; }
       body[data-section-divider="hairline"] #MainContent > .shopify-section + .shopify-section { border-top: 1px solid var(--border-hairline); }
     </style>

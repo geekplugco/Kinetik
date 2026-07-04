@@ -1,0 +1,27 @@
+{% doc %}
+  Resolves the global media effect into a data-kx-effect attribute for a
+  kx-media-effect element.
+
+  Resolution order: a non-blank override that is not 'default' wins,
+  otherwise settings.media_effect supplies the value. The caliper crosshair
+  is proof-surface-only by design, so card and tile surfaces fall back to
+  the technical scan hover when caliper is the global style.
+
+  Sections with their own hero-vocabulary selects (hero visual_effect,
+  hero-motion frame_style, route-map visual_style) map their "Default"
+  option inline: settings.media_effect 'none' inherits as their none/quiet
+  option, anything else inherits as their scan-ish signature option.
+
+  @param {string} [override] - forced effect: 'scan' | 'exposure' | 'trace' | 'caliper' | 'none'; blank or 'default' inherits settings.media_effect
+  @param {string} [surface] - 'proof' allows the caliper crosshair; any other value is treated as a card or tile surface
+{% enddoc %}
+{%- liquid
+  assign resolved = override
+  if resolved == blank or resolved == 'default'
+    assign resolved = settings.media_effect | default: 'scan'
+  endif
+  if resolved == 'caliper' and surface != 'proof'
+    assign resolved = 'scan'
+  endif
+  echo 'data-kx-effect="' | append: resolved | append: '"'
+-%}

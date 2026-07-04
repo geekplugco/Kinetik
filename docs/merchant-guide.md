@@ -1,5 +1,7 @@
 # KINETIK — Merchant Setup Guide
 
+> Full merchant-facing documentation lives in [`docs/merchant/`](merchant/README.md) (setup, sections reference, FAQ, support policy).
+
 > Everything needed to reproduce the demo and run Kinetik at Theme-Store quality.
 > Kinetik uses **Shopify-native settings only** — no app required, no code editing.
 
@@ -47,7 +49,7 @@ Theme settings → set **Swatch list** as `Name:#hex` per line (e.g. `Volt:#CCFF
 ## 5. Cart & recommendations
 
 - **Free shipping bar:** Header section → Cart → **Free shipping threshold** (in your currency; 0 = off). Also on the cart page.
-- **Recommendations** (complementary / related) use Shopify's **Search & Discovery** app data — install it and set recommendations; the theme falls back to same-collection products.
+- **Recommendations:** related products use Shopify's recommendations engine (loads on scroll; needs store data to fill in). Complementary products read **Search & Discovery** app pairings. Both sections stay hidden until data exists — no fake fallbacks.
 - **Order note / gift note:** enabled by default in the cart drawer + page.
 
 ## 6. Advanced sections
