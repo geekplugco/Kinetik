@@ -21,14 +21,14 @@ Header section, Submenu style set to Mega, then add a Mega menu panel block whos
 **Does the kit builder discount actually apply at checkout?**
 The section displays the discount live, and checkout applies it when you create a matching automatic discount in your admin (for example, a percentage off at a minimum quantity). Without one, the display is informational only.
 
-**Which apps does Kinetik support?**
+**Which apps does Waypoint support?**
 Any app that ships app blocks can be added to the product page and the Product apps / reviews section. Review apps that write the standard rating metafield (Judge.me, Loox, Okendo and similar) feed the built-in star display. The Custom Liquid section and block accept embed codes from other apps.
 
 **Is the theme translatable?**
 Yes. All storefront text ships in the theme's locale file and can be translated through Shopify's translation tools or a translations app. Selling in multiple currencies and languages shows the country and language selectors in the announcement bar and footer.
 
 **How fast is it?**
-Kinetik ships no external scripts, lazy-loads all below-the-fold imagery with responsive sizes, and keeps JavaScript per feature in small isolated files. Layout shift is designed out with fixed media ratios.
+Waypoint ships no external scripts, lazy-loads all below-the-fold imagery with responsive sizes, and keeps JavaScript per feature in small isolated files. Layout shift is designed out with fixed media ratios.
 
 **How do I update the theme?**
 Shopify notifies you when a new version is available in your admin. Updates install as a new unpublished copy so your customizations can be carried over before you publish.

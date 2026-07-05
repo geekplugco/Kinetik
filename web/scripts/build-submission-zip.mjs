@@ -103,7 +103,7 @@ for (const absPath of listJsonFiles(resolve(STAGE_DIR, 'sections'))) {
 }
 
 const PRESET_LISTINGS = [
-  { preset: 'Kinetik', folder: 'kinetik', template: 'index.json' },
+  { preset: 'Waypoint', folder: 'waypoint', template: 'index.json' },
   { preset: 'Carbon', folder: 'carbon', template: 'index.carbon.json' },
   { preset: 'Sand', folder: 'sand', template: 'index.sand.json' },
 ];

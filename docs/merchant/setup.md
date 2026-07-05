@@ -2,7 +2,7 @@
 
 ## Installation
 
-Install Kinetik from the Shopify Theme Store, or upload the theme zip in your admin under Online Store, Themes, Add theme. On install the theme matches the demo store's layout and color settings. Demo imagery does not transfer; image slots show placeholders until you upload your own media.
+Install Waypoint from the Shopify Theme Store, or upload the theme zip in your admin under Online Store, Themes, Add theme. On install the theme matches the demo store's layout and color settings. Demo imagery does not transfer; image slots show placeholders until you upload your own media.
 
 ## Style presets
 
@@ -10,7 +10,7 @@ Theme settings, Colors, holds the color scheme group. Three presets ship with th
 
 | Preset | Character |
 |---|---|
-| Kinetik | White paper, near-black ink, volt lime accent |
+| Waypoint | White paper, near-black ink, volt lime accent |
 | Carbon | Blackout surfaces, volt accent on dark |
 | Sand | Warm paper, umber text, burnt-orange accent |
 
@@ -64,7 +64,7 @@ The Footer's Support links group has four page pickers (contact, shipping and re
 
 ### Metafields
 
-Kinetik reads optional product metafields for spec-sheet content. Create definitions under Settings, Custom data, Products, in the `custom` namespace, with storefront access enabled:
+Waypoint reads optional product metafields for spec-sheet content. Create definitions under Settings, Custom data, Products, in the `custom` namespace, with storefront access enabled:
 
 | Key | Type | Where it appears |
 |---|---|---|

@@ -92,4 +92,4 @@ Configured on the Header section rather than as its own section. One panel block
 
 ## Templates
 
-Every template is sectioned, so you can add any section above to product, collection, page, blog, cart, and search templates. Kinetik ships alternate demo templates (editorial and campaign product layouts, carbon and sand collection styles) you can assign per product or collection, plus a contact page template with the form wired in.
+Every template is sectioned, so you can add any section above to product, collection, page, blog, cart, and search templates. Waypoint ships alternate demo templates (editorial and campaign product layouts, carbon and sand collection styles) you can assign per product or collection, plus a contact page template with the form wired in.
