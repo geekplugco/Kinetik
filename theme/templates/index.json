@@ -192,7 +192,7 @@
           "settings": {
             "eyebrow": "No noise",
             "quote": "<p>Every feature has to earn its position.</p>",
-            "attribution": "Kinetik field standard",
+            "attribution": "Waypoint field standard",
             "alignment": "left",
             "height": "compact",
             "button_label": "Shop the system",
@@ -296,7 +296,7 @@
           "type": "shot",
           "settings": {
             "image": "shopify://shop_images/05-sling-worn.png",
-            "image_alt": "Kinetik sling worn across technical outerwear",
+            "image_alt": "Waypoint sling worn across technical outerwear",
             "caption": "Carry system \u00b7 hands free",
             "product_1": "field-sling",
             "x_1": 52,
@@ -310,7 +310,7 @@
           "type": "shot",
           "settings": {
             "image": "shopify://shop_images/06-detail-trio.png",
-            "image_alt": "Close details of Kinetik technical materials",
+            "image_alt": "Close details of Waypoint technical materials",
             "caption": "Material readout \u00b7 hardware, fabric, closure",
             "product_1": "merino-base-ls",
             "x_1": 45,
@@ -332,7 +332,7 @@
       "type": "multicolumn",
       "settings": {
         "subheading": "The system",
-        "heading": "Why Kinetik",
+        "heading": "Why Waypoint",
         "text": "<p>No seasonal noise. A tight kit of technical pieces, engineered to outlast the trend cycle.</p>"
       },
       "blocks": {

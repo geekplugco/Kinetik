@@ -61,11 +61,12 @@
         }
       }
     },
-    "social_instagram": "https://instagram.com/kinetik",
+    "social_instagram": "https://instagram.com/waypoint",
     "social_tiktok": "https://tiktok.com/@kinetik",
     "social_youtube": "https://youtube.com/@kinetik",
-    "social_facebook": "https://facebook.com/kinetik",
-    "social_x": "https://x.com/kinetik"
+    "social_facebook": "https://facebook.com/waypoint",
+    "social_x": "https://x.com/waypoint",
+    "logo": "shopify://shop_images/waypoint-logo-tight.png"
   },
   "presets": {
     "Waypoint": {
@@ -130,11 +131,11 @@
           }
         }
       },
-      "social_instagram": "https://instagram.com/kinetik",
+      "social_instagram": "https://instagram.com/waypoint",
       "social_tiktok": "https://tiktok.com/@kinetik",
       "social_youtube": "https://youtube.com/@kinetik",
-      "social_facebook": "https://facebook.com/kinetik",
-      "social_x": "https://x.com/kinetik"
+      "social_facebook": "https://facebook.com/waypoint",
+      "social_x": "https://x.com/waypoint"
     },
     "Carbon": {
       "mode": "production-css-inline",
@@ -198,11 +199,11 @@
           }
         }
       },
-      "social_instagram": "https://instagram.com/kinetik",
+      "social_instagram": "https://instagram.com/waypoint",
       "social_tiktok": "https://tiktok.com/@kinetik",
       "social_youtube": "https://youtube.com/@kinetik",
-      "social_facebook": "https://facebook.com/kinetik",
-      "social_x": "https://x.com/kinetik"
+      "social_facebook": "https://facebook.com/waypoint",
+      "social_x": "https://x.com/waypoint"
     },
     "Sand": {
       "mode": "production-css-inline",
@@ -266,11 +267,11 @@
           }
         }
       },
-      "social_instagram": "https://instagram.com/kinetik",
+      "social_instagram": "https://instagram.com/waypoint",
       "social_tiktok": "https://tiktok.com/@kinetik",
       "social_youtube": "https://youtube.com/@kinetik",
-      "social_facebook": "https://facebook.com/kinetik",
-      "social_x": "https://x.com/kinetik"
+      "social_facebook": "https://facebook.com/waypoint",
+      "social_x": "https://x.com/waypoint"
     }
   }
 }
