@@ -26,13 +26,14 @@
 
   assign size_row_blocks = section.blocks | where: 'type', 'size_row'
   assign size_columns = section.settings.size_chart_col_1 | append: '|' | append: section.settings.size_chart_col_2 | append: '|' | append: section.settings.size_chart_col_3 | append: '|' | append: section.settings.size_chart_col_4 | append: '|' | append: section.settings.size_chart_col_5 | split: '|'
+  assign has_size_option = p.options_by_name['Size']
 
   assign size_source = ''
   if section.settings.show_size_guide
-    if size_row_blocks.size > 0
-      assign size_source = 'blocks'
-    elsif size_chart != blank
+    if size_chart != blank
       assign size_source = 'metafield'
+    elsif size_row_blocks.size > 0 and has_size_option != blank
+      assign size_source = 'blocks'
     elsif section.settings.size_guide_page != blank
       assign size_source = 'page'
     endif
@@ -220,7 +221,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Add Size chart row blocks below to build a table instead -- it takes priority over the page and metafield options above."
+      "content": "Add Size chart row blocks below to build a table shown on every product on this template that has a Size option. A product's own size_chart metafield, when set, overrides this chart and shows regardless of variant options."
     },
     {
       "type": "text",
