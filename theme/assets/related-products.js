@@ -23,7 +23,8 @@
             const html = document.createElement('div');
             html.innerHTML = text;
             const grid = html.querySelector('[data-related-grid]');
-            if (grid && grid.children.length) {
+            const hasProducts = grid && grid.children.length && !grid.querySelector('[data-related-loading]');
+            if (hasProducts) {
               this.grid.innerHTML = grid.innerHTML;
               this.removeAttribute('data-pending');
             } else {
