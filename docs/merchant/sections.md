@@ -70,21 +70,31 @@ The Product section renders vendor, title, rating, price, and description as reo
 
 Add Shot blocks (image, caption, optional focal point) and up to two hotspots per shot. Each hotspot takes a product plus horizontal and vertical position sliders; customers tap the marker to open a product tooltip with price and a quick-view link. Editorial note blocks drop pull-quotes between shots. Three layout modes: editorial (mixed spans), grid, and single column.
 
+![Lookbook section in editorial layout, showing shoppable hotspot frames and a field note aside](/screenshots/lookbook.png)
+
 ### Build your kit
 
 Add one Slot block per kit position (Shell, Layer, Bottom, Footwear, Carry, Gear). Each slot sources products three ways, in priority order: hand-picked products, a collection, or a comma-separated list of product types. Set the bundle discount percentage and minimum pieces on the section; the summary card updates live as customers add pieces, and the whole kit goes to the cart in one action. Pair the display discount with a real automatic discount in your admin.
+
+![Build your kit section showing the Shell slot row and the live kit summary card](/screenshots/build-your-kit.png)
 
 ### Drop system
 
 Set a target date and time; the countdown runs live and the section flips its state when the date passes. Blocks cover the drop product list, a signup form for notifications, and stat callouts.
 
+![Drop system section with a live countdown and email reminder signup](/screenshots/drop-system.png)
+
 ### Route map
 
 Add Stop blocks: a time and place label, heading, caption, an image, and an optional featured product with live pricing. Two layouts (board and timeline) and two visual styles (signal, with volt viewfinder framing, or quiet). Rows alternate media and copy sides by default (toggle off for a single-side layout), a Row density setting controls how tall each stop reads, and a sticky step index tracks position as customers scroll. Stops without an image show a route diagram placeholder, so the section never looks broken while you gather photography.
 
+![Route map section showing alternating image and text sides across the first two stops](/screenshots/route-map.png)
+
 ### Material scan
 
 Upload a macro fabric or hardware image, then add scan-point blocks positioned by percentage coordinates. Each point carries a label and detail line rendered in the theme's instrument style.
+
+![Material scan section with numbered scan points over a macro product image](/screenshots/material-scan.png)
 
 ### Mega menu
 

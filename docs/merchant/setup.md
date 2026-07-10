@@ -56,9 +56,13 @@ Set the Header section's Submenu style to Mega, then add one **Mega menu panel**
 
 Panels without a matching block fall back to a standard dropdown of the item's child links.
 
+![Mega menu open on the homepage, showing the Apparel panel's featured collection and promo image](/screenshots/mega-menu.png)
+
 ### Footer support links
 
 The Footer's Support column is a block list (Support link blocks), so you can add, remove, and reorder links freely instead of being limited to a fixed set. Each block has a Label and a URL. The default preset ships five: Contact, Shipping & returns, FAQ, Warranty, and Field guide.
+
+![Footer Support column with five link blocks: Contact, Shipping & returns, FAQ, Warranty, Field guide](/screenshots/footer-support-links.png)
 
 ## Product setup
 
