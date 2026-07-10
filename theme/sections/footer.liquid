@@ -29,7 +29,11 @@
       {%- endform -%}
     </div>
     <div class="mx-auto flex max-w-[var(--page-width)] flex-col items-center justify-between gap-3 border-t border-border-hairline px-6 py-5 font-mono text-xs text-text-muted md:flex-row">
-      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Engineered for movement.</span>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Engineered for movement.</span>
+        <span aria-hidden="true">&middot;</span>
+        <span>{{ powered_by_link }}</span>
+      </div>
       {%- if s.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
         <div class="flex flex-wrap items-center gap-2">
           {%- for type in shop.enabled_payment_types -%}
@@ -86,6 +90,11 @@
         </div>
       </div>
     </div>
+    <div class="mx-auto flex max-w-[var(--page-width)] flex-wrap items-center gap-x-3 gap-y-1 border-t border-border-hairline px-6 py-5 font-mono text-xs text-text-muted">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Engineered for movement.</span>
+      <span aria-hidden="true">&middot;</span>
+      <span>{{ powered_by_link }}</span>
+    </div>
   {%- elsif footer_style == 'split' -%}
     <div class="mx-auto grid max-w-[var(--page-width)] gap-0 px-6 py-12 md:grid-cols-[0.9fr_1.1fr] md:py-16">
       <div class="border-b border-border-hairline pb-10 md:border-b-0 md:border-r md:pr-10">
@@ -110,9 +119,11 @@
         </nav>
         <div class="flex flex-col gap-3">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">Support</span>
-          <a href="{{ s.contact_page.url | default: '/pages/contact' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">Contact</a>
-          <a href="{{ s.shipping_page.url | default: '/pages/shipping' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">Shipping &amp; returns</a>
-          <a href="{{ s.faq_page.url | default: '/pages/faq' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">FAQ</a>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'link' and block.settings.link_url != blank -%}
+              <a href="{{ block.settings.link_url }}" class="text-sm text-text-body transition-colors hover:text-text-strong" {{ block.shopify_attributes }}>{{ block.settings.link_label }}</a>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
         <div class="flex flex-col gap-3">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">Region</span>
@@ -134,6 +145,11 @@
           {%- endif -%}
         </div>
       </div>
+    </div>
+    <div class="mx-auto flex max-w-[var(--page-width)] flex-wrap items-center gap-x-3 gap-y-1 border-t border-border-hairline px-6 py-5 font-mono text-xs text-text-muted">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Engineered for movement.</span>
+      <span aria-hidden="true">&middot;</span>
+      <span>{{ powered_by_link }}</span>
     </div>
   {%- else -%}
   <div class="border-y border-border-hairline">
@@ -184,10 +200,11 @@
 
         <div class="flex flex-col gap-3 border-b border-border-hairline p-5 md:border-b-0 md:border-r">
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">Support</span>
-          <a href="{{ s.contact_page.url | default: '/pages/contact' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">Contact</a>
-          <a href="{{ s.shipping_page.url | default: '/pages/shipping' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">Shipping &amp; returns</a>
-          <a href="{{ s.faq_page.url | default: '/pages/faq' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">FAQ</a>
-          <a href="{{ s.warranty_page.url | default: '/pages/warranty' }}" class="text-sm text-text-body transition-colors hover:text-text-strong">Warranty</a>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'link' and block.settings.link_url != blank -%}
+              <a href="{{ block.settings.link_url }}" class="text-sm text-text-body transition-colors hover:text-text-strong" {{ block.shopify_attributes }}>{{ block.settings.link_label }}</a>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
 
         <div class="flex flex-col gap-3 border-b border-border-hairline p-5 md:border-b-0 md:border-r">
@@ -228,7 +245,11 @@
   </div>
 
   <div class="mx-auto flex max-w-[var(--page-width)] flex-col items-center justify-between gap-3 px-6 py-4 font-mono text-xs text-text-muted md:flex-row">
-    <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Engineered for movement.</span>
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Engineered for movement.</span>
+      <span aria-hidden="true">&middot;</span>
+      <span>{{ powered_by_link }}</span>
+    </div>
     {%- if s.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
       <div class="flex flex-wrap items-center gap-2">
         {%- for type in shop.enabled_payment_types -%}
@@ -285,31 +306,7 @@
       "type": "link_list",
       "id": "menu",
       "label": "t:sections.footer.settings.menu.label",
-      "default": "main-menu"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.footer.settings.header__support.content"
-    },
-    {
-      "type": "page",
-      "id": "contact_page",
-      "label": "t:sections.footer.settings.contact_page.label"
-    },
-    {
-      "type": "page",
-      "id": "shipping_page",
-      "label": "t:sections.footer.settings.shipping_page.label"
-    },
-    {
-      "type": "page",
-      "id": "faq_page",
-      "label": "t:sections.footer.settings.faq_page.label"
-    },
-    {
-      "type": "page",
-      "id": "warranty_page",
-      "label": "t:sections.footer.settings.warranty_page.label"
+      "default": "footer"
     },
     {
       "type": "text",
@@ -388,9 +385,66 @@
       "label": "t:sections.footer.settings.padding_bottom.label"
     }
   ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Support link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Label",
+          "default": "Link"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
   "presets": [
     {
-      "name": "t:sections.footer.presets.name"
+      "name": "t:sections.footer.presets.name",
+      "blocks": [
+        {
+          "type": "link",
+          "settings": {
+            "link_label": "Contact",
+            "link_url": "/pages/contact"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "link_label": "Shipping & returns",
+            "link_url": "/pages/shipping"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "link_label": "FAQ",
+            "link_url": "/pages/faq"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "link_label": "Warranty",
+            "link_url": "/pages/warranty"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "link_label": "Field guide",
+            "link_url": "/pages/content-library"
+          }
+        }
+      ]
     }
   ]
 }
