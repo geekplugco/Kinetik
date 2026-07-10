@@ -53,37 +53,20 @@
   class="bg-surface-page pt-[var(--pt,clamp(4rem,7vw,6rem))] pb-[var(--pb,clamp(4rem,7vw,6rem))]"
 >
   <look-book class="mx-auto block {{ width_cls }} px-6">
-    {%- if s.heading_layout == 'framed' -%}
-      <div class="mb-8 grid border border-border-hairline md:grid-cols-[1fr_auto]">
-        <div class="p-5 md:p-6">
-          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.kicker | default: 'Lookbook' }}</span>
-          {%- if s.heading != blank -%}<h2 class="mt-2 font-display text-h3 tracking-tight text-text-strong">{{ s.heading }}</h2>{%- endif -%}
-        </div>
-        <div class="border-t border-border-hairline p-5 md:border-l md:border-t-0 md:p-6">
-          {%- if s.text != blank -%}<div class="max-w-sm text-body text-text-muted [&_p]:m-0">{{ s.text }}</div>{%- endif -%}
-          <div class="mt-4 flex gap-2 font-mono text-[10px] uppercase tracking-label text-text-muted">
-            <span class="border border-border-hairline px-2 py-1">Hotspots</span>
-            <span class="border border-border-hairline px-2 py-1">{{ shots.size }} frames</span>
-          </div>
-        </div>
+    <div class="mb-12 flex flex-wrap items-end justify-between gap-6 md:mb-16">
+      <div class="max-w-2xl">
+        <span class="font-mono text-xs uppercase tracking-label text-accent-press">{{ s.kicker | default: 'Lookbook' }}</span>
+        {%- if s.heading != blank -%}<h2 class="mt-3 font-display text-display-2 tracking-tight text-balance text-text-strong">{{ s.heading }}</h2>{%- endif -%}
+        {%- if s.text != blank -%}<div class="mt-5 max-w-md text-body text-text-muted [&_p]:m-0">{{ s.text }}</div>{%- endif -%}
       </div>
-    {%- else -%}
-      <div class="mb-5 grid gap-4 border-y border-border-hairline py-5 md:mb-6 md:grid-cols-2 md:items-end md:py-6">
-        <div>
-          <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.kicker | default: 'Lookbook' }}</span>
-          {%- if s.heading != blank -%}<h2 class="mt-2 max-w-3xl font-display text-h2 tracking-tight text-text-strong">{{ s.heading }}</h2>{%- endif -%}
-        </div>
-        <div class="md:justify-self-end">
-          {%- if s.text != blank -%}<div class="max-w-sm text-body text-text-muted [&_p]:m-0">{{ s.text }}</div>{%- endif -%}
-          <div class="mt-4 flex flex-wrap gap-2 font-mono text-[10px] uppercase tracking-label text-text-muted">
-            <span class="border border-border-hairline px-2 py-1">Hotspots</span>
-            <span class="border border-border-hairline px-2 py-1">{{ shots.size }} frames</span>
-          </div>
-        </div>
+      <div class="flex shrink-0 items-baseline gap-2 font-mono text-xs uppercase tracking-label text-text-muted">
+        <span class="text-h3 font-display text-text-strong">{{ shots.size | prepend: '0' | slice: -2, 2 }}</span>
+        <span>shoppable frame{{ shots.size | pluralize: '', 's' }}</span>
       </div>
-    {%- endif -%}
+    </div>
 
     <div class="{% if is_editorial %}grid grid-cols-12 items-start{% elsif is_grid %}grid gap-4 md:grid-cols-2 md:gap-6{% else %}flex flex-col gap-8 md:gap-12{% endif %}"{% if is_editorial %} style="gap: {{ editorial_gap }}px;"{% endif %}>
+      {%- assign shot_index = 0 -%}
       {%- for block in section.blocks -%}
         {%- if block.type == 'note' -%}
           {%- assign n = block.settings -%}
@@ -118,6 +101,7 @@
           {%- continue -%}
         {%- endif -%}
         {%- if block.type != 'shot' -%}{%- continue -%}{%- endif -%}
+        {%- assign shot_index = shot_index | plus: 1 -%}
         {%- assign b = block.settings -%}
         {%- assign cell_cls = '' -%}
         {%- assign cell_ratio = ratio_cls -%}
@@ -170,10 +154,11 @@
           {%- else -%}{%- assign focal_cls = 'object-center' -%}
         {%- endcase -%}
         <figure class="group flex flex-col {{ cell_cls }}" {{ block.shopify_attributes }}>
-          <div class="relative {{ cell_ratio }} w-full overflow-hidden border border-border-hairline bg-surface-sunken">
-            <div class="pointer-events-none absolute inset-x-0 top-0 z-20 flex justify-between px-3 py-2 font-mono text-[10px] uppercase tracking-label text-paper" style="background: rgba(10, 10, 10, 0.72);">
-              <span>{% if b.frame_label != blank %}{{ b.frame_label }}{% else %}Frame {% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% endif %}</span>
-              <span>{{ b.overlay_label | default: 'Loadout map' }}</span>
+          <div class="relative {{ cell_ratio }} w-full overflow-hidden bg-surface-sunken">
+            <div class="pointer-events-none absolute left-3 top-3 z-20 flex items-center gap-2 bg-ink-950/70 px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-label text-paper backdrop-blur-sm">
+              <span class="text-accent" data-accent-ok>{% if shot_index < 10 %}0{% endif %}{{ shot_index }}</span>
+              <span class="text-paper/60">/</span>
+              <span>{% if b.frame_label != blank %}{{ b.frame_label }}{% else %}{{ b.overlay_label | default: 'Loadout map' }}{% endif %}</span>
             </div>
             {%- if b.image != blank -%}
               <div class="kx-media-effect absolute inset-0" {% render 'media-effect' %}>
@@ -194,8 +179,8 @@
               {%- assign hx = b[xkey] | default: 50 -%}
               {%- assign hy = b[ykey] | default: 50 -%}
               <div class="group/hs absolute z-10 -translate-x-1/2 -translate-y-1/2" style="left:{{ hx }}%;top:{{ hy }}%" data-hotspot-item>
-                <button type="button" aria-label="Shop {{ p.title | escape }}" aria-expanded="false" data-hotspot class="relative flex h-7 w-7 items-center justify-center rounded-full bg-paper text-ink-950 shadow-[0_2px_10px_rgba(10,10,10,0.35)] outline-none ring-accent transition-transform hover:scale-110 focus-visible:ring-2">
-                  <span class="absolute inset-0 animate-ping rounded-full bg-accent/60" aria-hidden="true"></span>
+                <button type="button" aria-label="Shop {{ p.title | escape }}" aria-expanded="false" data-hotspot class="relative flex h-9 w-9 items-center justify-center rounded-full bg-paper text-ink-950 shadow-[0_2px_14px_rgba(10,10,10,0.4)] outline-none ring-accent transition-transform hover:scale-110 focus-visible:ring-2">
+                  <span class="absolute inset-0 animate-ping rounded-full bg-accent/60 motion-reduce:animate-none" aria-hidden="true"></span>
                   {%- render 'icon', name: 'plus', size: 14 -%}
                 </button>
                 <div data-tip class="pointer-events-none absolute bottom-[calc(100%+10px)] left-1/2 z-20 w-56 -translate-x-1/2 translate-y-1 border border-border-hairline bg-surface-page p-3 opacity-0 shadow-xl transition-[transform,opacity] duration-200 motion-reduce:transition-none group-hover/hs:pointer-events-auto group-hover/hs:translate-y-0 group-hover/hs:opacity-100 group-focus-within/hs:pointer-events-auto group-focus-within/hs:translate-y-0 group-focus-within/hs:opacity-100">
@@ -229,7 +214,10 @@
           {%- endif -%}
 
           {%- if b.caption != blank -%}
-            <figcaption class="mt-4 font-mono text-xs uppercase tracking-label text-text-muted">{{ b.caption }}</figcaption>
+            <figcaption class="mt-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-label text-text-muted">
+              <span class="h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden="true"></span>
+              {{ b.caption }}
+            </figcaption>
           {%- endif -%}
         </figure>
       {%- endfor -%}
@@ -410,15 +398,42 @@
           "label": "Focal point",
           "default": "center",
           "options": [
-            { "value": "center", "label": "Center" },
-            { "value": "top", "label": "Top" },
-            { "value": "bottom", "label": "Bottom" },
-            { "value": "left", "label": "Left" },
-            { "value": "right", "label": "Right" },
-            { "value": "left-top", "label": "Left top" },
-            { "value": "right-top", "label": "Right top" },
-            { "value": "left-bottom", "label": "Left bottom" },
-            { "value": "right-bottom", "label": "Right bottom" }
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            },
+            {
+              "value": "left-top",
+              "label": "Left top"
+            },
+            {
+              "value": "right-top",
+              "label": "Right top"
+            },
+            {
+              "value": "left-bottom",
+              "label": "Left bottom"
+            },
+            {
+              "value": "right-bottom",
+              "label": "Right bottom"
+            }
           ]
         },
         {
@@ -427,11 +442,26 @@
           "label": "Frame size",
           "default": "auto",
           "options": [
-            { "value": "auto", "label": "Auto pattern" },
-            { "value": "feature", "label": "Feature wide" },
-            { "value": "tall", "label": "Tall side frame" },
-            { "value": "wide", "label": "Full wide" },
-            { "value": "square", "label": "Square" }
+            {
+              "value": "auto",
+              "label": "Auto pattern"
+            },
+            {
+              "value": "feature",
+              "label": "Feature wide"
+            },
+            {
+              "value": "tall",
+              "label": "Tall side frame"
+            },
+            {
+              "value": "wide",
+              "label": "Full wide"
+            },
+            {
+              "value": "square",
+              "label": "Square"
+            }
           ]
         },
         {
@@ -576,9 +606,18 @@
           "label": "Width",
           "default": "medium",
           "options": [
-            { "value": "narrow", "label": "Narrow" },
-            { "value": "medium", "label": "Medium" },
-            { "value": "wide", "label": "Wide" }
+            {
+              "value": "narrow",
+              "label": "Narrow"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "wide",
+              "label": "Wide"
+            }
           ]
         },
         {
@@ -598,26 +637,6 @@
     {
       "name": "t:sections.lookbook.presets.name__1",
       "blocks": [
-        {
-          "type": "shot"
-        },
-        {
-          "type": "shot"
-        },
-        {
-          "type": "shot"
-        }
-      ]
-    },
-    {
-      "name": "t:sections.lookbook.presets.name__2",
-      "settings": {
-        "layout": "grid"
-      },
-      "blocks": [
-        {
-          "type": "shot"
-        },
         {
           "type": "shot"
         },
