@@ -88,7 +88,7 @@ Upload a macro fabric or hardware image, then add scan-point blocks positioned b
 
 ### Mega menu
 
-Configured on the Header section rather than as its own section. One panel block per top-level menu item; see the [setup guide](setup.md#mega-menu).
+Configured on the Header section rather than as its own section. One panel block per top-level menu item; see the [setup guide](/docs/waypoint/setup#mega-menu).
 
 ## Templates
 

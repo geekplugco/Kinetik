@@ -18,7 +18,7 @@ For custom work, duplicate your theme before editing any code, and consider hiri
 
 ## Before you write in
 
-1. Check the [FAQ](faq.md) and the [setup guide](setup.md).
+1. Check the [FAQ](/docs/waypoint/faq) and the [setup guide](/docs/waypoint/setup).
 2. Preview the same page with all apps paused if you suspect an app conflict.
 3. Note your theme version (shown in the theme editor sidebar) and your store URL.
 
