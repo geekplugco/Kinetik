@@ -2,7 +2,7 @@
 
 ### My product pages look plain compared to the demo. What am I missing?
 
-The demo's spec-sheet content comes from optional product metafields (`product_code`, `spec`, `material`, and friends). Create the definitions listed in the [setup guide](/docs/waypoint/setup#metafields) and fill them per product. Sections like Field spec and Product loadout stay hidden until their data exists.
+The demo's spec-sheet content comes from optional product metafields (`product_code`, `spec`, `material`, and friends). Create the definitions listed in the [setup guide](/waypoint/setup#metafields) and fill them per product. Sections like Field spec and Product loadout stay hidden until their data exists.
 
 ### Why is the Related products section empty?
 
@@ -14,7 +14,7 @@ Name a product option Color (or change the trigger name in Theme settings, Color
 
 ### How do I set up a size chart?
 
-Three options, checked in this order: a product's own `size_chart` metafield (always wins, works on any product), Size chart row blocks on the Field spec section (a shared table, but only shows on products with a Size option), or a full page you build and link with the section's Size guide page setting. See [Size guide](/docs/waypoint/setup#size-guide) in the setup guide.
+Three options, checked in this order: a product's own `size_chart` metafield (always wins, works on any product), Size chart row blocks on the Field spec section (a shared table, but only shows on products with a Size option), or a full page you build and link with the section's Size guide page setting. See [Size guide](/waypoint/setup#size-guide) in the setup guide.
 
 ### Why isn't the size guide showing on some products?
 
@@ -30,7 +30,7 @@ Yes. Every section has a Color scheme setting. The three style presets each defi
 
 ### How do I set up the mega menu?
 
-Header section, Submenu style set to Mega, then add a Mega menu panel block whose Menu item to replace matches your top-level item title exactly. Details in the [setup guide](/docs/waypoint/setup#mega-menu).
+Header section, Submenu style set to Mega, then add a Mega menu panel block whose Menu item to replace matches your top-level item title exactly. Details in the [setup guide](/waypoint/setup#mega-menu).
 
 ### Does the kit builder discount actually apply at checkout?
 
@@ -54,4 +54,4 @@ Shopify notifies you when a new version is available in your admin. Updates inst
 
 ### Something looks broken. What should I include in a support request?
 
-Your store URL, the theme version (Theme settings, footer of the editor sidebar), the page where the issue appears, a screenshot, and the steps to reproduce it. See [Support](/docs/waypoint/support).
+Your store URL, the theme version (Theme settings, footer of the editor sidebar), the page where the issue appears, a screenshot, and the steps to reproduce it. See [Support](/waypoint/support).

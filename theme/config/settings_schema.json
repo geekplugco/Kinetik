@@ -4,8 +4,8 @@
     "theme_name": "Waypoint",
     "theme_version": "1.0.0",
     "theme_author": "HappyPow",
-    "theme_documentation_url": "https://docs.happypow.com/docs/waypoint",
-    "theme_support_url": "https://docs.happypow.com/docs/waypoint/support"
+    "theme_documentation_url": "https://docs.happypow.com/waypoint",
+    "theme_support_url": "https://docs.happypow.com/waypoint/support"
   },
   {
     "name": "t:settings_schema.logo_and_favicon.name",

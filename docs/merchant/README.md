@@ -6,20 +6,20 @@ Version: 1.0.0
 
 ## Contents
 
-- [Setup guide](/docs/waypoint/setup) — installation, style presets, theme settings, navigation, product data, known limitations
-- [Sections reference](/docs/waypoint/sections) — every section, what it does, and how to configure the signature ones
-- [Settings reference](/docs/waypoint/settings-reference) — auto-generated table of every theme setting, control type, and default
-- [Sections reference (full)](/docs/waypoint/sections-reference) — auto-generated table of every section's settings and blocks
-- [FAQ](/docs/waypoint/faq) — common questions
-- [Support](/docs/waypoint/support) — support policy and contact
+- [Setup guide](/waypoint/setup) — installation, style presets, theme settings, navigation, product data, known limitations
+- [Sections reference](/waypoint/sections) — every section, what it does, and how to configure the signature ones
+- [Settings reference](/waypoint/settings-reference) — auto-generated table of every theme setting, control type, and default
+- [Sections reference (full)](/waypoint/sections-reference) — auto-generated table of every section's settings and blocks
+- [FAQ](/waypoint/faq) — common questions
+- [Support](/waypoint/support) — support policy and contact
 
 ## Quick start
 
 1. **Pick a style.** Open Theme settings, then Colors. Waypoint ships three presets: **Waypoint** (ink and paper with a volt accent), **Carbon** (blackout), and **Sand** (warm neutrals). Each preset is a complete color-scheme set; your content and media stay the same when you switch.
 2. **Set your logo and favicon.** Theme settings, Logo and favicon. Upload a standard logo, an optional mobile logo, and a favicon (scaled down to 32 x 32px).
-3. **Create menus.** In Navigation, create a `main-menu` for the header and a footer menu. The header turns top-level items into a mega menu when you add Mega menu panel blocks (see [Setup guide](/docs/waypoint/setup#mega-menu)).
+3. **Create menus.** In Navigation, create a `main-menu` for the header and a footer menu. The header turns top-level items into a mega menu when you add Mega menu panel blocks (see [Setup guide](/waypoint/setup#mega-menu)).
 4. **Choose header and footer styles.** The Header section has a Style select (utility, editorial, commerce). The Footer has its own (system, compact, editorial, split).
-5. **Add product data.** Product pages read a small set of optional metafields for spec-sheet content. Products render correctly without them; each empty field simply does not appear. See [Product setup](/docs/waypoint/setup#product-setup).
+5. **Add product data.** Product pages read a small set of optional metafields for spec-sheet content. Products render correctly without them; each empty field simply does not appear. See [Product setup](/waypoint/setup#product-setup).
 
 ## What the demo store shows
 
