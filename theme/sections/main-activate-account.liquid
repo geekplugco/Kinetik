@@ -1,4 +1,8 @@
-{%- assign field = 'border border-border-strong bg-transparent px-4 py-3 text-text-strong outline-none transition-colors focus-visible:border-accent' -%}
+{%- liquid
+  assign field = 'min-h-[44px] border border-border-strong bg-transparent px-4 py-3 text-text-strong outline-none transition-colors focus-visible:border-accent'
+  assign submit_label = 'customer.activate_account.submit' | t | default: 'Activate account'
+  assign decline_label = 'customer.activate_account.decline' | t | default: 'Decline'
+-%}
 <section
   data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
   style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
@@ -8,7 +12,7 @@
   <p class="mt-3 text-sm text-text-muted">Set a password to finish activating your account.</p>
   {%- form 'activate_customer_password', class: 'mt-8 grid gap-4' -%}
     {%- if form.errors -%}
-      <div class="border border-state-error px-4 py-3 text-sm text-state-error">{{ form.errors | default_errors }}</div>
+      <div role="alert" class="border border-negative px-4 py-3 text-sm text-negative">{{ form.errors | default_errors }}</div>
     {%- endif -%}
     <label class="grid gap-1">
       <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ 'customer.activate_account.password' | t | default: 'Password' }}</span>
@@ -19,8 +23,8 @@
       <input type="password" name="customer[password_confirmation]" autocomplete="new-password" required class="{{ field }}">
     </label>
     <div class="mt-2 flex flex-wrap gap-3">
-      <button type="submit" name="commit" class="bg-accent px-6 py-3 font-mono text-xs uppercase tracking-label text-accent-ink transition-colors hover:bg-accent-hover{% if settings.button_style == 'rounded' %} rounded-full{% endif %}">{{ 'customer.activate_account.submit' | t | default: 'Activate account' }}</button>
-      <button type="submit" name="decline" class="border border-border-strong px-6 py-3 font-mono text-xs uppercase tracking-label text-text-strong transition-colors hover:bg-surface-sunken{% if settings.button_style == 'rounded' %} rounded-full{% endif %}">{{ 'customer.activate_account.decline' | t | default: 'Decline' }}</button>
+      {%- render 'button', label: submit_label, type: 'submit', name: 'commit' -%}
+      {%- render 'button', label: decline_label, type: 'submit', name: 'decline', variant: 'secondary' -%}
     </div>
   {%- endform -%}
 </section>

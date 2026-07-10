@@ -3,7 +3,7 @@
   style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
   class="mx-auto max-w-[900px] px-6"
 >
-  <a href="{{ routes.account_url }}" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-text-strong">&larr; {{ 'customer.account.title' | t | default: 'Account' }}</a>
+  <a href="{{ routes.account_url }}" class="inline-flex min-h-[44px] items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-text-strong">&larr; {{ 'customer.account.title' | t | default: 'Account' }}</a>
 
   <header class="mt-6 flex flex-wrap items-end justify-between gap-4 border-b border-border-hairline pb-6">
     <div class="flex flex-col gap-2">
@@ -22,7 +22,8 @@
 
   <div class="mt-8 grid gap-10 md:grid-cols-[2fr_1fr]">
     <div class="flex flex-col gap-6">
-      <table class="w-full border-collapse text-left text-sm">
+      <div class="overflow-x-auto">
+      <table class="w-full min-w-[480px] border-collapse text-left text-sm">
         <thead>
           <tr class="border-b border-border-strong font-mono text-xs uppercase tracking-label text-text-muted">
             <th class="py-3 pr-4">{{ 'customer.order.product' | t | default: 'Product' }}</th>
@@ -86,6 +87,7 @@
           {%- endfor -%}
         </tbody>
       </table>
+      </div>
 
       <dl class="ml-auto grid w-full max-w-xs grid-cols-[1fr_auto] gap-x-8 gap-y-2 font-mono text-sm">
         <dt class="text-text-muted">Subtotal</dt>

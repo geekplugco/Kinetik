@@ -8,7 +8,7 @@
       <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ customer.first_name | default: customer.name }}</span>
       <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ 'customer.account.title' | t | default: 'Account' }}</h1>
     </div>
-    <a href="{{ routes.account_logout_url }}" class="font-mono text-xs uppercase tracking-label text-text-muted underline underline-offset-4 transition-colors hover:text-accent-press">{{ 'customer.log_out' | t | default: 'Log out' }}</a>
+    <a href="{{ routes.account_logout_url }}" class="inline-flex min-h-[44px] items-center font-mono text-xs uppercase tracking-label text-text-muted underline underline-offset-4 transition-colors hover:text-accent-press">{{ 'customer.log_out' | t | default: 'Log out' }}</a>
   </div>
 
   <div class="mt-10 grid gap-10 md:grid-cols-[2fr_1fr]">
@@ -16,7 +16,8 @@
       <h2 class="font-mono text-xs uppercase tracking-label text-text-muted">{{ 'customer.orders.title' | t | default: 'Order history' }}</h2>
       {%- paginate customer.orders by 12 -%}
         {%- if customer.orders.size > 0 -%}
-          <table class="mt-4 w-full border-collapse text-left text-sm">
+          <div class="mt-4 overflow-x-auto">
+          <table class="w-full min-w-[480px] border-collapse text-left text-sm">
             <thead>
               <tr class="border-b border-border-strong font-mono text-xs uppercase tracking-label text-text-muted">
                 <th class="py-3 pr-4">{{ 'customer.orders.order_number' | t | default: 'Order' }}</th>
@@ -28,7 +29,7 @@
             <tbody>
               {%- for order in customer.orders -%}
                 <tr class="border-b border-border-hairline text-text-body">
-                  <td class="py-4 pr-4"><a href="{{ order.customer_url }}" class="font-mono text-text-strong transition-colors hover:text-accent-press">{{ order.name }}</a></td>
+                  <td class="py-4 pr-4"><a href="{{ order.customer_url }}" class="inline-flex min-h-[44px] items-center font-mono text-text-strong transition-colors hover:text-accent-press">{{ order.name }}</a></td>
                   <td class="py-4 pr-4">{{ order.created_at | date: '%b %d, %Y' }}</td>
                   <td class="py-4 pr-4">
                     {%- if order.fulfillment_status == 'fulfilled' -%}
@@ -42,6 +43,7 @@
               {%- endfor -%}
             </tbody>
           </table>
+          </div>
           {%- if paginate.pages > 1 -%}
             <nav class="mt-8 flex justify-center font-mono text-xs uppercase tracking-label text-text-muted" aria-label="Pagination">
               {{ paginate | default_pagination }}
@@ -62,7 +64,7 @@
       {%- if customer.default_address -%}
         <address class="mt-1 not-italic text-sm text-text-muted">{{ customer.default_address | format_address }}</address>
       {%- endif -%}
-      <a href="{{ routes.account_addresses_url }}" class="mt-2 inline-flex font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 transition-colors hover:text-accent-press">{{ 'customer.addresses.title' | t | default: 'Manage addresses' }}</a>
+      <a href="{{ routes.account_addresses_url }}" class="mt-2 inline-flex min-h-[44px] items-center font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 transition-colors hover:text-accent-press">{{ 'customer.addresses.title' | t | default: 'Manage addresses' }}</a>
     </aside>
   </div>
 </section>

@@ -1,21 +1,23 @@
 {%- liquid
   assign recover_done = false
-  assign field = 'border border-border-strong bg-transparent px-4 py-3 text-text-strong outline-none transition-colors focus-visible:border-accent'
+  assign field = 'min-h-[44px] border border-border-strong bg-transparent px-4 py-3 text-text-strong outline-none transition-colors focus-visible:border-accent'
+  assign sign_in_label = 'customer.login.sign_in' | t | default: 'Sign in'
+  assign recover_submit_label = 'Send reset link'
 -%}
 {%- capture recover_block -%}
   {%- form 'recover_customer_password', class: 'mt-5 grid gap-4' -%}
     {%- if form.posted_successfully? -%}
       {%- assign recover_done = true -%}
-      <div class="border border-positive px-4 py-3 text-sm text-positive" aria-live="polite">We've sent you an email with a link to update your password.</div>
+      <div role="status" aria-live="polite" class="border border-positive px-4 py-3 text-sm text-positive">We've sent you an email with a link to update your password.</div>
     {%- endif -%}
     {%- if form.errors -%}
-      <div class="border border-state-error px-4 py-3 text-sm text-state-error">{{ form.errors | default_errors }}</div>
+      <div role="alert" class="border border-negative px-4 py-3 text-sm text-negative">{{ form.errors | default_errors }}</div>
     {%- endif -%}
     <label class="grid gap-1">
       <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ 'customer.login.email' | t | default: 'Email' }}</span>
       <input type="email" name="email" autocomplete="email" required class="{{ field }}">
     </label>
-    <button type="submit" class="bg-accent px-6 py-3 font-mono text-xs uppercase tracking-label text-accent-ink transition-colors hover:bg-accent-hover{% if settings.button_style == 'rounded' %} rounded-full{% endif %}">Send reset link</button>
+    {%- render 'button', label: recover_submit_label, type: 'submit' -%}
   {%- endform -%}
 {%- endcapture -%}
 <section
@@ -27,7 +29,7 @@
 
   {%- form 'customer_login', class: 'mt-8 grid gap-4' -%}
     {%- if form.errors -%}
-      <div class="border border-state-error px-4 py-3 text-sm text-state-error">{{ form.errors | default_errors }}</div>
+      <div role="alert" class="border border-negative px-4 py-3 text-sm text-negative">{{ form.errors | default_errors }}</div>
     {%- endif -%}
     <label class="grid gap-1">
       <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ 'customer.login.email' | t | default: 'Email' }}</span>
@@ -39,17 +41,17 @@
         <input type="password" name="customer[password]" autocomplete="current-password" required class="{{ field }}">
       </label>
     {%- endif -%}
-    <button type="submit" class="mt-2 bg-accent px-6 py-3 font-mono text-xs uppercase tracking-label text-accent-ink transition-colors hover:bg-accent-hover{% if settings.button_style == 'rounded' %} rounded-full{% endif %}">{{ 'customer.login.sign_in' | t | default: 'Sign in' }}</button>
+    {%- render 'button', label: sign_in_label, type: 'submit', class: 'mt-2' -%}
   {%- endform -%}
 
   <details id="recover" class="mt-6 border-t border-border-hairline pt-6"{% if recover_done %} open{% endif %}>
-    <summary class="cursor-pointer list-none font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-text-strong">Forgot your password?</summary>
+    <summary class="inline-flex min-h-[44px] cursor-pointer list-none items-center font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-text-strong">Forgot your password?</summary>
     {{ recover_block }}
   </details>
 
   <p class="mt-6 font-mono text-xs uppercase tracking-label text-text-muted">
     {{ 'customer.login.no_account' | t | default: 'New here?' }}
-    <a href="{{ routes.account_register_url }}" class="text-text-strong underline underline-offset-4 transition-colors hover:text-accent-press">{{ 'customer.register.title' | t | default: 'Create account' }}</a>
+    <a href="{{ routes.account_register_url }}" class="inline-flex min-h-[44px] items-center text-text-strong underline underline-offset-4 transition-colors hover:text-accent-press">{{ 'customer.register.title' | t | default: 'Create account' }}</a>
   </p>
 </section>
 {% schema %}

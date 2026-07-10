@@ -1,24 +1,22 @@
 {%- liquid
-  assign field = 'border border-border-strong bg-transparent px-4 py-3 text-text-strong outline-none transition-colors focus-visible:border-accent'
+  assign field = 'min-h-[44px] border border-border-strong bg-transparent px-4 py-3 text-text-strong outline-none transition-colors focus-visible:border-accent'
   assign label_cls = 'font-mono text-xs uppercase tracking-label text-text-muted'
-  assign submit_cls = 'mt-2 bg-accent px-6 py-3 font-mono text-xs uppercase tracking-label text-accent-ink transition-colors hover:bg-accent-hover'
-  if settings.button_style == 'rounded'
-    assign submit_cls = submit_cls | append: ' rounded-full'
-  endif
+  assign add_label = 'customer.addresses.add' | t | default: 'Add address'
+  assign update_label = 'Update address'
 -%}
 <section
   data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
   style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
   class="mx-auto max-w-[900px] px-6"
 >
-  <a href="{{ routes.account_url }}" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-text-strong">&larr; {{ 'customer.account.title' | t | default: 'Account' }}</a>
+  <a href="{{ routes.account_url }}" class="inline-flex min-h-[44px] items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-text-strong">&larr; {{ 'customer.account.title' | t | default: 'Account' }}</a>
   <h1 class="mt-6 font-display text-h1 tracking-tight text-text-strong">{{ 'customer.addresses.title' | t | default: 'Addresses' }}</h1>
 
   <details class="mt-8 border border-border-strong p-6">
-    <summary class="cursor-pointer list-none font-mono text-xs uppercase tracking-label text-text-strong">+ {{ 'customer.addresses.add_new' | t | default: 'Add a new address' }}</summary>
+    <summary class="inline-flex min-h-[44px] cursor-pointer list-none items-center font-mono text-xs uppercase tracking-label text-text-strong">+ {{ 'customer.addresses.add_new' | t | default: 'Add a new address' }}</summary>
     {%- form 'customer_address', customer.new_address, class: 'mt-6 grid gap-4' -%}
       {%- if form.errors -%}
-        <div class="border border-state-error px-4 py-3 text-sm text-state-error">{{ form.errors | default_errors }}</div>
+        <div role="alert" class="border border-negative px-4 py-3 text-sm text-negative">{{ form.errors | default_errors }}</div>
       {%- endif -%}
       <div class="grid gap-4 sm:grid-cols-2">
         <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.register.first_name' | t | default: 'First name' }}</span><input type="text" name="address[first_name]" autocomplete="given-name" class="{{ field }}"></label>
@@ -36,8 +34,8 @@
         <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.addresses.country' | t | default: 'Country/region' }}</span><select name="address[country]" class="{{ field }}">{{ country_option_tags }}</select></label>
       </div>
       <label class="grid gap-1"><span class="{{ label_cls }}">Phone</span><input type="tel" name="address[phone]" autocomplete="tel" class="{{ field }}"></label>
-      <label class="flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted"><input type="checkbox" name="address[default]" value="1" class="h-4 w-4 accent-accent"> Set as default address</label>
-      <button type="submit" class="{{ submit_cls }}">{{ 'customer.addresses.add' | t | default: 'Add address' }}</button>
+      <label class="flex min-h-[44px] items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted"><input type="checkbox" name="address[default]" value="1" class="h-4 w-4 accent-accent"> Set as default address</label>
+      {%- render 'button', label: add_label, type: 'submit', class: 'mt-2' -%}
     {%- endform -%}
   </details>
 
@@ -54,15 +52,15 @@
               {%- endif -%}
               <form method="post" action="{{ address.url }}">
                 <input type="hidden" name="_method" value="delete">
-                <button type="submit" class="font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-state-error">Delete</button>
+                <button type="submit" aria-label="Delete address: {{ address.address1 | escape }}, {{ address.city | escape }}" class="inline-flex min-h-[44px] items-center font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-negative">Delete</button>
               </form>
             </div>
             <address class="not-italic text-body text-text-body">{{ address | format_address }}</address>
             <details>
-              <summary class="cursor-pointer list-none font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 transition-colors hover:text-accent-press">Edit</summary>
+              <summary aria-label="Edit address: {{ address.address1 | escape }}, {{ address.city | escape }}" class="inline-flex min-h-[44px] cursor-pointer list-none items-center font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 transition-colors hover:text-accent-press">Edit</summary>
               {%- form 'customer_address', address, class: 'mt-5 grid gap-4' -%}
                 {%- if form.errors -%}
-                  <div class="border border-state-error px-4 py-3 text-sm text-state-error">{{ form.errors | default_errors }}</div>
+                  <div role="alert" class="border border-negative px-4 py-3 text-sm text-negative">{{ form.errors | default_errors }}</div>
                 {%- endif -%}
                 <div class="grid gap-4 sm:grid-cols-2">
                   <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.register.first_name' | t | default: 'First name' }}</span><input type="text" name="address[first_name]" value="{{ address.first_name | escape }}" autocomplete="given-name" class="{{ field }}"></label>
@@ -80,8 +78,8 @@
                   <label class="grid gap-1"><span class="{{ label_cls }}">{{ 'customer.addresses.country' | t | default: 'Country/region' }}</span><select name="address[country]" class="{{ field }}">{{ country_option_tags }}</select></label>
                 </div>
                 <label class="grid gap-1"><span class="{{ label_cls }}">Phone</span><input type="tel" name="address[phone]" value="{{ address.phone | escape }}" autocomplete="tel" class="{{ field }}"></label>
-                <label class="flex items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted"><input type="checkbox" name="address[default]" value="1"{% if address == customer.default_address %} checked{% endif %} class="h-4 w-4 accent-accent"> Set as default address</label>
-                <button type="submit" class="{{ submit_cls }}">Update address</button>
+                <label class="flex min-h-[44px] items-center gap-2 font-mono text-xs uppercase tracking-label text-text-muted"><input type="checkbox" name="address[default]" value="1"{% if address == customer.default_address %} checked{% endif %} class="h-4 w-4 accent-accent"> Set as default address</label>
+                {%- render 'button', label: update_label, type: 'submit', class: 'mt-2' -%}
               {%- endform -%}
             </details>
           </div>
