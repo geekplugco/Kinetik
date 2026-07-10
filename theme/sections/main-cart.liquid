@@ -19,11 +19,63 @@
     <section
       data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
       style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
-      class="mx-auto max-w-[800px] px-6 text-center"
+      class="mx-auto max-w-[var(--page-width)] px-6"
     >
-      <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ 'sections.cart.empty' | t | default: 'Your cart is empty' }}</h1>
-      {%- assign continue_label = 'sections.cart.continue' | t | default: 'Continue shopping' -%}
-      <div class="mt-6">{%- render 'button', label: continue_label, href: routes.all_products_collection_url -%}</div>
+      <div class="grid overflow-hidden border border-border-hairline md:grid-cols-[0.86fr_1.14fr]">
+        <div class="flex min-h-[360px] flex-col justify-between bg-ink-950 p-6 text-paper md:p-8">
+          <div>
+            <span class="font-mono text-xs uppercase tracking-label text-accent">{{ section.settings.empty_eyebrow }}</span>
+            <h1 class="mt-4 max-w-xl font-display text-h1 uppercase leading-none tracking-tight text-paper">{{ section.settings.empty_heading | default: 'Your cart is empty' }}</h1>
+            <p class="mt-5 max-w-md text-body text-paper/70">{{ section.settings.empty_text }}</p>
+          </div>
+          <div class="mt-8 flex flex-wrap gap-3">
+            {%- assign continue_label = 'sections.cart.continue' | t | default: 'Continue shopping' -%}
+            {%- render 'button', label: continue_label, href: routes.all_products_collection_url -%}
+            {%- if section.settings.empty_secondary_label != blank and section.settings.empty_secondary_link != blank -%}
+              <a href="{{ section.settings.empty_secondary_link }}" class="inline-flex min-h-[44px] items-center justify-center border border-paper/55 px-5 py-3 font-mono text-xs uppercase tracking-label text-paper transition-colors hover:border-paper">{{ section.settings.empty_secondary_label }}</a>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class="grid bg-surface-page sm:grid-cols-3">
+          {%- assign empty_modules = '01|Shell|Weather layer|02|Carry|Daily loadout|03|Audio|Transit signal' | split: '|' -%}
+          {%- for i in (0..2) -%}
+            {%- assign base = i | times: 3 -%}
+            {%- assign num_index = base -%}
+            {%- assign title_index = base | plus: 1 -%}
+            {%- assign text_index = base | plus: 2 -%}
+            <div class="flex min-h-[300px] flex-col justify-between border-b border-border-hairline p-5 sm:border-b-0 sm:border-l">
+              <div class="relative aspect-[4/3] overflow-hidden bg-surface-sunken">
+                <span class="absolute left-5 top-5 font-mono text-xs uppercase tracking-label text-text-muted">{{ empty_modules[num_index] }}</span>
+                <span class="absolute inset-x-5 top-1/2 h-px bg-border-hairline"></span>
+                <span class="absolute inset-y-5 left-1/2 w-px bg-border-hairline"></span>
+                <span class="absolute bottom-5 right-5 h-10 w-10 border border-border-strong"></span>
+              </div>
+              <div class="mt-5">
+                <p class="font-display text-h4 tracking-tight text-text-strong">{{ empty_modules[title_index] }}</p>
+                <p class="mt-2 text-sm text-text-muted">{{ empty_modules[text_index] }}</p>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- assign empty_collection = section.settings.empty_collection -%}
+      {%- if empty_collection != blank and empty_collection.products_count > 0 -%}
+        <div class="mt-10 border-t border-border-hairline pt-8">
+          <div class="flex items-end justify-between gap-6">
+            <div>
+              <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ empty_collection.title }}</span>
+              <h2 class="mt-2 font-display text-h3 tracking-tight text-text-strong">{{ section.settings.empty_collection_heading }}</h2>
+            </div>
+            <a href="{{ empty_collection.url }}" class="hidden min-h-[44px] items-center font-mono text-xs uppercase tracking-label text-text-strong underline underline-offset-4 hover:text-accent-press sm:inline-flex">View all</a>
+          </div>
+          <div class="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {%- for p in empty_collection.products limit: 4 -%}
+              {%- render 'product-card', product: p -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
     </section>
   {%- else -%}
     <section
@@ -110,6 +162,11 @@
               <summary class="cursor-pointer select-none font-mono text-xs uppercase tracking-label text-text-muted">This is a gift &mdash; add a note</summary>
               <textarea name="attributes[Gift note]" rows="2" placeholder="Write a gift message" class="mt-2 w-full border border-border-strong bg-surface-page px-4 py-3 font-sans text-sm text-text-strong placeholder:text-text-faint">{{ cart.attributes['Gift note'] }}</textarea>
             </details>
+            <label class="flex cursor-pointer items-center gap-3 border border-border-hairline p-4">
+              <input type="hidden" name="attributes[Gift wrapping]" value="">
+              <input type="checkbox" name="attributes[Gift wrapping]" value="Yes"{% if cart.attributes['Gift wrapping'] == 'Yes' %} checked{% endif %} class="h-4 w-4 border border-border-strong accent-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
+              <span class="font-mono text-xs uppercase tracking-label text-text-strong">Add gift wrapping</span>
+            </label>
             <div class="flex flex-col gap-2">
               <span class="font-mono text-xs uppercase tracking-label text-text-muted">Discount code</span>
               <p class="font-mono text-[11px] text-text-faint">Discount codes are applied at checkout.</p>
@@ -202,6 +259,50 @@
       "id": "show_recommendations",
       "label": "t:sections.main-cart.settings.show_recommendations.label",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-cart.settings.header__empty.content"
+    },
+    {
+      "type": "text",
+      "id": "empty_eyebrow",
+      "label": "t:sections.main-cart.settings.empty_eyebrow.label",
+      "default": "System empty"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "empty_heading",
+      "label": "t:sections.main-cart.settings.empty_heading.label",
+      "default": "Your cart is empty"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text",
+      "label": "t:sections.main-cart.settings.empty_text.label",
+      "default": "Start with one anchor piece, then add carry, audio, or weather modules to complete the kit."
+    },
+    {
+      "type": "text",
+      "id": "empty_secondary_label",
+      "label": "t:sections.main-cart.settings.empty_secondary_label.label",
+      "default": "Open lookbook"
+    },
+    {
+      "type": "url",
+      "id": "empty_secondary_link",
+      "label": "t:sections.main-cart.settings.empty_secondary_link.label"
+    },
+    {
+      "type": "collection",
+      "id": "empty_collection",
+      "label": "t:sections.main-cart.settings.empty_collection.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "empty_collection_heading",
+      "label": "t:sections.main-cart.settings.empty_collection_heading.label",
+      "default": "Start with the live system"
     },
     {
       "type": "color_scheme",
