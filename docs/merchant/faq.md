@@ -9,6 +9,12 @@ It uses Shopify's recommendations engine, which needs sales and browsing data to
 **How do I get color swatches on cards and product pages?**
 Name a product option Color (or change the trigger name in Theme settings, Color swatches), then either set native swatches on the option values or add `Name:#hex` lines to the Swatch list setting.
 
+**How do I set up a size chart?**
+Three options, checked in this order: a product's own `size_chart` metafield (always wins, works on any product), Size chart row blocks on the Field spec section (a shared table, but only shows on products with a Size option), or a full page you build and link with the section's Size guide page setting. See [Size guide](/docs/waypoint/setup#size-guide) in the setup guide.
+
+**Why isn't the size guide showing on some products?**
+If you're relying on the Field spec section's Size chart row blocks, that table only appears on products that have a Size variant option — non-apparel products like sunglasses are skipped on purpose so they don't show an irrelevant chest/waist chart. Set a per-product `size_chart` metafield instead if you need sizing info on a product without a Size option, and check that Show size guide is enabled on the section.
+
 **Sale badges are not showing.**
 Set a compare-at price on the variant and check Theme settings, Badges, where sale and sold-out badges can be toggled.
 

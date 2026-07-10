@@ -79,6 +79,20 @@ Waypoint reads optional product metafields for spec-sheet content. Create defini
 
 Fields you leave empty simply do not render. A product with no metafields still gets a complete product page.
 
+### Size guide
+
+The Field spec section can show a "Size guide" link that opens a modal with sizing information. It checks three sources, in this order:
+
+1. **The product's `size_chart` metafield** (multi-line text/HTML, listed in the metafield table above). If you've filled this in, it always wins and shows on that product regardless of what variant options the product has — use it for a one-off exception or a product that needs custom sizing notes.
+2. **Size chart row blocks** on the Field spec section. Add one block per size (row label S, M, L, and so on) with a value for each column, and the theme renders a real table. Column headings — Chest, Waist, plus up to four optional extra columns — are section settings, so the table is shared across every product using that template. To avoid showing an irrelevant chest/waist table on accessories, this chart only appears on products that actually have a Size variant option.
+3. **The Size guide page** setting. Pick any page you've built in Online Store, Pages, for cases that need more than a table — fit notes, a sizing video, international conversions, and so on.
+
+Turn the whole feature off with the section's **Show size guide** checkbox, and change the trigger text with **Size guide label** (default "Size guide").
+
+![Size guide trigger link next to the Field spec badges](/screenshots/size-guide-trigger.png)
+
+![Size guide modal open, showing the size chart table](/screenshots/size-guide-modal.png)
+
 ### Swatches
 
 Color options resolve to swatches in this order:
