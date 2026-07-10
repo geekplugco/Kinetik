@@ -24,9 +24,14 @@
     assign has_badges = true
   endif
 
+  assign size_row_blocks = section.blocks | where: 'type', 'size_row'
+  assign size_columns = section.settings.size_chart_col_1 | append: '|' | append: section.settings.size_chart_col_2 | append: '|' | append: section.settings.size_chart_col_3 | append: '|' | append: section.settings.size_chart_col_4 | append: '|' | append: section.settings.size_chart_col_5 | split: '|'
+
   assign size_source = ''
   if section.settings.show_size_guide
-    if size_chart != blank
+    if size_row_blocks.size > 0
+      assign size_source = 'blocks'
+    elsif size_chart != blank
       assign size_source = 'metafield'
     elsif section.settings.size_guide_page != blank
       assign size_source = 'page'
@@ -79,7 +84,33 @@
                     <button type="button" data-size-guide-close aria-label="Close size guide" class="font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-text-strong">Close</button>
                   </div>
                   <div class="prose-spec px-6 py-6 text-body text-text-body [&_h3]:mt-0 [&_h3]:mb-3 [&_h3]:font-mono [&_h3]:text-xs [&_h3]:uppercase [&_h3]:tracking-label [&_h3]:text-text-muted [&_table]:w-full [&_table]:border-collapse [&_table]:font-mono [&_table]:text-xs [&_td]:border [&_td]:border-border-hairline [&_td]:px-3 [&_td]:py-2 [&_th]:border [&_th]:border-border-hairline [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:uppercase [&_th]:tracking-label [&_p]:m-0 [&_p:not(:last-child)]:mb-3">
-                    {%- if size_source == 'metafield' -%}
+                    {%- if size_source == 'blocks' -%}
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>{{ section.settings.size_chart_col_0 | default: 'Size' }}</th>
+                            {%- for col in size_columns -%}
+                              {%- if col != blank -%}<th>{{ col }}</th>{%- endif -%}
+                            {%- endfor -%}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {%- for row in size_row_blocks -%}
+                            <tr {{ row.shopify_attributes }}>
+                              <th>{{ row.settings.label }}</th>
+                              {%- if section.settings.size_chart_col_1 != blank -%}<td>{{ row.settings.value_1 }}</td>{%- endif -%}
+                              {%- if section.settings.size_chart_col_2 != blank -%}<td>{{ row.settings.value_2 }}</td>{%- endif -%}
+                              {%- if section.settings.size_chart_col_3 != blank -%}<td>{{ row.settings.value_3 }}</td>{%- endif -%}
+                              {%- if section.settings.size_chart_col_4 != blank -%}<td>{{ row.settings.value_4 }}</td>{%- endif -%}
+                              {%- if section.settings.size_chart_col_5 != blank -%}<td>{{ row.settings.value_5 }}</td>{%- endif -%}
+                            </tr>
+                          {%- endfor -%}
+                        </tbody>
+                      </table>
+                      {%- if section.settings.size_chart_note != blank -%}
+                        <p class="mt-3 text-text-muted">{{ section.settings.size_chart_note }}</p>
+                      {%- endif -%}
+                    {%- elsif size_source == 'metafield' -%}
                       {{ size_chart }}
                     {%- elsif size_source == 'page' -%}
                       {{ section.settings.size_guide_page.content }}
@@ -188,6 +219,49 @@
       "info": "t:sections.field-spec.settings.size_guide_page.info"
     },
     {
+      "type": "paragraph",
+      "content": "Add Size chart row blocks below to build a table instead -- it takes priority over the page and metafield options above."
+    },
+    {
+      "type": "text",
+      "id": "size_chart_col_0",
+      "label": "Row label column heading",
+      "default": "Size"
+    },
+    {
+      "type": "text",
+      "id": "size_chart_col_1",
+      "label": "Column 2 heading",
+      "default": "Chest"
+    },
+    {
+      "type": "text",
+      "id": "size_chart_col_2",
+      "label": "Column 3 heading",
+      "default": "Waist"
+    },
+    {
+      "type": "text",
+      "id": "size_chart_col_3",
+      "label": "Column 4 heading (optional)"
+    },
+    {
+      "type": "text",
+      "id": "size_chart_col_4",
+      "label": "Column 5 heading (optional)"
+    },
+    {
+      "type": "text",
+      "id": "size_chart_col_5",
+      "label": "Column 6 heading (optional)"
+    },
+    {
+      "type": "text",
+      "id": "size_chart_note",
+      "label": "Note below the chart (optional)",
+      "default": "All measurements in inches, laid flat."
+    },
+    {
       "type": "header",
       "content": "t:sections.field-spec.settings.header__style.content"
     },
@@ -246,6 +320,43 @@
           "id": "label",
           "label": "t:sections.field-spec.blocks.badge.settings.label.label",
           "default": "Weatherproof"
+        }
+      ]
+    },
+    {
+      "type": "size_row",
+      "name": "Size chart row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Row label",
+          "default": "M"
+        },
+        {
+          "type": "text",
+          "id": "value_1",
+          "label": "Value 1"
+        },
+        {
+          "type": "text",
+          "id": "value_2",
+          "label": "Value 2"
+        },
+        {
+          "type": "text",
+          "id": "value_3",
+          "label": "Value 3"
+        },
+        {
+          "type": "text",
+          "id": "value_4",
+          "label": "Value 4"
+        },
+        {
+          "type": "text",
+          "id": "value_5",
+          "label": "Value 5"
         }
       ]
     }
