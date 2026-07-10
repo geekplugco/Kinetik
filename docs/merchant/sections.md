@@ -80,7 +80,7 @@ Set a target date and time; the countdown runs live and the section flips its st
 
 ### Route map
 
-Add Stop blocks: a time and place label, heading, caption, an image, and an optional featured product with live pricing. Two layouts (board and timeline) and two visual styles (signal, with volt viewfinder framing, or quiet). Stops without an image show a route diagram placeholder, so the section never looks broken while you gather photography.
+Add Stop blocks: a time and place label, heading, caption, an image, and an optional featured product with live pricing. Two layouts (board and timeline) and two visual styles (signal, with volt viewfinder framing, or quiet). Rows alternate media and copy sides by default (toggle off for a single-side layout), a Row density setting controls how tall each stop reads, and a sticky step index tracks position as customers scroll. Stops without an image show a route diagram placeholder, so the section never looks broken while you gather photography.
 
 ### Material scan
 

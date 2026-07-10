@@ -6,8 +6,10 @@ Version: 1.0.0
 
 ## Contents
 
-- [Setup guide](setup.md) — installation, style presets, theme settings, navigation, product data
+- [Setup guide](setup.md) — installation, style presets, theme settings, navigation, product data, known limitations
 - [Sections reference](sections.md) — every section, what it does, and how to configure the signature ones
+- [Settings reference](settings-reference.md) — auto-generated table of every theme setting, control type, and default
+- [Sections reference (full)](sections-reference.md) — auto-generated table of every section's settings and blocks
 - [FAQ](faq.md) — common questions
 - [Support](support.md) — support policy and contact
 

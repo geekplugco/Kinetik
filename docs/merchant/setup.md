@@ -58,7 +58,7 @@ Panels without a matching block fall back to a standard dropdown of the item's c
 
 ### Footer support links
 
-The Footer's Support links group has four page pickers (contact, shipping and returns, FAQ, warranty). Unset pickers fall back to `/pages/contact`, `/pages/shipping`, `/pages/faq`, and `/pages/warranty`, so create pages with those handles or point the pickers at your own pages.
+The Footer's Support column is a block list (Support link blocks), so you can add, remove, and reorder links freely instead of being limited to a fixed set. Each block has a Label and a URL. The default preset ships five: Contact, Shipping & returns, FAQ, Warranty, and Field guide.
 
 ## Product setup
 
@@ -129,3 +129,11 @@ The theme lazy-loads all below-the-fold images and generates responsive sizes au
 ## Bundle pricing in Build your kit
 
 The Build your kit section shows a running discount when customers pick the minimum number of pieces. The percentage and minimum are section settings, and the display is informational: create a matching automatic discount in your admin (for example, 12% off orders of 3 or more items) so the price applies at checkout.
+
+## Known limitations
+
+- **New Customer Accounts.** If your store has Shopify's New Customer Accounts enabled, `/account/login`, `/account/register`, and password-reset pages redirect to Shopify's hosted account UI instead of the theme's own login, register, and reset-password templates. Those templates render fully on stores using Classic customer accounts. The account, addresses, and order-history pages work the same on both.
+- **Related products needs store history.** The Related products section calls Shopify's product recommendations engine, which returns nothing for a brand-new store or a product with no browsing or sales data. This is expected — the section stays hidden rather than showing an empty state, and fills in as the store gets traffic.
+- **Complementary products needs Search & Discovery pairings.** The section only appears once you've set "Pairs with" recommendations for a product in the Shopify Search and Discovery app. It does not generate pairings on its own.
+- **Bundle and free-shipping thresholds are display-only.** The Build your kit discount and the header's free-shipping bar both show a threshold you set in theme settings, but neither creates the underlying discount or shipping rate. Create a matching automatic discount / shipping rate in your admin so what customers see matches what they pay.
+- **Demo imagery does not transfer.** Installing the theme reproduces the demo's layout, color presets, and settings, but not its photography — image slots on a fresh install show placeholder art until you upload your own media.
