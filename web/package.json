@@ -14,6 +14,7 @@
     "guard:perf": "node scripts/guard-perf.mjs ../theme",
     "guard:contrast": "node scripts/guard-contrast.mjs ../theme",
     "smoke:sections": "SMOKE_THEME_DIR=../theme node scripts/smoke-sections.mjs",
+    "smoke:theme": "cd ../theme && node ../web/scripts/smoke-theme.mjs",
     "gate:theme": "node scripts/guard-comments.mjs ../theme && node scripts/guard-settings.mjs ../theme && node scripts/guard-perf.mjs ../theme && node scripts/guard-contrast.mjs ../theme && shopify theme check --path ../theme && node ~/.claude/skills/teifi-theme-json/src/validate.mjs gate ../theme --strict"
   },
   "dependencies": {
