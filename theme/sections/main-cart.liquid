@@ -37,25 +37,66 @@
           </div>
         </div>
         <div class="grid bg-surface-page sm:grid-cols-3">
-          {%- assign empty_modules = '01|Shell|Weather layer|02|Carry|Daily loadout|03|Audio|Transit signal' | split: '|' -%}
-          {%- for i in (0..2) -%}
-            {%- assign base = i | times: 3 -%}
-            {%- assign num_index = base -%}
-            {%- assign title_index = base | plus: 1 -%}
-            {%- assign text_index = base | plus: 2 -%}
-            <div class="flex min-h-[300px] flex-col justify-between border-b border-border-hairline p-5 sm:border-b-0 sm:border-l">
-              <div class="relative aspect-[4/3] overflow-hidden bg-surface-sunken">
-                <span class="absolute left-5 top-5 font-mono text-xs uppercase tracking-label text-text-muted">{{ empty_modules[num_index] }}</span>
-                <span class="absolute inset-x-5 top-1/2 h-px bg-border-hairline"></span>
-                <span class="absolute inset-y-5 left-1/2 w-px bg-border-hairline"></span>
-                <span class="absolute bottom-5 right-5 h-10 w-10 border border-border-strong"></span>
+          {%- assign empty_category_blocks = section.blocks | where: 'type', 'category' -%}
+          {%- if empty_category_blocks.size > 0 -%}
+            {%- for block in empty_category_blocks -%}
+              {%- liquid
+                assign tile_collection = block.settings.collection
+                assign tile_image = block.settings.image
+                if tile_image == blank and tile_collection != blank
+                  assign tile_image = tile_collection.featured_image
+                endif
+                assign tile_href = tile_collection.url
+                assign tile_label = block.settings.label
+                assign tile_caption = block.settings.caption
+                assign tile_alt = tile_image.alt | default: tile_label | escape
+                assign tile_number = forloop.index | prepend: '0' | slice: -2, 2
+                assign tile_ph_index = forloop.index0 | modulo: 3 | plus: 1
+                assign tile_placeholder = 'collection-' | append: tile_ph_index
+              -%}
+              {%- capture tile_content -%}
+                <div class="relative aspect-[4/3] overflow-hidden bg-surface-sunken">
+                  {%- if tile_image != blank -%}
+                    {{ tile_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(min-width:768px) 33vw, 100vw', alt: tile_alt, class: 'h-full w-full object-cover' }}
+                  {%- else -%}
+                    {{ tile_placeholder | placeholder_svg_tag: 'h-full w-full border border-border-hairline bg-surface-sunken object-cover text-border-hairline' }}
+                  {%- endif -%}
+                  <span class="absolute left-5 top-5 font-mono text-xs uppercase tracking-label text-text-muted">{{ tile_number }}</span>
+                </div>
+                <div class="mt-5">
+                  <p class="font-display text-h4 tracking-tight text-text-strong">{{ tile_label }}</p>
+                  <p class="mt-2 text-sm text-text-muted">{{ tile_caption }}</p>
+                </div>
+              {%- endcapture -%}
+              {%- if tile_href != blank -%}
+                <a href="{{ tile_href }}" {{ block.shopify_attributes }} class="group flex min-h-[300px] flex-col justify-between border-b border-border-hairline p-5 transition-colors hover:bg-surface-sunken/40 sm:border-b-0 sm:border-l">{{ tile_content }}</a>
+              {%- else -%}
+                <div {{ block.shopify_attributes }} class="flex min-h-[300px] flex-col justify-between border-b border-border-hairline p-5 sm:border-b-0 sm:border-l">{{ tile_content }}</div>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- assign empty_category_fallback = '01|Shell|Weather layer|02|Carry|Daily loadout|03|Audio|Transit signal' | split: '|' -%}
+            {%- for i in (0..2) -%}
+              {%- liquid
+                assign base = i | times: 3
+                assign num_index = base
+                assign title_index = base | plus: 1
+                assign text_index = base | plus: 2
+                assign fallback_ph_index = i | plus: 1
+                assign fallback_placeholder = 'collection-' | append: fallback_ph_index
+              -%}
+              <div class="flex min-h-[300px] flex-col justify-between border-b border-border-hairline p-5 sm:border-b-0 sm:border-l">
+                <div class="relative aspect-[4/3] overflow-hidden bg-surface-sunken">
+                  {{ fallback_placeholder | placeholder_svg_tag: 'h-full w-full border border-border-hairline bg-surface-sunken object-cover text-border-hairline' }}
+                  <span class="absolute left-5 top-5 font-mono text-xs uppercase tracking-label text-text-muted">{{ empty_category_fallback[num_index] }}</span>
+                </div>
+                <div class="mt-5">
+                  <p class="font-display text-h4 tracking-tight text-text-strong">{{ empty_category_fallback[title_index] }}</p>
+                  <p class="mt-2 text-sm text-text-muted">{{ empty_category_fallback[text_index] }}</p>
+                </div>
               </div>
-              <div class="mt-5">
-                <p class="font-display text-h4 tracking-tight text-text-strong">{{ empty_modules[title_index] }}</p>
-                <p class="mt-2 text-sm text-text-muted">{{ empty_modules[text_index] }}</p>
-              </div>
-            </div>
-          {%- endfor -%}
+            {%- endfor -%}
+          {%- endif -%}
         </div>
       </div>
 
@@ -333,6 +374,38 @@
       "unit": "px",
       "default": 48,
       "label": "t:sections.main-cart.settings.padding_bottom.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category tile",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Links the tile and supplies a fallback image when no image is set below."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (optional)",
+          "info": "Overrides the collection image."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Shell"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "Weather layer"
+        }
+      ]
     }
   ]
 }
