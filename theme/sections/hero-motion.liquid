@@ -113,7 +113,7 @@
 
     <div class="absolute inset-0 z-10 mx-auto flex max-w-[var(--page-width)] flex-col justify-center gap-6 px-7 py-16 md:px-14 {{ align_cls }}{% if stat_blocks.size > 0 %} pb-32 md:pb-36{% endif %}">
       {%- if s.kicker != blank -%}
-        <span class="hm-fade font-mono text-xs uppercase tracking-label text-accent" style="--hm-d:420ms">{{ s.kicker }}</span>
+        <span class="hm-fade font-mono text-xs uppercase tracking-label text-accent" data-accent-ok style="--hm-d:420ms">{{ s.kicker }}</span>
       {%- endif -%}
       <h1 class="max-w-4xl font-display font-bold uppercase tracking-hero" style="font-size:clamp(2.75rem,7vw,5.25rem);line-height:.95;letter-spacing:-0.035em" aria-label="{{ heading_text }}">
         <span aria-hidden="true">

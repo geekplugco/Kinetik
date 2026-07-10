@@ -2,7 +2,16 @@
   "sections": {
     "main": {
       "type": "main-collection",
-      "settings": {},
+      "settings": {
+        "hero_eyebrow": "Waypoint system",
+        "hero_text": "A complete grid of field-ready pieces: weather protection, carry, audio, and daily movement gear.",
+        "hero_badge_1": "Field-tested",
+        "hero_badge_2": "Ships in 24h",
+        "hero_badge_3": "60-day returns",
+        "hero_mode": "33 styles",
+        "hero_signal": "SS26 ready",
+        "hero_heading": "Build the route from the grid"
+      },
       "blocks": {
         "promo_ss26": {
           "type": "promo_tile",
@@ -26,10 +35,15 @@
         "padding_top": 16,
         "padding_bottom": 12
       }
+    },
+    "collection_nav": {
+      "type": "collection-nav",
+      "settings": {}
     }
   },
   "order": [
     "breadcrumb",
+    "collection_nav",
     "main"
   ]
 }

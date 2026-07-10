@@ -36,6 +36,51 @@ if (!customElements.get('collection-facets')) {
 
         this.onKey = this.onKey.bind(this);
         document.addEventListener('keydown', this.onKey);
+
+        this.querySelectorAll('[data-price-slider]').forEach(this.initPriceSlider.bind(this));
+      }
+
+      initPriceSlider(root) {
+        var rangeMax = parseFloat(root.dataset.rangeMax) || 0;
+        var minThumb = root.querySelector('[data-price-thumb="min"]');
+        var maxThumb = root.querySelector('[data-price-thumb="max"]');
+        var minNumber = root.querySelector('[data-price-number="min"]');
+        var maxNumber = root.querySelector('[data-price-number="max"]');
+        var fill = root.querySelector('[data-price-fill]');
+        if (!minThumb || !maxThumb || !minNumber || !maxNumber || !fill || rangeMax <= 0) return;
+
+        var render = function () {
+          var lo = Math.min(parseFloat(minThumb.value), parseFloat(maxThumb.value));
+          var hi = Math.max(parseFloat(minThumb.value), parseFloat(maxThumb.value));
+          fill.style.left = (lo / rangeMax) * 100 + '%';
+          fill.style.right = 100 - (hi / rangeMax) * 100 + '%';
+        };
+
+        var fromThumbs = function () {
+          if (parseFloat(minThumb.value) > parseFloat(maxThumb.value)) {
+            var tmp = minThumb.value;
+            minThumb.value = maxThumb.value;
+            maxThumb.value = tmp;
+          }
+          minNumber.value = minThumb.value;
+          maxNumber.value = maxThumb.value;
+          render();
+        };
+
+        var fromNumbers = function () {
+          var lo = minNumber.value === '' ? 0 : Math.max(0, Math.min(rangeMax, parseFloat(minNumber.value) || 0));
+          var hi = maxNumber.value === '' ? rangeMax : Math.max(0, Math.min(rangeMax, parseFloat(maxNumber.value) || rangeMax));
+          if (lo > hi) { var t = lo; lo = hi; hi = t; }
+          minThumb.value = lo;
+          maxThumb.value = hi;
+          render();
+        };
+
+        minThumb.addEventListener('input', fromThumbs);
+        maxThumb.addEventListener('input', fromThumbs);
+        minNumber.addEventListener('change', fromNumbers);
+        maxNumber.addEventListener('change', fromNumbers);
+        render();
       }
 
       applyClientFilters() {

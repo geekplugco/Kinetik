@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "padding_top": 16,
+        "padding_bottom": 12
+      }
+    },
+    "main": {
+      "type": "main-page"
+    },
+    "faq": {
+      "type": "product-faq",
+      "settings": {
+        "subheading": "Good to know",
+        "heading": "Frequently asked questions",
+        "padding_top": 24,
+        "padding_bottom": 96
+      },
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "How do I find my size?",
+            "answer": "<p>Check the size chart linked on each product page. Outerwear is cut for a light base layer underneath; if you run between sizes, size up for cold-weather layering.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Is Gore-Tex worth the upcharge?",
+            "answer": "<p>If you are regularly out in sustained rain, yes &mdash; it is the difference between shedding water and eventually wetting through. For commute-only use, our 2.5L shells handle most conditions at a lower price.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Do you restock sold-out sizes?",
+            "answer": "<p>Core styles restock seasonally. Limited drops do not restock &mdash; sign up for restock alerts on the product page.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I change or cancel an order?",
+            "answer": "<p>Contact us within 2 hours of placing the order. After that, it is already in fulfillment and cannot be modified.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"]
+    }
+  },
+  "order": ["breadcrumb", "main", "faq"]
+}

@@ -25,5 +25,9 @@
       color: {{ s.text }};
       background-color: {{ s.background }};
     }
+    {%- assign bg_bright = s.background | color_brightness -%}
+    {%- if bg_bright > 140 -%}
+      [data-color-scheme="{{ scheme.id }}"] .text-accent:not([data-accent-ok]) { color: {{ s.button | color_mix: s.text, 40 }}; }
+    {%- endif -%}
   {%- endfor -%}
 {%- endstyle -%}

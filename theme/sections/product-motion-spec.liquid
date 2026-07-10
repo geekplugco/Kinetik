@@ -13,6 +13,24 @@
   else
     assign stat_grid = 'md:grid-cols-4'
   endif
+  case section.settings.width
+    when 'full'
+      assign width_cls = 'max-w-none'
+    when 'narrow'
+      assign width_cls = 'max-w-4xl'
+    else
+      assign width_cls = 'max-w-[var(--page-width)]'
+  endcase
+  case section.settings.image_ratio
+    when 'portrait'
+      assign ratio_cls = 'aspect-[4/5]'
+    when 'square'
+      assign ratio_cls = 'aspect-square'
+    when 'wide'
+      assign ratio_cls = 'aspect-[16/9]'
+    else
+      assign ratio_cls = 'aspect-[4/3]'
+  endcase
 -%}
 {%- if show_section -%}
   <section
@@ -20,7 +38,7 @@
     style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
     class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)] text-text-strong"
   >
-    <div class="mx-auto max-w-[var(--page-width)] px-6">
+    <div class="mx-auto {{ width_cls }} px-6">
       {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
         <div class="mb-10 flex max-w-2xl flex-col gap-3">
           {%- if section.settings.subheading != blank -%}
@@ -52,11 +70,12 @@
       {%- if has_media -%}
         <div class="grid gap-10 border-t border-border-strong pt-10 md:grid-cols-2 md:items-center">
           <figure class="m-0 flex flex-col gap-3 {% if section.settings.media_position == 'right' %}md:order-2{% endif %}">
-            <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+            <div class="relative {{ ratio_cls }} overflow-hidden bg-surface-sunken">
               {%- if section.settings.video != blank -%}
                 {{ section.settings.video | video_tag: image_size: '1200x', loop: true, controls: true, preload: 'none', class: 'h-full w-full object-cover' }}
               {%- else -%}
-                {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading, class: 'h-full w-full object-cover' }}
+                {%- assign spec_alt = section.settings.image.alt | default: section.settings.heading -%}
+                {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: spec_alt, class: 'h-full w-full object-cover' }}
               {%- endif -%}
             </div>
             {%- if section.settings.proof_caption != blank -%}
@@ -95,6 +114,8 @@
       ]
     },
     { "type": "text", "id": "proof_caption", "label": "t:sections.product-motion-spec.settings.proof_caption.label", "info": "t:sections.product-motion-spec.settings.proof_caption.info" },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "portrait", "options": [ { "value": "landscape", "label": "Landscape" }, { "value": "portrait", "label": "Portrait" }, { "value": "square", "label": "Square" }, { "value": "wide", "label": "Wide" } ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "page", "options": [ { "value": "page", "label": "Page" }, { "value": "full", "label": "Full width" }, { "value": "narrow", "label": "Narrow" } ] },
     { "type": "header", "content": "t:sections.product-motion-spec.settings.header__style.content" },
     { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.product-motion-spec.settings.color_scheme.label", "default": "scheme-3" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.product-motion-spec.settings.padding_top.label" },

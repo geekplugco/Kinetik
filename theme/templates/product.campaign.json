@@ -80,7 +80,7 @@
     "material": {
       "type": "image-with-text",
       "settings": {
-        "image": "shopify://shop_images/material-macro.png",
+        "image": "shopify://shop_images/editorial-bench-macro2.png",
         "layout": "image_first",
         "media_style": "split",
         "image_ratio": "portrait",
@@ -226,7 +226,7 @@
         "p3"
       ],
       "settings": {
-        "image": "shopify://shop_images/material-macro.png",
+        "image": "shopify://shop_images/editorial-bench-macro2.png",
         "heading": "Engineered, not decorated",
         "subheading": "Material scan",
         "color_scheme": "scheme-3"

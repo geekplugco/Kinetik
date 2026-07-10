@@ -93,7 +93,7 @@
             "eyebrow": "Field manifesto",
             "quote": "<p>One system. Every condition. No compromise.</p>",
             "attribution": "Waypoint SS26",
-            "image": "shopify://shop_images/02-fulllook-cropped.png",
+            "image": "shopify://shop_images/01-jacket-hood-back.png",
             "overlay_opacity": 55,
             "alignment": "center",
             "height": "medium",
@@ -133,7 +133,7 @@
         "p1": {
           "type": "promo",
           "settings": {
-            "image": "shopify://shop_images/02-fulllook-cropped.png",
+            "image": "shopify://shop_images/01-jacket-hood-back.png",
             "eyebrow": "Outerwear",
             "heading": "Shells & layers",
             "button_label": "Shop outerwear",

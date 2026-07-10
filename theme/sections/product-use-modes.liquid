@@ -1,5 +1,23 @@
 {%- liquid
   assign modes = section.blocks | where: 'type', 'mode'
+  case section.settings.width
+    when 'full'
+      assign width_cls = 'max-w-none'
+    when 'narrow'
+      assign width_cls = 'max-w-4xl'
+    else
+      assign width_cls = 'max-w-[var(--page-width)]'
+  endcase
+  case section.settings.image_ratio
+    when 'portrait'
+      assign ratio_cls = 'aspect-[3/4]'
+    when 'square'
+      assign ratio_cls = 'aspect-square'
+    when 'wide'
+      assign ratio_cls = 'aspect-[16/9]'
+    else
+      assign ratio_cls = 'aspect-[4/3]'
+  endcase
 -%}
 {%- if modes.size > 0 -%}
   <section
@@ -7,7 +25,7 @@
     style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
     class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)]"
   >
-    <div class="mx-auto max-w-[var(--page-width)] px-6">
+    <div class="mx-auto {{ width_cls }} px-6">
       {%- if section.settings.heading != blank -%}
         <div class="mb-8 flex flex-col gap-3">
           {%- if section.settings.subheading != blank -%}
@@ -41,9 +59,10 @@
             class="mt-8 grid gap-8 md:grid-cols-2 md:items-center"
             {{ block.shopify_attributes }}
           >
-            <div class="relative aspect-[4/3] overflow-hidden bg-surface-sunken">
+            <div class="relative {{ ratio_cls }} overflow-hidden bg-surface-sunken">
               {%- if block.settings.image != blank -%}
-                {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: block.settings.image.alt | default: block.settings.label, class: 'h-full w-full object-cover' }}
+                {%- assign mode_alt = block.settings.image.alt | default: block.settings.label -%}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: mode_alt, class: 'h-full w-full object-cover' }}
               {%- else -%}
                 {{ 'lifestyle-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
               {%- endif -%}
@@ -72,6 +91,8 @@
   "settings": [
     { "type": "inline_richtext", "id": "subheading", "label": "t:sections.product-use-modes.settings.subheading.label", "default": "One kit, many modes" },
     { "type": "text", "id": "heading", "label": "t:sections.product-use-modes.settings.heading.label", "default": "Where it runs" },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "landscape", "options": [ { "value": "landscape", "label": "Landscape" }, { "value": "portrait", "label": "Portrait" }, { "value": "square", "label": "Square" }, { "value": "wide", "label": "Wide" } ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "page", "options": [ { "value": "page", "label": "Page" }, { "value": "full", "label": "Full width" }, { "value": "narrow", "label": "Narrow" } ] },
     { "type": "header", "content": "t:sections.product-use-modes.settings.header__style.content" },
     { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.product-use-modes.settings.color_scheme.label", "default": "scheme-1" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.product-use-modes.settings.padding_top.label" },

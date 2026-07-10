@@ -5,6 +5,7 @@
   assign sort_by = collection.sort_by | default: collection.default_sort_by
   assign promo_blocks = section.blocks | where: 'type', 'promo_tile'
   assign filter_style = section.settings.filter_style | default: 'command'
+  assign products_per_page = section.settings.products_per_page | default: 24
   assign active_filter_count = 0
   for filter in collection.filters
     assign active_filter_count = active_filter_count | plus: filter.active_values.size
@@ -15,7 +16,7 @@
     endif
   endfor
 -%}
-{%- paginate collection.products by 50 -%}
+{%- paginate collection.products by products_per_page -%}
   <section
     data-color-scheme="{{ section.settings.color_scheme | default: 'scheme-1' }}"
     style="--cols-desktop:{{ cols }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
@@ -32,9 +33,44 @@
           </div>
         </div>
       {%- else -%}
-        <header class="flex flex-col gap-2 border-b border-border-hairline pb-8">
-          <span class="font-mono text-xs uppercase tracking-label text-text-muted">Collection</span>
-          <h1 class="font-display text-h1 tracking-tight text-text-strong">{{ collection.title }}</h1>
+        <header class="grid overflow-hidden border border-border-hairline md:grid-cols-[1fr_0.72fr]">
+          <div class="flex min-h-64 flex-col justify-between p-6 md:p-8">
+            <div>
+              <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.hero_eyebrow }}</span>
+              <h1 class="mt-4 max-w-4xl font-display text-h1 tracking-tight text-text-strong">{{ collection.title }}</h1>
+              {%- if collection.description != blank -%}
+                {%- render 'rte', content: collection.description, class: 'mt-5 max-w-2xl text-body text-text-body' -%}
+              {%- elsif section.settings.hero_text != blank -%}
+                <p class="mt-5 max-w-2xl text-body text-text-muted">{{ section.settings.hero_text }}</p>
+              {%- endif -%}
+            </div>
+            <div class="mt-8 flex flex-wrap gap-2">
+              {%- if section.settings.hero_badge_1 != blank -%}<span class="border border-border-hairline px-3 py-2 font-mono text-[10px] uppercase tracking-label text-text-muted">{{ section.settings.hero_badge_1 }}</span>{%- endif -%}
+              {%- if section.settings.hero_badge_2 != blank -%}<span class="border border-border-hairline px-3 py-2 font-mono text-[10px] uppercase tracking-label text-text-muted">{{ section.settings.hero_badge_2 }}</span>{%- endif -%}
+              {%- if section.settings.hero_badge_3 != blank -%}<span class="border border-border-hairline px-3 py-2 font-mono text-[10px] uppercase tracking-label text-text-muted">{{ section.settings.hero_badge_3 }}</span>{%- endif -%}
+            </div>
+          </div>
+          <div class="grid border-t border-border-hairline bg-surface-sunken md:border-l md:border-t-0">
+            <div class="grid grid-cols-2 border-b border-border-hairline">
+              <div class="border-r border-border-hairline p-5">
+                <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">Products</span>
+                <p class="mt-2 font-display text-h2 tracking-tight text-text-strong">{{ collection.products_count }}</p>
+              </div>
+              <div class="p-5">
+                <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">Mode</span>
+                <p class="mt-2 font-mono text-xs uppercase tracking-label text-text-strong">{{ section.settings.hero_mode }}</p>
+              </div>
+            </div>
+            <div class="relative min-h-40 overflow-hidden p-5">
+              <span class="absolute inset-5 border border-border-hairline"></span>
+              <span class="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-border-hairline"></span>
+              <span class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-border-hairline"></span>
+              <div class="relative z-[1] flex h-full flex-col justify-end">
+                <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ section.settings.hero_signal }}</span>
+                <p class="mt-2 max-w-xs font-display text-h4 tracking-tight text-text-strong">{{ section.settings.hero_heading }}</p>
+              </div>
+            </div>
+          </div>
         </header>
       {%- endif -%}
 
@@ -187,7 +223,7 @@
       <nav class="mt-10 font-mono text-xs uppercase tracking-label" aria-label="Pagination">{{ paginate | default_pagination }}</nav>
     {%- endif -%}
 
-    {%- if collection.description != blank and section.settings.show_collection_description -%}
+    {%- if collection.description != blank and section.settings.show_collection_description and collection.image != blank -%}
       <div class="mt-16 max-w-prose border-t border-border-hairline pt-10">
         <span class="font-mono text-xs uppercase tracking-label text-text-muted">About this collection</span>
         {%- render 'rte', content: collection.description, class: 'mt-3 text-body text-text-body' -%}
@@ -220,6 +256,58 @@
       "label": "t:sections.main-collection.settings.show_collection_description.label",
       "info": "t:sections.main-collection.settings.show_collection_description.info",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-collection.settings.header__hero.content"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "t:sections.main-collection.settings.hero_eyebrow.label",
+      "default": "Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "t:sections.main-collection.settings.hero_text.label",
+      "default": "A complete grid of field-ready pieces: weather protection, carry, audio, and daily movement gear."
+    },
+    {
+      "type": "text",
+      "id": "hero_badge_1",
+      "label": "t:sections.main-collection.settings.hero_badge_1.label",
+      "default": "Field-tested"
+    },
+    {
+      "type": "text",
+      "id": "hero_badge_2",
+      "label": "t:sections.main-collection.settings.hero_badge_2.label",
+      "default": "Ships in 24h"
+    },
+    {
+      "type": "text",
+      "id": "hero_badge_3",
+      "label": "t:sections.main-collection.settings.hero_badge_3.label",
+      "default": "60-day returns"
+    },
+    {
+      "type": "text",
+      "id": "hero_mode",
+      "label": "t:sections.main-collection.settings.hero_mode.label",
+      "default": "Live system"
+    },
+    {
+      "type": "text",
+      "id": "hero_signal",
+      "label": "t:sections.main-collection.settings.hero_signal.label",
+      "default": "SS26 ready"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "hero_heading",
+      "label": "t:sections.main-collection.settings.hero_heading.label",
+      "default": "Build the route from the grid"
     },
     {
       "type": "checkbox",
@@ -257,6 +345,16 @@
       "step": 1,
       "default": 4,
       "label": "t:sections.main-collection.settings.columns_desktop.label"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24,
+      "label": "t:sections.main-collection.settings.products_per_page.label",
+      "info": "t:sections.main-collection.settings.products_per_page.info"
     },
     {
       "type": "color_scheme",

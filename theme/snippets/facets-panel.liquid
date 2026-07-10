@@ -99,15 +99,33 @@
             </div>
           {%- endif -%}
         {%- when 'price_range' -%}
-          <div class="grid grid-cols-2 gap-3">
-            <label class="flex flex-col gap-1 font-mono text-[11px] uppercase tracking-label text-text-muted">
-              Min
-              <input name="{{ filter.min_value.param_name }}" type="number" inputmode="numeric" min="0" {% if filter.range_max != blank %}max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"{% endif %} value="{% if filter.min_value.value %}{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{% endif %}" class="min-h-[44px] border border-border-hairline bg-surface-page px-3 py-2 font-sans text-sm text-text-strong">
-            </label>
-            <label class="flex flex-col gap-1 font-mono text-[11px] uppercase tracking-label text-text-muted">
-              Max
-              <input name="{{ filter.max_value.param_name }}" type="number" inputmode="numeric" min="0" {% if filter.range_max != blank %}max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"{% endif %} value="{% if filter.max_value.value %}{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{% endif %}" class="min-h-[44px] border border-border-hairline bg-surface-page px-3 py-2 font-sans text-sm text-text-strong">
-            </label>
+          {%- liquid
+            assign price_range_max = filter.range_max | money_without_currency | replace: ',', '' | times: 1
+            assign price_min_val = 0
+            if filter.min_value.value
+              assign price_min_val = filter.min_value.value | money_without_currency | replace: ',', '' | times: 1
+            endif
+            assign price_max_val = price_range_max
+            if filter.max_value.value
+              assign price_max_val = filter.max_value.value | money_without_currency | replace: ',', '' | times: 1
+            endif
+          -%}
+          <div data-price-slider data-range-max="{{ price_range_max }}" class="pt-1">
+            <div class="relative h-1 rounded-full bg-border-hairline">
+              <div data-price-fill class="absolute h-1 rounded-full bg-accent"></div>
+              <input type="range" data-price-thumb="min" min="0" max="{{ price_range_max }}" step="1" value="{{ price_min_val }}" aria-label="Minimum price" class="pointer-events-none absolute inset-x-0 top-1/2 h-1 w-full -translate-y-1/2 appearance-none bg-transparent [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-surface-page [&::-moz-range-thumb]:bg-accent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-surface-page [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:shadow-[0_0_0_1px_var(--border-strong)]">
+              <input type="range" data-price-thumb="max" min="0" max="{{ price_range_max }}" step="1" value="{{ price_max_val }}" aria-label="Maximum price" class="pointer-events-none absolute inset-x-0 top-1/2 h-1 w-full -translate-y-1/2 appearance-none bg-transparent [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-surface-page [&::-moz-range-thumb]:bg-accent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-surface-page [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:shadow-[0_0_0_1px_var(--border-strong)]">
+            </div>
+            <div class="mt-6 grid grid-cols-2 gap-3">
+              <label class="flex flex-col gap-1 font-mono text-[11px] uppercase tracking-label text-text-muted">
+                Min
+                <input data-price-number="min" name="{{ filter.min_value.param_name }}" type="number" inputmode="numeric" min="0" max="{{ price_range_max }}" value="{% if filter.min_value.value %}{{ price_min_val }}{% endif %}" class="min-h-[44px] border border-border-hairline bg-surface-page px-3 py-2 font-sans text-sm text-text-strong">
+              </label>
+              <label class="flex flex-col gap-1 font-mono text-[11px] uppercase tracking-label text-text-muted">
+                Max
+                <input data-price-number="max" name="{{ filter.max_value.param_name }}" type="number" inputmode="numeric" min="0" max="{{ price_range_max }}" value="{% if filter.max_value.value %}{{ price_max_val }}{% endif %}" class="min-h-[44px] border border-border-hairline bg-surface-page px-3 py-2 font-sans text-sm text-text-strong">
+              </label>
+            </div>
           </div>
       {%- endcase -%}
     </div>

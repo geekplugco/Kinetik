@@ -22,6 +22,7 @@
   "accessibility": {
     "skip_to_text": "Skip to content",
     "refresh_page": "Choosing a selection results in a full page refresh.",
+    "back_to_top": "Back to top",
     "link_messages": { "new_window": "Opens in a new window." }
   },
   "products": {

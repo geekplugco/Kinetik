@@ -98,11 +98,18 @@
         "padding_top": 16,
         "padding_bottom": 12
       }
+    },
+    "collection_nav": {
+      "type": "collection-nav",
+      "settings": {
+        "color_scheme": "scheme-5"
+      }
     }
   },
   "order": [
     "statement",
     "breadcrumb",
+    "collection_nav",
     "main",
     "route"
   ]

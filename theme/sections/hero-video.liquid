@@ -53,7 +53,7 @@
     <div class="relative mx-auto flex w-full max-w-[var(--page-width)] items-end justify-between gap-6 px-6 pb-12 pt-44 md:pb-16">
       <div class="max-w-3xl">
         {%- if s.kicker != blank -%}
-          <span class="hp-reveal hp-reveal--fade font-mono text-xs uppercase tracking-label text-accent">{{ s.kicker }}</span>
+          <span class="hp-reveal hp-reveal--fade font-mono text-xs uppercase tracking-label text-accent" data-accent-ok>{{ s.kicker }}</span>
         {%- endif -%}
         <h1 class="hp-reveal hp-reveal--mask mt-4 font-display font-bold uppercase tracking-hero" style="--reveal-delay:80ms;font-size:clamp(2.75rem,7vw,5.25rem);line-height:.95;letter-spacing:-0.035em;">{{ s.heading | default: 'Motion is the brief' }}</h1>
         {%- if s.text != blank -%}

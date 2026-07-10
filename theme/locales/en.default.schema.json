@@ -66,8 +66,7 @@
         }
       },
       "presets": {
-        "name__1": "Announcement bar",
-        "name__2": "Announcement bar — rotating"
+        "name__1": "Announcement bar"
       }
     },
     "blog-posts": {
@@ -162,9 +161,7 @@
         }
       },
       "presets": {
-        "name__1": "Blog posts",
-        "name__2": "Blog posts — overlay grid",
-        "name__3": "Blog posts — bordered square"
+        "name__1": "Blog posts"
       }
     },
     "breadcrumb": {
@@ -360,9 +357,7 @@
         }
       },
       "presets": {
-        "name__1": "Collapsible content",
-        "name__2": "FAQ — split aside",
-        "name__3": "FAQ — boxed"
+        "name__1": "Collapsible content"
       }
     },
     "collection-list": {
@@ -449,9 +444,7 @@
         }
       },
       "presets": {
-        "name__1": "Collection list",
-        "name__2": "Collection list — captions below",
-        "name__3": "Collection list — editorial pair"
+        "name__1": "Collection list"
       }
     },
     "complementary-products": {
@@ -674,9 +667,7 @@
         }
       },
       "presets": {
-        "name__1": "Contact form",
-        "name__2": "Contact — split with details",
-        "name__3": "Contact — wide"
+        "name__1": "Contact form"
       }
     },
     "custom-liquid": {
@@ -703,7 +694,7 @@
       }
     },
     "drop-system": {
-      "name": "Drop system",
+      "name": "Countdown timer",
       "settings": {
         "kicker": {
           "label": "Kicker"
@@ -735,7 +726,7 @@
         },
         "ticker_items": {
           "label": "Ticker lines",
-          "info": "One line per item. Keep claims factual — invented urgency is not allowed on the Theme Store."
+          "info": "One line per item. Keep claims factual. Invented urgency is not allowed on the Theme Store."
         }
       },
       "presets": {
@@ -825,9 +816,7 @@
         }
       },
       "presets": {
-        "name__1": "Featured collection",
-        "name__2": "Featured collection — editorial",
-        "name__3": "Featured collection — dense grid"
+        "name__1": "Featured collection"
       }
     },
     "featured-product": {
@@ -892,9 +881,17 @@
         }
       },
       "presets": {
-        "name__1": "Featured product",
-        "name__2": "Featured product — image right",
-        "name__3": "Featured product — full bleed"
+        "name__1": "Featured product"
+      },
+      "blocks": {
+        "custom_liquid": {
+          "name": "Custom Liquid",
+          "settings": {
+            "custom_liquid": {
+              "label": "Custom Liquid"
+            }
+          }
+        }
       }
     },
     "footer": {
@@ -1135,9 +1132,7 @@
         }
       },
       "presets": {
-        "name__1": "Hero",
-        "name__2": "Hero — overlay",
-        "name__3": "Hero — stacked"
+        "name__1": "Hero"
       }
     },
     "hero-video": {
@@ -1257,7 +1252,7 @@
       }
     },
     "hero-manifesto": {
-      "name": "Hero manifesto",
+      "name": "Statement hero",
       "settings": {
         "header__1": {
           "content": "Layout"
@@ -1468,6 +1463,10 @@
         "color_scheme": {
           "label": "Color scheme"
         },
+        "text_panel_scheme": {
+          "label": "Text panel scheme",
+          "info": "Color scheme for the dark text panel only. Pick the scheme that matches this store's own dark tone."
+        },
         "padding_top": {
           "label": "Padding top"
         },
@@ -1612,9 +1611,7 @@
         }
       },
       "presets": {
-        "name__1": "Image gallery",
-        "name__2": "Image gallery — uniform grid",
-        "name__3": "Image gallery — full-bleed"
+        "name__1": "Image gallery"
       }
     },
     "image-with-text": {
@@ -1715,9 +1712,7 @@
         }
       },
       "presets": {
-        "name__1": "Image with text",
-        "name__2": "Image with text — overlap",
-        "name__3": "Image with text — dark panel"
+        "name__1": "Image with text"
       }
     },
     "logo-list": {
@@ -1814,9 +1809,7 @@
         }
       },
       "presets": {
-        "name__1": "Logo list",
-        "name__2": "Logo grid",
-        "name__3": "Logo wall — dark"
+        "name__1": "Logo list"
       }
     },
     "lookbook": {
@@ -1957,8 +1950,7 @@
         }
       },
       "presets": {
-        "name__1": "Lookbook",
-        "name__2": "Lookbook grid"
+        "name__1": "Lookbook"
       }
     },
     "main-404": {
@@ -2064,6 +2056,30 @@
         "color_scheme": {
           "label": "Color scheme"
         },
+        "header__empty": {
+          "content": "Empty blog state"
+        },
+        "empty_eyebrow": {
+          "label": "Eyebrow"
+        },
+        "empty_heading": {
+          "label": "Heading"
+        },
+        "empty_text": {
+          "label": "Text"
+        },
+        "empty_button_label": {
+          "label": "Primary button label"
+        },
+        "empty_button_link": {
+          "label": "Primary button link"
+        },
+        "empty_secondary_label": {
+          "label": "Secondary button label"
+        },
+        "empty_secondary_link": {
+          "label": "Secondary button link"
+        },
         "header__1": {
           "content": "Padding"
         },
@@ -2102,6 +2118,30 @@
         },
         "show_recommendations": {
           "label": "Show \"Complete your order\" recommendations"
+        },
+        "header__empty": {
+          "content": "Empty cart state"
+        },
+        "empty_eyebrow": {
+          "label": "Eyebrow"
+        },
+        "empty_heading": {
+          "label": "Heading"
+        },
+        "empty_text": {
+          "label": "Text"
+        },
+        "empty_secondary_label": {
+          "label": "Secondary button label"
+        },
+        "empty_secondary_link": {
+          "label": "Secondary button link"
+        },
+        "empty_collection": {
+          "label": "Featured collection"
+        },
+        "empty_collection_heading": {
+          "label": "Featured collection heading"
         }
       }
     },
@@ -2115,6 +2155,33 @@
         "show_collection_description": {
           "label": "Show collection description",
           "info": "Displays the collection description (set in Shopify admin) as an \"About this collection\" block below the product grid. Good for on-page SEO copy."
+        },
+        "header__hero": {
+          "content": "Fallback collection header"
+        },
+        "hero_eyebrow": {
+          "label": "Eyebrow"
+        },
+        "hero_text": {
+          "label": "Text"
+        },
+        "hero_badge_1": {
+          "label": "Badge 1"
+        },
+        "hero_badge_2": {
+          "label": "Badge 2"
+        },
+        "hero_badge_3": {
+          "label": "Badge 3"
+        },
+        "hero_mode": {
+          "label": "Mode label"
+        },
+        "hero_signal": {
+          "label": "Signal label"
+        },
+        "hero_heading": {
+          "label": "Signal heading"
         },
         "enable_filtering": {
           "label": "Enable filtering"
@@ -2133,6 +2200,10 @@
         },
         "columns_desktop": {
           "label": "Columns on desktop"
+        },
+        "products_per_page": {
+          "label": "Products per page",
+          "info": "Lower this to demonstrate pagination on collections with fewer products."
         },
         "color_scheme": {
           "label": "Color scheme"
@@ -2549,9 +2620,7 @@
         }
       },
       "presets": {
-        "name__1": "Map",
-        "name__2": "Map — color, map left",
-        "name__3": "Map — full width"
+        "name__1": "Map"
       }
     },
     "marquee": {
@@ -2620,9 +2689,7 @@
         }
       },
       "presets": {
-        "name__1": "Marquee",
-        "name__2": "Marquee — ink",
-        "name__3": "Marquee — paper outline"
+        "name__1": "Marquee"
       }
     },
     "multicolumn": {
@@ -2735,9 +2802,7 @@
         }
       },
       "presets": {
-        "name__1": "Newsletter",
-        "name__2": "Newsletter — split light",
-        "name__3": "Newsletter — wide dark"
+        "name__1": "Newsletter"
       }
     },
     "related-products": {
@@ -2930,9 +2995,7 @@
         }
       },
       "presets": {
-        "name__1": "Rich text",
-        "name__2": "Rich text — centered narrow",
-        "name__3": "Rich text — dark panel"
+        "name__1": "Rich text"
       }
     },
     "section": {
@@ -3132,9 +3195,7 @@
         }
       },
       "presets": {
-        "name__1": "Slideshow",
-        "name__2": "Slideshow — fullscreen fade",
-        "name__3": "Slideshow — slide carousel"
+        "name__1": "Slideshow"
       }
     },
     "statement": {
@@ -3330,9 +3391,7 @@
         }
       },
       "presets": {
-        "name__1": "Video",
-        "name__2": "Video — cinematic",
-        "name__3": "Video — square spotlight"
+        "name__1": "Video"
       }
     },
     "welcome": {
@@ -3403,7 +3462,7 @@
       }
     },
     "field-spec": {
-      "name": "Field spec",
+      "name": "Product specifications",
       "settings": {
         "subheading": {
           "label": "Subheading"
@@ -3463,7 +3522,7 @@
       }
     },
     "field-assurance": {
-      "name": "Field assurance",
+      "name": "Trust badges",
       "settings": {
         "heading": {
           "label": "Heading"
@@ -3547,7 +3606,7 @@
       }
     },
     "product-motion-spec": {
-      "name": "Product motion spec",
+      "name": "Spec highlights",
       "settings": {
         "subheading": {
           "label": "Subheading"
@@ -3615,7 +3674,7 @@
       }
     },
     "product-field-note": {
-      "name": "Product field note",
+      "name": "Customer quote",
       "settings": {
         "eyebrow": {
           "label": "Eyebrow"
@@ -3647,7 +3706,7 @@
       }
     },
     "product-use-modes": {
-      "name": "Product use modes",
+      "name": "Use cases",
       "settings": {
         "subheading": {
           "label": "Subheading"
@@ -3692,7 +3751,7 @@
       }
     },
     "product-faq": {
-      "name": "Product FAQ",
+      "name": "FAQ",
       "settings": {
         "subheading": {
           "label": "Subheading"
@@ -3741,7 +3800,7 @@
         },
         "note": {
           "label": "Note",
-          "info": "Optional line. Use for a real, configured bundle offer only — no fake discounts."
+          "info": "Optional line. Use for a real, configured bundle offer only. No fake discounts."
         },
         "base_label": {
           "label": "Base item label"
@@ -3828,7 +3887,7 @@
       }
     },
     "material-scan": {
-      "name": "Material scan",
+      "name": "Product details",
       "settings": {
         "subheading": {
           "label": "Subheading"
@@ -3939,7 +3998,7 @@
       }
     },
     "route-map": {
-      "name": "Route map",
+      "name": "Timeline",
       "settings": {
         "subheading": {
           "label": "Subheading"
@@ -4008,6 +4067,83 @@
       },
       "presets": {
         "name__1": "Route map"
+      }
+    },
+    "collection-nav": {
+      "name": "Collection navigation",
+      "settings": {
+        "menu": {
+          "label": "Menu"
+        },
+        "header__style": {
+          "content": "Style"
+        },
+        "color_scheme": {
+          "label": "Color scheme"
+        },
+        "padding_top": {
+          "label": "Top padding"
+        },
+        "padding_bottom": {
+          "label": "Bottom padding"
+        }
+      },
+      "presets": {
+        "name": "Collection navigation"
+      }
+    },
+    "promo-popup": {
+      "name": "Promo popup",
+      "settings": {
+        "enable": {
+          "label": "Enable popup"
+        },
+        "subheading": {
+          "label": "Subheading"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "image": {
+          "label": "Image"
+        },
+        "show_email_signup": {
+          "label": "Show email signup form"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "button_link": {
+          "label": "Button link",
+          "info": "Used when email signup is off"
+        },
+        "header__behavior": {
+          "content": "Behavior"
+        },
+        "frequency": {
+          "label": "Show frequency",
+          "options__1": {
+            "label": "Once per session"
+          },
+          "options__2": {
+            "label": "Once per day"
+          },
+          "options__3": {
+            "label": "Once only"
+          }
+        },
+        "delay_seconds": {
+          "label": "Delay before showing"
+        },
+        "header__style": {
+          "content": "Style"
+        },
+        "color_scheme": {
+          "label": "Color scheme"
+        }
       }
     }
   },
@@ -4430,7 +4566,7 @@
         },
         "logo_mobile": {
           "label": "Mobile logo",
-          "info": "Optional — falls back to the main logo"
+          "info": "Optional; falls back to the main logo"
         },
         "logo_width": {
           "label": "Logo width"
@@ -4698,9 +4834,6 @@
         },
         "card_show_swatches": {
           "label": "Show color swatches"
-        },
-        "card_quick_add": {
-          "label": "Enable quick add"
         }
       }
     },
@@ -4725,7 +4858,7 @@
         },
         "swatch_list": {
           "label": "Custom swatch list",
-          "info": "One per line — Name:#hexcolor or Name:image.png. Used when a product has no native swatch."
+          "info": "One per line. Name:#hexcolor or Name:image.png. Used when a product has no native swatch."
         }
       }
     },

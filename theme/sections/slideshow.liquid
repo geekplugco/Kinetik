@@ -74,6 +74,12 @@
         endif
         assign slide_alt = b.image.alt | default: b.heading | default: s.accessibility_info | default: 'Slideshow image' | escape
         assign slide_mobile_alt = b.image_mobile.alt | default: slide_alt | escape
+        assign slide_loading = 'lazy'
+        assign slide_fetchpriority = 'auto'
+        if forloop.first
+          assign slide_loading = 'eager'
+          assign slide_fetchpriority = 'high'
+        endif
       -%}
       <div
         class="absolute inset-0 duration-700 {{ slide_state }}"
@@ -87,13 +93,13 @@
       >
         {%- if b.image != blank -%}
           {%- if b.image_mobile != blank -%}
-            {{ b.image_mobile | image_url: width: 1100 | image_tag: loading: 'lazy', widths: '550,750,1100', sizes: '100vw', alt: slide_mobile_alt, class: 'absolute inset-0 h-full w-full object-cover md:hidden' }}
+            {{ b.image_mobile | image_url: width: 1100 | image_tag: loading: slide_loading, fetchpriority: slide_fetchpriority, widths: '550,750,1100', sizes: '100vw', alt: slide_mobile_alt, class: 'absolute inset-0 h-full w-full object-cover md:hidden' }}
           {%- else -%}
-            {{ b.image | image_url: width: 1100 | image_tag: loading: 'lazy', widths: '550,750,1100', sizes: '100vw', alt: slide_alt, class: 'absolute inset-0 h-full w-full object-cover md:hidden' }}
+            {{ b.image | image_url: width: 1100 | image_tag: loading: slide_loading, fetchpriority: slide_fetchpriority, widths: '550,750,1100', sizes: '100vw', alt: slide_alt, class: 'absolute inset-0 h-full w-full object-cover md:hidden' }}
           {%- endif -%}
-          {{ b.image | image_url: width: 2000 | image_tag: loading: 'lazy', widths: '990,1200,1600,2000', sizes: '100vw', alt: slide_alt, class: 'absolute inset-0 hidden h-full w-full object-cover md:block' }}
+          {{ b.image | image_url: width: 2000 | image_tag: loading: slide_loading, fetchpriority: slide_fetchpriority, widths: '990,1200,1600,2000', sizes: '100vw', alt: slide_alt, class: 'absolute inset-0 hidden h-full w-full object-cover md:block' }}
         {%- elsif b.image_mobile != blank -%}
-          {{ b.image_mobile | image_url: width: 1100 | image_tag: loading: 'lazy', widths: '550,750,1100', sizes: '100vw', alt: slide_mobile_alt, class: 'absolute inset-0 h-full w-full object-cover md:hidden' }}
+          {{ b.image_mobile | image_url: width: 1100 | image_tag: loading: slide_loading, fetchpriority: slide_fetchpriority, widths: '550,750,1100', sizes: '100vw', alt: slide_mobile_alt, class: 'absolute inset-0 h-full w-full object-cover md:hidden' }}
           {{ 'hero-apparel-1' | placeholder_svg_tag: 'absolute inset-0 hidden h-full w-full object-cover md:block bg-surface-sunken text-border-hairline' }}
         {%- else -%}
           {{ 'lifestyle-2' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
@@ -393,41 +399,6 @@
   "presets": [
     {
       "name": "t:sections.slideshow.presets.name__1",
-      "blocks": [
-        {
-          "type": "slide"
-        },
-        {
-          "type": "slide"
-        }
-      ]
-    },
-    {
-      "name": "t:sections.slideshow.presets.name__2",
-      "settings": {
-        "slide_height": "large",
-        "transition": "fade",
-        "container": "full"
-      },
-      "blocks": [
-        {
-          "type": "slide"
-        },
-        {
-          "type": "slide"
-        },
-        {
-          "type": "slide"
-        }
-      ]
-    },
-    {
-      "name": "t:sections.slideshow.presets.name__3",
-      "settings": {
-        "slide_height": "medium",
-        "transition": "slide",
-        "autoplay": true
-      },
       "blocks": [
         {
           "type": "slide"

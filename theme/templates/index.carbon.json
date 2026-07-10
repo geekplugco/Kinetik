@@ -7,9 +7,9 @@
         "heading": "Night moves, clean signal",
         "text": "<p>A blackout capsule for after-dark movement. Sealed carry, low-noise layers, reflective readouts where they count.</p>",
         "button_label": "Shop the capsule",
-        "button_link": "shopify://collections/best-sellers",
-        "secondary_button_label": "Night lookbook",
-        "secondary_button_link": "shopify://pages/lookbook",
+        "button_link": "shopify://collections/new-arrivals",
+        "secondary_button_label": "",
+        "secondary_button_link": "",
         "height": "large",
         "content_position": "left",
         "enable_parallax": true,
@@ -82,7 +82,7 @@
       "type": "featured-collection",
       "settings": {
         "heading": "The capsule",
-        "collection": "best-sellers",
+        "collection": "new-arrivals",
         "products_to_show": 8,
         "columns_desktop": 4,
         "grid_density": "compact",
@@ -111,7 +111,7 @@
             "image_alt": "Sling bag with reflective strips under a street lamp at night",
             "frame_label": "Frame 01",
             "overlay_label": "Reflective readout",
-            "product_1": "sling-bag",
+            "product_1": "tech-sling",
             "x_1": 50,
             "y_1": 55
           }
@@ -124,7 +124,7 @@
             "heading": "Visible when it matters",
             "text": "<p>Reflective trim sits on movement lines. Headlamp range, not billboard.</p>",
             "link_label": "Open lookbook",
-            "link_url": "shopify://pages/lookbook"
+            "link_url": ""
           }
         },
         "l2": {
@@ -135,7 +135,7 @@
             "image_alt": "Sling worn across a dark layer",
             "frame_label": "Frame 02",
             "overlay_label": "Carry",
-            "product_1": "belt-bag",
+            "product_1": "phone-harness",
             "x_1": 48,
             "y_1": 52
           }
@@ -148,7 +148,7 @@
             "image_alt": "Watch, earbuds and hardware details",
             "frame_label": "Frame 03",
             "overlay_label": "Detail",
-            "product_1": "smartwatch",
+            "product_1": "nightwatch-pro",
             "x_1": 40,
             "y_1": 50
           }

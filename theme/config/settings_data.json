@@ -8,7 +8,7 @@
     "spacing_sections": 0,
     "corner_radius": 0,
     "animate_hover": "technical",
-    "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D",
+    "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D\nRust:#C04417\nEspresso:#4A3728",
     "color_schemes": {
       "scheme-1": {
         "settings": {
@@ -66,7 +66,7 @@
     "social_youtube": "https://youtube.com/@kinetik",
     "social_facebook": "https://facebook.com/waypoint",
     "social_x": "https://x.com/waypoint",
-    "logo": "shopify://shop_images/waypoint-logo-tight.png"
+    "logo": "shopify://shop_images/waypoint-logo-transparent.png"
   },
   "presets": {
     "Waypoint": {
@@ -78,7 +78,7 @@
       "spacing_sections": 0,
       "corner_radius": 0,
       "animate_hover": "technical",
-      "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D",
+      "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D\nRust:#C04417\nEspresso:#4A3728",
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -135,7 +135,8 @@
       "social_tiktok": "https://tiktok.com/@kinetik",
       "social_youtube": "https://youtube.com/@kinetik",
       "social_facebook": "https://facebook.com/waypoint",
-      "social_x": "https://x.com/waypoint"
+      "social_x": "https://x.com/waypoint",
+      "logo": "shopify://shop_images/waypoint-logo-transparent.png"
     },
     "Carbon": {
       "mode": "production-css-inline",
@@ -146,7 +147,7 @@
       "spacing_sections": 0,
       "corner_radius": 0,
       "animate_hover": "technical",
-      "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D",
+      "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D\nRust:#C04417\nEspresso:#4A3728",
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -203,7 +204,8 @@
       "social_tiktok": "https://tiktok.com/@kinetik",
       "social_youtube": "https://youtube.com/@kinetik",
       "social_facebook": "https://facebook.com/waypoint",
-      "social_x": "https://x.com/waypoint"
+      "social_x": "https://x.com/waypoint",
+      "logo": "shopify://shop_images/waypoint-logo-inverted.png"
     },
     "Sand": {
       "mode": "production-css-inline",
@@ -214,7 +216,7 @@
       "spacing_sections": 0,
       "corner_radius": 0,
       "animate_hover": "technical",
-      "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D",
+      "swatch_list": "Ink:#0A0A0A\nVolt:#CCFF00\nGraphite:#3A3A3A\nBone:#EFECE2\nCharcoal:#3A3A3A\nSand:#C8A876\nOnyx:#0D0D0D\nRust:#C04417\nEspresso:#4A3728",
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -271,7 +273,8 @@
       "social_tiktok": "https://tiktok.com/@kinetik",
       "social_youtube": "https://youtube.com/@kinetik",
       "social_facebook": "https://facebook.com/waypoint",
-      "social_x": "https://x.com/waypoint"
+      "social_x": "https://x.com/waypoint",
+      "logo": "shopify://shop_images/waypoint-logo-transparent.png"
     }
   }
 }

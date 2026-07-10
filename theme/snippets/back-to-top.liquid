@@ -1,0 +1,14 @@
+{% doc %}
+  Renders a fixed, scroll-triggered button that returns the customer to the top of the page.
+{% enddoc %}
+<back-to-top data-back-to-top hidden class="fixed bottom-6 right-4 kx-z-toast md:right-6">
+  <button
+    type="button"
+    data-back-to-top-button
+    aria-label="{{ 'accessibility.back_to_top' | t | default: 'Back to top' }}"
+    class="flex h-11 w-11 items-center justify-center border border-border-strong bg-surface-page text-text-strong shadow-[0_8px_24px_-12px_rgba(10,10,10,0.4)] transition-opacity hover:bg-surface-sunken focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+  >
+    <span class="rotate-180">{%- render 'icon', name: 'chevron', size: 18 -%}</span>
+  </button>
+</back-to-top>
+<script src="{{ 'back-to-top.js' | asset_url }}" defer="defer"></script>

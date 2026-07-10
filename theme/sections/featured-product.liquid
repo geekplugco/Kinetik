@@ -204,6 +204,10 @@
               {%- case block.type -%}
                 {%- when '@app' -%}
                   {%- render block -%}
+                {%- when 'custom_liquid' -%}
+                  {%- if block.settings.custom_liquid != blank -%}
+                    <div {{ block.shopify_attributes }}>{{ block.settings.custom_liquid }}</div>
+                  {%- endif -%}
               {%- endcase -%}
             {%- endfor -%}
           </div>
@@ -327,29 +331,22 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "custom_liquid",
+      "name": "t:sections.featured-product.blocks.custom_liquid.name",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "t:sections.featured-product.blocks.custom_liquid.settings.custom_liquid.label"
+        }
+      ]
     }
   ],
   "presets": [
     {
       "name": "t:sections.featured-product.presets.name__1"
-    },
-    {
-      "name": "t:sections.featured-product.presets.name__2",
-      "settings": {
-        "heading": "Spotlight",
-        "image_position": "right",
-        "image_ratio": "square",
-        "width": "narrow"
-      }
-    },
-    {
-      "name": "t:sections.featured-product.presets.name__3",
-      "settings": {
-        "heading": "Hero product",
-        "image_position": "left",
-        "image_ratio": "landscape",
-        "width": "full"
-      }
     }
   ]
 }

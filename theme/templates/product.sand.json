@@ -86,7 +86,7 @@
     "story": {
       "type": "image-with-text",
       "settings": {
-        "image": "shopify://shop_images/09-paired-hero.png",
+        "image": "shopify://shop_images/wp-hero-garage-19.png",
         "layout": "image_first",
         "image_ratio": "landscape",
         "subheading": "Sand system",

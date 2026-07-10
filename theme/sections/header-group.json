@@ -5,7 +5,8 @@
     "header": {
       "type": "header",
       "settings": {
-        "header_style": "utility",
+        "header_style": "commerce",
+        "utility_text": "Free shipping over $150 · 60-day returns · Carbon-neutral shipping",
         "submenu_style": "mega",
         "sticky_header": true,
         "show_free_shipping_goal": true,

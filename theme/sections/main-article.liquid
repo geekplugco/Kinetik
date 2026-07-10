@@ -95,7 +95,7 @@
           <div class="border border-state-error px-4 py-3 text-sm text-state-error">{{ form.errors | default_errors }}</div>
         {%- endif -%}
         {%- if form.posted_successfully? -%}
-          <div class="border border-positive px-4 py-3 text-sm text-positive">{% if blog.moderated? %}Thanks — your comment is awaiting moderation.{% else %}Thanks — your comment is live.{% endif %}</div>
+          <div class="border border-positive px-4 py-3 text-sm text-positive">{% if blog.moderated? %}Thanks, your comment is awaiting moderation.{% else %}Thanks, your comment is live.{% endif %}</div>
         {%- endif -%}
         <div class="grid gap-4 sm:grid-cols-2">
           <input type="text" name="comment[author]" autocomplete="name" required placeholder="Name" aria-label="Name" class="border border-border-strong bg-transparent px-4 py-3 text-text-strong outline-none focus-visible:border-accent">

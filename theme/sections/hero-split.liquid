@@ -29,9 +29,9 @@
   class="border-b border-border-strong pb-[var(--pb,0px)] pt-[var(--pt,0px)]"
 >
   <div class="mx-auto grid grid-cols-1 md:grid-cols-2 {{ height_cls }}">
-    <div class="hs-panel theme-dark relative flex flex-col justify-center gap-6 overflow-hidden bg-ink-950 px-7 py-14 text-paper md:px-12 md:py-16 {{ type_order }}">
+    <div data-color-scheme="{{ s.text_panel_scheme | default: 'scheme-5' }}" class="hs-panel relative flex flex-col justify-center gap-6 overflow-hidden bg-surface-page px-7 py-14 text-text-strong md:px-12 md:py-16 {{ type_order }}">
       {%- if s.kicker != blank -%}
-        <span class="hs-fade font-mono text-xs uppercase tracking-label text-accent" style="--hs-d:420ms">{{ s.kicker }}</span>
+        <span class="hs-fade font-mono text-xs uppercase tracking-label text-accent-press" style="--hs-d:420ms">{{ s.kicker }}</span>
       {%- endif -%}
       <h1 class="max-w-xl font-display font-bold uppercase tracking-hero" style="font-size:clamp(2.5rem,5.5vw,4.25rem);line-height:.95;letter-spacing:-0.035em" aria-label="{{ heading_text }}">
         <span aria-hidden="true">
@@ -41,10 +41,10 @@
         </span>
       </h1>
       {%- if s.text != blank -%}
-        <div class="hs-fade max-w-sm text-body-lg leading-snug text-ink-300 [&_p]:m-0" style="--hs-d:560ms">{{ s.text }}</div>
+        <div class="hs-fade max-w-sm text-body-lg leading-snug text-text-body [&_p]:m-0" style="--hs-d:560ms">{{ s.text }}</div>
       {%- endif -%}
       {%- if s.spec_line != blank -%}
-        <p class="hs-fade flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-label text-paper/70" style="--hs-d:680ms">
+        <p class="hs-fade flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-label text-text-muted" style="--hs-d:680ms">
           <span class="h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden="true"></span>
           {{ s.spec_line }}
         </p>
@@ -183,6 +183,13 @@
       "id": "color_scheme",
       "label": "t:sections.hero-split.settings.color_scheme.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "text_panel_scheme",
+      "label": "t:sections.hero-split.settings.text_panel_scheme.label",
+      "info": "t:sections.hero-split.settings.text_panel_scheme.info",
+      "default": "scheme-5"
     },
     {
       "type": "range",

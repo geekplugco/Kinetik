@@ -11,7 +11,7 @@
         "button_link": "shopify://collections/new-arrivals",
         "button_label_2": "Lookbook",
         "button_link_2": "shopify://pages/lookbook",
-        "image": "shopify://shop_images/08-hero-back-wide.png",
+        "image": "shopify://shop_images/wp-hero-garage-19.png",
         "image_caption": "SS26 \u00b7 Lookbook 01",
         "visual_effect": "signal_frame"
       }
@@ -266,15 +266,15 @@
         "l1": {
           "type": "shot",
           "settings": {
-            "image": "shopify://shop_images/lookbook-frame1-flatlay.png",
-            "image_alt": "Shell jacket, headphones, watch, and sling bag arranged as a flat lay",
+            "image": "shopify://shop_images/lookbook-frame1-dark.png",
+            "image_alt": "Shell jacket, watch, earbuds, and sling bag arranged as a flat lay",
             "caption": "Shell, base, carry \u00b7 city-to-field",
             "product_1": "shell-jacket",
-            "x_1": 42,
-            "y_1": 37,
-            "product_2": "field-sling",
-            "x_2": 75,
-            "y_2": 60,
+            "x_1": 34,
+            "y_1": 42,
+            "product_2": "sling-bag",
+            "x_2": 77,
+            "y_2": 55,
             "focal_point": "center",
             "frame_size": "feature",
             "frame_label": "Frame 01",

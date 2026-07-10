@@ -9,6 +9,16 @@
     else
       assign width_cls = 'max-w-[var(--page-width)]'
   endcase
+  case s.image_ratio
+    when 'portrait'
+      assign ratio_cls = 'aspect-[3/4]'
+    when 'square'
+      assign ratio_cls = 'aspect-square'
+    when 'wide'
+      assign ratio_cls = 'aspect-[16/9]'
+    else
+      assign ratio_cls = 'aspect-[4/3]'
+  endcase
 -%}
 <section
   data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
@@ -22,7 +32,7 @@
         {%- if s.heading != blank -%}<h2 class="font-display text-[clamp(2rem,4vw,3.25rem)] font-bold uppercase leading-[0.95] tracking-tight text-text-strong">{{ s.heading }}</h2>{%- endif -%}
       </div>
     {%- endif -%}
-    <ol class="flex max-w-2xl flex-col">
+    <ol class="flex max-w-3xl flex-col">
       {%- for block in chapters -%}
         {%- assign b = block.settings -%}
         <li class="hp-reveal hp-reveal--fade grid grid-cols-[2rem_1fr] gap-x-4 md:grid-cols-[3.5rem_1fr] md:gap-x-8" {{ block.shopify_attributes }}>
@@ -33,8 +43,8 @@
           <div class="pb-12 last:pb-0 md:pb-20">
             {%- if b.label != blank -%}<span class="font-mono text-[11px] uppercase tracking-label text-accent-press">{{ b.label }}</span>{%- endif -%}
             {%- if b.heading != blank -%}<h3 class="mt-1.5 font-display text-h3 tracking-tight text-text-strong">{{ b.heading }}</h3>{%- endif -%}
-            <div class="group mt-4 max-w-lg">
-              <div class="kx-media-effect relative aspect-[16/10] overflow-hidden" {% render 'media-effect' %}>
+            <div class="group mt-4">
+              <div class="kx-media-effect relative {{ ratio_cls }} overflow-hidden" {% render 'media-effect' %}>
                 {%- if b.image != blank -%}
                   {%- assign story_alt = b.image.alt | default: b.heading | default: s.heading -%}
                   {{ b.image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', sizes: '(min-width:750px) 48vw, 100vw', alt: story_alt, class: 'h-full w-full object-cover' }}
@@ -89,6 +99,18 @@
       ]
     },
     {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "default": "wide",
+      "options": [
+        { "value": "landscape", "label": "Landscape" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "square", "label": "Square" },
+        { "value": "wide", "label": "Wide" }
+      ]
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.collection-story.settings.color_scheme.label",
@@ -140,7 +162,7 @@
           "type": "richtext",
           "id": "text",
           "label": "t:sections.collection-story.blocks.chapter.settings.text.label",
-          "default": "<p>Describe this step of the story — the material, the field test, the release.</p>"
+          "default": "<p>Describe this step of the story: the material, the field test, the release.</p>"
         },
         {
           "type": "image_picker",

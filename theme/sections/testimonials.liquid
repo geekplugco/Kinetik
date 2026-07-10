@@ -6,13 +6,21 @@
       assign tcount = tcount | plus: 1
     endif
   endfor
+  case section.settings.width
+    when 'full'
+      assign width_cls = 'max-w-none'
+    when 'narrow'
+      assign width_cls = 'max-w-4xl'
+    else
+      assign width_cls = 'max-w-[var(--page-width)]'
+  endcase
 -%}
 <section
   data-color-scheme="{{ s.color_scheme | default: 'scheme-3' }}"
   style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
   class="theme-dark bg-surface-page text-text-body"
 >
-  <div class="mx-auto max-w-[var(--page-width)] px-6">
+  <div class="mx-auto {{ width_cls }} px-6">
     <div class="flex items-start justify-between gap-6">
       <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ s.kicker | default: 'Field reports' }}</span>
       {%- if s.heading != blank -%}<span class="sr-only">{{ s.heading }}</span>{%- endif -%}
@@ -78,6 +86,17 @@
       "id": "color_scheme",
       "label": "t:sections.testimonials.settings.color_scheme.label",
       "default": "scheme-3"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "page",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" },
+        { "value": "narrow", "label": "Narrow" }
+      ]
     },
     {
       "type": "header",

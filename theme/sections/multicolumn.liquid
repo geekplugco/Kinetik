@@ -5,13 +5,21 @@
   if s.list_columns == '1'
     assign list_cols_cls = ''
   endif
+  case section.settings.width
+    when 'full'
+      assign width_cls = 'max-w-none'
+    when 'narrow'
+      assign width_cls = 'max-w-4xl'
+    else
+      assign width_cls = 'max-w-[var(--page-width)]'
+  endcase
 -%}
 <section
   data-color-scheme="{{ s.color_scheme | default: 'scheme-1' }}"
   style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
   class="border-y border-border-hairline bg-surface-page"
 >
-  <div class="mx-auto grid max-w-[var(--page-width)] px-6 md:grid-cols-[0.85fr_1.15fr]">
+  <div class="mx-auto grid {{ width_cls }} px-6 md:grid-cols-[0.85fr_1.15fr]">
     <div class="border-b border-border-hairline bg-surface-page p-6 md:sticky md:top-24 md:self-start md:border-b-0 md:border-r md:p-8">
       <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ kicker }}</span>
       {%- if s.heading != blank -%}
@@ -91,6 +99,17 @@
       "options": [
         { "value": "1", "label": "1 column" },
         { "value": "2", "label": "2 columns" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "page",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" },
+        { "value": "narrow", "label": "Narrow" }
       ]
     },
     {

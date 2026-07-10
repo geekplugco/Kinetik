@@ -10,7 +10,7 @@
     {%- if product.featured_media == blank -%}
       {{ 'product-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
     {%- elsif product.featured_media.media_type == 'image' -%}
-      {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'eager', widths: '400,600,800', sizes: '(min-width:750px) 40vw, 90vw', alt: product.title, class: 'h-full w-full object-cover' }}
+      {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'eager', widths: '400,600,800', sizes: '(min-width:750px) 40vw, 90vw', alt: product.title, class: 'h-full w-full object-contain' }}
     {%- else -%}
       {%- render 'product-media', media: product.featured_media, sizes: '(min-width:750px) 40vw, 90vw', loading: 'eager', priority: 'auto', alt: product.title -%}
     {%- endif -%}
@@ -44,12 +44,12 @@
               <div class="flex flex-wrap gap-2.5">
                 {%- for value in option.values -%}
                   {%- assign opt_id = 'qv-' | append: option.position | append: '-' | append: forloop.index -%}
-                  <label for="{{ opt_id }}" class="cursor-pointer">
+                  <label for="{{ opt_id }}" class="cursor-pointer{% if is_color %} flex min-h-[44px] min-w-[44px] items-center justify-center{% endif %}">
                     <input type="radio" id="{{ opt_id }}" class="peer sr-only" name="option-{{ option.position }}" value="{{ value | escape }}" data-option-position="{{ option.position }}"{% if is_color %} data-option-color{% endif %}{% if option.selected_value == value %} checked{% endif %}>
                     {%- if is_color -%}
                       {%- render 'swatch', value: value, title: value, size_class: 'h-8 w-8' -%}
                     {%- else -%}
-                      <span class="block min-h-[40px] border border-border-hairline px-3 py-2 font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">{{ value }}</span>
+                      <span class="block min-h-[44px] border border-border-hairline px-3 py-2 font-mono text-xs uppercase tracking-wide text-text-muted peer-checked:border-border-strong peer-checked:bg-surface-sunken peer-checked:text-text-strong peer-focus-visible:ring-2 peer-focus-visible:ring-accent-press">{{ value }}</span>
                     {%- endif -%}
                   </label>
                 {%- endfor -%}

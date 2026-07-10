@@ -1,10 +1,10 @@
 {%- liquid
-  assign coll = section.settings.collection
-  unless coll
+  assign coll = collections[section.settings.collection]
+  if coll == blank or coll.products_count == 0
     for c in collections limit: 1
       assign coll = c
     endfor
-  endunless
+  endif
   assign limit = section.settings.products_to_show | default: 8
   assign layout = section.settings.layout | default: 'split'
   assign width = section.settings.width | default: 'page'
@@ -243,26 +243,6 @@
   "presets": [
     {
       "name": "t:sections.featured-collection.presets.name__1"
-    },
-    {
-      "name": "t:sections.featured-collection.presets.name__2",
-      "settings": {
-        "heading": "The edit",
-        "layout": "editorial",
-        "width": "narrow",
-        "grid_density": "spacious",
-        "columns_desktop": 3
-      }
-    },
-    {
-      "name": "t:sections.featured-collection.presets.name__3",
-      "settings": {
-        "heading": "Shop all",
-        "layout": "stacked",
-        "grid_density": "compact",
-        "columns_desktop": 5,
-        "columns_mobile": "2"
-      }
     }
   ]
 }

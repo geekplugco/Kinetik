@@ -1,7 +1,11 @@
 {
   "sections": {
     "main": {
-      "type": "main-cart"
+      "type": "main-cart",
+      "settings": {
+        "empty_secondary_link": "shopify://pages/lookbook",
+        "empty_collection": "all"
+      }
     },
     "breadcrumb": {
       "type": "breadcrumb",

@@ -35,7 +35,7 @@
     {%- endif -%}
     {%- form 'contact', class: 'flex flex-col gap-4' -%}
       {%- if form.posted_successfully? -%}
-        <p role="status" class="font-mono text-xs uppercase tracking-label text-accent-press">Thanks — we will be in touch.</p>
+        <p role="status" class="font-mono text-xs uppercase tracking-label text-accent-press">Thanks. We will be in touch.</p>
       {%- elsif form.errors -%}
         <div role="alert" class="border border-negative px-4 py-3 font-mono text-xs text-negative">
           <ul class="list-disc space-y-1 pl-4">
@@ -195,23 +195,6 @@
   "presets": [
     {
       "name": "t:sections.contact-form.presets.name__1"
-    },
-    {
-      "name": "t:sections.contact-form.presets.name__2",
-      "settings": {
-        "layout": "split",
-        "width": "page",
-        "heading": "Get in touch",
-        "show_phone": true
-      }
-    },
-    {
-      "name": "t:sections.contact-form.presets.name__3",
-      "settings": {
-        "layout": "stacked",
-        "width": "page",
-        "heading": "Contact us"
-      }
     }
   ]
 }

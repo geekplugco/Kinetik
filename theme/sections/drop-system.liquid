@@ -69,7 +69,7 @@
             <label for="drop-email" class="sr-only">{{ 'newsletter.label' | t | default: 'Email' }}</label>
             {%- if form.posted_successfully? -%}
               <p class="flex items-center gap-2 border border-accent px-4 py-3 font-mono text-xs uppercase tracking-label text-text-strong">
-                {%- render 'icon', name: 'arrow', size: 14, class: 'text-accent' -%} You&rsquo;re on the list — we&rsquo;ll ping you at drop.
+                {%- render 'icon', name: 'arrow', size: 14, class: 'text-accent' -%} You&rsquo;re on the list. We&rsquo;ll ping you at drop.
               </p>
             {%- else -%}
               <div class="flex gap-2">

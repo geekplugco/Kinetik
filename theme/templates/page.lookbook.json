@@ -60,7 +60,7 @@
         "s1": {
           "type": "shot",
           "settings": {
-            "image": "shopify://shop_images/02-fulllook-cropped.png",
+            "image": "shopify://shop_images/01-jacket-hood-back.png",
             "image_alt": "Full Field System look, front",
             "caption": "01 — The full system",
             "product_1": "shell-jacket",
@@ -124,7 +124,7 @@
         "s6": {
           "type": "shot",
           "settings": {
-            "image": "shopify://shop_images/lookbook-frame6-hoodie-shoes.png",
+            "image": "shopify://shop_images/06-detail-trio.png",
             "image_alt": "Black hoodie and trail running sneakers arranged as a flat lay",
             "caption": "06 — Storm Hoodie + Trail Runner",
             "product_1": "tech-hoodie",
@@ -182,7 +182,7 @@
             "label": "03 — Release",
             "heading": "One system, shipped complete",
             "text": "<p>The final kit drops as a coordinated system — shell, layers, carry — each piece coded to work with the next.</p>",
-            "image": "shopify://shop_images/09-paired-hero.png",
+            "image": "shopify://shop_images/wp-hero-garage-19.png",
             "button_label": "Shop the drop",
             "button_link": "shopify://collections/frontpage"
           }
@@ -221,7 +221,7 @@
         "p1": {
           "type": "promo",
           "settings": {
-            "image": "shopify://shop_images/02-fulllook-cropped.png",
+            "image": "shopify://shop_images/01-jacket-hood-back.png",
             "eyebrow": "Outerwear",
             "heading": "Shells & layers",
             "text": "<p>Waterproof-breathable, seam-taped.</p>",
@@ -263,9 +263,9 @@
       "settings": {
         "subheading": "Field vs street",
         "heading": "One shell, two contexts",
-        "before_image": "shopify://shop_images/02-fulllook-cropped.png",
+        "before_image": "shopify://shop_images/01-jacket-hood-back.png",
         "before_label": "Field",
-        "after_image": "shopify://shop_images/09-paired-hero.png",
+        "after_image": "shopify://shop_images/wp-hero-garage-19.png",
         "after_label": "Street",
         "caption": "Drag to compare the full field system against the street loadout.",
         "aspect": "wide",

@@ -71,9 +71,42 @@
         </nav>
       {%- endif -%}
     {%- else -%}
-      <div class="mt-10 border border-border-hairline p-8 text-center">
-        <p class="font-display text-h3 text-text-strong">No articles yet.</p>
-        <p class="mt-2 text-body text-text-muted">Publish a field note to populate this journal.</p>
+      <div class="mt-10 grid overflow-hidden border border-border-hairline md:grid-cols-[0.9fr_1.1fr]">
+        <div class="flex min-h-[360px] flex-col justify-between bg-ink-950 p-6 text-paper md:p-8">
+          <div>
+            <span class="font-mono text-xs uppercase tracking-label text-accent">{{ section.settings.empty_eyebrow }}</span>
+            <p class="mt-4 max-w-lg font-display text-h2 uppercase leading-none tracking-tight">{{ section.settings.empty_heading }}</p>
+            <p class="mt-5 max-w-md text-body text-paper/70">{{ section.settings.empty_text }}</p>
+          </div>
+          <div class="mt-8 flex flex-wrap gap-3">
+            {%- if section.settings.empty_button_label != blank and section.settings.empty_button_link != blank -%}
+              <a href="{{ section.settings.empty_button_link }}" class="inline-flex min-h-[44px] items-center justify-center bg-accent px-5 py-3 font-mono text-xs uppercase tracking-label text-accent-ink transition-colors hover:bg-accent-hover">{{ section.settings.empty_button_label }}</a>
+            {%- endif -%}
+            {%- if section.settings.empty_secondary_label != blank and section.settings.empty_secondary_link != blank -%}
+              <a href="{{ section.settings.empty_secondary_link }}" class="inline-flex min-h-[44px] items-center justify-center border border-paper/55 px-5 py-3 font-mono text-xs uppercase tracking-label text-paper transition-colors hover:border-paper">{{ section.settings.empty_secondary_label }}</a>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class="grid bg-surface-page sm:grid-cols-3">
+          {%- assign demo_notes = 'Material brief|How the shell system handles rain, pack weight, and the first mile.|Transit test|Pocket access, strap position, and audio under a hood.|Care log|Wash cycles, repair points, and what changes after thirty wears.' | split: '|' -%}
+          {%- for i in (0..2) -%}
+            {%- assign title_index = i | times: 2 -%}
+            {%- assign text_index = title_index | plus: 1 -%}
+            <article class="flex min-h-[360px] flex-col justify-between border-b border-border-hairline p-5 sm:border-b-0 sm:border-l">
+              <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+                <span class="absolute inset-5 border border-border-hairline"></span>
+                <span class="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-border-hairline"></span>
+                <span class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-border-hairline"></span>
+                <span class="absolute bottom-5 left-5 font-mono text-[10px] uppercase tracking-label text-text-muted">Frame 0{{ forloop.index }}</span>
+              </div>
+              <div class="mt-5">
+                <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">Field note</span>
+                <p class="mt-2 font-display text-h4 tracking-tight text-text-strong">{{ demo_notes[title_index] }}</p>
+                <p class="mt-2 text-sm text-text-muted">{{ demo_notes[text_index] }}</p>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
       </div>
     {%- endif -%}
   {%- endpaginate -%}
@@ -89,6 +122,50 @@
       "id": "color_scheme",
       "label": "t:sections.main-blog.settings.color_scheme.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-blog.settings.header__empty.content"
+    },
+    {
+      "type": "text",
+      "id": "empty_eyebrow",
+      "label": "t:sections.main-blog.settings.empty_eyebrow.label",
+      "default": "Journal setup"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "empty_heading",
+      "label": "t:sections.main-blog.settings.empty_heading.label",
+      "default": "Field notes are ready for your first post"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text",
+      "label": "t:sections.main-blog.settings.empty_text.label",
+      "default": "Use the journal for launch notes, material proof, fit guides, care stories, and behind-the-scenes release content."
+    },
+    {
+      "type": "text",
+      "id": "empty_button_label",
+      "label": "t:sections.main-blog.settings.empty_button_label.label",
+      "default": "Shop the system"
+    },
+    {
+      "type": "url",
+      "id": "empty_button_link",
+      "label": "t:sections.main-blog.settings.empty_button_link.label"
+    },
+    {
+      "type": "text",
+      "id": "empty_secondary_label",
+      "label": "t:sections.main-blog.settings.empty_secondary_label.label",
+      "default": "Open lookbook"
+    },
+    {
+      "type": "url",
+      "id": "empty_secondary_link",
+      "label": "t:sections.main-blog.settings.empty_secondary_link.label"
     },
     {
       "type": "header",

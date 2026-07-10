@@ -4,8 +4,8 @@
     "theme_name": "Waypoint",
     "theme_version": "1.0.0",
     "theme_author": "HappyPow",
-    "theme_documentation_url": "https://github.com/geekplugco/Kinetik/tree/feat/kinetik-y5d-theme-engine/docs/merchant",
-    "theme_support_url": "https://github.com/geekplugco/Kinetik/issues/new?template=support.yml"
+    "theme_documentation_url": "https://docs.happypow.com/docs/waypoint",
+    "theme_support_url": "https://docs.happypow.com/docs/waypoint/support"
   },
   {
     "name": "t:settings_schema.logo_and_favicon.name",
@@ -573,12 +573,6 @@
         "type": "checkbox",
         "id": "card_show_swatches",
         "label": "t:settings_schema.product_cards.settings.card_show_swatches.label",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "card_quick_add",
-        "label": "t:settings_schema.product_cards.settings.card_quick_add.label",
         "default": true
       }
     ]
