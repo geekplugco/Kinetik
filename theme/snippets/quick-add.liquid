@@ -7,7 +7,7 @@
 <quick-add>
   <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="{{ qa_variant.id }}">
-    <button type="submit" class="absolute inset-x-0 bottom-0 flex w-full translate-y-0 items-center justify-center gap-2 bg-ink-950 py-3 font-mono text-xs uppercase tracking-label text-paper transition-transform duration-300 md:translate-y-full md:group-hover:translate-y-0 focus-visible:translate-y-0">
+    <button type="submit" class="absolute inset-x-0 bottom-0 flex min-h-[44px] w-full translate-y-0 items-center justify-center gap-2 bg-ink-950 py-3 font-mono text-xs uppercase tracking-label text-paper transition-transform duration-300 md:translate-y-full md:group-hover:translate-y-0 focus-visible:translate-y-0">
       {%- render 'icon', name: 'cart', size: 15 -%} {{ 'products.product.add_to_cart' | t | default: 'Add to cart' }}
     </button>
   </form>
