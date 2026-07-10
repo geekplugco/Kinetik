@@ -138,6 +138,7 @@ See `@.claude/rules/skill-routing.md` for the full decision guide:
 2. **Code search** — Never grep whole files. Use `teifi-munch` or `mcp__jcodemunch-mcp__search_symbols`.
 3. **Task tracking** — Every work session must have an active beads task.
 4. **No prose comments in code** — explanatory comments drift from the code when requirements change, then mislead; make names carry the meaning instead. Guard: `node web/scripts/guard-comments.mjs theme` must PASS. Banned: `//`, `/* */`, `<!-- -->`, `{% comment %}`. Allowed because the toolchain validates them against the code (can't silently drift): Liquid `{% doc %}` snippet contracts (theme-check `ValidDoc`) and `{%- # theme-check-disable/enable -%}` directives.
+5. **No AI-slop in written content** — before finalizing any merchant-facing or user-facing copy (docs, FAQ, support pages, marketing text, commit messages meant for humans), run the `tantislop` skill in rewrite mode to strip banned vocabulary, em-dash overuse, parataxis, rule-of-three patterns, hedging, and structural uniformity. Applies to both English and Vietnamese content.
 
 ## Theme Z-Index Rule
 

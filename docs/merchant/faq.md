@@ -18,7 +18,7 @@ Three options, checked in this order: a product's own `size_chart` metafield (al
 
 ### Why isn't the size guide showing on some products?
 
-If you're relying on the Field spec section's Size chart row blocks, that table only appears on products that have a Size variant option — non-apparel products like sunglasses are skipped on purpose so they don't show an irrelevant chest/waist chart. Set a per-product `size_chart` metafield instead if you need sizing info on a product without a Size option, and check that Show size guide is enabled on the section.
+If you're relying on the Field spec section's Size chart row blocks, that table only appears on products that have a Size variant option. Non-apparel products like sunglasses are skipped on purpose so they don't show an irrelevant chest/waist chart. Set a per-product `size_chart` metafield instead if you need sizing info on a product without a Size option, and check that Show size guide is enabled on the section.
 
 ### Sale badges are not showing.
 

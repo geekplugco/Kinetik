@@ -52,7 +52,7 @@ The Product section renders vendor, title, rating, price, and description as reo
 
 | Section | What it does |
 |---|---|
-| Field spec | Spec-sheet grid from product metafields, plus the size guide (metafield, table blocks, or linked page — see the [setup guide](/docs/waypoint/setup#size-guide)) |
+| Field spec | Spec-sheet grid from product metafields, plus the size guide (metafield, table blocks, or linked page; see the [setup guide](/docs/waypoint/setup#size-guide)) |
 | Product loadout | Companion products from the `loadout` metafield |
 | Product use modes | Scenario tabs for one product |
 | Product motion spec | Animated spec callouts |

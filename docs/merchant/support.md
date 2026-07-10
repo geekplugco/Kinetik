@@ -14,7 +14,7 @@ Support requests receive a reply within two business days. Critical bugs are fix
 - Third-party app configuration or conflicts caused by app-injected code
 - General Shopify admin tasks (product entry, shipping setup, checkout configuration)
 
-For custom work, duplicate your theme before editing any code. HappyPow offers paid customization work directly — reach out through the form below with what you need and we'll quote a fee.
+For custom work, duplicate your theme before editing any code. HappyPow offers paid customization work directly. Reach out through the form below with what you need and we'll quote a fee.
 
 ## Before you write in
 
