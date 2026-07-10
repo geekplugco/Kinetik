@@ -1,1 +1,32 @@
-{ "type": "footer", "name": "Footer group", "sections": { "footer": { "type": "footer", "settings": {} } }, "order": ["footer"] }
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": { "footer_style": "system" },
+      "blocks": {
+        "support_contact": { "type": "link", "settings": { "link_label": "Contact", "link_url": "/pages/contact" } },
+        "support_shipping": { "type": "link", "settings": { "link_label": "Shipping & returns", "link_url": "/pages/shipping" } },
+        "support_faq": { "type": "link", "settings": { "link_label": "FAQ", "link_url": "/pages/faq" } },
+        "support_warranty": { "type": "link", "settings": { "link_label": "Warranty", "link_url": "/pages/warranty" } },
+        "support_field_guide": { "type": "link", "settings": { "link_label": "Field guide", "link_url": "/pages/content-library" } }
+      },
+      "block_order": ["support_contact", "support_shipping", "support_faq", "support_warranty", "support_field_guide"]
+    },
+    "promo_popup": {
+      "type": "promo-popup",
+      "settings": {
+        "enable": true,
+        "heading": "Get early access",
+        "text": "<p>Sign up for new drops and restocks before they sell out.</p>",
+        "show_email_signup": true,
+        "button_label": "Sign up",
+        "frequency": "session",
+        "delay_seconds": 4,
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": ["footer", "promo_popup"]
+}
