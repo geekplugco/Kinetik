@@ -33,22 +33,30 @@
     else
       assign ratio_cls = 'aspect-[4/3]'
   endcase
-  assign scan_grid_cls = 'grid border border-border-hairline md:grid-cols-[1.25fr_0.75fr] md:items-stretch'
+  assign scan_grid_cls = 'grid gap-10 md:grid-cols-[1.35fr_0.65fr] md:items-stretch md:gap-14'
   if layout == 'stacked'
-    assign scan_grid_cls = 'grid border border-border-hairline'
+    assign scan_grid_cls = 'grid gap-10'
   endif
-  assign details_cls = 'flex flex-col border-t border-border-hairline md:border-l md:border-t-0'
+  assign details_cls = 'flex flex-col divide-y divide-border-hairline'
   if layout == 'stacked'
-    assign details_cls = 'grid border-t border-border-hairline md:grid-cols-3'
+    assign details_cls = 'grid divide-x divide-border-hairline md:grid-cols-3'
   endif
   if image_position == 'right' and layout == 'split'
     assign media_order = 'md:order-2'
-    assign details_order = 'md:order-1 md:border-l-0 md:border-r'
+    assign details_order = 'md:order-1'
   endif
-  assign detail_button_cls = 'flex w-full items-start gap-4 border-b border-border-hairline px-4 py-4 text-left transition-colors aria-pressed:bg-text-strong/5 md:px-6'
+  assign detail_button_cls = 'group/row flex w-full items-start gap-5 py-6 text-left first:pt-0 last:pb-0'
   if panel_style == 'cards'
-    assign detail_button_cls = 'm-3 flex w-[calc(100%-1.5rem)] items-start gap-4 border border-border-hairline bg-surface-raised px-4 py-4 text-left transition-colors aria-pressed:border-border-strong aria-pressed:bg-text-strong/5'
+    assign detail_button_cls = 'group/row mb-3 flex w-full items-start gap-5 border border-border-hairline bg-surface-card px-5 py-5 text-left transition-colors last:mb-0 aria-pressed:border-border-strong'
   endif
+  case section.settings.width
+    when 'full'
+      assign width_cls = 'max-w-none'
+    when 'narrow'
+      assign width_cls = 'max-w-4xl'
+    else
+      assign width_cls = 'max-w-[var(--page-width)]'
+  endcase
 -%}
 {%- if show_section -%}
   <section
@@ -56,26 +64,27 @@
     style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
     class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)] text-text-strong"
   >
-    <div class="mx-auto max-w-[var(--page-width)] px-6">
-      <div class="mb-8 grid border border-border-strong md:grid-cols-[1fr_auto]">
-        <div class="p-4 md:p-5">
+    <div class="mx-auto {{ width_cls }} px-6">
+      <div class="mb-12 flex flex-wrap items-end justify-between gap-6 md:mb-16">
+        <div class="max-w-2xl">
           {%- if section.settings.subheading != blank -%}
-            <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
+            <span class="font-mono text-xs uppercase tracking-label text-accent">{{ section.settings.subheading }}</span>
           {%- endif -%}
           {%- if section.settings.heading != blank -%}
-            <h2 class="mt-2 font-display text-h3 tracking-tight">{{ section.settings.heading }}</h2>
+            <h2 class="mt-3 font-display text-display-2 tracking-tight text-balance">{{ section.settings.heading }}</h2>
           {%- endif -%}
         </div>
-        <div class="grid grid-cols-2 border-t border-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted md:w-56 md:border-l md:border-t-0">
-          <span class="border-r border-border-hairline p-3">{{ points.size }} points</span>
-          <span class="p-3">scan</span>
+        <div class="flex shrink-0 items-baseline gap-2 font-mono text-xs uppercase tracking-label text-text-muted">
+          <span class="text-h3 font-display text-text-strong">{{ points.size | prepend: '0' | slice: -2, 2 }}</span>
+          <span>{{ points.size | pluralize: 'point', 'points' }} on record</span>
         </div>
       </div>
       <material-scan class="{{ scan_grid_cls }}">
         <div data-scan-stage class="relative overflow-hidden bg-surface-sunken {{ media_order }}">
           <div class="kx-media-effect relative {{ ratio_cls }}" {% render 'media-effect', override: effect_override, surface: 'proof' %}>
             {%- if section.settings.image != blank -%}
-              {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700,1050,1400', sizes: '(min-width:990px) 45vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading, class: 'h-full w-full object-cover' }}
+              {%- assign scan_alt = section.settings.image.alt | default: section.settings.heading -%}
+              {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700,1050,1400', sizes: '(min-width:990px) 45vw, 100vw', alt: scan_alt, class: 'h-full w-full object-cover' }}
             {%- else -%}
               {{ 'lifestyle-2' | placeholder_svg_tag: 'h-full w-full object-cover bg-surface-sunken text-border-hairline' }}
             {%- endif -%}
@@ -85,20 +94,24 @@
             {%- if show_scan_line -%}
               <span data-scan-line aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 z-10 h-px bg-accent opacity-0"></span>
             {%- endif -%}
+            <span class="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1/2 bg-gradient-to-t from-ink-950/55 to-transparent" aria-hidden="true"></span>
             {%- for point in points -%}
-              <button type="button" data-scan-point data-index="{{ forloop.index }}" aria-label="{{ point.settings.label | default: 'Detail' | escape }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" style="left:{{ point.settings.x | default: 50 }}%;top:{{ point.settings.y | default: 50 }}%" class="absolute z-10 flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center border border-accent bg-ink-950/70 font-mono text-[11px] text-paper backdrop-blur transition-transform hover:scale-110 aria-pressed:scale-110 aria-pressed:bg-accent aria-pressed:text-accent-ink" {{ point.shopify_attributes }}>{{ forloop.index }}</button>
+              <button type="button" data-scan-point data-index="{{ forloop.index }}" aria-label="Point {{ forloop.index }}: {{ point.settings.label | default: 'Detail' | escape }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" style="left:{{ point.settings.x | default: 50 }}%;top:{{ point.settings.y | default: 50 }}%" class="absolute z-10 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-paper font-mono text-xs text-ink-950 shadow-[0_2px_14px_rgba(10,10,10,0.4)] transition-transform hover:scale-110 aria-pressed:scale-125 aria-pressed:bg-accent aria-pressed:text-accent-ink">
+                <span class="absolute inset-0 -z-10 rounded-full border border-paper/60 aria-pressed:border-accent" aria-hidden="true" style="inset:-8px"></span>
+                {{ forloop.index }}
+              </button>
             {%- endfor -%}
           </div>
         </div>
         <ul class="{{ details_cls }} {{ details_order }}">
           {%- for point in points -%}
-            <li>
-              <button type="button" data-scan-detail data-index="{{ forloop.index }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" class="{{ detail_button_cls }}">
-                <span class="flex h-7 w-7 shrink-0 items-center justify-center border border-border-strong font-mono text-[11px] text-text-strong">{{ forloop.index }}</span>
-                <span class="flex flex-col gap-1">
-                  <span class="font-mono text-xs uppercase tracking-label text-text-strong">{{ point.settings.label | default: 'Detail' }}</span>
+            <li class="{% if panel_style == 'cards' %}px-0{% else %}px-0{% endif %}">
+              <button type="button" data-scan-detail data-index="{{ forloop.index }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" class="{{ detail_button_cls }} border-l-2 border-transparent pl-5 transition-[border-color] aria-pressed:border-accent">
+                <span class="shrink-0 pt-1 font-mono text-xs text-text-faint group-aria-pressed/row:text-text-strong">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                <span class="flex flex-col gap-2">
+                  <span class="font-display text-h4 tracking-tight text-text-strong">{{ point.settings.label | default: 'Detail' }}</span>
                   {%- if point.settings.detail != blank -%}
-                    <span data-scan-detail-body class="text-sm text-text-body [&_p]:m-0">{{ point.settings.detail }}</span>
+                    <span data-scan-detail-body class="max-w-md text-body text-text-muted [&_p]:m-0">{{ point.settings.detail }}</span>
                   {%- endif -%}
                 </span>
               </button>
@@ -107,7 +120,7 @@
         </ul>
       </material-scan>
       {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
-        <div class="mt-8">{%- render 'button', label: section.settings.cta_label, href: section.settings.cta_url, variant: 'secondary' -%}</div>
+        <div class="mt-10">{%- render 'button', label: section.settings.cta_label, href: section.settings.cta_url, variant: 'secondary' -%}</div>
       {%- endif -%}
     </div>
   </section>
@@ -177,6 +190,17 @@
       "options": [
         { "value": "attached", "label": "t:sections.material-scan.settings.panel_style.options__1.label" },
         { "value": "cards", "label": "t:sections.material-scan.settings.panel_style.options__2.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "page",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" },
+        { "value": "narrow", "label": "Narrow" }
       ]
     },
     { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.material-scan.settings.color_scheme.label", "default": "scheme-3" },
