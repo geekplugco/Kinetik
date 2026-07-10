@@ -10,9 +10,9 @@
     "intro": {
       "type": "rich-text",
       "settings": {
-        "subheading": "Content system",
-        "heading": "Merchant content sections",
-        "text": "<p>A reusable page template that demonstrates the content blocks most stores need: FAQs, shipping, returns, sizing, care, warranty, contact, editorial proof, and journal entries.</p>",
+        "subheading": "Field guide",
+        "heading": "Everything you need, in one place",
+        "text": "<p>Sizing, shipping, materials, and care &mdash; the details that matter once your order is in hand. Can't find it below? The team answers directly.</p>",
         "style": "accent-rule",
         "width": "page",
         "padding_top": 56,
@@ -22,10 +22,10 @@
     "nav": {
       "type": "multicolumn",
       "settings": {
-        "subheading": "Common pages",
-        "heading": "What merchants usually need",
-        "text": "<p>Use this page as a section library or duplicate the sections into policy, FAQ, support, and product education pages.</p>",
-        "show_module_count": true,
+        "subheading": "On this page",
+        "heading": "Find it fast",
+        "text": "<p>Jump to sizing, shipping, care, or support &mdash; or scroll through the full guide.</p>",
+        "show_module_count": false,
         "list_columns": "2",
         "padding_top": 32,
         "padding_bottom": 32
@@ -34,29 +34,29 @@
         "n1": {
           "type": "column",
           "settings": {
-            "title": "Pre-purchase clarity",
-            "text": "<p>FAQ, size guide, materials, product care, compatibility, and comparison content reduce support load before checkout.</p>"
+            "title": "Before you order",
+            "text": "<p>Size guide, materials, fit notes, and the questions that come up before checkout.</p>"
           }
         },
         "n2": {
           "type": "column",
           "settings": {
-            "title": "Post-purchase support",
-            "text": "<p>Shipping, returns, warranty, repair, account, and contact sections make the store feel reliable after the order.</p>"
+            "title": "After it ships",
+            "text": "<p>Shipping windows, returns, exchanges, and warranty coverage once your order is moving.</p>"
           }
         },
         "n3": {
           "type": "column",
           "settings": {
-            "title": "Trust and proof",
-            "text": "<p>Reviews, press quotes, field notes, certification claims, and process content help a brand justify premium pricing.</p>"
+            "title": "Built to last",
+            "text": "<p>Construction notes, hardware choices, and the field-testing behind every piece.</p>"
           }
         },
         "n4": {
           "type": "column",
           "settings": {
-            "title": "Retention",
-            "text": "<p>Newsletter, journal, drop access, and community links give shoppers a reason to return without fake urgency.</p>"
+            "title": "Stay connected",
+            "text": "<p>Restock alerts and drop notices &mdash; no noise, just the next window.</p>"
           }
         }
       },
@@ -156,10 +156,10 @@
       "settings": {
         "subheading": "Care and materials",
         "heading": "Teach the product, not just the policy",
-        "text": "<p>Use image-with-text for size guides, material proof, repair programs, fit notes, ingredient lists, certification explanations, or product education.</p>",
+        "text": "<p>Wash cold, skip the fabric softener, and let technical fabrics air dry. Reproof the face fabric on shells once water stops beading.</p>",
         "button_label": "Open support",
         "button_link": "shopify://pages/contact",
-        "image": "shopify://shop_images/06-detail-trio.png",
+        "image": "shopify://shop_images/lookbook-frame1-flatlay.png",
         "image_ratio": "landscape",
         "layout": "image_first",
         "color_scheme": "scheme-1",
@@ -172,7 +172,7 @@
       "settings": {
         "subheading": "Warranty",
         "heading": "Set expectations clearly",
-        "text": "<p>Use this block for warranty coverage, repair terms, final-sale rules, subscription policy, preorder timing, or wholesale terms. Keep language specific and avoid vague trust claims.</p>",
+        "text": "<p>Every seam carries a lifetime warranty against defects in materials and workmanship. Reproofing, zip replacement, and stress-point repairs are handled directly &mdash; normal wear and accidental damage are not covered. Start a claim below with your order number.</p>",
         "style": "panel",
         "width": "page",
         "color_scheme": "scheme-3",
@@ -185,7 +185,7 @@
       "settings": {
         "subheading": "Support",
         "heading": "Contact the team",
-        "details": "<p>Use the contact form for sizing help, warranty claims, order questions, wholesale requests, or custom project leads.</p>",
+        "details": "<p>Sizing questions, warranty claims, order changes, or wholesale inquiries &mdash; reach the team directly and expect a reply within one business day.</p>",
         "layout": "split",
         "width": "page",
         "show_phone": true,
@@ -210,9 +210,9 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "subheading": "Retention",
-        "heading": "Keep shoppers in the loop",
-        "text": "<p>Use newsletter blocks on support and education pages when a shopper is engaged but not ready to buy.</p>",
+        "subheading": "Trail list",
+        "heading": "One list, everything that matters",
+        "text": "<p>Restock alerts, care reminders, and shipping updates &mdash; sent only when there's something worth reading.</p>",
         "layout": "split",
         "width": "page",
         "background_style": "dark",
