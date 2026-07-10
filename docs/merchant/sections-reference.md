@@ -64,10 +64,10 @@
 | Kicker | Text | The system |
 | Heading | Rich text | Build your kit |
 | Intro text | Rich text | — |
-| Discount percentage <br><sub>Display only. Configure a matching Shopify automatic discount (e.g. % off at this piece count) so the saving actually applies at checkout. Leave at 0 if you have no such discount.</sub> | Slider 0–40% | 0% |
+| Discount percentage <br/><sub>Display only. Configure a matching Shopify automatic discount (e.g. % off at this piece count) so the saving actually applies at checkout. Leave at 0 if you have no such discount.</sub> | Slider 0–40% | 0% |
 | Minimum pieces for discount | Slider 2–6 | 3 |
 | Image ratio | Choose: Portrait 4:5 / Square / Landscape 4:3 | portrait |
-| Image fit <br><sub>Show full product keeps the whole photo visible on the tile background instead of cropping to fill.</sub> | Choose: Crop to fill / Show full product | cover |
+| Image fit <br/><sub>Show full product keeps the whole photo visible on the tile background instead of cropping to fill.</sub> | Choose: Crop to fill / Show full product | cover |
 | Color scheme | Color scheme | scheme-1 |
 | Padding top | Slider 0–120px | 0px |
 | Padding bottom | Slider 0–120px | 0px |
@@ -98,7 +98,7 @@
 |---|---|---|
 | Eyebrow | Text | Browse the system |
 | Heading | Rich text | Shop by category |
-| Collections <br><sub>Leave empty to show all collections automatically.</sub> | Collection | — |
+| Collections <br/><sub>Leave empty to show all collections automatically.</sub> | Collection | — |
 | Card style | Choose: Overlay caption / Caption below image | overlay |
 | Image ratio | Choose: Tall (3:4) / Portrait (4:5) / Square (1:1) / Landscape (4:3) | tall |
 | Section width | Choose: Page / Full width / Narrow | page |
@@ -173,7 +173,7 @@
 |---|---|---|
 | Subheading | Rich text | — |
 | Heading | Rich text | — |
-| Contact details <br><sub>Shown beside the form in split layout</sub> | Rich text | — |
+| Contact details <br/><sub>Shown beside the form in split layout</sub> | Rich text | — |
 | Name placeholder | Text | Name |
 | Email placeholder | Text | Email |
 | Show phone field | Toggle | Off |
@@ -206,10 +206,10 @@
 | Kicker | Text | Next drop |
 | Drop name | Rich text | Drop 05 · Field System |
 | Text | Rich text | — |
-| Drop date/time <br><sub>ISO format, e.g. 2026-07-15T10:00:00</sub> | Text | 2026-07-15T10:00:00 |
+| Drop date/time <br/><sub>ISO format, e.g. 2026-07-15T10:00:00</sub> | Text | 2026-07-15T10:00:00 |
 | Button label | Text | Notify me |
 | Show live activity ticker | Toggle | On |
-| Ticker lines <br><sub>One line per item. Keep claims factual. Invented urgency is not allowed on the Theme Store.</sub> | Text (multi-line) | — |
+| Ticker lines <br/><sub>One line per item. Keep claims factual. Invented urgency is not allowed on the Theme Store.</sub> | Text (multi-line) | — |
 | Color scheme | Color scheme | scheme-3 |
 | Padding top | Slider 0–120px | 0px |
 | Padding bottom | Slider 0–120px | 0px |
@@ -266,7 +266,7 @@
 
 `sections/field-spec.liquid` · Presets: Field spec
 
-**Content blocks:** Spec row, Use-case badge
+**Content blocks:** Spec row, Use-case badge, Size chart row
 
 | Setting | Control | Default |
 |---|---|---|
@@ -274,7 +274,14 @@
 | Heading | Text | Field spec |
 | Show size guide | Toggle | On |
 | Size guide label | Text | Size guide |
-| Size guide page <br><sub>Shown in the size-guide modal when no size_chart metafield is set.</sub> | Page | — |
+| Size guide page <br/><sub>Shown in the size-guide modal when no size_chart metafield is set.</sub> | Page | — |
+| Row label column heading | Text | Size |
+| Column 2 heading | Text | Chest |
+| Column 3 heading | Text | Waist |
+| Column 4 heading (optional) | Text | — |
+| Column 5 heading (optional) | Text | — |
+| Column 6 heading (optional) | Text | — |
+| Note below the chart (optional) | Text | All measurements in inches, laid flat. |
 | Color scheme | Color scheme | scheme-1 |
 | Top padding | Slider 0–120px | 48px |
 | Bottom padding | Slider 0–120px | 48px |
@@ -319,9 +326,9 @@
 | Show featured products in mega menu | Toggle | On |
 | Show promo image tile in mega menu | Toggle | On |
 | Show account icon | Toggle | On |
-| Show country and language selectors in the mobile menu <br><sub>Selectors appear only when the store has more than one market country or published language.</sub> | Toggle | On |
+| Show country and language selectors in the mobile menu <br/><sub>Selectors appear only when the store has more than one market country or published language.</sub> | Toggle | On |
 | Show free shipping goal | Toggle | On |
-| Free shipping threshold <br><sub>Amount in store currency units.</sub> | Number | 150 |
+| Free shipping threshold <br/><sub>Amount in store currency units.</sub> | Number | 150 |
 | Show order note | Toggle | On |
 | Upsell collection | Collection | — |
 | Upsell heading | Text | Complete the kit |
@@ -356,7 +363,7 @@
 | Padding bottom | Slider 0–120px | 0px |
 | Kicker | Text | Field manifesto |
 | Heading | Text | Every gram earns its place |
-| Accent word <br><sub>A word in the heading to render in the accent color. Matched case-insensitively.</sub> | Text | earns |
+| Accent word <br/><sub>A word in the heading to render in the accent color. Matched case-insensitively.</sub> | Text | earns |
 | Text | Rich text | No filler panels, no decorative hardware… |
 | Button label | Text | Shop the system |
 | Button link | Link | — |
@@ -378,7 +385,7 @@
 | Padding bottom | Slider 0–120px | 0px |
 | Pointer parallax | Toggle | On |
 | Instrument frame | Choose: Default / Viewfinder corners / Scanline sweep / Viewfinder and scanline / None | default |
-| Rotate media every <br><sub>Set to 0 to turn off rotation.</sub> | Slider 0–10s | 6s |
+| Rotate media every <br/><sub>Set to 0 to turn off rotation.</sub> | Slider 0–10s | 6s |
 | Kicker | Text | SS26 / Field System |
 | Heading | Text | Built for the next condition |
 | Text | Rich text | — |
@@ -387,7 +394,7 @@
 | Secondary button label | Text | Lookbook |
 | Secondary button link | Link | — |
 | Overlay opacity | Slider 0–80% | 35% |
-| Mobile image <br><sub>Replaces the first media image on small screens.</sub> | Image | — |
+| Mobile image <br/><sub>Replaces the first media image on small screens.</sub> | Image | — |
 
 ## Hero split
 
@@ -398,13 +405,13 @@
 | Image position | Choose: Right / Left | right |
 | Height | Choose: Large / Medium | large |
 | Color scheme | Color scheme | scheme-1 |
-| Text panel scheme <br><sub>Color scheme for the dark text panel only. Pick the scheme that matches this store's own dark tone.</sub> | Color scheme | scheme-5 |
+| Text panel scheme <br/><sub>Color scheme for the dark text panel only. Pick the scheme that matches this store's own dark tone.</sub> | Color scheme | scheme-5 |
 | Padding top | Slider 0–120px | 0px |
 | Padding bottom | Slider 0–120px | 0px |
 | Kicker | Text | System entry |
 | Heading | Text | Start with the shell |
 | Text | Rich text | One piece anchors the whole system. Wate… |
-| Spec line <br><sub>Mono technical line under the text, for example 3L shell · 28,000mm HH · 340g.</sub> | Text | 3L shell · 28,000mm HH · 340g |
+| Spec line <br/><sub>Mono technical line under the text, for example 3L shell · 28,000mm HH · 340g.</sub> | Text | 3L shell · 28,000mm HH · 340g |
 | Product | Product | — |
 | Button label | Text | View product |
 | Show quick view | Toggle | On |
@@ -415,9 +422,9 @@
 
 | Setting | Control | Default |
 |---|---|---|
-| Video <br><sub>Shopify-hosted video. Plays muted, loops, and is preferred over the external URL when both are set.</sub> | Video | — |
-| External video URL <br><sub>YouTube or Vimeo. Loads lazily as a muted background; the poster image shows first.</sub> | Video | https://www.youtube.com/watch?v=_9VUPq3S… |
-| Poster image <br><sub>Shown before the external video loads and whenever reduced motion is on.</sub> | Image | — |
+| Video <br/><sub>Shopify-hosted video. Plays muted, loops, and is preferred over the external URL when both are set.</sub> | Video | — |
+| External video URL <br/><sub>YouTube or Vimeo. Loads lazily as a muted background; the poster image shows first.</sub> | Video | https://www.youtube.com/watch?v=_9VUPq3S… |
+| Poster image <br/><sub>Shown before the external video loads and whenever reduced motion is on.</sub> | Image | — |
 | Kicker | Text | Field footage |
 | Heading | Rich text | Motion is the brief |
 | Text | Rich text | — |
@@ -509,7 +516,7 @@
 | Width | Choose: Narrow / Page / Full width | page |
 | Logo size | Choose: Small / Medium / Large | medium |
 | Logo style | Choose: Muted (reveal on hover) / Grayscale (color on hover) / Full color | muted |
-| Columns (desktop) <br><sub>Used when layout is Grid</sub> | Slider 1–5 | 5 |
+| Columns (desktop) <br/><sub>Used when layout is Grid</sub> | Slider 1–5 | 5 |
 | Columns (mobile) | Choose: 1 / 2 | 2 |
 | Padding top | Slider 0–120px | 80px |
 | Padding bottom | Slider 0–120px | 80px |
@@ -611,7 +618,7 @@
 | Setting | Control | Default |
 |---|---|---|
 | Show free shipping bar | Toggle | On |
-| Free shipping threshold (cents) <br><sub>Cart total in cents to unlock free shipping</sub> | Number | 150 |
+| Free shipping threshold (cents) <br/><sub>Cart total in cents to unlock free shipping</sub> | Number | 150 |
 | Show "Complete your order" recommendations | Toggle | On |
 | Eyebrow | Text | System empty |
 | Heading | Rich text | Your cart is empty |
@@ -632,8 +639,8 @@
 
 | Setting | Control | Default |
 |---|---|---|
-| Show collection image <br><sub>Displays the image set on this collection in Shopify admin as a banner above the heading, when one is uploaded.</sub> | Toggle | On |
-| Show collection description <br><sub>Displays the collection description (set in Shopify admin) as an "About this collection" block below the product grid. Good for on-page SEO copy.</sub> | Toggle | On |
+| Show collection image <br/><sub>Displays the image set on this collection in Shopify admin as a banner above the heading, when one is uploaded.</sub> | Toggle | On |
+| Show collection description <br/><sub>Displays the collection description (set in Shopify admin) as an "About this collection" block below the product grid. Good for on-page SEO copy.</sub> | Toggle | On |
 | Eyebrow | Text | Collection |
 | Text | Text (multi-line) | A complete grid of field-ready pieces: w… |
 | Badge 1 | Text | Field-tested |
@@ -646,7 +653,7 @@
 | Enable sorting | Toggle | On |
 | Filter drawer style | Choose: Command drawer / Technical rail | command |
 | Columns on desktop | Slider 2–5 | 4 |
-| Products per page <br><sub>Lower this to demonstrate pagination on collections with fewer products.</sub> | Slider 8–48 | 24 |
+| Products per page <br/><sub>Lower this to demonstrate pagination on collections with fewer products.</sub> | Slider 8–48 | 24 |
 | Color scheme | Color scheme | scheme-1 |
 | Top padding | Slider 0–100px | 48px |
 | Bottom padding | Slider 0–100px | 48px |
@@ -716,7 +723,7 @@
 | Enable sticky add-to-cart bar | Toggle | On |
 | Enable image zoom | Toggle | On |
 | Variant picker style | Choose: Buttons / Dropdown | button |
-| Low stock threshold <br><sub>Show "Only N left" when stock is at or below this number (requires inventory tracking). Set to 0 to hide.</sub> | Slider 0–50 | 10 |
+| Low stock threshold <br/><sub>Show "Only N left" when stock is at or below this number (requires inventory tracking). Set to 0 to hide.</sub> | Slider 0–50 | 10 |
 | Dispatch note | Text | Ships from active stock |
 | Returns note | Text | Fit-safe return window |
 | Top padding | Slider 0–120px | 36px |
@@ -779,7 +786,7 @@
 
 | Setting | Control | Default |
 |---|---|---|
-| Text <br><sub>Separate items with ·</sub> | Text | KINETIK |
+| Text <br/><sub>Separate items with ·</sub> | Text | KINETIK |
 | Separator | Text | — |
 | Style | Choose: Volt accent / Ink (dark) / Paper outline | accent |
 | Direction | Choose: Left / Right | left |
@@ -858,7 +865,7 @@
 |---|---|---|
 | Subheading | Rich text | — |
 | Heading | Text | Reviews |
-| Anchor ID <br><sub>The product rating links to #reviews. Keep this as reviews to connect them.</sub> | Text | reviews |
+| Anchor ID <br/><sub>The product rating links to #reviews. Keep this as reviews to connect them.</sub> | Text | reviews |
 | Color scheme | Color scheme | scheme-1 |
 | Top padding | Slider 0–160px | 64px |
 | Bottom padding | Slider 0–160px | 64px |
@@ -901,7 +908,7 @@
 |---|---|---|
 | Subheading | Rich text | Field loadout |
 | Heading | Text | Build the loadout |
-| Note <br><sub>Optional line. Use for a real, configured bundle offer only. No fake discounts.</sub> | Text | — |
+| Note <br/><sub>Optional line. Use for a real, configured bundle offer only. No fake discounts.</sub> | Text | — |
 | Base item label | Text | This item |
 | Total label | Text | Loadout total |
 | Button label | Text | Add loadout to cart |
@@ -922,9 +929,9 @@
 | Heading | Text | Built to spec |
 | Text | Rich text | — |
 | Image | Image | — |
-| Video <br><sub>Shopify-hosted video. Takes priority over the image.</sub> | Video | — |
+| Video <br/><sub>Shopify-hosted video. Takes priority over the image.</sub> | Video | — |
 | Media position | Choose: Left / Right | left |
-| Proof caption <br><sub>A short mono caption under the media, e.g. lab test or field condition.</sub> | Text | — |
+| Proof caption <br/><sub>A short mono caption under the media, e.g. lab test or field condition.</sub> | Text | — |
 | Image ratio | Choose: Landscape / Portrait / Square / Wide | portrait |
 | Width | Choose: Page / Full width / Narrow | page |
 | Color scheme | Color scheme | scheme-3 |
@@ -979,7 +986,7 @@
 | Image | Image | — |
 | Show email signup form | Toggle | On |
 | Button label | Text | Sign up |
-| Button link <br><sub>Used when email signup is off</sub> | Link | — |
+| Button link <br/><sub>Used when email signup is off</sub> | Link | — |
 | Show frequency | Choose: Once per session / Once per day / Once only | session |
 | Delay before showing | Slider 0–30s | 4s |
 | Color scheme | Color scheme | scheme-1 |

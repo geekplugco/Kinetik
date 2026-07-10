@@ -7,9 +7,9 @@
 | Setting | Control | Default |
 |---|---|---|
 | Logo | Image | — |
-| Mobile logo <br><sub>Optional; falls back to the main logo</sub> | Image | — |
+| Mobile logo <br/><sub>Optional; falls back to the main logo</sub> | Image | — |
 | Logo width | Slider 60–280px | 120px |
-| Favicon <br><sub>Will be scaled down to 32 x 32px</sub> | Image | — |
+| Favicon <br/><sub>Will be scaled down to 32 x 32px</sub> | Image | — |
 
 ## Color palette
 
@@ -23,7 +23,7 @@
 |---|---|---|
 | Heading font | Font | space_grotesk_n7 |
 | Body font | Font | inter_n4 |
-| Accent / mono font <br><sub>Used for spec labels and codes</sub> | Font | space_mono_n4 |
+| Accent / mono font <br/><sub>Used for spec labels and codes</sub> | Font | space_mono_n4 |
 | Heading scale | Slider 100–150% | 100% |
 | Body scale | Slider 90–130% | 100% |
 | Heading letter spacing | Choose: Tight / Normal / Wide | tight |
@@ -50,7 +50,7 @@
 
 | Setting | Control | Default |
 |---|---|---|
-| Effect style <br><sub>Applies to product cards and media hovers across the theme.</sub> | Choose: Technical scan / Exposure meter / Blueprint trace / Caliper crosshair / None | scan |
+| Effect style <br/><sub>Applies to product cards and media hovers across the theme.</sub> | Choose: Technical scan / Exposure meter / Blueprint trace / Caliper crosshair / None | scan |
 | Show ambient scan on proof sections | Toggle | On |
 
 ## Badges
@@ -123,10 +123,10 @@
 
 | Setting | Control | Default |
 |---|---|---|
-| Swatch option name <br><sub>Product option rendered as swatches (e.g. Color)</sub> | Text | Color |
+| Swatch option name <br/><sub>Product option rendered as swatches (e.g. Color)</sub> | Text | Color |
 | Shape | Choose: Circle / Square | circle |
 | Maximum swatches on cards | Slider 2–8 | 5 |
-| Custom swatch list <br><sub>One per line. Name:#hexcolor or Name:image.png. Used when a product has no native swatch.</sub> | Text (multi-line) | — |
+| Custom swatch list <br/><sub>One per line. Name:#hexcolor or Name:image.png. Used when a product has no native swatch.</sub> | Text (multi-line) | — |
 
 ## Search
 
