@@ -77,11 +77,11 @@
       <div class="order-1 min-w-0 flex-1 md:order-2">
         <div data-gallery-main tabindex="0" aria-label="{{ product.title | escape }} media" class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
           {{ first_media.preview_image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1600', sizes: media_sizes, alt: first_alt, class: 'h-full w-full object-cover transition-transform duration-200 ease-out' }}
-          <button type="button" data-gallery-expand aria-label="View full image" class="absolute bottom-3 right-3 z-10 flex h-9 w-9 items-center justify-center border border-border-strong bg-surface-page/90 text-text-strong transition-colors hover:bg-surface-page">{%- render 'icon', name: 'arrow-up-right', size: 16 -%}</button>
+          <button type="button" data-gallery-expand aria-label="View full image" class="absolute bottom-3 right-3 z-10 flex h-11 w-11 items-center justify-center border border-border-strong bg-surface-page/90 text-text-strong transition-colors hover:bg-surface-page">{%- render 'icon', name: 'arrow-up-right', size: 16 -%}</button>
         </div>
         <div data-gallery-dots class="mt-3 flex justify-center gap-1.5 md:hidden">
           {%- for media in product.media -%}
-            <button type="button" data-gallery-dot data-media-id="{{ media.id }}" data-img="{{ media.preview_image | image_url: width: 1600 }}" data-alt="{{ media.alt | default: product.title | escape }}" aria-label="Go to media {{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}" class="flex h-11 w-6 items-center justify-center"><span class="h-1.5 w-1.5 border border-border-strong {% if forloop.first %}bg-border-strong{% else %}bg-transparent{% endif %}"></span></button>
+            <button type="button" data-gallery-dot data-media-id="{{ media.id }}" data-img="{{ media.preview_image | image_url: width: 1600 }}" data-alt="{{ media.alt | default: product.title | escape }}" aria-label="Go to media {{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}" class="flex h-11 w-11 items-center justify-center"><span class="h-1.5 w-1.5 border border-border-strong {% if forloop.first %}bg-border-strong{% else %}bg-transparent{% endif %}"></span></button>
           {%- endfor -%}
         </div>
         <p data-gallery-caption class="mt-3 font-mono text-xs uppercase tracking-label text-text-muted empty:hidden" aria-live="polite">{{ first_alt }}</p>
