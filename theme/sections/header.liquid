@@ -174,7 +174,7 @@
     {%- if mega_image == blank and mega_collection.featured_image -%}
       {%- assign mega_image = mega_collection.featured_image -%}
     {%- endif -%}
-    <div data-panel="{{ forloop.index }}" class="absolute top-full hidden origin-top animate-[megaIn_.18s_ease] border-b border-border-hairline bg-surface-page shadow-[0_24px_40px_-24px_rgba(10,10,10,0.25)] {% if mega %}left-0 right-0{% else %}left-6 w-80{% endif %}">
+    <div data-panel="{{ forloop.index }}" class="absolute top-full hidden origin-top border-b border-border-hairline bg-surface-page shadow-[0_24px_40px_-24px_rgba(10,10,10,0.25)] {% if mega %}left-0 right-0{% else %}left-6 w-80{% endif %}">
       <div class="mx-auto px-6 py-10 {% if mega %}grid max-w-[var(--page-width)] gap-x-12 gap-y-8 {{ mega_cols }}{% else %}w-80 px-6 py-6{% endif %}">
         <div>
           <span class="font-mono text-xs uppercase tracking-label text-text-muted">{% if mega_kicker != blank %}{{ mega_kicker }}{% else %}{{ link.title }}{% endif %}</span>
@@ -397,7 +397,7 @@
           <input type="hidden" name="type" value="product">
           <span class="text-text-muted">{%- render 'icon', name: 'search' -%}</span>
           <label for="HeaderSearchInput" class="sr-only">{{ 'general.search.search' | t | default: 'Search' }}</label>
-          <input id="HeaderSearchInput" data-search-input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t | default: 'Search products' }}" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="PredictiveResults" aria-autocomplete="list" aria-haspopup="listbox" class="flex-1 bg-transparent py-2 font-sans text-body text-text-strong outline-none placeholder:text-text-muted">
+          <input id="HeaderSearchInput" data-search-input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t | default: 'Search products' }}" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="PredictiveResults" aria-autocomplete="list" aria-haspopup="listbox" class="flex-1 bg-transparent py-2 font-sans text-body text-text-strong outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent placeholder:text-text-muted">
           <button type="submit" class="font-mono text-xs uppercase tracking-label text-text-body hover:text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{{ 'general.search.search' | t | default: 'Search' }}</button>
           <button type="button" aria-label="Close search" data-search-close class="flex h-11 w-11 items-center justify-center text-text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{%- render 'icon', name: 'close' -%}</button>
         </form>

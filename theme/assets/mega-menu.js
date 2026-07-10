@@ -9,12 +9,15 @@ if (!customElements.get('mega-menu')) {
           this.panels[p.getAttribute('data-panel')] = p;
         }, this);
         this.closeTimer = null;
+        this.openTimer = null;
+        this.activeKey = null;
 
         this.items.forEach(function (item) {
           var trigger = item.querySelector('[data-nav-trigger]');
           if (!trigger) return;
           var key = trigger.getAttribute('data-panel-key');
-          item.addEventListener('mouseenter', this.show.bind(this, key));
+          item.addEventListener('mouseenter', this.scheduleOpen.bind(this, key));
+          item.addEventListener('mouseleave', this.cancelOpen.bind(this));
           trigger.addEventListener('focus', this.show.bind(this, key));
         }, this);
 
@@ -51,8 +54,20 @@ if (!customElements.get('mega-menu')) {
         document.removeEventListener('keydown', this.onKey);
       }
 
+      scheduleOpen(key) {
+        this.cancelOpen();
+        if (this.activeKey === key) { this.cancelClose(); return; }
+        this.openTimer = window.setTimeout(this.show.bind(this, key), 80);
+      }
+
+      cancelOpen() {
+        if (this.openTimer) { window.clearTimeout(this.openTimer); this.openTimer = null; }
+      }
+
       show(key) {
+        this.cancelOpen();
         this.cancelClose();
+        this.activeKey = key;
         Object.keys(this.panels).forEach(function (k) {
           this.setPanel(k, k === key);
         }, this);
@@ -61,20 +76,34 @@ if (!customElements.get('mega-menu')) {
       setPanel(key, open) {
         var panel = this.panels[key];
         if (!panel) return;
-        panel.classList.toggle('hidden', !open);
         var trigger = this.querySelector('[data-panel-key="' + key + '"]');
         if (trigger) {
           trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
           var chevron = trigger.querySelector('svg');
           if (chevron) chevron.classList.toggle('rotate-180', open);
         }
+        if (open) {
+          panel.classList.remove('is-closing');
+          panel.classList.remove('hidden');
+          return;
+        }
+        if (panel.classList.contains('hidden')) return;
+        panel.classList.add('is-closing');
+        var onDone = function () {
+          panel.classList.add('hidden');
+          panel.classList.remove('is-closing');
+        };
+        panel.addEventListener('animationend', onDone, { once: true });
+        window.setTimeout(onDone, 200);
       }
 
       hideAll() {
+        this.activeKey = null;
         Object.keys(this.panels).forEach(function (k) { this.setPanel(k, false); }, this);
       }
 
       scheduleClose() {
+        this.cancelOpen();
         this.cancelClose();
         this.closeTimer = window.setTimeout(this.hideAll.bind(this), 150);
       }
