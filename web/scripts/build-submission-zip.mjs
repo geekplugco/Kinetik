@@ -10,12 +10,15 @@ const DIST_DIR = resolve(ROOT, 'dist');
 const STAGE_DIR = resolve(DIST_DIR, 'kinetik-submission');
 
 const SHOPIFY_REF_PREFIX = 'shopify://';
-const MEGA_PANEL_TYPE = 'mega_panel';
+const SAFE_SYSTEM_HANDLES = new Set(['frontpage']);
+const SCHEMA_RE = /\{%-?\s*schema\s*-?%\}([\s\S]*?)\{%-?\s*endschema\s*-?%\}/;
 
 const settingsSchema = JSON.parse(readFileSync(resolve(THEME_SRC, 'config/settings_schema.json'), 'utf8'));
 const themeInfo = settingsSchema.find((block) => block.name === 'theme_info') || {};
+const themeName = themeInfo.theme_name || 'theme';
 const themeVersion = themeInfo.theme_version || '0.0.0';
-const ZIP_PATH = resolve(DIST_DIR, `kinetik-theme-${themeVersion}-submission.zip`);
+const ZIP_NAME = `${themeName}-${themeVersion}.zip`;
+const ZIP_PATH = resolve(DIST_DIR, ZIP_NAME);
 
 function logStrip(relPath, fieldPath, oldValue) {
   console.log(`stripped: ${relPath} -> ${fieldPath}  ("${oldValue}" -> "")`);
@@ -50,28 +53,86 @@ function stripShopifyRefs(node, path, relPath, tally) {
   }
 }
 
-function stripMegaPanelCollections(data, relPath, tally) {
+function extractSchema(liquidSource) {
+  const match = liquidSource.match(SCHEMA_RE);
+  if (!match) return null;
+  try {
+    return JSON.parse(match[1]);
+  } catch {
+    return null;
+  }
+}
+
+const RESOURCE_SETTING_KINDS = ['product', 'collection', 'product_list', 'collection_list', 'page', 'blog', 'article'];
+
+function collectResourceSettingIds(settingsArray) {
+  const ids = Object.fromEntries(RESOURCE_SETTING_KINDS.map((kind) => [kind, []]));
+  for (const setting of settingsArray || []) {
+    if (setting && ids[setting.type]) ids[setting.type].push(setting.id);
+  }
+  return ids;
+}
+
+function buildSectionSchemaIndex(sectionsDir) {
+  const index = {};
+  if (!existsSync(sectionsDir)) return index;
+  for (const file of readdirSync(sectionsDir).filter((name) => name.endsWith('.liquid'))) {
+    const type = file.replace(/\.liquid$/, '');
+    const schema = extractSchema(readFileSync(join(sectionsDir, file), 'utf8'));
+    if (!schema) continue;
+    const blocks = {};
+    for (const block of schema.blocks || []) {
+      if (!block.type || !block.settings) continue;
+      blocks[block.type] = collectResourceSettingIds(block.settings);
+    }
+    index[type] = { ...collectResourceSettingIds(schema.settings), blocks };
+  }
+  return index;
+}
+
+function stripResourceSetting(settings, id, relPath, fieldPath, tally) {
+  const value = settings[id];
+  if (typeof value === 'string' && value !== '' && !SAFE_SYSTEM_HANDLES.has(value)) {
+    logStrip(relPath, fieldPath, value);
+    settings[id] = '';
+    tally.count++;
+  } else if (Array.isArray(value) && value.length) {
+    logStrip(relPath, fieldPath, JSON.stringify(value));
+    settings[id] = [];
+    tally.count++;
+  }
+}
+
+function stripDemoResourceRefs(data, relPath, schemaIndex, tally) {
   const sections = data.sections || {};
   for (const sectionKey of Object.keys(sections)) {
-    const blocks = sections[sectionKey].blocks || {};
+    const section = sections[sectionKey];
+    const sectionSchema = schemaIndex[section.type];
+    if (sectionSchema && section.settings) {
+      for (const kind of RESOURCE_SETTING_KINDS) {
+        for (const id of sectionSchema[kind]) {
+          stripResourceSetting(section.settings, id, relPath, `sections.${sectionKey}.settings.${id}`, tally);
+        }
+      }
+    }
+    const blocks = section.blocks || {};
     for (const blockKey of Object.keys(blocks)) {
       const block = blocks[blockKey];
-      if (block.type !== MEGA_PANEL_TYPE) continue;
-      const settings = block.settings || {};
-      if (typeof settings.collection === 'string' && settings.collection !== '') {
-        const fieldPath = `sections.${sectionKey}.blocks.${blockKey}.settings.collection`;
-        logStrip(relPath, fieldPath, settings.collection);
-        settings.collection = '';
-        tally.count++;
+      const blockSchema = sectionSchema && sectionSchema.blocks[block.type];
+      if (!blockSchema || !block.settings) continue;
+      for (const kind of RESOURCE_SETTING_KINDS) {
+        for (const id of blockSchema[kind]) {
+          stripResourceSetting(block.settings, id, relPath, `sections.${sectionKey}.blocks.${blockKey}.settings.${id}`, tally);
+        }
       }
     }
   }
 }
 
-function processJsonFile(absPath, relPath, tally, extra) {
+function processJsonFile(absPath, relPath, tally, schemaIndex) {
   const data = JSON.parse(readFileSync(absPath, 'utf8'));
   stripShopifyRefs(data, '', relPath, tally);
-  if (extra) extra(data, relPath, tally);
+  stripDemoResourceRefs(data, relPath, schemaIndex, tally);
   writeFileSync(absPath, `${JSON.stringify(data, null, 2)}\n`);
 }
 
@@ -91,15 +152,22 @@ cpSync(THEME_SRC, STAGE_DIR, {
 });
 
 const tally = { count: 0 };
+const schemaIndex = buildSectionSchemaIndex(resolve(STAGE_DIR, 'sections'));
 
 for (const absPath of listJsonFiles(resolve(STAGE_DIR, 'templates'))) {
-  processJsonFile(absPath, relative(STAGE_DIR, absPath), tally);
+  processJsonFile(absPath, relative(STAGE_DIR, absPath), tally, schemaIndex);
 }
 
 for (const absPath of listJsonFiles(resolve(STAGE_DIR, 'sections'))) {
-  const relPath = relative(STAGE_DIR, absPath);
-  const extra = absPath.endsWith('header-group.json') ? stripMegaPanelCollections : undefined;
-  processJsonFile(absPath, relPath, tally, extra);
+  processJsonFile(absPath, relative(STAGE_DIR, absPath), tally, schemaIndex);
+}
+
+const settingsDataPath = resolve(STAGE_DIR, 'config/settings_data.json');
+if (existsSync(settingsDataPath)) {
+  const relPath = relative(STAGE_DIR, settingsDataPath);
+  const data = JSON.parse(readFileSync(settingsDataPath, 'utf8'));
+  stripShopifyRefs(data, '', relPath, tally);
+  writeFileSync(settingsDataPath, `${JSON.stringify(data, null, 2)}\n`);
 }
 
 const PRESET_LISTINGS = [
@@ -120,10 +188,12 @@ for (const { preset, folder, template } of PRESET_LISTINGS) {
 }
 
 rmSync(ZIP_PATH, { force: true });
-execSync(`zip -r -X -q "${ZIP_PATH}" .`, { cwd: STAGE_DIR, stdio: 'inherit' });
+execSync('shopify theme package', { cwd: STAGE_DIR, stdio: 'inherit' });
+cpSync(resolve(STAGE_DIR, ZIP_NAME), ZIP_PATH);
+rmSync(resolve(STAGE_DIR, ZIP_NAME));
 
 const zipStats = statSync(ZIP_PATH);
 console.log('---');
-console.log(`${tally.count} demo-only refs stripped (shopify:// resource URLs + header-group.json mega_panel collection handles)`);
+console.log(`${tally.count} demo-only refs stripped (shopify:// resource URLs incl. config/settings_data.json + ${RESOURCE_SETTING_KINDS.join('/')} settings resolved from each section's schema)`);
 console.log(`submission zip: ${relative(ROOT, ZIP_PATH)} (${(zipStats.size / 1024).toFixed(1)} KB)`);
 console.log(`source theme/ left untouched — staged copy at ${relative(ROOT, STAGE_DIR)}`);

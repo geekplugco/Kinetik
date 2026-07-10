@@ -7,7 +7,7 @@ const WEB = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const entry = resolve(WEB, 'tailwind-theme-entry.css');
 const out = resolve(WEB, '../theme/assets/tailwind.css');
 
-execSync(`bunx @tailwindcss/cli@4 -i "${entry}" -o "${out}"`, { stdio: 'inherit', cwd: WEB });
+execSync(`bunx @tailwindcss/cli@4 -i "${entry}" -o "${out}" --minify`, { stdio: 'inherit', cwd: WEB });
 
 const googleFonts = /@import\s+(url\()?["']?[^"']*fonts\.googleapis\.com[^"']*["']?\)?\s*;/g;
 const css = readFileSync(out, 'utf8').replace(googleFonts, '');

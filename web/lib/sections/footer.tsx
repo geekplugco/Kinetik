@@ -83,7 +83,7 @@ export function Footer({ section }: SectionProps) {
       <div aria-hidden className="overflow-hidden border-b border-border-hairline px-6">
         <div className="mx-auto max-w-[var(--page-width)]">
           <span className="block select-none whitespace-nowrap font-display text-[clamp(4rem,19vw,17rem)] font-bold uppercase leading-[0.78] tracking-[-0.05em] text-text-strong">
-            Kinetik<span className="text-accent">.</span>
+            Waypoint<span className="text-accent">.</span>
           </span>
         </div>
       </div>

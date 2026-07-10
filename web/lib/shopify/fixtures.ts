@@ -19,24 +19,24 @@ interface CatalogEntry {
 }
 
 const catalog: CatalogEntry[] = [
-  { handle: "shell-jacket", title: "Shell-01 Hardshell", code: "KX-SHELL-01", type: "Outerwear", price: 33600, compareAt: 42000, spec: "Gore-Tex 3L · 480g", colors: [{ name: "Ink", swatch: INK }, { name: "Volt", swatch: VOLT }], img: "card-01-shell-jacket.png" },
-  { handle: "cargo-pants", title: "Cargo Tech Pant", code: "KX-PANT-02", type: "Bottoms", price: 21000, badge: "New", spec: "4-way stretch · taped", colors: [{ name: "Graphite", swatch: "#3A3A3A" }, { name: "Ink", swatch: INK }], img: "card-02-cargo-pants.png" },
-  { handle: "utility-vest", title: "Utility Vest 6P", code: "KX-VEST-03", type: "Outerwear", price: 18800, compareAt: 23500, spec: "6-pocket · ripstop", colors: [{ name: "Ink", swatch: INK }], img: "card-03-utility-vest.png" },
-  { handle: "sling-bag", title: "Sling 4L", code: "KX-BAG-04", type: "Bags", price: 14500, badge: "New", spec: "CORDURA · 4L", colors: [{ name: "Ink", swatch: INK }], img: "card-04-sling-bag.png" },
-  { handle: "sneakers", title: "Trail Runner XS", code: "KX-SHOE-05", type: "Footwear", price: 24000, compareAt: 30000, spec: "Vibram · 280g", colors: [{ name: "Ink", swatch: INK }, { name: "Bone", swatch: "#EFECE2" }], img: "card-05-sneakers.png" },
-  { handle: "cap", title: "6-Panel Field Cap", code: "KX-CAP-06", type: "Accessories", price: 6500, spec: "Cotton twill · strap", colors: [{ name: "Ink", swatch: INK }], img: "card-06-cap.png" },
-  { handle: "headphones", title: "Field Monitors", code: "KX-AUD-07", type: "Audio", price: 29000, compareAt: 34000, spec: "ANC · 40h battery", colors: [{ name: "Ink", swatch: INK }], img: "card-07-headphones.png" },
-  { handle: "earbuds", title: "Pulse Earbuds", code: "KX-AUD-08", type: "Audio", price: 16000, badge: "New", spec: "IPX5 · 32h case", colors: [{ name: "Ink", swatch: INK }], img: "card-08-earbuds.png" },
-  { handle: "smartwatch", title: "Kinetik Watch", code: "KX-WTCH-09", type: "Wearables", price: 38000, spec: "GPS · 18h active", colors: [{ name: "Ink", swatch: INK }, { name: "Volt", swatch: VOLT }], img: "card-09-smartwatch.png" },
-  { handle: "speaker", title: "Field Speaker 02", code: "KX-SPK-10", type: "Audio", price: 17500, compareAt: 21500, spec: "IP67 · 24h play", colors: [{ name: "Ink", swatch: INK }], img: "card-10-speaker.png" },
-  { handle: "tech-hoodie", title: "Storm Hoodie", code: "KX-HOOD-11", type: "Tops", price: 14800, badge: "New", spec: "Heavyweight loopback · storm hood", colors: [{ name: "Ink", swatch: INK }, { name: "Graphite", swatch: "#3A3A3A" }], img: "card-11-tech-hoodie.png" },
-  { handle: "insulated-parka", title: "Field Parka 3L", code: "KX-PARKA-12", type: "Outerwear", price: 48000, compareAt: 56000, spec: "3L insulated · taped seams", colors: [{ name: "Ink", swatch: INK }], img: "card-12-parka.png" },
-  { handle: "base-layer", title: "Merino Base LS", code: "KX-BASE-13", type: "Tops", price: 9000, spec: "Merino 200 · flatlock", colors: [{ name: "Charcoal", swatch: "#3A3A3A" }, { name: "Ink", swatch: INK }], img: "card-13-base-layer.png" },
-  { handle: "backpack", title: "Roll-Top 22L", code: "KX-PACK-14", type: "Bags", price: 19500, badge: "New", spec: "22L roll-top · weatherproof", colors: [{ name: "Ink", swatch: INK }], img: "card-14-backpack.png" },
-  { handle: "hip-pack", title: "Hip Pack 2L", code: "KX-HIP-15", type: "Bags", price: 8500, spec: "2L · weatherproof zip", colors: [{ name: "Ink", swatch: INK }], img: "card-15-hip-pack.png" },
-  { handle: "beanie", title: "Merino Beanie", code: "KX-BEAN-16", type: "Accessories", price: 4500, spec: "Merino rib · cuffed", colors: [{ name: "Ink", swatch: INK }, { name: "Graphite", swatch: "#3A3A3A" }], img: "card-16-beanie.png" },
-  { handle: "tech-gloves", title: "Touch Gloves", code: "KX-GLOVE-17", type: "Accessories", price: 5500, spec: "Touchscreen · articulated", colors: [{ name: "Ink", swatch: INK }], img: "card-17-gloves.png" },
-  { handle: "power-bank", title: "Power Cell 10K", code: "KX-POWER-18", type: "Tech", price: 7900, badge: "New", spec: "10000mAh · USB-C PD", colors: [{ name: "Ink", swatch: INK }, { name: "Volt", swatch: VOLT }], img: "card-18-power-bank.png" },
+  { handle: "shell-jacket", title: "Shell-01 Hardshell", code: "WP-SHELL-01", type: "Outerwear", price: 33600, compareAt: 42000, spec: "Gore-Tex 3L · 480g", colors: [{ name: "Ink", swatch: INK }, { name: "Volt", swatch: VOLT }], img: "card-01-shell-jacket.png" },
+  { handle: "cargo-pants", title: "Cargo Tech Pant", code: "WP-PANT-02", type: "Bottoms", price: 21000, badge: "New", spec: "4-way stretch · taped", colors: [{ name: "Graphite", swatch: "#3A3A3A" }, { name: "Ink", swatch: INK }], img: "card-02-cargo-pants.png" },
+  { handle: "utility-vest", title: "Utility Vest 6P", code: "WP-VEST-03", type: "Outerwear", price: 18800, compareAt: 23500, spec: "6-pocket · ripstop", colors: [{ name: "Ink", swatch: INK }], img: "card-03-utility-vest.png" },
+  { handle: "sling-bag", title: "Sling 4L", code: "WP-BAG-04", type: "Bags", price: 14500, badge: "New", spec: "CORDURA · 4L", colors: [{ name: "Ink", swatch: INK }], img: "card-04-sling-bag.png" },
+  { handle: "sneakers", title: "Trail Runner XS", code: "WP-SHOE-05", type: "Footwear", price: 24000, compareAt: 30000, spec: "Vibram · 280g", colors: [{ name: "Ink", swatch: INK }, { name: "Bone", swatch: "#EFECE2" }], img: "card-05-sneakers.png" },
+  { handle: "cap", title: "6-Panel Field Cap", code: "WP-CAP-06", type: "Accessories", price: 6500, spec: "Cotton twill · strap", colors: [{ name: "Ink", swatch: INK }], img: "card-06-cap.png" },
+  { handle: "headphones", title: "Field Monitors", code: "WP-AUD-07", type: "Audio", price: 29000, compareAt: 34000, spec: "ANC · 40h battery", colors: [{ name: "Ink", swatch: INK }], img: "card-07-headphones.png" },
+  { handle: "earbuds", title: "Pulse Earbuds", code: "WP-AUD-08", type: "Audio", price: 16000, badge: "New", spec: "IPX5 · 32h case", colors: [{ name: "Ink", swatch: INK }], img: "card-08-earbuds.png" },
+  { handle: "smartwatch", title: "Waypoint Watch", code: "WP-WTCH-09", type: "Wearables", price: 38000, spec: "GPS · 18h active", colors: [{ name: "Ink", swatch: INK }, { name: "Volt", swatch: VOLT }], img: "card-09-smartwatch.png" },
+  { handle: "speaker", title: "Field Speaker 02", code: "WP-SPK-10", type: "Audio", price: 17500, compareAt: 21500, spec: "IP67 · 24h play", colors: [{ name: "Ink", swatch: INK }], img: "card-10-speaker.png" },
+  { handle: "tech-hoodie", title: "Storm Hoodie", code: "WP-HOOD-11", type: "Tops", price: 14800, badge: "New", spec: "Heavyweight loopback · storm hood", colors: [{ name: "Ink", swatch: INK }, { name: "Graphite", swatch: "#3A3A3A" }], img: "card-11-tech-hoodie.png" },
+  { handle: "insulated-parka", title: "Field Parka 3L", code: "WP-PARKA-12", type: "Outerwear", price: 48000, compareAt: 56000, spec: "3L insulated · taped seams", colors: [{ name: "Ink", swatch: INK }], img: "card-12-parka.png" },
+  { handle: "base-layer", title: "Merino Base LS", code: "WP-BASE-13", type: "Tops", price: 9000, spec: "Merino 200 · flatlock", colors: [{ name: "Charcoal", swatch: "#3A3A3A" }, { name: "Ink", swatch: INK }], img: "card-13-base-layer.png" },
+  { handle: "backpack", title: "Roll-Top 22L", code: "WP-PACK-14", type: "Bags", price: 19500, badge: "New", spec: "22L roll-top · weatherproof", colors: [{ name: "Ink", swatch: INK }], img: "card-14-backpack.png" },
+  { handle: "hip-pack", title: "Hip Pack 2L", code: "WP-HIP-15", type: "Bags", price: 8500, spec: "2L · weatherproof zip", colors: [{ name: "Ink", swatch: INK }], img: "card-15-hip-pack.png" },
+  { handle: "beanie", title: "Merino Beanie", code: "WP-BEAN-16", type: "Accessories", price: 4500, spec: "Merino rib · cuffed", colors: [{ name: "Ink", swatch: INK }, { name: "Graphite", swatch: "#3A3A3A" }], img: "card-16-beanie.png" },
+  { handle: "tech-gloves", title: "Touch Gloves", code: "WP-GLOVE-17", type: "Accessories", price: 5500, spec: "Touchscreen · articulated", colors: [{ name: "Ink", swatch: INK }], img: "card-17-gloves.png" },
+  { handle: "power-bank", title: "Power Cell 10K", code: "WP-POWER-18", type: "Tech", price: 7900, badge: "New", spec: "10000mAh · USB-C PD", colors: [{ name: "Ink", swatch: INK }, { name: "Volt", swatch: VOLT }], img: "card-18-power-bank.png" },
 ];
 
 const lifestyleShots: Record<string, string> = {
@@ -59,7 +59,7 @@ export const products: Product[] = catalog.map((c, i) => {
     id: `p-${i}`,
     title: c.title,
     handle: c.handle,
-    vendor: "Kinetik",
+    vendor: "Waypoint",
     type: c.type,
     code: c.code,
     spec: c.spec,
@@ -98,7 +98,7 @@ function makeCollection(id: string, title: string, handle: string, description: 
 }
 
 const apparelTypes = ["Outerwear", "Bottoms", "Bags", "Footwear", "Accessories", "Tops"];
-export const collection = makeCollection("c-arrivals", "New Arrivals", "new-arrivals", "The latest Kinetik drop.", products);
+export const collection = makeCollection("c-arrivals", "New Arrivals", "new-arrivals", "The latest Waypoint drop.", products);
 const apparel = makeCollection("c-apparel", "Apparel", "apparel", "Technical apparel, field-tested.", products.filter((p) => apparelTypes.includes(p.type)));
 const tech = makeCollection("c-tech", "Tech", "tech", "Audio and wearables.", products.filter((p) => !apparelTypes.includes(p.type)));
 
@@ -123,10 +123,10 @@ export const cart: Cart = {
 };
 
 export const shop: Shop = {
-  name: "Kinetik",
+  name: "Waypoint",
   currency: "USD",
   money_format: "${{amount}}",
-  domain: "kinetik.example.com",
+  domain: "waypoint.example.com",
 };
 
 export const mainMenu: Menu = {
@@ -172,7 +172,7 @@ export const articles: Article[] = [
 ];
 
 export const pagesByHandle: Record<string, Page> = {
-  about: { title: "About Kinetik", handle: "about", content: "<p>Kinetik builds field-tested apparel and audio for people who move. Technical materials, considered construction, zero noise.</p><p>Designed in studio, tested in the world.</p>" },
+  about: { title: "About Waypoint", handle: "about", content: "<p>Waypoint builds field-tested apparel and audio for people who move. Technical materials, considered construction, zero noise.</p><p>Designed in studio, tested in the world.</p>" },
   contact: { title: "Contact", handle: "contact", content: "<p>Questions, press, or wholesale — send a note and the studio will reply within two business days.</p>" },
   lookbook: { title: "Lookbook", handle: "lookbook", content: "" },
 };

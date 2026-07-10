@@ -1,10 +1,16 @@
-// Create the 3 storefront collections on happy-kinetik. Run from project root:
-// bun run web/scripts/seed-collections.ts
+// Create the 3 storefront collections on a store. Run from project root:
+// bun run web/scripts/seed-collections.ts [--domain <shop.myshopify.com>]
 import { execFileSync } from "node:child_process";
 
-const ONLINE_STORE = "gid://shopify/Publication/174227718204";
+const args = process.argv.slice(2);
+const domainIdx = args.indexOf("--domain");
+const domain = domainIdx >= 0 ? args[domainIdx + 1] : undefined;
 const gql = (query: string, vars: Record<string, unknown>): any =>
-  JSON.parse(execFileSync("teifi-shopify-connect", ["graphql", "--query", query, "--vars", JSON.stringify(vars)], { encoding: "utf8", maxBuffer: 20 * 1024 * 1024 }));
+  JSON.parse(execFileSync("teifi-shopify-connect", ["graphql", ...(domain ? ["--domain", domain] : []), "--query", query, "--vars", JSON.stringify(vars)], { encoding: "utf8", maxBuffer: 20 * 1024 * 1024 }));
+
+const pubRes = gql(`{ publications(first: 5) { nodes { id name } } }`, {});
+const ONLINE_STORE = pubRes?.publications?.nodes?.find((n: any) => n.name === "Online Store")?.id;
+if (!ONLINE_STORE) { console.error("Could not find Online Store publication"); process.exit(1); }
 
 const CREATE = `mutation Coll($input: CollectionInput!) {
   collectionCreate(input: $input) { collection { id handle } userErrors { field message } }
@@ -39,7 +45,7 @@ async function make(input: Record<string, unknown>, productIds?: string[]) {
 const all = gql(`{ products(first: 50) { nodes { id } } }`, {});
 const allIds: string[] = (all?.products?.nodes ?? []).map((n: any) => n.id);
 
-await make({ title: "New Arrivals", handle: "new-arrivals", descriptionHtml: "<p>The latest Kinetik drop.</p>" }, allIds);
+await make({ title: "New Arrivals", handle: "new-arrivals", descriptionHtml: "<p>The latest Waypoint drop.</p>" }, allIds);
 await make({ title: "Apparel", handle: "apparel", descriptionHtml: "<p>Technical apparel, field-tested.</p>", ruleSet: typeRule(["Outerwear", "Bottoms", "Bags", "Footwear", "Accessories", "Tops"]) });
 await make({ title: "Tech", handle: "tech", descriptionHtml: "<p>Audio and wearables.</p>", ruleSet: typeRule(["Audio", "Wearables", "Tech"]) });
 

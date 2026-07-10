@@ -1,14 +1,18 @@
-// Upload + attach product gallery images on happy-kinetik. Run from project root:
-// bun run web/scripts/seed-images.ts [handle]
+// Upload + attach product gallery images on a store. Run from project root:
+// bun run web/scripts/seed-images.ts [handle] [--domain <shop.myshopify.com>]
 import { execFileSync } from "node:child_process";
 import { products } from "../lib/shopify/fixtures";
 
+const args = process.argv.slice(2);
+const domainIdx = args.indexOf("--domain");
+const domain = domainIdx >= 0 ? args[domainIdx + 1] : undefined;
+const only = args.find((a, i) => !a.startsWith("--") && args[i - 1] !== "--domain");
+
 const PUBLIC = "web/public";
-const only = process.argv[2];
-const SKIP = new Set(["shell-jacket"]); // already seeded in the validation test
+const SKIP = domain ? new Set<string>() : new Set(["shell-jacket"]); // already seeded on happy-kinetik's original validation test
 
 const gql = (query: string, vars: Record<string, unknown>): any =>
-  JSON.parse(execFileSync("teifi-shopify-connect", ["graphql", "--query", query, "--vars", JSON.stringify(vars)], { encoding: "utf8", maxBuffer: 20 * 1024 * 1024 }));
+  JSON.parse(execFileSync("teifi-shopify-connect", ["graphql", ...(domain ? ["--domain", domain] : []), "--query", query, "--vars", JSON.stringify(vars)], { encoding: "utf8", maxBuffer: 20 * 1024 * 1024 }));
 
 const STAGE = `mutation Stage($input: [StagedUploadInput!]!) {
   stagedUploadsCreate(input: $input) {

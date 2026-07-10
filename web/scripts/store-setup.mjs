@@ -82,7 +82,7 @@ async function setProductMetafields(catalog, ids) {
 
 async function ensurePages() {
   const pages = [
-    { handle: 'about', title: 'About Kinetik', body: '<p>Kinetik builds field-tested apparel and audio for people who move. Technical materials, considered construction, zero noise.</p><p>Designed in studio, tested in the world.</p>' },
+    { handle: 'about', title: 'About Waypoint', body: '<p>Waypoint builds field-tested apparel and audio for people who move. Technical materials, considered construction, zero noise.</p><p>Designed in studio, tested in the world.</p>' },
     { handle: 'contact', title: 'Contact', body: '<p>Questions, press, or wholesale — send a note and the studio will reply within two business days.</p>' },
     { handle: 'lookbook', title: 'Lookbook', body: '<p>SS26 — shot in the field.</p>' },
   ];

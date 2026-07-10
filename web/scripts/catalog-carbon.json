@@ -1,0 +1,29 @@
+{
+  "concept": "Carbon — night-tech audio, wearables, and EDC carry. Dark, precision-engineered aesthetic matching the Carbon preset's near-black UI (#0B0B0B bg, volt-green accent).",
+  "industry": "Electronics",
+  "catalogSize": "Some (11-100+)",
+  "colors": { "Onyx": "#0D0D0D", "Graphite": "#3A3A3A", "Volt": "#CCFF00" },
+  "vendor": "Carbon",
+  "collections": [
+    { "title": "Audio", "handle": "audio", "types": ["Audio"], "description": "<p>Headphones, buds, and speakers tuned for the commute and the desk.</p>" },
+    { "title": "Wearables", "handle": "wearables", "types": ["Wearables"], "description": "<p>Watches built for battery life over gimmicks.</p>" },
+    { "title": "Carry & Tech", "handle": "carry-tech", "types": ["Bags", "Accessories", "Tech"], "description": "<p>Power, cable, and carry for whatever's already in your pockets.</p>" }
+  ],
+  "products": [
+    { "handle": "pulse-buds-pro", "title": "Pulse Buds Pro", "code": "CB-AUD-01", "type": "Audio", "price": 18000, "spec": "ANC · 36h case", "colors": ["Onyx"], "badge": "New", "desc": "Active noise cancelling in a case small enough to forget. Sealed drivers cut commute noise without the usual bass loss, and the case holds four extra charges for multi-day trips." },
+    { "handle": "monitor-x", "title": "Monitor-X Headphones", "code": "CB-AUD-02", "type": "Audio", "price": 32000, "compareAt": 38000, "spec": "Studio ANC · 50h battery", "colors": ["Onyx", "Graphite"], "desc": "Studio-tuned drivers with adaptive ANC that recalibrates every ten minutes to the room you're in. Fifty hours of playback means one charge a week, not one a day." },
+    { "handle": "signal-speaker", "title": "Signal Speaker 03", "code": "CB-SPK-03", "type": "Audio", "price": 19500, "spec": "IP67 · 28h play", "colors": ["Onyx"], "desc": "Full-range sound from a housing rated for rain, dust, and the occasional drop off a ledge. Pair two for stereo separation across a room." },
+    { "handle": "nightwatch-pro", "title": "Nightwatch Pro", "code": "CB-WTCH-04", "type": "Wearables", "price": 42000, "compareAt": 48000, "spec": "AMOLED · GPS · 20h active", "colors": ["Onyx", "Volt"], "desc": "Always-on AMOLED that stays legible in direct sun, GPS that locks in under five seconds, and enough battery to survive a weekend without a charger in sight." },
+    { "handle": "nightwatch-lite", "title": "Nightwatch Lite", "code": "CB-WTCH-05", "type": "Wearables", "price": 24000, "spec": "7-day battery · sleep tracking", "colors": ["Graphite"], "desc": "The essentials without the always-on drain: sleep staging, heart rate, and a battery that lasts the week instead of the day." },
+    { "handle": "power-cell-20k", "title": "Power Cell 20K", "code": "CB-POWER-06", "type": "Tech", "price": 9500, "badge": "New", "spec": "20000mAh · 65W PD", "colors": ["Onyx", "Volt"], "desc": "Enough capacity for a laptop and two phones on one trip, with 65W PD fast enough to top up a notebook between meetings." },
+    { "handle": "power-cell-mini", "title": "Power Cell 10K Mini", "code": "CB-POWER-07", "type": "Tech", "price": 6500, "spec": "10000mAh · pocket-size", "colors": ["Onyx"], "desc": "Half the size of a standard bank, still good for two full phone charges. The one that actually stays in your pocket instead of the drawer." },
+    { "handle": "tech-sling", "title": "Tech Sling 3L", "code": "CB-BAG-08", "type": "Bags", "price": 12500, "spec": "Padded tech sling · 3L", "colors": ["Onyx"], "desc": "A padded sling built around the shape of a phone, a bank, and a set of buds — not a generic bag that happens to fit tech." },
+    { "handle": "cable-kit", "title": "Cable Roll Kit", "code": "CB-KIT-09", "type": "Accessories", "price": 4200, "spec": "Braided · organizer roll", "colors": ["Graphite"], "desc": "Four braided cables and a compact wall plug in a roll that stops them from turning into a knot at the bottom of a bag." },
+    { "handle": "lens-case", "title": "Lens Case Hard", "code": "CB-CASE-10", "type": "Accessories", "price": 5800, "spec": "Impact-rated · foam core", "colors": ["Onyx"], "desc": "A hard shell with custom foam cutouts that keeps a lens or a compact rig from shifting in transit." },
+    { "handle": "phone-harness", "title": "Phone Harness", "code": "CB-HARN-11", "type": "Accessories", "price": 6800, "badge": "New", "spec": "Chest-carry · quick-release", "colors": ["Onyx", "Graphite"], "desc": "Chest-mounted carry with a quick-release buckle, built for hands-free filming or navigation on the move." },
+    { "handle": "charge-pad", "title": "Wireless Charge Pad", "code": "CB-CHRG-12", "type": "Tech", "price": 5200, "spec": "15W fast wireless", "colors": ["Onyx"], "desc": "15W fast wireless charging on a pad slim enough to leave on a nightstand without it looking like a gadget." },
+    { "handle": "signal-beanie", "title": "Signal Beanie", "code": "CB-BEAN-13", "type": "Accessories", "price": 4800, "spec": "Conductive-touch knit", "colors": ["Onyx", "Graphite"], "desc": "Conductive threads at the fingertips mean the phone works without the beanie coming off first." },
+    { "handle": "grid-gloves", "title": "Grid Gloves", "code": "CB-GLOVE-14", "type": "Accessories", "price": 5600, "spec": "Touchscreen · thermal lining", "colors": ["Onyx"], "desc": "Thermal lining for cold mornings, touchscreen fingertips so the gloves never have to come off at the crosswalk." },
+    { "handle": "transit-pouch", "title": "Transit Pouch", "code": "CB-POUCH-15", "type": "Bags", "price": 3800, "spec": "Water-resistant · zip pouch", "colors": ["Onyx", "Graphite"], "desc": "A water-resistant zip pouch sized for a bank, a cable roll, and whatever else lives in the bottom of a bag." }
+  ]
+}

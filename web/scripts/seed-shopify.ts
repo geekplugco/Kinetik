@@ -1,18 +1,26 @@
-// Seed happy-kinetik with the full prototype catalog via teifi-shopify-connect.
-// Run: bun run web/scripts/seed-shopify.ts
+// Seed a store with the full prototype catalog via teifi-shopify-connect.
+// Run: bun run web/scripts/seed-shopify.ts [--domain <shop.myshopify.com>]
+// Defaults to happy-kinetik if --domain is omitted.
 import { execFileSync } from "node:child_process";
 import { products } from "../lib/shopify/fixtures";
 
-const ONLINE_STORE = "gid://shopify/Publication/174227718204";
+const args = process.argv.slice(2);
+const domainIdx = args.indexOf("--domain");
+const domain = domainIdx >= 0 ? args[domainIdx + 1] : undefined;
 const money = (cents: number) => (cents / 100).toFixed(2);
 
 function gql(query: string, vars: Record<string, unknown>): any {
-  const out = execFileSync("teifi-shopify-connect", ["graphql", "--query", query, "--vars", JSON.stringify(vars)], {
+  const cliArgs = ["graphql", ...(domain ? ["--domain", domain] : []), "--query", query, "--vars", JSON.stringify(vars)];
+  const out = execFileSync("teifi-shopify-connect", cliArgs, {
     encoding: "utf8",
     maxBuffer: 20 * 1024 * 1024,
   });
   return JSON.parse(out);
 }
+
+const pubRes = gql(`{ publications(first: 5) { nodes { id name } } }`, {});
+const ONLINE_STORE = pubRes?.publications?.nodes?.find((n: any) => n.name === "Online Store")?.id;
+if (!ONLINE_STORE) { console.error("Could not find Online Store publication"); process.exit(1); }
 
 const PRODUCT_SET = `mutation Seed($input: ProductSetInput!) {
   productSet(synchronous: true, input: $input) {

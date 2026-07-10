@@ -122,7 +122,7 @@ export function MainProduct({ section }: SectionProps) {
 
             <div className="flex items-start gap-2 border border-border-hairline p-4 text-sm text-text-body">
               <Icon name="user" size={18} className="mt-0.5 text-positive" />
-              <span><strong className="text-text-strong">Pickup available</strong> at Kinetik Studio · Usually ready in 24 hours</span>
+              <span><strong className="text-text-strong">Pickup available</strong> at Waypoint Studio · Usually ready in 24 hours</span>
             </div>
 
             {/* Spec-sheet collapsible tabs (forked from Hyper product-collapsible-tab) */}

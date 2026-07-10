@@ -1,0 +1,29 @@
+{
+  "concept": "Sand — desert expedition and heritage overland apparel. Warm, craft-driven aesthetic matching the Sand preset's cream UI (#F3EFE7 bg, rust accent #C04417).",
+  "industry": "Clothing",
+  "catalogSize": "Some (11-100+)",
+  "colors": { "Sand": "#C8A876", "Bone": "#EFECE2", "Rust": "#C04417" },
+  "vendor": "Sand",
+  "collections": [
+    { "title": "Apparel", "handle": "apparel", "types": ["Outerwear", "Tops", "Bottoms"], "description": "<p>Waxed canvas and heritage cuts built for overland travel.</p>" },
+    { "title": "Footwear", "handle": "footwear", "types": ["Footwear"], "description": "<p>Boots built to soften with wear, not fall apart.</p>" },
+    { "title": "Carry", "handle": "carry", "types": ["Bags", "Accessories"], "description": "<p>Canvas and leather carry for the road between towns.</p>" }
+  ],
+  "products": [
+    { "handle": "desert-shell", "title": "Desert Shell", "code": "SD-SHELL-01", "type": "Outerwear", "price": 26500, "spec": "Ventilated 2.5L · UPF 50", "colors": ["Sand", "Bone"], "desc": "Vented under the arms and across the back so heat escapes before it builds, with UPF 50 for the hours between sunrise and shade." },
+    { "handle": "canvas-vest", "title": "Canvas Utility Vest", "code": "SD-VEST-02", "type": "Outerwear", "price": 15800, "spec": "Waxed canvas · 8-pocket", "colors": ["Sand"], "desc": "Eight pockets sized for a notebook, a multitool, and the small things that usually end up loose in a bag. Waxed canvas breaks in, not down." },
+    { "handle": "waxed-jacket", "title": "Waxed Field Jacket", "code": "SD-JCKT-03", "type": "Outerwear", "price": 32000, "compareAt": 38000, "spec": "Waxed cotton · corduroy collar", "colors": ["Rust", "Sand"], "desc": "Waxed cotton sheds a passing shower without the crinkle of synthetic shells, and the corduroy collar softens with wear instead of wearing out." },
+    { "handle": "overland-cargo", "title": "Overland Cargo Pant", "code": "SD-PANT-04", "type": "Bottoms", "price": 16500, "spec": "Ripstop canvas · reinforced knee", "colors": ["Sand", "Bone"], "desc": "Reinforced at the knee where canvas usually gives out first, cut for movement rather than a straight-leg silhouette." },
+    { "handle": "dune-shorts", "title": "Dune Cargo Shorts", "code": "SD-SHORT-05", "type": "Bottoms", "price": 14000, "badge": "New", "spec": "Quick-dry canvas", "colors": ["Sand"], "desc": "Quick-dry canvas that doesn't hold heat like denim or sand like mesh — built for the stretch of trail where both come up." },
+    { "handle": "chambray-shirt", "title": "Heritage Chambray Shirt", "code": "SD-SHIRT-06", "type": "Tops", "price": 9800, "spec": "Brushed chambray · snap front", "colors": ["Bone"], "desc": "Brushed chambray with a snap front that layers clean under a vest or jacket without bunching at the placket." },
+    { "handle": "expedition-henley", "title": "Expedition Henley", "code": "SD-HENLEY-07", "type": "Tops", "price": 6800, "spec": "Heavyweight jersey", "colors": ["Sand", "Bone"], "desc": "Heavyweight jersey with enough substance to work as a base layer at dawn and a standalone shirt by noon." },
+    { "handle": "trail-cap", "title": "Trail Canvas Cap", "code": "SD-CAP-08", "type": "Accessories", "price": 4200, "spec": "Waxed canvas · leather strap", "colors": ["Sand"], "desc": "A low-profile canvas cap with a leather strap back, built to take on the shape of whoever wears it." },
+    { "handle": "expedition-hat", "title": "Wide-Brim Expedition Hat", "code": "SD-HAT-09", "type": "Accessories", "price": 5800, "badge": "New", "spec": "UPF 50 · packable", "colors": ["Sand"], "desc": "A brim wide enough to shade the neck, packable enough to stuff in a duffel without losing its shape." },
+    { "handle": "desert-boot", "title": "Desert Boot", "code": "SD-BOOT-10", "type": "Footwear", "price": 21000, "compareAt": 25000, "spec": "Suede · crepe sole", "colors": ["Sand", "Rust"], "desc": "Suede upper on a crepe sole — soft enough for a long walk, sturdy enough to not fall apart on the way back." },
+    { "handle": "canvas-belt-bag", "title": "Canvas Belt Bag", "code": "SD-BELT-11", "type": "Bags", "price": 7200, "spec": "Waxed canvas · brass hardware", "colors": ["Sand"], "desc": "Brass hardware that won't corrode, sized for a phone, a wallet, and a passport when the rest stays at the hotel." },
+    { "handle": "overland-duffel", "title": "Overland Duffel 40L", "code": "SD-DUFFEL-12", "type": "Bags", "price": 24500, "spec": "40L · leather trim", "colors": ["Rust", "Sand"], "desc": "Forty liters of waxed canvas with leather trim at every stress point, built to be thrown in a truck bed for a decade." },
+    { "handle": "canvas-rucksack", "title": "Canvas Rucksack 22L", "code": "SD-PACK-13", "type": "Bags", "price": 18800, "badge": "New", "spec": "22L · roll-top canvas", "colors": ["Sand"], "desc": "A roll-top that expands past its rated 22L when the trip runs long, in canvas that only looks better with dust on it." },
+    { "handle": "bandana-trio", "title": "Bandana Trio", "code": "SD-BAND-14", "type": "Accessories", "price": 3200, "spec": "3-pack · block print", "colors": ["Rust"], "desc": "Three block-printed bandanas for dust, sweat, or a quick repair — the kind of thing you always need one more of." },
+    { "handle": "field-belt", "title": "Leather Field Belt", "code": "SD-BELT2-15", "type": "Accessories", "price": 6200, "spec": "Full-grain leather", "colors": ["Sand"], "desc": "Full-grain leather with a solid brass buckle, built to darken and soften with every year it's worn." }
+  ]
+}
