@@ -24,12 +24,8 @@ For custom work, duplicate your theme before editing any code, and consider hiri
 
 ## Contact
 
-Reach us through the support form linked on the theme's listing page. The form asks for:
+Use the form below to reach the team directly. It asks for your name, email address, store URL, a description of the problem, and an optional screenshot.
 
-- Name
-- Email address
-- Store URL (for example, `https://storename.myshopify.com`)
-- Description of the problem
-- Optional file upload for screenshots
+<SupportForm />
 
-You receive an automatic confirmation when the form is submitted, then a reply from the team within two business days.
+You receive an on-page confirmation as soon as you submit, then a reply from the team within two business days.
