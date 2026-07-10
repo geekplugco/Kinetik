@@ -13,10 +13,38 @@
   if show_index == nil
     assign show_index = true
   endif
-  assign route_class = 'md:grid-cols-[3rem_minmax(0,0.92fr)_minmax(0,1fr)]'
-  if layout == 'timeline'
-    assign route_class = 'md:grid-cols-[3rem_minmax(0,0.58fr)_minmax(0,1.2fr)]'
+  assign alternate_sides = section.settings.alternate_sides
+  if alternate_sides == nil
+    assign alternate_sides = true
   endif
+  assign row_density = section.settings.row_density | default: 'relaxed'
+  assign row_min_h = 'md:min-h-[340px]'
+  if row_density == 'compact'
+    assign row_min_h = 'md:min-h-[240px]'
+  endif
+  assign route_class = 'md:grid-cols-[4.5rem_minmax(0,0.92fr)_minmax(0,1fr)]'
+  if layout == 'timeline'
+    assign route_class = 'md:grid-cols-[4.5rem_minmax(0,0.58fr)_minmax(0,1.2fr)]'
+  endif
+  case section.settings.width
+    when 'full'
+      assign width_cls = 'max-w-none'
+    when 'narrow'
+      assign width_cls = 'max-w-4xl'
+    else
+      assign width_cls = 'max-w-[var(--page-width)]'
+  endcase
+  case section.settings.image_ratio
+    when 'portrait'
+      assign ratio_cls = 'aspect-[3/4]'
+    when 'square'
+      assign ratio_cls = 'aspect-square'
+    when 'wide'
+      assign ratio_cls = 'aspect-[16/9]'
+    else
+      assign ratio_cls = 'aspect-[4/3]'
+  endcase
+  assign stop_count = stops.size | prepend: '0' | slice: -2, 2
 -%}
 {%- if stops.size > 0 -%}
   <section
@@ -24,30 +52,56 @@
     style="--pt:{{ section.settings.padding_top }}px;--pb:{{ section.settings.padding_bottom }}px"
     class="bg-surface-page pt-[var(--pt,72px)] pb-[var(--pb,72px)]"
   >
-    <div class="mx-auto max-w-[var(--page-width)] overflow-hidden px-6">
-      <div class="mb-8 grid min-w-0 border border-border-strong md:grid-cols-[minmax(0,1fr)_auto]">
-        <div class="min-w-0 p-4 md:p-5">
+    <div class="mx-auto {{ width_cls }} overflow-x-hidden px-6">
+      <div class="mb-12 flex min-w-0 flex-wrap items-end justify-between gap-6 md:mb-16">
+        <div class="min-w-0 max-w-2xl">
           {%- if section.settings.subheading != blank -%}
-            <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
+            <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.subheading }}</span>
           {%- endif -%}
           {%- if section.settings.heading != blank -%}
-            <h2 class="mt-2 font-display text-h3 tracking-tight text-text-strong">{{ section.settings.heading }}</h2>
+            <h2 class="mt-3 font-display text-display-2 tracking-tight text-balance text-text-strong">{{ section.settings.heading }}</h2>
           {%- endif -%}
         </div>
-        <div class="grid grid-cols-2 border-t border-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted md:w-56 md:border-l md:border-t-0">
-          <span class="border-r border-border-hairline p-3">{{ stops.size }} stops</span>
-          <span class="p-3">route</span>
+        <div class="flex shrink-0 items-baseline gap-2 font-mono text-xs uppercase tracking-label text-text-muted">
+          <span class="text-h3 font-display text-text-strong">{{ stop_count }}</span>
+          <span>stop{{ stops.size | pluralize: '', 's' }} on route</span>
         </div>
       </div>
-      <ol class="relative min-w-0 overflow-hidden border border-border-hairline bg-surface-page">
+      <ol class="relative min-w-0 divide-y divide-border-hairline border-t border-border-hairline">
         {%- for block in stops -%}
-          {%- assign p = block.settings.product -%}
-          <li class="grid min-w-0 border-b border-border-hairline last:border-b-0 {{ route_class }}" {{ block.shopify_attributes }}>
-            <span aria-hidden="true" class="flex min-h-[3rem] items-center justify-center border-b border-border-hairline font-mono text-[11px] text-text-muted md:border-b-0 md:border-r">{% if show_index %}{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% endif %}</span>
-            <div class="kx-media-effect relative min-w-0 aspect-[4/3] overflow-hidden bg-ink-950 md:aspect-auto md:min-h-[340px]" {% render 'media-effect', surface: 'proof' %}>
+          {%- liquid
+            assign p = block.settings.product
+            assign flip = false
+            if alternate_sides
+              assign row_parity = forloop.index0 | modulo: 2
+              if row_parity == 1
+                assign flip = true
+              endif
+            endif
+            assign img_order_cls = 'md:order-1'
+            assign text_order_cls = 'md:order-2'
+            assign img_edge_cls = ''
+            assign text_edge_cls = 'md:border-l'
+            if flip
+              assign img_order_cls = 'md:order-2'
+              assign text_order_cls = 'md:order-1'
+              assign img_edge_cls = 'md:border-l'
+              assign text_edge_cls = ''
+            endif
+            assign stop_index = forloop.index | prepend: '0' | slice: -2, 2
+          -%}
+          <li class="relative grid min-w-0 {{ route_class }}" {{ block.shopify_attributes }}>
+            {%- if show_index -%}
+              <span aria-hidden="true" class="pointer-events-none absolute left-4 top-4 z-10 font-display text-h3 text-paper md:sticky md:top-24 md:z-auto md:flex md:min-h-[3rem] md:flex-col md:items-start md:justify-start md:gap-1 md:pt-8 md:text-h2 md:text-text-faint">
+                <span>{{ stop_index }}</span>
+                <span class="hidden font-mono text-xs font-normal normal-case tracking-normal text-text-faint md:block">/ {{ stop_count }}</span>
+              </span>
+            {%- endif -%}
+            <div class="kx-media-effect relative min-w-0 {{ ratio_cls }} {{ img_order_cls }} {{ img_edge_cls }} overflow-hidden bg-ink-950 md:aspect-auto {{ row_min_h }}" {% render 'media-effect', surface: 'proof' %}>
               <div class="absolute inset-0">
                 {%- if block.settings.image != blank -%}
-                  {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: block.settings.image.alt | default: block.settings.place, class: 'h-full w-full object-cover' }}
+                  {%- assign stop_alt = block.settings.image.alt | default: block.settings.place -%}
+                  {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(min-width:990px) 45vw, 100vw', alt: stop_alt, class: 'h-full w-full object-cover' }}
                 {%- else -%}
                   <svg viewBox="0 0 900 675" role="img" aria-label="{{ block.settings.place | default: 'Route stop' | escape }}" class="h-full w-full bg-ink-950 text-paper" preserveAspectRatio="xMidYMid meet">
                     <rect width="900" height="675" fill="currentColor" opacity="0.035"/>
@@ -87,7 +141,7 @@
                 <span class="kx-ambient" aria-hidden="true"></span>
               {%- endif -%}
             </div>
-            <div class="min-w-0 overflow-hidden flex flex-col justify-center gap-4 border-t border-border-hairline p-5 md:border-l md:border-t-0 md:p-8">
+            <div class="min-w-0 overflow-hidden {{ text_order_cls }} {{ text_edge_cls }} flex flex-col justify-start gap-4 border-t border-border-hairline p-5 md:border-t-0 md:p-8">
                 {%- if block.settings.place != blank -%}
                   <span class="max-w-full break-words font-mono text-[10px] uppercase tracking-label text-text-muted">{{ block.settings.place }}</span>
                 {%- endif -%}
@@ -100,6 +154,7 @@
                 {%- if p != blank -%}
                   {%- render 'product-tile-compact', product: p, layout: 'row', image_width: 160, sizes: '72px', kicker: 'Featured', show_arrow: true, class: 'mt-1 flex min-w-0 items-center gap-4 overflow-hidden border border-border-hairline bg-surface-raised p-3 transition-colors hover:border-border-strong md:max-w-xl' -%}
                 {%- endif -%}
+                <span aria-hidden="true" class="mt-auto block h-px w-10 bg-border-hairline"></span>
             </div>
           </li>
         {%- endfor -%}
@@ -138,6 +193,10 @@
       ]
     },
     { "type": "checkbox", "id": "show_index", "label": "t:sections.route-map.settings.show_index.label", "default": true },
+    { "type": "checkbox", "id": "alternate_sides", "label": "Alternate image and text sides", "default": true },
+    { "type": "select", "id": "row_density", "label": "Row density", "default": "relaxed", "options": [ { "value": "relaxed", "label": "Relaxed" }, { "value": "compact", "label": "Compact" } ] },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "landscape", "options": [ { "value": "landscape", "label": "Landscape" }, { "value": "portrait", "label": "Portrait" }, { "value": "square", "label": "Square" }, { "value": "wide", "label": "Wide" } ] },
+    { "type": "select", "id": "width", "label": "Width", "default": "page", "options": [ { "value": "page", "label": "Page" }, { "value": "full", "label": "Full width" }, { "value": "narrow", "label": "Narrow" } ] },
     { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.route-map.settings.color_scheme.label", "default": "scheme-1" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.route-map.settings.padding_top.label" },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "default": 72, "unit": "px", "label": "t:sections.route-map.settings.padding_bottom.label" }
