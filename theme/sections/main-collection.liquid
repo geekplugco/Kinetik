@@ -61,10 +61,10 @@
                 <p class="mt-2 overflow-x-auto whitespace-nowrap font-mono text-xs uppercase tracking-label text-text-strong [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{{ section.settings.hero_mode }}</p>
               </div>
             </div>
-            <div class="relative min-h-40 overflow-hidden p-5">
-              <span class="absolute inset-5 border border-border-hairline"></span>
-              <span class="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-border-hairline"></span>
-              <span class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-border-hairline"></span>
+            <div class="relative min-h-20 overflow-hidden p-5 md:min-h-40">
+              <span class="absolute inset-5 hidden border border-border-hairline md:block"></span>
+              <span class="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-border-hairline md:block"></span>
+              <span class="absolute left-0 top-1/2 hidden h-px w-full -translate-y-1/2 bg-border-hairline md:block"></span>
               <div class="relative z-[1] flex h-full flex-col justify-end">
                 <span class="font-mono text-[10px] uppercase tracking-label text-text-muted">{{ section.settings.hero_signal }}</span>
                 <p class="mt-2 max-w-xs font-display text-h4 tracking-tight text-text-strong">{{ section.settings.hero_heading }}</p>
