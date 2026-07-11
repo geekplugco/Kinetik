@@ -9,7 +9,7 @@ Version: 1.0.0
 - [Setup guide](/waypoint/setup) — installation, style presets, theme settings, navigation, product data, known limitations
 - [Sections reference](/waypoint/sections) — every section, what it does, and how to configure the signature ones
 - [Settings reference](/waypoint/settings-reference) — auto-generated table of every theme setting, control type, and default
-- [Sections reference (full)](/waypoint/sections-reference) — auto-generated table of every section's settings and blocks
+- [Sections reference (full)](/waypoint/sections-reference) — every section's description, a live screenshot (or the reason none exists), and its full settings table
 - [FAQ](/waypoint/faq) — common questions
 - [Support](/waypoint/support) — support policy and contact
 
