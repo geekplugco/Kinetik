@@ -46,7 +46,7 @@
       {%- if s.spec_line != blank -%}
         <p class="hs-fade flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-label text-text-muted" style="--hs-d:680ms">
           <span class="h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden="true"></span>
-          {{ s.spec_line }}
+          <span class="min-w-0 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{{ s.spec_line }}</span>
         </p>
       {%- endif -%}
     </div>

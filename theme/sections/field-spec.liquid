@@ -73,16 +73,16 @@
           {%- endif -%}
           {%- if size_source != blank -%}
             <size-guide class="mt-2 block">
-              <button type="button" data-size-guide-open aria-haspopup="dialog" class="inline-flex min-h-[44px] items-center gap-2 self-start font-mono text-xs uppercase tracking-label text-text-strong underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent-press">
-                {{ section.settings.size_guide_label | default: 'Size guide' }}
-                <span aria-hidden="true">&#8599;</span>
+              <button type="button" data-size-guide-open aria-haspopup="dialog" class="inline-flex max-w-full min-h-[44px] items-center gap-2 self-start font-mono text-xs uppercase tracking-label text-text-strong underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent-press">
+                <span class="min-w-0 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{{ section.settings.size_guide_label | default: 'Size guide' }}</span>
+                <span aria-hidden="true" class="shrink-0">&#8599;</span>
               </button>
               <div data-size-guide-modal hidden class="fixed inset-0 kx-z-modal opacity-0 transition-opacity duration-300 motion-reduce:transition-none [&.is-open]:opacity-100">
                 <div data-size-guide-close class="absolute inset-0 bg-ink-950/85"></div>
                 <div role="dialog" aria-modal="true" aria-label="{{ section.settings.size_guide_label | default: 'Size guide' | escape }}" class="absolute inset-x-0 bottom-0 mx-auto max-h-[85vh] w-full overflow-y-auto border-t border-border-strong bg-surface-page md:inset-y-0 md:right-0 md:left-auto md:max-h-none md:w-[28rem] md:border-l md:border-t-0">
-                  <div class="flex items-center justify-between border-b border-border-hairline px-6 py-4">
-                    <span class="font-mono text-xs uppercase tracking-label text-text-strong">{{ section.settings.size_guide_label | default: 'Size guide' }}</span>
-                    <button type="button" data-size-guide-close aria-label="Close size guide" class="font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-text-strong">Close</button>
+                  <div class="flex items-center justify-between gap-4 border-b border-border-hairline px-6 py-4">
+                    <span class="min-w-0 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden font-mono text-xs uppercase tracking-label text-text-strong">{{ section.settings.size_guide_label | default: 'Size guide' }}</span>
+                    <button type="button" data-size-guide-close aria-label="Close size guide" class="shrink-0 font-mono text-xs uppercase tracking-label text-text-muted transition-colors hover:text-text-strong">Close</button>
                   </div>
                   <div class="prose-spec px-6 py-6 text-body text-text-body [&_h3]:mt-0 [&_h3]:mb-3 [&_h3]:font-mono [&_h3]:text-xs [&_h3]:uppercase [&_h3]:tracking-label [&_h3]:text-text-muted [&_table]:w-full [&_table]:border-collapse [&_table]:font-mono [&_table]:text-xs [&_td]:border [&_td]:border-border-hairline [&_td]:px-3 [&_td]:py-2 [&_th]:border [&_th]:border-border-hairline [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:uppercase [&_th]:tracking-label [&_p]:m-0 [&_p:not(:last-child)]:mb-3">
                     {%- if size_source == 'blocks' -%}

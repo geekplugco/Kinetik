@@ -52,9 +52,9 @@
       {%- else -%}
         {{ 'lifestyle-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover bg-surface-sunken text-border-hairline' }}
       {%- endif -%}
-      <div class="pointer-events-none absolute inset-x-4 top-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-label text-paper mix-blend-difference">
-        <span>{{ media_label }}</span>
-        <span>Scan 01</span>
+      <div class="pointer-events-none absolute inset-x-4 top-4 flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-label text-paper mix-blend-difference">
+        <span class="min-w-0 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{{ media_label }}</span>
+        <span class="shrink-0">Scan 01</span>
       </div>
       <div class="pointer-events-none absolute bottom-4 left-4 right-4 hidden border border-paper/30 bg-ink-950/55 px-3 py-2 font-mono text-[10px] uppercase tracking-label text-paper backdrop-blur-sm md:flex md:items-center md:justify-between">
         <span>Field image</span>
@@ -65,11 +65,11 @@
       <div class="max-w-xl border border-border-hairline bg-surface-page p-5 md:p-7">
         <div class="mb-5 flex items-center justify-between gap-4 border-b border-border-hairline pb-4 font-mono text-[10px] uppercase tracking-label text-text-muted">
           {%- if s.subheading != blank -%}
-            <span>{{ s.subheading }}</span>
+            <span class="min-w-0 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{{ s.subheading }}</span>
           {%- else -%}
-            <span>System note</span>
+            <span class="min-w-0 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">System note</span>
           {%- endif -%}
-          <span>01 / proof</span>
+          <span class="shrink-0">01 / proof</span>
         </div>
         <div class="flex flex-col gap-5 {{ content_align }}">
           <h2 class="font-display text-h2 tracking-tight text-text-strong">{{ s.heading | default: 'Built to last' }}</h2>
