@@ -140,7 +140,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-panel] {
+  [data-panel],
+  [data-panel].is-closing {
     animation-duration: 1ms;
   }
 }
