@@ -13,7 +13,7 @@
       </a>
       <div class="grid max-w-sm grid-cols-2 border border-border-hairline font-mono text-[10px] uppercase tracking-label text-text-muted">
         <span class="border-r border-border-hairline p-3">{{ article.published_at | date: '%b %d, %Y' }}</span>
-        <span class="p-3">{% if article.author != blank %}{{ article.author }}{% else %}{{ shop.name }}{% endif %}</span>
+        <span class="min-w-0 overflow-x-auto whitespace-nowrap p-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{% if article.author != blank %}{{ article.author }}{% else %}{{ shop.name }}{% endif %}</span>
       </div>
     </div>
     <div>
