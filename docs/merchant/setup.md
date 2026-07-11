@@ -16,6 +16,12 @@ Theme settings, Colors, holds the color scheme group. Three presets ship with th
 
 Each scheme defines background, text, button, button label, and shadow roles. The theme derives its full token set (muted text, hairlines, hover states) from those roles, so custom schemes stay coherent automatically. Every section has its own Color scheme setting, so you can mix light and dark bands down a page.
 
+![Waypoint preset: white paper background, near-black text, volt lime accent button](/screenshots/style-preset-waypoint.png)
+
+![Carbon preset: blackout background, white text, volt lime accent button](/screenshots/style-preset-carbon.png)
+
+![Sand preset: warm paper background, umber text, burnt-orange accent button](/screenshots/style-preset-sand.png)
+
 ## Theme settings reference
 
 | Group | Controls |
