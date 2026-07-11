@@ -24,16 +24,16 @@
         "m2": {
           "type": "media",
           "settings": {
-            "image": "shopify://shop_images/05-sling-worn.png",
-            "caption": "Frame 02 · Sling 4L, worn",
-            "link": "shopify://products/sling-bag"
+            "image": "shopify://shop_images/card-12-overland-duffel.png",
+            "caption": "Frame 02 · Overland Duffel, packed",
+            "link": "shopify://products/overland-duffel"
           }
         },
         "m3": {
           "type": "media",
           "settings": {
-            "image": "shopify://shop_images/06-detail-trio.png",
-            "caption": "Frame 03 · Detail trio"
+            "image": "shopify://shop_images/card-15-field-belt.png",
+            "caption": "Frame 03 · Field belt detail"
           }
         }
       },
@@ -60,13 +60,13 @@
         "s1": {
           "type": "shot",
           "settings": {
-            "image": "shopify://shop_images/01-jacket-hood-back.png",
-            "image_alt": "Full Field System look, front",
+            "image": "shopify://shop_images/card-01-desert-shell.png",
+            "image_alt": "Desert Shell jacket, front",
             "caption": "01 — The full system",
-            "product_1": "shell-jacket",
+            "product_1": "desert-shell",
             "x_1": 50,
             "y_1": 32,
-            "product_2": "cargo-pants",
+            "product_2": "overland-cargo",
             "x_2": 46,
             "y_2": 72
           }
@@ -74,10 +74,10 @@
         "s2": {
           "type": "shot",
           "settings": {
-            "image": "shopify://shop_images/07-cap-shadow.png",
-            "image_alt": "Field cap detail in hard shadow",
-            "caption": "02 — 6-Panel Field Cap",
-            "product_1": "cap",
+            "image": "shopify://shop_images/card-08-trail-cap.png",
+            "image_alt": "Trail canvas cap detail",
+            "caption": "02 — Trail Canvas Cap",
+            "product_1": "trail-cap",
             "x_1": 52,
             "y_1": 44
           }
@@ -85,13 +85,13 @@
         "s3": {
           "type": "shot",
           "settings": {
-            "image": "shopify://shop_images/08-hero-back-wide.png",
-            "image_alt": "Back panel, wide",
-            "caption": "03 — Roll-Top + Shell, back",
-            "product_1": "shell-jacket",
+            "image": "shopify://shop_images/card-03-waxed-jacket.png",
+            "image_alt": "Waxed field jacket, back",
+            "caption": "03 — Waxed Jacket + Duffel",
+            "product_1": "waxed-jacket",
             "x_1": 44,
             "y_1": 40,
-            "product_2": "backpack",
+            "product_2": "overland-duffel",
             "x_2": 50,
             "y_2": 56
           }
@@ -99,13 +99,13 @@
         "s4": {
           "type": "shot",
           "settings": {
-            "image": "shopify://shop_images/03-vest-torso.png",
-            "image_alt": "Utility vest torso detail",
-            "caption": "04 — Utility Vest 6P",
-            "product_1": "utility-vest",
+            "image": "shopify://shop_images/card-02-canvas-vest.png",
+            "image_alt": "Canvas utility vest torso detail",
+            "caption": "04 — Canvas Utility Vest",
+            "product_1": "canvas-vest",
             "x_1": 50,
             "y_1": 48,
-            "product_2": "base-layer",
+            "product_2": "chambray-shirt",
             "x_2": 40,
             "y_2": 70
           }
@@ -113,10 +113,10 @@
         "s5": {
           "type": "shot",
           "settings": {
-            "image": "shopify://shop_images/05-sling-worn.png",
-            "image_alt": "Sling bag worn across the body",
-            "caption": "05 — Sling 4L",
-            "product_1": "sling-bag",
+            "image": "shopify://shop_images/card-13-canvas-rucksack.png",
+            "image_alt": "Canvas rucksack worn across the body",
+            "caption": "05 — Canvas Rucksack 22L",
+            "product_1": "canvas-rucksack",
             "x_1": 54,
             "y_1": 52
           }
@@ -124,13 +124,13 @@
         "s6": {
           "type": "shot",
           "settings": {
-            "image": "shopify://shop_images/06-detail-trio.png",
-            "image_alt": "Black hoodie and trail running sneakers arranged as a flat lay",
-            "caption": "06 — Storm Hoodie + Trail Runner",
-            "product_1": "tech-hoodie",
+            "image": "shopify://shop_images/card-10-desert-boot.png",
+            "image_alt": "Desert boot and expedition henley arranged as a flat lay",
+            "caption": "06 — Desert Boot + Henley",
+            "product_1": "desert-boot",
             "x_1": 38,
             "y_1": 38,
-            "product_2": "sneakers",
+            "product_2": "expedition-henley",
             "x_2": 58,
             "y_2": 80
           }
@@ -162,7 +162,7 @@
             "label": "01 — Material",
             "heading": "3-layer membrane, sourced first",
             "text": "<p>Every piece starts with the shell: a 3-layer waterproof-breathable membrane rated 20k/20k, taped at every seam before a single panel is cut.</p>",
-            "image": "shopify://shop_images/03-vest-torso.png",
+            "image": "shopify://shop_images/editorial-bench-macro2.png",
             "button_label": "Shop the system",
             "button_link": "shopify://collections/frontpage"
           }
@@ -173,7 +173,7 @@
             "label": "02 — Field test",
             "heading": "Broken in on the route",
             "text": "<p>Prototypes ran the full commute-to-trail loop for a season — abrasion, storm load, pack friction — until the pattern earned its spec sheet.</p>",
-            "image": "shopify://shop_images/08-hero-back-wide.png"
+            "image": "shopify://shop_images/route-field-midday.png"
           }
         },
         "c3": {
@@ -182,7 +182,7 @@
             "label": "03 — Release",
             "heading": "One system, shipped complete",
             "text": "<p>The final kit drops as a coordinated system — shell, layers, carry — each piece coded to work with the next.</p>",
-            "image": "shopify://shop_images/wp-hero-garage-19.png",
+            "image": "shopify://shop_images/card-04-overland-cargo.png",
             "button_label": "Shop the drop",
             "button_link": "shopify://collections/frontpage"
           }
@@ -221,7 +221,7 @@
         "p1": {
           "type": "promo",
           "settings": {
-            "image": "shopify://shop_images/01-jacket-hood-back.png",
+            "image": "shopify://shop_images/card-03-waxed-jacket.png",
             "eyebrow": "Outerwear",
             "heading": "Shells & layers",
             "text": "<p>Waterproof-breathable, seam-taped.</p>",
@@ -232,7 +232,7 @@
         "p2": {
           "type": "promo",
           "settings": {
-            "image": "shopify://shop_images/05-sling-worn.png",
+            "image": "shopify://shop_images/card-13-canvas-rucksack.png",
             "eyebrow": "Carry",
             "heading": "Packs & slings",
             "text": "<p>Modular carry for the commute.</p>",
@@ -243,7 +243,7 @@
         "p3": {
           "type": "promo",
           "settings": {
-            "image": "shopify://shop_images/07-cap-shadow.png",
+            "image": "shopify://shop_images/card-09-expedition-hat.png",
             "eyebrow": "Accessories",
             "heading": "Caps & extras",
             "text": "<p>Finish the system.</p>",
@@ -263,9 +263,9 @@
       "settings": {
         "subheading": "Field vs street",
         "heading": "One shell, two contexts",
-        "before_image": "shopify://shop_images/01-jacket-hood-back.png",
+        "before_image": "shopify://shop_images/card-02-canvas-vest.png",
         "before_label": "Field",
-        "after_image": "shopify://shop_images/wp-hero-garage-19.png",
+        "after_image": "shopify://shop_images/card-06-chambray-shirt.png",
         "after_label": "Street",
         "caption": "Drag to compare the full field system against the street loadout.",
         "aspect": "wide",
@@ -299,8 +299,8 @@
             "place": "06:10 · Transit",
             "heading": "Out the door",
             "caption": "<p>Shell on, pack loaded, audio in. The commute is the first field test of the day.</p>",
-            "image": "shopify://shop_images/route-transit-platform.png",
-            "product": "shell-jacket"
+            "image": "shopify://shop_images/card-01-desert-shell.png",
+            "product": "desert-shell"
           }
         },
         "s2": {
@@ -310,7 +310,7 @@
             "heading": "Off the grid",
             "caption": "<p>Weather turns fast above the treeline. The membrane holds while the base layer moves moisture out.</p>",
             "image": "shopify://shop_images/route-field-midday.png",
-            "product": "tech-hoodie"
+            "product": "merino-half-zip"
           }
         },
         "s3": {
@@ -319,8 +319,8 @@
             "place": "21:30 · Camp",
             "heading": "Hold position",
             "caption": "<p>Layer down, power up, reset for the next leg. Reflective trim keeps you readable in headlamp range.</p>",
-            "image": "shopify://shop_images/route-return-night.png",
-            "product": "sling-bag"
+            "image": "shopify://shop_images/card-13-canvas-rucksack.png",
+            "product": "canvas-rucksack"
           }
         }
       },
@@ -345,7 +345,7 @@
             "eyebrow": "Field manifesto",
             "quote": "<p>One system. Every condition. No compromise.</p>",
             "attribution": "Waypoint SS26",
-            "image": "shopify://shop_images/08-hero-back-wide.png",
+            "image": "shopify://shop_images/card-04-overland-cargo.png",
             "overlay_opacity": 55,
             "alignment": "center",
             "height": "tall",
@@ -371,7 +371,7 @@
       "type": "hero-video",
       "settings": {
         "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "poster": "shopify://shop_images/route-return-night.png",
+        "poster": "shopify://shop_images/editorial-bench-macro2.png",
         "kicker": "Field footage",
         "heading": "In motion",
         "text": "<p>Sixty frames of the system under load. Shot on route, not in studio.</p>",
