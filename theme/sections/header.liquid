@@ -107,7 +107,7 @@
   {%- elsif header_style == 'commerce' -%}
     <div class="border-b border-border-hairline bg-surface-raised/70">
       <div class="mx-auto flex max-w-[var(--page-width)] items-center justify-between gap-4 px-6 py-2 font-mono text-[11px] uppercase tracking-label text-text-muted">
-        <span>{{ s.utility_text | default: 'Free shipping and returns on qualifying orders' }}</span>
+        <span class="min-w-0 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{{ s.utility_text | default: 'Free shipping and returns on qualifying orders' }}</span>
         <a href="{{ routes.all_products_collection_url }}" class="hidden items-center gap-2 text-text-body transition-colors hover:text-text-strong md:inline-flex">Shop all {%- render 'icon', name: 'arrow', size: 12 -%}</a>
       </div>
     </div>
