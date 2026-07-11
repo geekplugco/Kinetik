@@ -15,11 +15,11 @@
           {%- if collection and link.object.handle == collection.handle -%}
             {%- assign is_current = true -%}
           {%- endif -%}
-          <li>
+          <li class="max-w-full">
             <a
               href="{{ link.url }}"
               {% if is_current %}aria-current="page"{% endif %}
-              class="inline-flex min-h-[36px] items-center border px-4 font-mono text-xs uppercase tracking-label transition-colors {% if is_current %}border-border-strong bg-surface-sunken text-text-strong{% else %}border-border-hairline text-text-muted hover:border-border-strong hover:text-text-strong{% endif %}"
+              class="inline-flex min-h-[36px] max-w-full items-center overflow-x-auto whitespace-nowrap border px-4 font-mono text-xs uppercase tracking-label transition-colors [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden {% if is_current %}border-border-strong bg-surface-sunken text-text-strong{% else %}border-border-hairline text-text-muted hover:border-border-strong hover:text-text-strong{% endif %}"
             >{{ link.title }}</a>
           </li>
         {%- endfor -%}

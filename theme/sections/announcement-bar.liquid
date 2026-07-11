@@ -37,14 +37,14 @@
     {%- if s.show_localization -%}<span class="hidden w-32 md:block" aria-hidden="true"></span>{%- endif -%}
     <div class="flex flex-1 items-center gap-6 {{ align_class }}">
       {%- if mcount == 0 -%}
-        <span data-ann-item class="inline-flex min-h-[44px] items-center"><span class="font-mono text-xs uppercase tracking-label">Free shipping on orders over $50</span></span>
+        <span data-ann-item class="inline-flex min-h-[44px] min-w-0 max-w-full items-center overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"><span class="font-mono text-xs uppercase tracking-label">Free shipping on orders over $50</span></span>
       {%- else -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'message' -%}
             {%- if block.settings.link != blank -%}
-              <a {{ block.shopify_attributes }} data-ann-item href="{{ block.settings.link }}" class="inline-flex min-h-[44px] items-center transition-opacity hover:opacity-70"><span class="font-mono text-xs uppercase tracking-label">{{ block.settings.text }}</span></a>
+              <a {{ block.shopify_attributes }} data-ann-item href="{{ block.settings.link }}" class="inline-flex min-h-[44px] min-w-0 max-w-full items-center overflow-x-auto whitespace-nowrap transition-opacity hover:opacity-70 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"><span class="font-mono text-xs uppercase tracking-label">{{ block.settings.text }}</span></a>
             {%- else -%}
-              <span {{ block.shopify_attributes }} data-ann-item class="inline-flex min-h-[44px] items-center"><span class="font-mono text-xs uppercase tracking-label">{{ block.settings.text }}</span></span>
+              <span {{ block.shopify_attributes }} data-ann-item class="inline-flex min-h-[44px] min-w-0 max-w-full items-center overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"><span class="font-mono text-xs uppercase tracking-label">{{ block.settings.text }}</span></span>
             {%- endif -%}
           {%- endif -%}
         {%- endfor -%}

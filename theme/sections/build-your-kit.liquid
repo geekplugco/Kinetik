@@ -108,9 +108,9 @@
           {%- if opt_count > 0 -%}
             <li class="border-t border-border-hairline py-6 first:border-t-0 first:pt-0" data-slot-row="{{ slot_id }}">
               <div class="mb-4 flex items-baseline gap-3">
-                <span class="font-mono text-sm tabular-nums text-text-muted">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
-                <span class="font-mono text-xs uppercase tracking-label text-text-strong">{{ slot_label }}</span>
-                <span data-slot-status="{{ slot_id }}"{% if block.settings.required %} data-required{% endif %} class="font-mono text-[11px] uppercase tracking-label text-text-muted">{% if block.settings.required %}Required{% else %}Optional{% endif %}</span>
+                <span class="shrink-0 font-mono text-sm tabular-nums text-text-muted">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                <span class="min-w-0 overflow-x-auto whitespace-nowrap font-mono text-xs uppercase tracking-label text-text-strong [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{{ slot_label }}</span>
+                <span data-slot-status="{{ slot_id }}"{% if block.settings.required %} data-required{% endif %} class="shrink-0 font-mono text-[11px] uppercase tracking-label text-text-muted">{% if block.settings.required %}Required{% else %}Optional{% endif %}</span>
               </div>
               <ul class="flex gap-3 overflow-x-auto pb-2">{{ options_html }}</ul>
             </li>

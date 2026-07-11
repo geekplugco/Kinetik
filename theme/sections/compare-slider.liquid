@@ -38,8 +38,8 @@
           {{ 'lifestyle-1' | placeholder_svg_tag: 'pointer-events-none absolute inset-0 h-full w-full object-cover bg-surface-sunken text-border-hairline' }}
         {%- endif -%}
       </div>
-      {%- if s.before_label != blank -%}<span class="pointer-events-none absolute left-3 top-3 z-10 bg-ink-950/72 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper">{{ s.before_label }}</span>{%- endif -%}
-      {%- if s.after_label != blank -%}<span class="pointer-events-none absolute right-3 top-3 z-10 bg-ink-950/72 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper">{{ s.after_label }}</span>{%- endif -%}
+      {%- if s.before_label != blank -%}<span class="pointer-events-none absolute left-3 top-3 z-10 max-w-[42%] overflow-x-auto whitespace-nowrap bg-ink-950/72 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{{ s.before_label }}</span>{%- endif -%}
+      {%- if s.after_label != blank -%}<span class="pointer-events-none absolute right-3 top-3 z-10 max-w-[42%] overflow-x-auto whitespace-nowrap bg-ink-950/72 px-2 py-1 font-mono text-[10px] uppercase tracking-label text-paper [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{{ s.after_label }}</span>{%- endif -%}
       <button type="button" data-compare-handle role="slider" aria-label="Drag to compare {{ s.before_label | default: 'before' }} and {{ s.after_label | default: 'after' }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" style="left:50%" class="absolute top-0 z-20 flex h-full w-11 -translate-x-1/2 cursor-ew-resize items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent">
         <span class="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-paper" aria-hidden="true"></span>
         <span class="relative flex h-9 w-9 items-center justify-center gap-0.5 rounded-full border border-ink-950/10 bg-paper text-ink-950 shadow-[0_2px_10px_rgba(10,10,10,0.35)]" aria-hidden="true">
