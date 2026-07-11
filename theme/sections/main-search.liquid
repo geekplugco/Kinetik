@@ -69,7 +69,11 @@
           {%- for item in search.results -%}
             {%- case item.object_type -%}
               {%- when 'product' -%}
-                {%- render 'product-card', product: item -%}
+                {%- if forloop.first -%}
+                  {%- render 'product-card', product: item, loading: 'eager', priority: 'high' -%}
+                {%- else -%}
+                  {%- render 'product-card', product: item -%}
+                {%- endif -%}
               {%- when 'article' -%}
                 <a href="{{ item.url }}" class="group col-span-2 flex flex-col gap-3 border-t border-border-hairline pt-4 sm:col-span-1">
                   <div class="relative aspect-[3/2] overflow-hidden bg-surface-sunken">
@@ -110,7 +114,7 @@
     {%- endif -%}
   {%- endif -%}
 </section>
-<script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+{%- unless settings.search_predictive -%}<script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>{%- endunless -%}
 {% schema %}
 {
   "name": "t:sections.main-search.name",

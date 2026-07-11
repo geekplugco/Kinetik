@@ -12,26 +12,32 @@
       assign has_size_filter = true
     endif
   endfor
-  for product in collection.products
-    for option in product.options_with_values
-      assign oname = option.name | downcase
-      if oname contains 'color' or oname contains 'colour'
-        for value in option.values
-          assign token = '|' | append: value | append: '|'
-          unless color_values contains token
-            assign color_values = color_values | append: value | append: '|'
+  unless has_color_filter and has_size_filter
+    for product in collection.products
+      for option in product.options_with_values
+        assign oname = option.name | downcase
+        if oname contains 'color' or oname contains 'colour'
+          unless has_color_filter
+            for value in option.values
+              assign token = '|' | append: value | append: '|'
+              unless color_values contains token
+                assign color_values = color_values | append: value | append: '|'
+              endunless
+            endfor
           endunless
-        endfor
-      elsif oname contains 'size'
-        for value in option.values
-          assign token = '|' | append: value | append: '|'
-          unless size_values contains token
-            assign size_values = size_values | append: value | append: '|'
+        elsif oname contains 'size'
+          unless has_size_filter
+            for value in option.values
+              assign token = '|' | append: value | append: '|'
+              unless size_values contains token
+                assign size_values = size_values | append: value | append: '|'
+              endunless
+            endfor
           endunless
-        endfor
-      endif
+        endif
+      endfor
     endfor
-  endfor
+  endunless
   assign color_list = color_values | split: '|'
   assign size_list = size_values | split: '|'
 -%}

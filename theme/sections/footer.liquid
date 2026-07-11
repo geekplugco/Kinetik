@@ -9,7 +9,7 @@
       <div class="max-w-md">
         <a href="{{ routes.root_url }}" class="block text-text-strong" aria-label="{{ shop.name | escape }}">
           {%- if settings.logo != blank -%}
-            {{ settings.logo | image_url: width: 420 | image_tag: alt: shop.name, widths: '180,300,420', loading: 'lazy', style: 'max-width:180px', class: 'h-auto w-auto' }}
+            {{ settings.logo | image_url: width: 420 | image_tag: alt: shop.name, widths: '180,300,420', sizes: '180px', loading: 'lazy', style: 'max-width:180px', class: 'h-auto w-auto' }}
           {%- else -%}
             <span class="font-display text-2xl font-bold uppercase leading-none tracking-tight">{{ shop.name }}</span>
           {%- endif -%}
@@ -83,7 +83,7 @@
       <div class="mx-auto max-w-[var(--page-width)]">
         <div class="py-6 text-text-strong">
           {%- if settings.logo != blank -%}
-            {{ settings.logo | image_url: width: 1600 | image_tag: alt: shop.name, widths: '600,1000,1600', loading: 'lazy', class: 'h-auto w-full max-w-none' }}
+            {{ settings.logo | image_url: width: 1600 | image_tag: alt: shop.name, widths: '600,1000,1600', sizes: '100vw', loading: 'lazy', class: 'h-auto w-full max-w-none' }}
           {%- else -%}
             <span class="block font-display text-[18vw] font-bold uppercase leading-none tracking-tight">{{ shop.name }}</span>
           {%- endif -%}
@@ -158,7 +158,7 @@
         <div class="border-b border-border-hairline p-5 md:border-b-0 md:border-r md:p-6">
           <a href="{{ routes.root_url }}" class="block w-fit text-text-strong" aria-label="{{ shop.name | escape }}">
             {%- if settings.logo != blank -%}
-              {{ settings.logo | image_url: width: 520 | image_tag: alt: shop.name, widths: '180,320,520', loading: 'lazy', style: 'max-width:220px', class: 'h-auto w-auto' }}
+              {{ settings.logo | image_url: width: 520 | image_tag: alt: shop.name, widths: '180,320,520', sizes: '220px', loading: 'lazy', style: 'max-width:220px', class: 'h-auto w-auto' }}
             {%- else -%}
               <span class="font-display text-2xl font-bold uppercase leading-none tracking-tight">{{ shop.name }}</span>
             {%- endif -%}

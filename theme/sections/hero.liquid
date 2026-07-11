@@ -1,6 +1,10 @@
 {%- liquid
   assign s = section.settings
   assign layout = s.layout | default: 'split'
+  assign hero_sizes = '100vw'
+  if layout == 'split'
+    assign hero_sizes = '(min-width: 768px) 54vw, 100vw'
+  endif
 
   case s.width
     when 'full'
@@ -75,7 +79,7 @@
 
 {%- capture hero_image -%}
   {%- if s.image != blank -%}
-    {{ s.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1600,2000', sizes: '100vw', alt: alt, class: 'absolute inset-0 h-full w-full object-cover kx-hero-media' }}
+    {{ s.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1600,2000', sizes: hero_sizes, alt: alt, class: 'absolute inset-0 h-full w-full object-cover kx-hero-media' }}
   {%- else -%}
     {{ 'lifestyle-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-cover text-border-hairline' }}
   {%- endif -%}

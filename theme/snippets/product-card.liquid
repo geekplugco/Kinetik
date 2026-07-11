@@ -5,10 +5,14 @@
   @param {string} [ratio] - adapt | square | portrait (default = settings.card_image_ratio)
   @param {boolean} [show_quick_add] - override settings.card_quick_add
   @param {string} [sizes] - responsive image sizes attr
+  @param [loading] {string} - img loading attribute, defaults to 'lazy'; pass 'eager' for above-the-fold cards
+  @param [priority] {string} - img fetchpriority, defaults to 'auto'; pass 'high' for the LCP card only
 {% enddoc %}
 {%- liquid
   assign card_ratio = ratio | default: settings.card_image_ratio | default: 'portrait'
   assign card_mode = settings.card_mode | default: 'technical'
+  assign card_loading = loading | default: 'lazy'
+  assign card_priority = priority | default: 'auto'
   case card_ratio
     when 'square'
       assign ratio_cls = 'aspect-square'
@@ -53,7 +57,7 @@
       {%- if product.featured_media -%}
         {%- assign show_second = false -%}
         {%- if settings.card_show_second_image and product.media[1] -%}{%- assign show_second = true -%}{%- endif -%}
-        {{ product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300,450,600,900', sizes: img_sizes, alt: card_alt, class: 'h-full w-full object-cover motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
+        {{ product.featured_media | image_url: width: 900 | image_tag: loading: card_loading, fetchpriority: card_priority, widths: '300,450,600,900', sizes: img_sizes, alt: card_alt, class: 'h-full w-full object-cover motion-reduce:transition-none motion-reduce:group-hover:scale-100' }}
         {%- if show_second -%}
           {{ product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300,450,600,900', sizes: img_sizes, alt: card_alt, class: 'absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100' }}
         {%- endif -%}

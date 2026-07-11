@@ -1,11 +1,23 @@
 class ProductGallery extends HTMLElement {
   connectedCallback() {
+    this.reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.stackItems = Array.from(this.querySelectorAll('[data-gallery-stack-item]'));
+    if (this.stackItems.length) {
+      this.onVariant = (e) => {
+        const v = e.detail && e.detail.variant;
+        if (!v || !v.featured_media_id) return;
+        const target = this.stackItems.find((el) => el.dataset.mediaId === String(v.featured_media_id));
+        if (target) target.scrollIntoView({ behavior: this.reduce ? 'auto' : 'smooth', block: 'center' });
+      };
+      document.addEventListener('variant:change', this.onVariant);
+      return;
+    }
+
     this.main = this.querySelector('[data-gallery-main]');
     this.mainImg = this.main && this.main.querySelector('img');
     this.thumbs = Array.from(this.querySelectorAll('[data-gallery-thumb]'));
     this.dots = Array.from(this.querySelectorAll('[data-gallery-dot]'));
     this.caption = this.querySelector('[data-gallery-caption]');
-    this.reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!this.main || !this.mainImg) return;
     this.index = 0;
 

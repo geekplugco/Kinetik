@@ -1824,15 +1824,6 @@
         "text": {
           "label": "Intro text"
         },
-        "heading_layout": {
-          "label": "Heading layout",
-          "options__1": {
-            "label": "Editorial bar"
-          },
-          "options__2": {
-            "label": "Framed panel"
-          }
-        },
         "layout": {
           "label": "Layout",
           "options__1": {

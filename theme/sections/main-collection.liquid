@@ -6,6 +6,10 @@
   assign promo_blocks = section.blocks | where: 'type', 'promo_tile'
   assign filter_style = section.settings.filter_style | default: 'command'
   assign products_per_page = section.settings.products_per_page | default: 24
+  assign has_collection_banner = false
+  if collection.image != blank and section.settings.show_collection_image
+    assign has_collection_banner = true
+  endif
   assign active_filter_count = 0
   for filter in collection.filters
     assign active_filter_count = active_filter_count | plus: filter.active_values.size
@@ -204,7 +208,13 @@
             endfor
           -%}
           <div data-product-item data-option-color="{{ pc_colors }}" data-option-size="{{ pc_sizes }}">
-            {%- render 'product-card', product: product -%}
+            {%- if forloop.first -%}
+              {%- assign card_priority = 'auto' -%}
+              {%- unless has_collection_banner -%}{%- assign card_priority = 'high' -%}{%- endunless -%}
+              {%- render 'product-card', product: product, loading: 'eager', priority: card_priority -%}
+            {%- else -%}
+              {%- render 'product-card', product: product -%}
+            {%- endif -%}
           </div>
         {%- else -%}
           <div class="col-span-full border border-border-hairline px-6 py-12 text-center">

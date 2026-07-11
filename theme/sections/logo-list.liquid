@@ -11,10 +11,13 @@
   case s.logo_size
     when 'small'
       assign size = 'h-6 w-24'
+      assign logo_sizes = '96px'
     when 'large'
       assign size = 'h-10 w-36'
+      assign logo_sizes = '144px'
     else
       assign size = 'h-8 w-28'
+      assign logo_sizes = '112px'
   endcase
   case s.logo_style
     when 'full'
@@ -48,7 +51,7 @@
         {%- if block.type == 'logo' -%}
           <div {{ block.shopify_attributes }} class="relative {{ size }} {{ style_class }}">
             {%- if block.settings.image != blank -%}
-              {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '120,200,300,400', alt: block.settings.alt, class: 'absolute inset-0 h-full w-full object-contain' }}
+              {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '120,200,300,400', sizes: logo_sizes, alt: block.settings.alt, class: 'absolute inset-0 h-full w-full object-contain' }}
             {%- else -%}
               <span class="flex h-full items-center justify-center overflow-x-auto whitespace-nowrap font-display text-h4 uppercase tracking-tight text-text-strong [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{{ block.settings.alt | default: 'Logo' }}</span>
             {%- endif -%}

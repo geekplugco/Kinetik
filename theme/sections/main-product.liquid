@@ -39,7 +39,7 @@
 >
   {%- assign gallery_layout = section.settings.gallery_layout | default: 'thumbnail' -%}
   {%- if gallery_layout == 'stacked' or product.media.size < 2 -%}
-    <div class="flex flex-col gap-3">
+    <product-gallery class="flex flex-col gap-3">
       {%- for media in product.media -%}
         {%- liquid
           assign s_loading = 'lazy'
@@ -50,15 +50,15 @@
           endif
           assign s_alt = media.alt | default: product.title | escape
         -%}
-        <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
-          {%- render 'product-media', media: media, loading: s_loading, priority: s_priority, sizes: media_sizes, alt: s_alt -%}
+        <div data-gallery-stack-item data-media-id="{{ media.id }}" class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
+          {%- render 'product-media', media: media, loading: s_loading, priority: s_priority, sizes: media_sizes, alt: s_alt, fit: 'contain' -%}
         </div>
       {%- else -%}
         <div class="relative aspect-[4/5] overflow-hidden bg-surface-sunken">
           {{ 'product-1' | placeholder_svg_tag: 'h-full w-full object-cover text-border-hairline' }}
         </div>
       {%- endfor -%}
-    </div>
+    </product-gallery>
   {%- else -%}
     {%- assign first_media = product.media.first -%}
     {%- assign first_alt = first_media.alt | default: product.title | escape -%}
@@ -445,7 +445,6 @@
     {%- endif -%}
   </variant-picker>
 </section>
-<script src="{{ 'variant-picker.js' | asset_url }}" defer="defer"></script>
 {%- if product.gift_card? -%}
   <script src="{{ 'gift-card-recipient.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
