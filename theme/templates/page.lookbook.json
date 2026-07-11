@@ -3,10 +3,10 @@
     "hero_collage": {
       "type": "hero-collage",
       "settings": {
-        "kicker": "SS26 · Field System",
-        "heading": "Shot in the field, worn in transit",
-        "text": "<p>Three frames from the season. Every piece in shot ships now — scroll for the full story.</p>",
-        "button_label": "Shop the system",
+        "kicker": "SS26 · The Sand Line",
+        "heading": "Worn in, not worn out",
+        "text": "<p>Four pieces built to soften with use, not wear thin. Scroll for the full story.</p>",
+        "button_label": "Shop the line",
         "button_link": "shopify://collections/frontpage",
         "color_scheme": "scheme-1",
         "padding_top": 0,
@@ -46,9 +46,9 @@
     "lookbook": {
       "type": "lookbook",
       "settings": {
-        "kicker": "SS26 · Field System",
-        "heading": "Shot in the field",
-        "text": "<p>One kit, every condition. Tap a piece to shop the look.</p>",
+        "kicker": "SS26 · The Sand Line",
+        "heading": "Shot on the road",
+        "text": "<p>Canvas, wax, and leather — built for travel that starts before sunrise. Tap a piece to shop the look.</p>",
         "layout": "editorial",
         "image_ratio": "portrait",
         "width": "page",
@@ -62,7 +62,7 @@
           "settings": {
             "image": "shopify://shop_images/card-01-desert-shell.png",
             "image_alt": "Desert Shell jacket, front",
-            "caption": "01 — The full system",
+            "caption": "01 — The full kit",
             "product_1": "desert-shell",
             "x_1": 50,
             "y_1": 32,
@@ -148,8 +148,8 @@
     "collection_story": {
       "type": "collection-story",
       "settings": {
-        "kicker": "SS26 · Field System",
-        "heading": "From membrane to drop",
+        "kicker": "SS26 · The Sand Line",
+        "heading": "From hide to hand",
         "width": "page",
         "color_scheme": "scheme-1",
         "padding_top": 56,
@@ -160,10 +160,10 @@
           "type": "chapter",
           "settings": {
             "label": "01 — Material",
-            "heading": "3-layer membrane, sourced first",
-            "text": "<p>Every piece starts with the shell: a 3-layer waterproof-breathable membrane rated 20k/20k, taped at every seam before a single panel is cut.</p>",
+            "heading": "Canvas, wax, and full-grain leather",
+            "text": "<p>Every piece starts with materials chosen to age well: waxed cotton canvas, vegetable-tanned leather, and brass hardware built to be repaired, not replaced.</p>",
             "image": "shopify://shop_images/editorial-bench-macro2.png",
-            "button_label": "Shop the system",
+            "button_label": "Shop the line",
             "button_link": "shopify://collections/frontpage"
           }
         },
@@ -171,8 +171,8 @@
           "type": "chapter",
           "settings": {
             "label": "02 — Field test",
-            "heading": "Broken in on the route",
-            "text": "<p>Prototypes ran the full commute-to-trail loop for a season — abrasion, storm load, pack friction — until the pattern earned its spec sheet.</p>",
+            "heading": "Broken in on the road",
+            "text": "<p>Prototypes rode along on a season of early starts and long routes — sun, dust, daily wear — until the canvas softened and the leather took its first patina.</p>",
             "image": "shopify://shop_images/route-field-midday.png"
           }
         },
@@ -180,8 +180,8 @@
           "type": "chapter",
           "settings": {
             "label": "03 — Release",
-            "heading": "One system, shipped complete",
-            "text": "<p>The final kit drops as a coordinated system — shell, layers, carry — each piece coded to work with the next.</p>",
+            "heading": "One line, built to last",
+            "text": "<p>The finished collection ships as a coordinated set — shell, carry, layers — each piece meant to be worn for years, not seasons.</p>",
             "image": "shopify://shop_images/card-04-overland-cargo.png",
             "button_label": "Shop the drop",
             "button_link": "shopify://collections/frontpage"
@@ -197,7 +197,7 @@
     "marquee": {
       "type": "marquee",
       "settings": {
-        "text": "SS26 · Field System · Shop the look",
+        "text": "SS26 · The Sand Line · Shop the look",
         "separator": "—",
         "style": "outline",
         "speed": "normal",
@@ -208,8 +208,8 @@
     "promo_grid": {
       "type": "promo-grid",
       "settings": {
-        "subheading": "Shop by system",
-        "heading": "Build your loadout",
+        "subheading": "Shop by category",
+        "heading": "Build your kit",
         "columns_desktop": 3,
         "columns_mobile": "1",
         "image_ratio": "portrait",
@@ -223,8 +223,8 @@
           "settings": {
             "image": "shopify://shop_images/card-03-waxed-jacket.png",
             "eyebrow": "Outerwear",
-            "heading": "Shells & layers",
-            "text": "<p>Waterproof-breathable, seam-taped.</p>",
+            "heading": "Shells & jackets",
+            "text": "<p>Waxed cotton canvas, built to soften with wear.</p>",
             "button_label": "Shop outerwear",
             "link": "shopify://collections/frontpage"
           }
@@ -234,8 +234,8 @@
           "settings": {
             "image": "shopify://shop_images/card-13-canvas-rucksack.png",
             "eyebrow": "Carry",
-            "heading": "Packs & slings",
-            "text": "<p>Modular carry for the commute.</p>",
+            "heading": "Bags & rucksacks",
+            "text": "<p>Canvas and leather carry for the daily commute.</p>",
             "button_label": "Shop carry",
             "link": "shopify://collections/frontpage"
           }
@@ -246,7 +246,7 @@
             "image": "shopify://shop_images/card-09-expedition-hat.png",
             "eyebrow": "Accessories",
             "heading": "Caps & extras",
-            "text": "<p>Finish the system.</p>",
+            "text": "<p>Finish the kit.</p>",
             "button_label": "Shop accessories",
             "link": "shopify://collections/frontpage"
           }
@@ -262,12 +262,12 @@
       "type": "compare-slider",
       "settings": {
         "subheading": "Field vs street",
-        "heading": "One shell, two contexts",
+        "heading": "One kit, two settings",
         "before_image": "shopify://shop_images/card-02-canvas-vest.png",
         "before_label": "Field",
         "after_image": "shopify://shop_images/card-06-chambray-shirt.png",
         "after_label": "Street",
-        "caption": "Drag to compare the full field system against the street loadout.",
+        "caption": "Drag to compare the full kit against the everyday carry.",
         "aspect": "wide",
         "color_scheme": "scheme-1",
         "padding_top": 56,
@@ -278,8 +278,8 @@
       "type": "newsletter",
       "settings": {
         "subheading": "Field signal",
-        "heading": "Join the system",
-        "text": "<p>Drop alerts, restocks, and field notes.</p>",
+        "heading": "Join the list",
+        "text": "<p>New arrivals, restocks, and field notes.</p>",
         "input_placeholder": "Email address",
         "button_label": "Subscribe",
         "layout": "split",
@@ -298,7 +298,7 @@
           "settings": {
             "place": "06:10 · Transit",
             "heading": "Out the door",
-            "caption": "<p>Shell on, pack loaded, audio in. The commute is the first field test of the day.</p>",
+            "caption": "<p>Shell on, bag packed, coffee in hand. The commute is the first mile of the day.</p>",
             "image": "shopify://shop_images/card-01-desert-shell.png",
             "product": "desert-shell"
           }
@@ -308,7 +308,7 @@
           "settings": {
             "place": "12:45 · Trail",
             "heading": "Off the grid",
-            "caption": "<p>Weather turns fast above the treeline. The membrane holds while the base layer moves moisture out.</p>",
+            "caption": "<p>Sun's up and the canvas is already softening. The half-zip moves with you, not against you.</p>",
             "image": "shopify://shop_images/route-field-midday.png",
             "product": "merino-half-zip"
           }
@@ -318,7 +318,7 @@
           "settings": {
             "place": "21:30 · Camp",
             "heading": "Hold position",
-            "caption": "<p>Layer down, power up, reset for the next leg. Reflective trim keeps you readable in headlamp range.</p>",
+            "caption": "<p>Pack down, boots off, reset for the next leg. Built to look better for it tomorrow.</p>",
             "image": "shopify://shop_images/card-13-canvas-rucksack.png",
             "product": "canvas-rucksack"
           }
@@ -343,13 +343,13 @@
           "type": "banner",
           "settings": {
             "eyebrow": "Field manifesto",
-            "quote": "<p>One system. Every condition. No compromise.</p>",
-            "attribution": "Waypoint SS26",
+            "quote": "<p>Built to soften. Built to last. Built to be repaired.</p>",
+            "attribution": "Sand SS26",
             "image": "shopify://shop_images/card-04-overland-cargo.png",
             "overlay_opacity": 55,
             "alignment": "center",
             "height": "tall",
-            "button_label": "Shop the system",
+            "button_label": "Shop the line",
             "button_link": "shopify://collections/frontpage",
             "button_style": "secondary",
             "color_scheme": "scheme-1"
@@ -374,7 +374,7 @@
         "poster": "shopify://shop_images/editorial-bench-macro2.png",
         "kicker": "Field footage",
         "heading": "In motion",
-        "text": "<p>Sixty frames of the system under load. Shot on route, not in studio.</p>",
+        "text": "<p>A season on the road, shot as it happened — not in studio.</p>",
         "height": "medium",
         "overlay_opacity": 55,
         "color_scheme": "scheme-2"
