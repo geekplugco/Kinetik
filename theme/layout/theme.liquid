@@ -105,18 +105,32 @@
       }
       .group:hover .kx-media-effect > img,
       .group:focus-within .kx-media-effect > img,
+      .kx-media-effect:hover img,
+      .kx-media-effect:focus-within img,
       .group:hover .kx-media-effect > svg,
-      .group:focus-within .kx-media-effect > svg { transform: scale(1.045) translateY(-0.6%); filter: contrast(1.08) saturate(1.02); }
+      .group:focus-within .kx-media-effect > svg,
+      .kx-media-effect:hover svg,
+      .kx-media-effect:focus-within svg { transform: scale(1.045) translateY(-0.6%); filter: contrast(1.08) saturate(1.02); }
       .group:hover .kx-media-effect[data-kx-effect="hero"] > img,
       .group:focus-within .kx-media-effect[data-kx-effect="hero"] > img,
+      .kx-media-effect[data-kx-effect="hero"]:hover img,
+      .kx-media-effect[data-kx-effect="hero"]:focus-within img,
       .group:hover .kx-media-effect[data-kx-effect="hero"] > svg,
-      .group:focus-within .kx-media-effect[data-kx-effect="hero"] > svg { transform: scale(1.025); filter: contrast(1.1) saturate(0.98); }
+      .group:focus-within .kx-media-effect[data-kx-effect="hero"] > svg,
+      .kx-media-effect[data-kx-effect="hero"]:hover svg,
+      .kx-media-effect[data-kx-effect="hero"]:focus-within svg { transform: scale(1.025); filter: contrast(1.1) saturate(0.98); }
       .group:hover .kx-media-effect::before,
-      .group:focus-within .kx-media-effect::before { opacity: 0.46; transform: translateY(8%); }
+      .group:focus-within .kx-media-effect::before,
+      .kx-media-effect:hover::before,
+      .kx-media-effect:focus-within::before { opacity: 0.46; transform: translateY(8%); }
       .group:hover .kx-media-effect[data-kx-effect="hero"]::before,
-      .group:focus-within .kx-media-effect[data-kx-effect="hero"]::before { opacity: 0.32; transform: translateX(4%); }
+      .group:focus-within .kx-media-effect[data-kx-effect="hero"]::before,
+      .kx-media-effect[data-kx-effect="hero"]:hover::before,
+      .kx-media-effect[data-kx-effect="hero"]:focus-within::before { opacity: 0.32; transform: translateX(4%); }
       .group:hover .kx-media-effect::after,
-      .group:focus-within .kx-media-effect::after { opacity: 1; transform: scale(1); }
+      .group:focus-within .kx-media-effect::after,
+      .kx-media-effect:hover::after,
+      .kx-media-effect:focus-within::after { opacity: 1; transform: scale(1); }
       .kx-media-effect[data-kx-effect="none"]::before,
       .kx-media-effect[data-kx-effect="none"]::after,
       .kx-media-effect[data-kx-effect="exposure"]::before,
@@ -140,7 +154,9 @@
       }
       .kx-media-effect[data-kx-effect="exposure"].is-in::after { animation: kxExposureBlink 560ms steps(1, end); }
       .group:hover .kx-media-effect[data-kx-effect="exposure"]::after,
-      .group:focus-within .kx-media-effect[data-kx-effect="exposure"]::after { opacity: 0; transform: none; }
+      .group:focus-within .kx-media-effect[data-kx-effect="exposure"]::after,
+      .kx-media-effect[data-kx-effect="exposure"]:hover::after,
+      .kx-media-effect[data-kx-effect="exposure"]:focus-within::after { opacity: 0; transform: none; }
       .kx-media-effect[data-kx-effect="trace"]::after {
         padding: 1px;
         background: conic-gradient(var(--accent) var(--kx-trace, 0%), transparent 0%);

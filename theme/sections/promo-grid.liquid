@@ -33,7 +33,9 @@
       }
       {%- if hover_effect == 'none' -%}
         #shopify-section-{{ section.id }} .group:hover .kx-media-effect > img,
-        #shopify-section-{{ section.id }} .group:focus-within .kx-media-effect > img {
+        #shopify-section-{{ section.id }} .group:focus-within .kx-media-effect > img,
+        #shopify-section-{{ section.id }} .kx-media-effect:hover > img,
+        #shopify-section-{{ section.id }} .kx-media-effect:focus-within > img {
           transform: none;
           filter: none;
         }
