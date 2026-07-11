@@ -1,10 +1,15 @@
 # Waypoint — sections reference
 
 > Auto-generated from each section's schema (v1.0.0). Add sections via **Add section** in the theme editor.
+> Screenshots are captured live from waypoint-demo.myshopify.com by `web/scripts/build-theme-screenshots.mjs`; sections with no screenshot say why below their table.
 
 ## Announcement bar
 
 `sections/announcement-bar.liquid` · Presets: Announcement bar
+
+Rotating messages above the header, with optional country and language selectors.
+
+_No screenshot: Not placed in any current template/preset — add via **Add section** in the editor (header/footer flexible group)._
 
 **Content blocks:** Message
 
@@ -22,6 +27,10 @@
 ## Blog posts
 
 `sections/blog-posts.liquid` · Presets: Blog posts
+
+Recent-articles feed pulled from a blog.
+
+![Blog posts section on Waypoint](/screenshots/sections/blog-posts.png)
 
 | Setting | Control | Default |
 |---|---|---|
@@ -43,6 +52,10 @@
 
 `sections/breadcrumb.liquid` · Presets: Breadcrumb
 
+Configurable breadcrumb trail for collection, product, and page templates.
+
+![Breadcrumb section on Waypoint](/screenshots/sections/breadcrumb.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Show home link | Toggle | On |
@@ -56,6 +69,10 @@
 ## Build your kit
 
 `sections/build-your-kit.liquid` · Presets: Build your kit
+
+Multi-slot bundle builder — each slot sources products by hand-pick, collection, or product type, with a live kit summary and one-action add to cart.
+
+![Build your kit section on Waypoint](/screenshots/sections/build-your-kit.png)
 
 **Content blocks:** Slot
 
@@ -76,6 +93,10 @@
 
 `sections/collapsible-content.liquid` · Presets: Collapsible content
 
+Accordion rows — question/answer or policy detail groups.
+
+_No screenshot: Only used in `page.content-library.json`, which has no live Page assigned to it on this store._
+
 **Content blocks:** Item
 
 | Setting | Control | Default |
@@ -93,6 +114,10 @@
 ## Collection list
 
 `sections/collection-list.liquid` · Presets: Collection list
+
+Collection tiles with captions, used on the Sand preset homepage.
+
+![Collection list section on Waypoint](/screenshots/sections/collection-list.png)
 
 | Setting | Control | Default |
 |---|---|---|
@@ -112,6 +137,10 @@
 
 `sections/collection-nav.liquid` · Presets: Collection navigation
 
+The sort, filter, and active-filter-chip bar above a collection grid.
+
+![Collection navigation section on Waypoint](/screenshots/sections/collection-nav.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Menu | Menu | main-menu |
@@ -122,6 +151,10 @@
 ## Collection story
 
 `sections/collection-story.liquid` · Presets: Collection story
+
+Numbered chapter timeline, used on the Lookbook page.
+
+![Collection story section on Waypoint](/screenshots/sections/collection-story.png)
 
 **Content blocks:** Chapter
 
@@ -138,6 +171,10 @@
 ## Compare slider
 
 `sections/compare-slider.liquid` · Presets: Compare slider
+
+Before-and-after image comparison slider, used on the Lookbook page.
+
+![Compare slider section on Waypoint](/screenshots/sections/compare-slider.png)
 
 | Setting | Control | Default |
 |---|---|---|
@@ -157,6 +194,10 @@
 
 `sections/complementary-products.liquid` · Presets: Complementary products
 
+"Pairs with" products sourced from the Search & Discovery app.
+
+_No screenshot: Hidden by design until Search & Discovery has product pairings configured — none are configured on this store._
+
 | Setting | Control | Default |
 |---|---|---|
 | Heading | Rich text | Pairs well with |
@@ -168,6 +209,10 @@
 ## Contact form
 
 `sections/contact-form.liquid` · Presets: Contact form
+
+Name, email, phone, and message form; powers the theme's Contact page.
+
+![Contact form section on Waypoint](/screenshots/sections/contact-form.png)
 
 | Setting | Control | Default |
 |---|---|---|
@@ -190,6 +235,10 @@
 
 `sections/custom-liquid.liquid` · Presets: Custom Liquid
 
+Raw Liquid slot for app embeds or bespoke markup.
+
+_No screenshot: Not placed in any current template/preset — add via **Add section** wherever a flexible section group is available._
+
 | Setting | Control | Default |
 |---|---|---|
 | Custom Liquid | Rich text | — |
@@ -200,6 +249,10 @@
 ## Countdown timer
 
 `sections/drop-system.liquid` · Presets: Drop system
+
+Product drop with a live countdown; the section changes state automatically once the target date passes.
+
+![Countdown timer section on Waypoint](/screenshots/sections/drop-system.png)
 
 | Setting | Control | Default |
 |---|---|---|
@@ -217,6 +270,10 @@
 ## Featured collection
 
 `sections/featured-collection.liquid` · Presets: Featured collection
+
+Product grid or carousel sourced from any collection.
+
+![Featured collection section on Waypoint](/screenshots/sections/featured-collection.png)
 
 | Setting | Control | Default |
 |---|---|---|
@@ -236,6 +293,10 @@
 
 `sections/featured-product.liquid` · Presets: Featured product
 
+Single product spotlight with a fully working buy form.
+
+![Featured product section on Waypoint](/screenshots/sections/featured-product.png)
+
 **Content blocks:** @app, Custom Liquid
 
 | Setting | Control | Default |
@@ -253,6 +314,10 @@
 
 `sections/field-assurance.liquid` · Presets: Field assurance
 
+Trust and guarantee band (shipping, returns, warranty callouts).
+
+![Trust badges section on Waypoint](/screenshots/sections/field-assurance.png)
+
 **Content blocks:** Assurance item, Store pickup (live), Policy links, Trust badges
 
 | Setting | Control | Default |
@@ -265,6 +330,10 @@
 ## Product specifications
 
 `sections/field-spec.liquid` · Presets: Field spec
+
+Spec-sheet grid sourced from product metafields, plus the size guide (metafield, table blocks, or a linked page).
+
+![Product specifications section on Waypoint](/screenshots/sections/field-spec.png)
 
 **Content blocks:** Spec row, Use-case badge, Size chart row
 
@@ -290,6 +359,10 @@
 
 `sections/footer.liquid` · Presets: Footer
 
+Menu, support links, newsletter signup, social, region, and payment icons. System, compact, editorial, and split styles.
+
+![Footer section on Waypoint](/screenshots/sections/footer.png)
+
 **Content blocks:** Support link
 
 | Setting | Control | Default |
@@ -312,6 +385,10 @@
 ## Header
 
 `sections/header.liquid` · Presets: Header
+
+Logo, navigation, search, account, and cart. Utility, editorial, and commerce styles; supports a mega menu, a free-shipping bar, and the cart drawer.
+
+![Header section on Waypoint](/screenshots/sections/header.png)
 
 **Content blocks:** Mega menu panel
 
@@ -337,6 +414,10 @@
 
 `sections/hero-collage.liquid` · Presets: Hero collage
 
+Multi-image collage hero used to open the Lookbook page.
+
+![Hero collage section on Waypoint](/screenshots/sections/hero-collage.png)
+
 **Content blocks:** Media
 
 | Setting | Control | Default |
@@ -353,6 +434,10 @@
 ## Statement hero
 
 `sections/hero-manifesto.liquid` · Presets: Hero manifesto
+
+Statement-style hero built for the About page — headline and prose, no product imagery required.
+
+![Statement hero section on Waypoint](/screenshots/sections/hero-manifesto.png)
 
 **Content blocks:** Term
 
@@ -373,6 +458,10 @@
 ## Hero motion
 
 `sections/hero-motion.liquid` · Presets: Hero motion
+
+Hero variant with a moving/parallax media treatment for drop and campaign pages.
+
+![Hero motion section on Waypoint](/screenshots/sections/hero-motion.png)
 
 **Content blocks:** Media, Stat
 
@@ -400,6 +489,10 @@
 
 `sections/hero-split.liquid` · Presets: Hero split
 
+Hero variant with a fixed image column beside the headline, used on the Sand preset and the Build-a-system page.
+
+![Hero split section on Waypoint](/screenshots/sections/hero-split.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Image position | Choose: Right / Left | right |
@@ -420,6 +513,10 @@
 
 `sections/hero-video.liquid` · Presets: Hero video
 
+Full-bleed hero built around a hosted or embedded video, used as a chapter break on the Lookbook page.
+
+![Hero video section on Waypoint](/screenshots/sections/hero-video.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Video <br/><sub>Shopify-hosted video. Plays muted, loops, and is preferred over the external URL when both are set.</sub> | Video | — |
@@ -437,6 +534,10 @@
 ## Hero
 
 `sections/hero.liquid` · Presets: Hero
+
+Full-bleed image with headline, buttons, and an optional visual effect.
+
+![Hero section on Waypoint](/screenshots/sections/hero.png)
 
 | Setting | Control | Default |
 |---|---|---|
@@ -465,6 +566,10 @@
 
 `sections/image-gallery.liquid` · Presets: Image gallery
 
+Uniform or full-bleed image grid.
+
+![Image gallery section on Waypoint](/screenshots/sections/image-gallery.png)
+
 **Content blocks:** Image
 
 | Setting | Control | Default |
@@ -484,6 +589,10 @@
 ## Image with text
 
 `sections/image-with-text.liquid` · Presets: Image with text
+
+Split media-and-copy band.
+
+![Image with text section on Waypoint](/screenshots/sections/image-with-text.png)
 
 | Setting | Control | Default |
 |---|---|---|
@@ -507,6 +616,10 @@
 
 `sections/logo-list.liquid` · Presets: Logo list
 
+Press or partner logo strip.
+
+_No screenshot: Not placed in any current template/preset — add via **Add section**._
+
 **Content blocks:** Logo
 
 | Setting | Control | Default |
@@ -525,6 +638,10 @@
 ## Lookbook
 
 `sections/lookbook.liquid` · Presets: Lookbook
+
+Editorial image grid with shoppable hotspots — tap a marker for price and a quick-view link.
+
+![Lookbook section on Waypoint](/screenshots/sections/lookbook.png)
 
 **Content blocks:** Shot, Editorial note
 
@@ -546,6 +663,10 @@
 
 `sections/main-404.liquid`
 
+The 404 not-found page shell.
+
+![404 section on Waypoint](/screenshots/sections/main-404.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Color scheme | Color scheme | scheme-1 |
@@ -555,6 +676,10 @@
 ## Account
 
 `sections/main-account.liquid` · Presets: Account
+
+Customer account overview shell.
+
+_No screenshot: This store uses Shopify's New Customer Accounts (hosted UI) — the classic `customers/account.json` template is not reachable._
 
 | Setting | Control | Default |
 |---|---|---|
@@ -566,6 +691,10 @@
 
 `sections/main-activate-account.liquid` · Presets: Activate account
 
+Account-activation shell shown from an activation email link.
+
+_No screenshot: This store uses Shopify's New Customer Accounts (hosted UI) — the classic template is not reachable._
+
 | Setting | Control | Default |
 |---|---|---|
 | Color scheme | Color scheme | scheme-1 |
@@ -575,6 +704,10 @@
 ## Addresses
 
 `sections/main-addresses.liquid` · Presets: Addresses
+
+Saved-address management shell.
+
+_No screenshot: This store uses Shopify's New Customer Accounts (hosted UI) — the classic template is not reachable._
 
 | Setting | Control | Default |
 |---|---|---|
@@ -586,6 +719,10 @@
 
 `sections/main-article.liquid` · Presets: Article
 
+Blog article shell — title, author, date, body, and share links.
+
+![Article section on Waypoint](/screenshots/sections/main-article.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Color scheme | Color scheme | scheme-1 |
@@ -595,6 +732,10 @@
 ## Blog
 
 `sections/main-blog.liquid` · Presets: Blog
+
+Blog index shell — article listing with pagination.
+
+![Blog section on Waypoint](/screenshots/sections/main-blog.png)
 
 | Setting | Control | Default |
 |---|---|---|
@@ -612,6 +753,10 @@
 ## Cart
 
 `sections/main-cart.liquid`
+
+Cart page shell — line-item edit/remove, gift note, upsell, and empty state.
+
+![Cart section on Waypoint](/screenshots/sections/main-cart.png)
 
 **Content blocks:** Category tile
 
@@ -634,6 +779,10 @@
 ## Collection
 
 `sections/main-collection.liquid`
+
+Collection page shell — grid, filtering, sorting, pagination, and empty state.
+
+![Collection section on Waypoint](/screenshots/sections/main-collection.png)
 
 **Content blocks:** Promo tile
 
@@ -662,6 +811,10 @@
 
 `sections/main-list-collections.liquid`
 
+The all-collections index shell.
+
+![Collections list section on Waypoint](/screenshots/sections/main-list-collections.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Color scheme | Color scheme | scheme-1 |
@@ -671,6 +824,10 @@
 ## Login
 
 `sections/main-login.liquid` · Presets: Login
+
+Customer login shell.
+
+_No screenshot: This store uses Shopify's New Customer Accounts (hosted UI) — the classic template is not reachable._
 
 | Setting | Control | Default |
 |---|---|---|
@@ -682,6 +839,10 @@
 
 `sections/main-order.liquid` · Presets: Order
 
+Order-detail shell.
+
+_No screenshot: This store uses Shopify's New Customer Accounts (hosted UI) — the classic template is not reachable._
+
 | Setting | Control | Default |
 |---|---|---|
 | Color scheme | Color scheme | scheme-1 |
@@ -691,6 +852,10 @@
 ## Page
 
 `sections/main-page.liquid` · Presets: Page
+
+Generic page shell for rich-text/section-composed pages.
+
+![Page section on Waypoint](/screenshots/sections/main-page.png)
 
 | Setting | Control | Default |
 |---|---|---|
@@ -702,6 +867,10 @@
 
 `sections/main-password.liquid` · Presets: Password
 
+The theme's own password-gate shell (used only when a store relies on the theme's password.json template rather than Shopify's dev-store password gate).
+
+_No screenshot: This dev store's password protection is Shopify's own hosted gate, checked before the theme renders — the theme's `password.json` template is unreachable regardless of URL._
+
 | Setting | Control | Default |
 |---|---|---|
 | Color scheme | Color scheme | scheme-1 |
@@ -711,6 +880,10 @@
 ## Product
 
 `sections/main-product.liquid`
+
+The product template shell — vendor, title, rating, price, and description as reorderable blocks, plus collapsible rows, app blocks, and a Custom Liquid block.
+
+![Product section on Waypoint](/screenshots/sections/main-product.png)
 
 **Content blocks:** Vendor, Title, Product rating, Price, Description, @app, Collapsible row, Custom Liquid
 
@@ -733,6 +906,10 @@
 
 `sections/main-register.liquid` · Presets: Register
 
+Customer registration shell.
+
+_No screenshot: This store uses Shopify's New Customer Accounts (hosted UI) — the classic template is not reachable._
+
 | Setting | Control | Default |
 |---|---|---|
 | Color scheme | Color scheme | scheme-1 |
@@ -742,6 +919,10 @@
 ## Reset password
 
 `sections/main-reset-password.liquid` · Presets: Reset password
+
+Password-reset shell.
+
+_No screenshot: This store uses Shopify's New Customer Accounts (hosted UI) — the classic template is not reachable._
 
 | Setting | Control | Default |
 |---|---|---|
@@ -753,6 +934,10 @@
 
 `sections/main-search.liquid`
 
+Search results shell — predictive results, pagination, and empty state.
+
+![Search section on Waypoint](/screenshots/sections/main-search.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Enable filtering | Toggle | On |
@@ -763,6 +948,10 @@
 ## Map
 
 `sections/map.liquid` · Presets: Map
+
+Store location section with stockist details.
+
+_No screenshot: Not placed in any current template/preset — add via **Add section**._
 
 | Setting | Control | Default |
 |---|---|---|
@@ -784,6 +973,10 @@
 
 `sections/marquee.liquid` · Presets: Marquee
 
+Scrolling text ribbon, typically for taglines or trust copy.
+
+![Marquee section on Waypoint](/screenshots/sections/marquee.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Text <br/><sub>Separate items with ·</sub> | Text | KINETIK |
@@ -799,6 +992,10 @@
 ## Product details
 
 `sections/material-scan.liquid` · Presets: Material scan
+
+Macro fabric or hardware image with positioned, numbered annotation points.
+
+![Product details section on Waypoint](/screenshots/sections/material-scan.png)
 
 **Content blocks:** Scan point
 
@@ -823,6 +1020,10 @@
 
 `sections/multicolumn.liquid` · Presets: Multicolumn
 
+Icon or text columns, e.g. shipping/returns/warranty callouts.
+
+![Multicolumn section on Waypoint](/screenshots/sections/multicolumn.png)
+
 **Content blocks:** Column
 
 | Setting | Control | Default |
@@ -840,6 +1041,10 @@
 ## Newsletter
 
 `sections/newsletter.liquid` · Presets: Newsletter
+
+Email signup band.
+
+![Newsletter section on Waypoint](/screenshots/sections/newsletter.png)
 
 | Setting | Control | Default |
 |---|---|---|
@@ -859,6 +1064,10 @@
 
 `sections/product-apps.liquid` · Presets: Product apps / reviews
 
+Host block for review apps (Judge.me, Loox, Okendo); the star rating reads the app's own rating metafield.
+
+_No screenshot: Hidden by design until a review app is installed and has review data — no review app is installed on this store._
+
 **Content blocks:** @app
 
 | Setting | Control | Default |
@@ -874,6 +1083,10 @@
 
 `sections/product-faq.liquid` · Presets: Product FAQ
 
+Per-product question-and-answer accordion.
+
+![FAQ section on Waypoint](/screenshots/sections/product-faq.png)
+
 **Content blocks:** Question
 
 | Setting | Control | Default |
@@ -888,6 +1101,10 @@
 
 `sections/product-field-note.liquid` · Presets: Product field note
 
+Editorial pull-quote aside on the product page.
+
+![Customer quote section on Waypoint](/screenshots/sections/product-field-note.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Eyebrow | Rich text | Field note |
@@ -901,6 +1118,10 @@
 ## Product loadout
 
 `sections/product-loadout.liquid` · Presets: Product loadout
+
+Companion products pulled from the product's `loadout` metafield.
+
+_No screenshot: Hidden by design until the product's `loadout` metafield is set — not populated on the demo product used for this pass._
 
 **Content blocks:** Companion product
 
@@ -920,6 +1141,10 @@
 ## Spec highlights
 
 `sections/product-motion-spec.liquid` · Presets: Product motion spec
+
+Animated spec callouts for a product.
+
+![Spec highlights section on Waypoint](/screenshots/sections/product-motion-spec.png)
 
 **Content blocks:** Stat
 
@@ -942,6 +1167,10 @@
 
 `sections/product-use-modes.liquid` · Presets: Product use modes
 
+Scenario tabs describing how one product performs in different use cases.
+
+![Use cases section on Waypoint](/screenshots/sections/product-use-modes.png)
+
 **Content blocks:** Mode
 
 | Setting | Control | Default |
@@ -957,6 +1186,10 @@
 ## Promo grid
 
 `sections/promo-grid.liquid` · Presets: Promo grid
+
+Mixed grid of promotional tiles linking to collections, pages, or products.
+
+![Promo grid section on Waypoint](/screenshots/sections/promo-grid.png)
 
 **Content blocks:** Promo card
 
@@ -977,6 +1210,10 @@
 
 `sections/promo-popup.liquid`
 
+Timed email-capture popup (delay, frequency, and dismissal are all merchant-configurable).
+
+![Promo popup section on Waypoint](/screenshots/sections/promo-popup.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Enable popup | Toggle | Off |
@@ -995,17 +1232,29 @@
 
 `sections/quick-view.liquid`
 
+The modal opened from a product card's quick-view button.
+
+_No screenshot: Rendered on demand via the Section Rendering API from a product card's quick-view button, not from a template — no standalone URL to capture._
+
 _No configurable settings._
 
 ## Recently viewed card
 
 `sections/recently-viewed-card.liquid`
 
+The individual product card used inside the Recently viewed row.
+
+_No screenshot: A sub-template rendered inside Recently viewed, not a standalone section._
+
 _No configurable settings._
 
 ## Recently viewed
 
 `sections/recently-viewed.liquid` · Presets: Recently viewed
+
+A row of the customer's own recently viewed products.
+
+_No screenshot: Hidden by design until the shopper has real browsing history — the demo product's fresh session has none._
 
 | Setting | Control | Default |
 |---|---|---|
@@ -1019,6 +1268,10 @@ _No configurable settings._
 
 `sections/related-products.liquid` · Presets: Related products
 
+Automatic recommendations from Shopify's recommendation engine, loaded on scroll.
+
+![Related products section on Waypoint](/screenshots/sections/related-products.png)
+
 | Setting | Control | Default |
 |---|---|---|
 | Heading | Rich text | You might also like |
@@ -1030,6 +1283,10 @@ _No configurable settings._
 ## Rich text
 
 `sections/rich-text.liquid` · Presets: Rich text
+
+Headline-and-prose band for freeform copy.
+
+_No screenshot: Only used in `page.content-library.json`, which has no live Page assigned to it on this store._
 
 | Setting | Control | Default |
 |---|---|---|
@@ -1046,6 +1303,10 @@ _No configurable settings._
 ## Timeline
 
 `sections/route-map.liquid` · Presets: Route map
+
+Day-in-the-life timeline of stops (time, place, image, optional featured product) in board or timeline layout.
+
+![Timeline section on Waypoint](/screenshots/sections/route-map.png)
 
 **Content blocks:** Stop
 
@@ -1068,6 +1329,8 @@ _No configurable settings._
 
 `sections/section.liquid` · Presets: Section
 
+_No screenshot: Generic flexible-content primitive, addable via **Add section**; not part of the curated demo._
+
 **Content blocks:** @theme
 
 | Setting | Control | Default |
@@ -1082,6 +1345,10 @@ _No configurable settings._
 ## Slideshow
 
 `sections/slideshow.liquid` · Presets: Slideshow
+
+Multi-slide hero with independent content per slide.
+
+_No screenshot: Not placed in any current template/preset — add via **Add section**._
 
 **Content blocks:** Slide
 
@@ -1103,6 +1370,10 @@ _No configurable settings._
 
 `sections/statement.liquid` · Presets: Statement
 
+Full-width banner with a quote or claim, background image, and button; supports repeatable banner blocks.
+
+![Statement section on Waypoint](/screenshots/sections/statement.png)
+
 **Content blocks:** Banner
 
 | Setting | Control | Default |
@@ -1114,6 +1385,10 @@ _No configurable settings._
 ## Testimonials
 
 `sections/testimonials.liquid` · Presets: Testimonials
+
+Customer quotes.
+
+![Testimonials section on Waypoint](/screenshots/sections/testimonials.png)
 
 **Content blocks:** Testimonial
 
@@ -1129,6 +1404,10 @@ _No configurable settings._
 ## Video
 
 `sections/video.liquid` · Presets: Video
+
+Hosted or embedded video with a cover image.
+
+_No screenshot: Not placed in any current template/preset — add via **Add section**._
 
 | Setting | Control | Default |
 |---|---|---|
@@ -1146,6 +1425,10 @@ _No configurable settings._
 ## Welcome
 
 `sections/welcome.liquid` · Presets: Welcome
+
+Shopify's placeholder section shown on a brand-new, empty theme before any real content is added.
+
+_No screenshot: Shopify's own empty-theme placeholder — not a section a merchant configures._
 
 | Setting | Control | Default |
 |---|---|---|

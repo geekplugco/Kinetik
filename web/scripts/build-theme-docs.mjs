@@ -1,11 +1,13 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 import { dirname, resolve, join, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { DESCRIPTIONS, GAP_REASONS } from './theme-section-descriptions.mjs';
 
 const WEB = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ROOT = resolve(WEB, '..');
 const THEME = resolve(ROOT, process.argv[2] || 'theme');
 const OUT = resolve(ROOT, 'docs/merchant');
+const SCREENSHOTS_DIR = resolve(ROOT, 'docs/screenshots/sections');
 const SCHEMA_RE = /\{%-?\s*schema\s*-?%\}([\s\S]*?)\{%-?\s*endschema\s*-?%\}/;
 
 const schemaLocale = existsSync(join(THEME, 'locales/en.default.schema.json'))
@@ -85,19 +87,29 @@ writeFileSync(join(OUT, 'settings-reference.md'), g);
 // ---- Sections reference ----
 const sectionsDir = join(THEME, 'sections');
 const files = readdirSync(sectionsDir).filter((f) => f.endsWith('.liquid')).sort();
-let sec = `# ${NAME} — sections reference\n\n> Auto-generated from each section's schema (v${VERSION}). Add sections via **Add section** in the theme editor.\n\n`;
+let sec = `# ${NAME} — sections reference\n\n> Auto-generated from each section's schema (v${VERSION}). Add sections via **Add section** in the theme editor.\n> Screenshots are captured live from waypoint-demo.myshopify.com by \`web/scripts/build-theme-screenshots.mjs\`; sections with no screenshot say why below their table.\n\n`;
 let count = 0;
+let withScreenshot = 0;
 for (const f of files) {
   const src = readFileSync(join(sectionsDir, f), 'utf8');
   const m = src.match(SCHEMA_RE);
   if (!m) continue;
   let schema;
   try { schema = JSON.parse(m[1]); } catch { continue; }
-  const name = t(schema.name) || basename(f, '.liquid');
+  const type = basename(f, '.liquid');
+  const name = t(schema.name) || type;
   const presets = (schema.presets || []).map((p) => t(p.name)).filter(Boolean);
   const blocks = (schema.blocks || []).map((b) => t(b.name) || b.type).filter(Boolean);
   sec += `## ${name}\n\n`;
   sec += `\`sections/${f}\`${presets.length ? ` · Presets: ${presets.join(', ')}` : ''}\n\n`;
+  if (DESCRIPTIONS[type]) sec += `${DESCRIPTIONS[type]}\n\n`;
+  const screenshotPath = resolve(SCREENSHOTS_DIR, `${type}.png`);
+  if (existsSync(screenshotPath)) {
+    sec += `![${name} section on Waypoint](/screenshots/sections/${type}.png)\n\n`;
+    withScreenshot++;
+  } else if (GAP_REASONS[type]) {
+    sec += `_No screenshot: ${GAP_REASONS[type]}_\n\n`;
+  }
   if (blocks.length) sec += `**Content blocks:** ${blocks.join(', ')}\n\n`;
   sec += settingsTable(schema.settings) + '\n';
   count++;
@@ -106,4 +118,4 @@ writeFileSync(join(OUT, 'sections-reference.md'), sec);
 
 console.log(`docs generated for ${NAME} v${VERSION}:`);
 console.log(`  docs/merchant/settings-reference.md (${themeInfo.length - 1} setting groups)`);
-console.log(`  docs/merchant/sections-reference.md (${count} sections)`);
+console.log(`  docs/merchant/sections-reference.md (${count} sections, ${withScreenshot} with a live screenshot)`);

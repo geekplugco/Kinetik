@@ -1,0 +1,262 @@
+[
+  {
+    "type": "header",
+    "screenshot": "sections/header.png",
+    "ok": true
+  },
+  {
+    "type": "footer",
+    "screenshot": "sections/footer.png",
+    "ok": true
+  },
+  {
+    "type": "hero",
+    "screenshot": "sections/hero.png",
+    "ok": true
+  },
+  {
+    "type": "marquee",
+    "screenshot": "sections/marquee.png",
+    "ok": true
+  },
+  {
+    "type": "featured-collection",
+    "screenshot": "sections/featured-collection.png",
+    "ok": true
+  },
+  {
+    "type": "promo-grid",
+    "screenshot": "sections/promo-grid.png",
+    "ok": true
+  },
+  {
+    "type": "material-scan",
+    "screenshot": "sections/material-scan.png",
+    "ok": true
+  },
+  {
+    "type": "build-your-kit",
+    "screenshot": "sections/build-your-kit.png",
+    "ok": true
+  },
+  {
+    "type": "image-with-text",
+    "screenshot": "sections/image-with-text.png",
+    "ok": true
+  },
+  {
+    "type": "statement",
+    "screenshot": "sections/statement.png",
+    "ok": true
+  },
+  {
+    "type": "route-map",
+    "screenshot": "sections/route-map.png",
+    "ok": true
+  },
+  {
+    "type": "lookbook",
+    "screenshot": "sections/lookbook.png",
+    "ok": true
+  },
+  {
+    "type": "multicolumn",
+    "screenshot": "sections/multicolumn.png",
+    "ok": true
+  },
+  {
+    "type": "newsletter",
+    "screenshot": "sections/newsletter.png",
+    "ok": true
+  },
+  {
+    "type": "drop-system",
+    "screenshot": "sections/drop-system.png",
+    "ok": true
+  },
+  {
+    "type": "featured-product",
+    "screenshot": "sections/featured-product.png",
+    "ok": true
+  },
+  {
+    "type": "testimonials",
+    "screenshot": "sections/testimonials.png",
+    "ok": true
+  },
+  {
+    "type": "blog-posts",
+    "screenshot": "sections/blog-posts.png",
+    "ok": true
+  },
+  {
+    "type": "hero-motion",
+    "screenshot": "sections/hero-motion.png",
+    "ok": true
+  },
+  {
+    "type": "hero-split",
+    "screenshot": "sections/hero-split.png",
+    "ok": true
+  },
+  {
+    "type": "collection-list",
+    "screenshot": "sections/collection-list.png",
+    "ok": true
+  },
+  {
+    "type": "field-assurance",
+    "screenshot": "sections/field-assurance.png",
+    "ok": true
+  },
+  {
+    "type": "main-product",
+    "screenshot": "sections/main-product.png",
+    "ok": true
+  },
+  {
+    "type": "field-spec",
+    "screenshot": "sections/field-spec.png",
+    "ok": true
+  },
+  {
+    "type": "recently-viewed",
+    "ok": false,
+    "error": "locator.screenshot: Timeout 29998.528000000002ms exceeded.\nCall log:\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying scroll into view action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "type": "product-faq",
+    "screenshot": "sections/product-faq.png",
+    "ok": true
+  },
+  {
+    "type": "product-loadout",
+    "ok": false,
+    "error": "locator.screenshot: Timeout 29998.419ms exceeded.\nCall log:\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying scroll into view action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "type": "product-apps",
+    "ok": false,
+    "error": "locator.screenshot: Timeout 29998.458ms exceeded.\nCall log:\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying scroll into view action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "type": "complementary-products",
+    "ok": false,
+    "error": "locator.screenshot: Timeout 29998.259000000005ms exceeded.\nCall log:\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying scroll into view action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "type": "related-products",
+    "screenshot": "sections/related-products.png",
+    "ok": true
+  },
+  {
+    "type": "main-collection",
+    "screenshot": "sections/main-collection.png",
+    "ok": true
+  },
+  {
+    "type": "breadcrumb",
+    "screenshot": "sections/breadcrumb.png",
+    "ok": true
+  },
+  {
+    "type": "collection-nav",
+    "screenshot": "sections/collection-nav.png",
+    "ok": true
+  },
+  {
+    "type": "image-gallery",
+    "screenshot": "sections/image-gallery.png",
+    "ok": true
+  },
+  {
+    "type": "product-field-note",
+    "screenshot": "sections/product-field-note.png",
+    "ok": true
+  },
+  {
+    "type": "product-motion-spec",
+    "screenshot": "sections/product-motion-spec.png",
+    "ok": true
+  },
+  {
+    "type": "product-use-modes",
+    "screenshot": "sections/product-use-modes.png",
+    "ok": true
+  },
+  {
+    "type": "main-cart",
+    "screenshot": "sections/main-cart.png",
+    "ok": true
+  },
+  {
+    "type": "main-search",
+    "screenshot": "sections/main-search.png",
+    "ok": true
+  },
+  {
+    "type": "main-blog",
+    "screenshot": "sections/main-blog.png",
+    "ok": true
+  },
+  {
+    "type": "main-article",
+    "screenshot": "sections/main-article.png",
+    "ok": true
+  },
+  {
+    "type": "main-page",
+    "screenshot": "sections/main-page.png",
+    "ok": true
+  },
+  {
+    "type": "contact-form",
+    "screenshot": "sections/contact-form.png",
+    "ok": true
+  },
+  {
+    "type": "hero-manifesto",
+    "screenshot": "sections/hero-manifesto.png",
+    "ok": true
+  },
+  {
+    "type": "hero-collage",
+    "screenshot": "sections/hero-collage.png",
+    "ok": true
+  },
+  {
+    "type": "collection-story",
+    "screenshot": "sections/collection-story.png",
+    "ok": true
+  },
+  {
+    "type": "compare-slider",
+    "screenshot": "sections/compare-slider.png",
+    "ok": true
+  },
+  {
+    "type": "hero-video",
+    "screenshot": "sections/hero-video.png",
+    "ok": true
+  },
+  {
+    "type": "main-list-collections",
+    "screenshot": "sections/main-list-collections.png",
+    "ok": true
+  },
+  {
+    "type": "main-404",
+    "screenshot": "sections/main-404.png",
+    "ok": true
+  },
+  {
+    "type": "promo-popup",
+    "screenshot": "sections/promo-popup.png",
+    "ok": true
+  },
+  {
+    "type": "main-password",
+    "ok": false,
+    "error": "unreachable on this store: dev-store password protection is a Shopify-hosted gate, not the theme's own password.json template"
+  }
+]
