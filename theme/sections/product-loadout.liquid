@@ -93,13 +93,13 @@
           {%- endfor -%}
         </ul>
 
-        <aside class="flex flex-col gap-4 self-start border border-border-strong p-5 lg:sticky lg:top-24">
+        <aside class="min-w-0 flex flex-col gap-4 self-start border border-border-strong p-5 lg:sticky lg:top-24">
           <div class="flex items-center justify-between font-mono text-xs uppercase tracking-label text-text-muted">
             <span data-loadout-count>0 selected</span>
           </div>
-          <div class="flex items-baseline justify-between border-t border-border-hairline pt-4">
-            <span class="font-mono text-xs uppercase tracking-label text-text-muted">{{ section.settings.total_label | default: 'Loadout total' }}</span>
-            <span data-loadout-total class="font-display text-h4 text-text-strong">{{ base.price | money }}</span>
+          <div class="flex items-baseline justify-between gap-3 border-t border-border-hairline pt-4">
+            <span class="min-w-0 overflow-x-auto whitespace-nowrap font-mono text-xs uppercase tracking-label text-text-muted [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{{ section.settings.total_label | default: 'Loadout total' }}</span>
+            <span data-loadout-total class="shrink-0 font-display text-h4 text-text-strong">{{ base.price | money }}</span>
           </div>
           <button type="button" data-add-loadout class="inline-flex w-full items-center justify-center gap-2 bg-accent px-6 py-3 font-mono text-sm uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-40">
             {{ section.settings.button_label | default: 'Add loadout to cart' }}
