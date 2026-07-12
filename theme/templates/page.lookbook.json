@@ -48,7 +48,7 @@
       "settings": {
         "kicker": "SS26 · The Sand Line",
         "heading": "Shot on the road",
-        "text": "<p>Canvas, wax, and leather — built for travel that starts before sunrise. Tap a piece to shop the look.</p>",
+        "text": "<p>The line is canvas, wax, and leather, made for travel that starts before sunrise. Tap a piece to shop the look.</p>",
         "layout": "editorial",
         "image_ratio": "portrait",
         "width": "page",
@@ -172,7 +172,7 @@
           "settings": {
             "label": "02 — Field test",
             "heading": "Broken in on the road",
-            "text": "<p>Prototypes rode along on a season of early starts and long routes — sun, dust, daily wear — until the canvas softened and the leather took its first patina.</p>",
+            "text": "<p>Prototypes spent a season on early starts and long routes. Sun, dust, and daily wear softened the canvas and gave the leather its first patina.</p>",
             "image": "shopify://shop_images/route-field-midday.png"
           }
         },
@@ -181,7 +181,7 @@
           "settings": {
             "label": "03 — Release",
             "heading": "One line, built to last",
-            "text": "<p>The finished collection ships as a coordinated set — shell, carry, layers — each piece meant to be worn for years, not seasons.</p>",
+            "text": "<p>The finished collection ships as shell, carry, and layers together, each piece meant to be worn for years, not seasons.</p>",
             "image": "shopify://shop_images/card-04-overland-cargo.png",
             "button_label": "Shop the drop",
             "button_link": "shopify://collections/frontpage"
@@ -374,7 +374,7 @@
         "poster": "shopify://shop_images/editorial-bench-macro2.png",
         "kicker": "Field footage",
         "heading": "In motion",
-        "text": "<p>A season on the road, shot as it happened — not in studio.</p>",
+        "text": "<p>A season on the road, shot as it happened, not staged in a studio.</p>",
         "height": "medium",
         "overlay_opacity": 55,
         "color_scheme": "scheme-2"
